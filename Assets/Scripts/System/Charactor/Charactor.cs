@@ -88,7 +88,14 @@ public class Charactor
 
     public virtual void Down()
     {
-        playerController.sawDir = new Vector2(playerController.presentSawDir.x, -1);
+        if(playerController.IsGrounded)
+        {
+            playerController.isSit = true;
+        }
+        else
+        {
+            playerController.sawDir = new Vector2(playerController.presentSawDir.x, -1);
+        }
     }    
 
     public virtual void SpecialMove(int index)

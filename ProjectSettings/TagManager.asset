@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - Enemy
+  - Attack
   layers:
   - Default
   - TransparentFX
@@ -11,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Player
+  - Enemy
+  - EnemyAttack
+  - Attack
   - 
   - 
   - 
@@ -40,4 +43,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FrontInGame
+    uniqueID: 2018573283
+    locked: 0
+  - name: Player
+    uniqueID: 1562918333
+    locked: 0
+  - name: BackwordInGame
+    uniqueID: 3095113591
+    locked: 0
+  - name: BackGround
+    uniqueID: 3245096703
+    locked: 0
+  - name: FarBackGround
+    uniqueID: 436120117
     locked: 0

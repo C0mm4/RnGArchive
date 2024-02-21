@@ -7,26 +7,23 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static UnityEditor.Progress;
 
 public class PlayerController : KinematicObject
 {
     // Command Input System Variable
     // Command Input List in System
-    private List<KeyValuePair<KeyValues, float>> commandInputs;
-    [SerializeField]
-    private List<KeyValues> cmds;
-    // Player Input List Last 3 seconds Freames
-    private List<KeyValuePair<List<KeyCode>, float>> previousInputs;
+    private List<(KeyValues, float)> commandInputs;
+    [SerializeField] List<KeyValues> cmds;
     // Check Last Input Time
     private float lastInputTime;
-    // For Correction Key Inputs 
-    private List<KeyValues> inputBuffers;
     // Input Correction start Time
     private float lastProcessBufferT;
     // Is Start Correction
     private bool isDetectKey;
 
-
+    private List<(KeyValues, float)> inputbuffers;
+    private List<(KeyValues, float)> previousinputbuffers;
 
     /// <summary>
     /// Initial jump velocity at the start of a jump.
@@ -62,6 +59,7 @@ public class PlayerController : KinematicObject
     [SerializeField]
     public string currentState;
     public bool isMove;
+    public bool isSit;
 
     public Vector2 presentSawDir;
 
@@ -73,10 +71,9 @@ public class PlayerController : KinematicObject
         
         body = GetComponent<Rigidbody2D>();
 
+        inputbuffers = new();
+        previousinputbuffers = new();
         commandInputs = new();
-        previousInputs = new();
-        inputBuffers = new();
-
         body.gravityScale = 1.0f;
 
         sawDir = new Vector2(1, 0);
@@ -122,7 +119,6 @@ public class PlayerController : KinematicObject
             {
                 isMove = true;
             }
-            CommandInput();
             if(workingSkill != null)
             {
                 workingSkill.Step();
@@ -140,7 +136,7 @@ public class PlayerController : KinematicObject
             {
                 SetAlarm(2, 1f);
             }
-
+            SetCommandBuffer();
             currentState = charactor.stateMachine.getStateStr();
 
             if (isAttackInput)
@@ -164,7 +160,7 @@ public class PlayerController : KinematicObject
                     SetAlarm(4, charactor.status.attackSpeed);
                 }
             }
-                        if (!isAction && IsGrounded && Mathf.Abs(velocity.x) == 0 && !isAttack)
+            if (!isAction && IsGrounded && Mathf.Abs(velocity.x) == 0 && !isAttack)
             {
                 charactor.SetIdle();
             }
@@ -195,14 +191,12 @@ public class PlayerController : KinematicObject
                 {
                     MoveKey();
                 }
-
-                List<KeyCode> InputKeys = GetPressedKey();
-
-                if (InputKeys.Count != 0)
+                var items = setInputBuffer();
+                inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
+                if (inputbuffers.Count > 0)
                 {
                     lastInputTime = Time.time;
                 }
-                previousInputs.Add(new KeyValuePair<List<KeyCode>, float>(InputKeys, Time.time));
 
             }
         }
@@ -212,6 +206,257 @@ public class PlayerController : KinematicObject
             SetSkin(1);
         }
     }
+
+    private List<(KeyValues, float)> setInputBuffer()
+    {
+        List<(KeyValues, float)> ret = new List<(KeyValues, float)>();
+        float time = Time.time;
+        if (Input.GetKey(GameManager.Input._keySettings.upKey))
+        {
+            ret.Add((KeyValues.Up, time));
+        }
+        else if (Input.GetKey(GameManager.Input._keySettings.downKey))
+        {
+            ret.Add((KeyValues.Down, time));
+        }
+
+        if (Input.GetKey(GameManager.Input._keySettings.leftKey))
+        {
+            ret.Add((KeyValues.Left, time));
+        }
+        else if (Input.GetKey(GameManager.Input._keySettings.rightKey))
+        {
+            ret.Add((KeyValues.Right, time));
+        }
+
+        if (Input.GetKey(GameManager.Input._keySettings.Shot))
+        {
+            ret.Add((KeyValues.Shot, time));
+        }
+        if (Input.GetKey(GameManager.Input._keySettings.Jump))
+        {
+            ret.Add((KeyValues.Jump, time));
+        }
+        if (Input.GetKey(GameManager.Input._keySettings.Call))
+        {
+            ret.Add((KeyValues.Call, time));
+        }
+
+        return ret;
+    }
+
+    private void SetCommandBuffer()
+    {
+        if (inputbuffers.Count == 0)
+        {
+            if (commandInputs.Count > 0)
+            {
+                if (commandInputs.Last().Item1 != KeyValues.O)
+                {
+                    commandInputs.Add((KeyValues.O, Time.time));
+                    cmds.Add(KeyValues.O);
+                    CheckCommands();
+                }
+            }
+        }
+        else
+        {
+            var tmp = inputbuffers.ToList();
+            if(commandInputs.Count > 0)
+            {
+                if(commandInputs.Last().Item1 != KeyValues.O)
+                {
+                    inputbuffers.RemoveAll(x => previousinputbuffers.Any(y => y.Item1 == x.Item1));
+                }
+            }
+            previousinputbuffers.Clear();
+            previousinputbuffers.AddRange(tmp);
+            for (int i = 0; i < inputbuffers.Count; i++)
+            {
+                // if First Input, Set Buffer Data
+                if (commandInputs.Count == 0)
+                {
+                    commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
+                    cmds.Add(inputbuffers[i].Item1);
+                    CheckCommands();
+                }
+                else
+                {
+                    // if Last Input is Nearby (6 frame), Combine Input Insert
+                    if (inputbuffers[i].Item2 - commandInputs.Last().Item2 <= .1f)
+                    {
+                        if(checkCombine(commandInputs.Last().Item1, inputbuffers[i].Item1))
+                        {
+                            KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i].Item1;
+                            commandInputs.Add((kv, inputbuffers[i].Item2));
+                            cmds.Add(kv);
+                            CheckCommands();
+                        }
+                    }
+                    commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
+                    cmds.Add(inputbuffers[i].Item1);
+                    CheckCommands();
+                    // Last Input is not input buffer, input insert
+                    if (commandInputs.Last().Item1 != inputbuffers[i].Item1)
+                    {
+                        commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
+                        cmds.Add(inputbuffers[i].Item1);
+                        CheckCommands();
+                    }
+                    if (i < inputbuffers.Count - 1)
+                    {
+                        if (inputbuffers[i + 1].Item2 - inputbuffers[i].Item2 <= .1f)
+                        {
+                            if (checkCombine(inputbuffers[i].Item1, inputbuffers[i + 1].Item1))
+                            {
+                                KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i+1].Item1;
+                                commandInputs.Add((kv, inputbuffers[i+1].Item2));
+                                cmds.Add(kv);
+                                CheckCommands();
+                            }
+                            else
+                            {
+                                commandInputs.Add((KeyValues.O, inputbuffers[i].Item2));
+                                cmds.Add(KeyValues.O);
+                                CheckCommands();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        inputbuffers.Clear();
+
+    }
+
+    private bool checkCombine(KeyValues kv1, KeyValues kv2)
+    {
+        Debug.Log(kv1 + " " +  kv2);
+        if(kv1 == kv2)
+        {
+            return false;
+        }
+        if(Func.arrows.Contains(kv2)) 
+        {
+            if (Func.arrows.Contains(kv1))
+            {
+                return true;
+            }
+            else return false;
+        }
+        if (Func.actions.Contains(kv2))
+        {
+            if (Func.directions.Contains(kv1))
+            {
+                return true;
+            }
+            else return false;
+        }
+        return false;
+    }
+
+    private void CheckCommands()
+    {
+        List<KeyValues> cmd = null;
+        bool isLeft;
+        (cmd, isLeft) = CheckCommandInputs();
+        if(cmd != null)
+        {
+            Debug.Log(charactor.commands[cmd].GetType().Name);
+        }
+        else
+        {
+            if((commandInputs.Last().Item1 & KeyValues.Shot) == KeyValues.Shot)
+            {
+                isAttackInput = true;
+                SetAlarm(3, 0.2f);
+            }
+        }
+    }
+
+    private (List<KeyValues>, bool) CheckCommandInputs()
+    {
+        List<(List<KeyValues>, bool)> findCommands = new List<(List<KeyValues>, bool)>();
+
+        List<KeyValues> ret;
+        bool isLeft;
+
+        foreach(List<KeyValues> cmds in charactor.commands.Keys.ToList())
+        {
+            var (b1, b2) = CheckCommandsLastEnd(commandInputs, cmds);
+            if (b1)
+            {
+                findCommands.Add((cmds, b2));
+            }
+        }
+
+        if(findCommands.Count > 0)
+        {
+            (ret, isLeft) = findCommands.OrderByDescending(item => item.Item1.Count).ToList().First();
+            return (ret, isLeft);
+        }
+
+        return (null, false);
+    }
+
+    private (bool, bool) CheckCommandsLastEnd(List<(KeyValues, float)> inputs, List<KeyValues> predefinedCmds)
+    {
+        if (inputs.Count < predefinedCmds.Count) return (false, false);
+        List<KeyValues> reverseCmds = Func.Reverse(predefinedCmds);
+        bool isLeft;
+
+        // Check command is Left command
+        if ((inputs.Last().Item1 & predefinedCmds.Last()) == predefinedCmds.Last())
+        {
+            isLeft = false;
+        }
+        else if ((inputs.Last().Item1 & reverseCmds.Last()) == reverseCmds.Last())
+        {
+            isLeft = true;
+        }
+        else
+        {
+            return (false, false);
+        }
+
+        // If Forward
+        if (!isLeft)
+        {
+            for(int i = predefinedCmds.Count - 1; i >= 0; i--)
+            {
+                for(int j = inputs.Count - 1; i >= 0; j--)
+                {
+                    if (inputs[j].Item1 == KeyValues.O)
+                    {
+                        continue;
+                    }
+                    
+                    if (predefinedCmds[i] == inputs[j].Item1)
+                    {
+                        break;
+                    }
+
+
+                }
+            }
+        }
+        // If Reverse
+        else
+        {
+            return (false, true);
+        }
+
+        if (isLeft)
+        {
+            return (true, true);
+        }
+        else
+        {
+            return (true, false);
+        }
+    }
+
 
     public float CalculateJumpForce()
     {
@@ -229,7 +474,7 @@ public class PlayerController : KinematicObject
             if (!isImmune)
             {
                 Debug.Log("Hit");
-                Bounce(new Vector2(-rh.collider.transform.position.x + transform.position.x * 4, Vector2.up.y * 3));
+                Bounce(new Vector2((-rh.collider.transform.position.x + transform.position.x) * 4, Vector2.up.y * 3));
                 isImmune = true;
                 isHitState = true;
 
@@ -244,281 +489,6 @@ public class PlayerController : KinematicObject
         targetVelocity = moveAccel;
     }
 
-
-    public List<KeyCode> GetPressedKey()
-    {
-        List<KeyCode> ret = new List<KeyCode>();
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            ret.Add(KeyCode.UpArrow);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            ret.Add(KeyCode.DownArrow);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            ret.Add(KeyCode.LeftArrow);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            ret.Add(KeyCode.RightArrow);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            ret.Add(KeyCode.A);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            ret.Add(KeyCode.S);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            ret.Add(KeyCode.D);
-        }
-
-        return ret;
-    }
-
-    public List<KeyValues> GetKeyValues(List<KeyCode> kl)
-    {
-        List<KeyValues> ret = new List<KeyValues>();
-
-        foreach (KeyCode key in kl)
-        {
-            if (key == KeyCode.UpArrow)
-            {
-                ret.Add(KeyValues.Up);
-            }
-            if (key == KeyCode.DownArrow)
-            {
-                ret.Add(KeyValues.Down);
-            }
-
-            if (key == KeyCode.LeftArrow)
-            {
-                ret.Add(KeyValues.Left);
-            }
-            if (key == KeyCode.RightArrow)
-            {
-                ret.Add(KeyValues.Right);
-            }
-
-            if (key == KeyCode.A)
-            {
-                ret.Add(KeyValues.Shot);
-            }
-            if (key == KeyCode.S)
-            {
-                ret.Add(KeyValues.Jump);
-            }
-            if (key == KeyCode.D)
-            {
-                ret.Add(KeyValues.Call);
-            }
-        }
-
-        return ret;
-    }
-
-    public KeyValues GetKeyValue(List<KeyValues> kv)
-    {
-        KeyValues ret = new KeyValues();
-        ret = KeyValues.None;
-        foreach (KeyValues key in kv)
-        {
-            switch (key)
-            {
-                case KeyValues.Up:
-                    ret += 1;
-                    break;
-                case KeyValues.Down:
-                    ret += 2;
-                    break;
-                case KeyValues.Left:
-                    ret += 4;
-                    break;
-                case KeyValues.Right:
-                    ret += 8;
-                    break;
-                case KeyValues.Shot:
-                    ret += 16;
-                    break;
-                case KeyValues.Jump:
-                    ret += 32;
-                    break;
-                case KeyValues.Call:
-                    ret += 64;
-                    break;
-            }
-        }
-
-        return ret;
-    }
-
-    public void CommandInput(KeyValues kv)
-    {
-        isDetectKey = false;
-
-        if (kv != KeyValues.None && Enum.IsDefined(typeof(KeyValues), kv))
-        {
-            if (commandInputs.Count > 0)
-            {
-                if (commandInputs.Last().Key != kv)
-                {
-                    commandInputs.Add(new KeyValuePair<KeyValues, float>(kv, Time.time));
-                    cmds.Add(kv);
-                    CheckCommand();
-                }
-            }
-            else
-            {
-                commandInputs.Add(new KeyValuePair<KeyValues, float>(kv, Time.time));
-                cmds.Add(kv);
-                CheckCommand();
-            }
-
-        }
-    }
-
-
-    public void CheckCommand()
-    {
-        List<KeyValues> cmd;
-        bool isLeft;
-        (cmd, isLeft) = CheckInputCommand(commandInputs, charactor.commands.Keys.ToList());
-        if (cmd != null)
-        {
-            if (!isAction)
-            {
-                Debug.Log(charactor.commands[cmd].GetType().Name);
-                if (isLeft)
-                {
-                    charactor.commands[cmd].Execute(new Vector2(-1, 0));
-
-                }
-                else
-                {
-                    charactor.commands[cmd].Execute(new Vector2(1, 0));
-
-                }
-            }
-        }
-        else
-        {
-            if((commandInputs.Last().Key & KeyValues.Shot) == KeyValues.Shot)
-            {
-
-                isAttackInput = true;
-                SetAlarm(3, 0.2f);
-            }
-        }
-    }
-
-    public (List<KeyValues>, bool) CheckInputCommand(List<KeyValuePair<KeyValues, float>> inputCommand, List<List<KeyValues>> predefinedCommands)
-    {
-        List<(List<KeyValues>, bool)> findCommands = new List<(List<KeyValues>, bool)>();
-        List<KeyValues> ret;
-        bool isReverse;
-        foreach (List<KeyValues> kv in predefinedCommands)
-        {
-            var (b1, b2) = CheckListsEnd(inputCommand, kv);
-            if (b1)
-            {
-                findCommands.Add((kv, b2));
-            }
-        }
-        if (findCommands.Count > 0)
-        {
-            (ret, isReverse) = findCommands.OrderByDescending(item => item.Item1.Count).ToList().First();
-            return (ret, isReverse);
-        }
-        return (null, false);
-
-    }
-
-    public (bool, bool) CheckListsEnd(List<KeyValuePair<KeyValues, float>> a, List<KeyValues> b)
-    {
-        if (a.Count < b.Count) return (false, false);
-
-        List<KeyValues> revKvs = Func.Reverse(b);
-        bool isReverse;
-
-        if ((a.Last().Key & b.Last()) == b.Last())
-        {
-            isReverse = false;
-        }
-        else if((a.Last().Key & revKvs.Last()) == revKvs.Last())
-        {
-            isReverse = true;
-        }
-        else
-        {
-            return (false, false);
-        }
-        if (isReverse)
-        {
-            for (int i = revKvs.Count; i > revKvs.Count; i--)
-            {
-                for (int j = a.Count - 1; ; j--)
-                {
-                    if (a[j].Key == KeyValues.O)
-                    {
-                        continue;
-                    }
-                    // out of index end check
-                    if (j < 0)
-                    {
-                        return (false, false);
-                    }
-
-                    // if input delay is too late, end check
-                    if (j >= 1 && a[j].Value - a[j - 1].Value >= 0.07f)
-                    {
-                        return (false, false);
-                    }
-                }
-
-            }
-        }
-        else
-        {
-            for (int i = b.Count; i > b.Count; i--)
-            {
-                for (int j = a.Count - 1; ; j--)
-                {
-                    if (a[j].Key == KeyValues.O)
-                    {
-                        continue;
-                    }
-                    // out of index end check
-                    if (j < 0)
-                    {
-                        return (false, false);
-                    }
-
-                    // if input delay is too late, end check
-                    if (j >= 1 && a[j].Value - a[j - 1].Value >= 0.07f)
-                    {
-                        return (false, false);
-                    }
-                }
-
-            }
-        }
-
-
-
-        if (isReverse)
-            return (true, false);
-        else
-        {
-            return (true, true);
-        }
-    }
 
     public override void Alarm0()
     {
@@ -551,6 +521,7 @@ public class PlayerController : KinematicObject
 
     public void MoveKey()
     {
+        isSit = false;
         if (Input.GetKey(GameManager.Input._keySettings.upKey))
         {
             if (!isAction && !isAttack && canMove)
@@ -664,79 +635,6 @@ public class PlayerController : KinematicObject
 
     }
 
-    public void CommandInput()
-    {
-
-        // Delete Input Buffers after 3 seconds
-        if (previousInputs.Count > 0 && Time.time - previousInputs[0].Value >= 3f)
-        {
-            previousInputs.RemoveAt(0);
-        }
-
-        if (Time.time - lastInputTime >= 3f)
-        {
-            previousInputs.Clear();
-            commandInputs.Clear();
-        }
-
-        if (previousInputs.Count >= 2)
-        {
-            if (previousInputs.Last().Key.Count == 0)
-            {
-                if (previousInputs[previousInputs.Count - 2].Key.Count != 0)
-                {
-                    CommandInput(GetKeyValue(inputBuffers));
-                    CommandInput(KeyValues.O);
-                }
-            }
-            else
-            {
-                if (!isDetectKey)
-                {
-                    lastProcessBufferT = Time.time;
-                    inputBuffers = GetKeyValues(previousInputs.Last().Key);
-
-                    CommandInput(GetKeyValue(inputBuffers));
-                    isDetectKey = true;
-                }
-                else
-                {
-                    int previousInputValue = (int)GetKeyValue(inputBuffers);
-                    if (previousInputValue > 0 && (previousInputValue & (previousInputValue - 1)) != 0)
-                    {
-                        CommandInput(GetKeyValue(inputBuffers));
-                    }
-                    else
-                    {
-                        List<KeyValues> tmp = new List<KeyValues>(inputBuffers);
-
-                        List<KeyValues> keyValues = GetKeyValues(previousInputs.Last().Key);
-                        foreach (KeyValues kv in keyValues)
-                        {
-                            if (!tmp.Contains(kv))
-                            {
-                                tmp.Add(kv);
-                            }
-                        }
-                        if (Enum.IsDefined(typeof(KeyValues), (KeyValues)previousInputValue))
-                        {
-                            inputBuffers = tmp;
-                        }
-                        else
-                        {
-                            CommandInput(GetKeyValue(inputBuffers));
-                        }
-
-                    }
-                }
-            }
-        }
-
-        if (isDetectKey && Time.time - lastProcessBufferT >= 0.1f)
-        {
-            CommandInput(GetKeyValue(inputBuffers));
-        }
-    }
 
     public void SetSkin(int index)
     {

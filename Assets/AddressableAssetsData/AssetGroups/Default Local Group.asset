@@ -56,7 +56,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 42402a454ee822c4688cf8217e31bc92
-    m_Address: KeySetting
+    m_Address: Assets/Settings/KeySettings.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

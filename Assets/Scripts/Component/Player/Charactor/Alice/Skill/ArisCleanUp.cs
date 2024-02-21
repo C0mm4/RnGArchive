@@ -26,7 +26,7 @@ public class ArisCleanUp : Skill
             player.isAction = true;
         }
         base.PassiveStep();
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot))
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) || !player.isSit)
         {
             startT = Time.time;
             isCharge = true;

@@ -46,4 +46,8 @@ public static class Func
         }
         return revKvs;
     }
+
+    public static List<KeyValues> arrows = new() { KeyValues.Up, KeyValues.Left, KeyValues.Down, KeyValues.Right};
+    public static List<KeyValues> directions = new() { KeyValues.Up, KeyValues.UpLeft, KeyValues.Left, KeyValues.DownLeft, KeyValues.Down, KeyValues.DownRight, KeyValues.Right, KeyValues.UpRight };
+    public static List<KeyValues> actions = new() { KeyValues.Shot, KeyValues.Jump, KeyValues.Call };
 }
