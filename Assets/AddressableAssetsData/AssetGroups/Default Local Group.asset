@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d15b19c80c57ff64a87a17b7604bb7ab
+  m_SerializeEntries:
+  - m_GUID: e3ede18a05b2e714f876267824c278e2
+    m_Address: MiniMap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+  - m_GUID: b10453fa157ae6649869756898948e74
+    m_Address: MiniMapTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+  - m_GUID: d56bac8edd5755e4dad85cc863ad9b47
+    m_Address: AliceBaseLeg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 519a811ec8bd6ba45bf728fd7b39c778
+    m_Address: AliceBaseBody
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d9943a125d279f479ff8857dad9efd3
+    m_Address: AliceBaseLegJump
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3b93e1c377c1114fb750c942c20c9fe
+    m_Address: AliceBaseLegMove
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a427d1956caf98d4da0be85e9d0e0289
+    m_Address: AliceBaseLegIdle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe9da4512be232e4b946479ce447ef59
+    m_Address: AliceBaseAttack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5375a7b8765df8f46a633701f7561042
+    m_Address: AliceBaseAttackPref
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 42402a454ee822c4688cf8217e31bc92
+    m_Address: KeySetting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c81ec2a552950d74c847110cf63de77d, type: 2}
+    - {fileID: 11400000, guid: 202ebc2a8754db748bf72641243ade9d, type: 2}

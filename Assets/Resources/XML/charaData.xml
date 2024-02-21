@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<text>
+		<Charactor>
+			<id>10001001</id>
+			<class>Alice</class>
+			<name>
+				<Kr>아리스</Kr>
+				<Eng>Alice</Eng>
+				<Jp>アリス</Jp>
+			</name>
+			<moveAccelSpeed>3</moveAccelSpeed>
+			<breakAccel>10</breakAccel>
+			<maxSpeed>5</maxSpeed>
+			<AttackSpeed>1.2</AttackSpeed>
+			<path>Alice</path>
+			<Skins>
+				<Skin>AliceBase</Skin>
+				<Skin>TestAnnimate1</Skin>
+			</Skins>
+			<Skills>
+				<Skill>
+					<class>BrightLight</class>
+					<Kr>빛이여!</Kr>
+					<Eng>Bright Light!</Eng>
+					<Jp>光よ!</Jp>
+					<command>2A</command>
+				</Skill>
+				<Skill>
+					<class>BalanceBreakdown</class>
+					<Kr>밸런스 붕괴!</Kr>
+					<Eng>Balance Breakdown</Eng>
+					<Jp>世界の 法則が 崩壊します！</Jp>
+					<command>236236A</command>
+				</Skill>
+				<Skill>
+					<class>ArisCleanUp</class>
+					<Kr>아리스, 청소합니다!</Kr>
+					<Eng>Aris, Clean Up!</Eng>
+					<Jp>アリス、お掃除します！</Jp>
+					<command>-</command>
+				</Skill>
+			</Skills>
+		</Charactor>
+		<Charactor>
+			<id>10001002</id>
+			<class>Midori</class>
+			<name>
+				<Kr>미도리</Kr>
+				<Eng>Midori</Eng>
+				<Jp>ミドリ</Jp>
+			</name>
+			<moveAccelSpeed>3.5</moveAccelSpeed>
+			<breakAccel>10</breakAccel>
+			<maxSpeed>5</maxSpeed>
+			<AttackSpeed>0.7</AttackSpeed>
+			<path>Midori</path>
+			<Skins>
+				<Skin>TestAnnimate</Skin>
+			</Skins>
+			<Skills>
+				<Skill>
+					<class>BrightLight</class>
+					<Kr>빛이여!</Kr>
+					<Eng>Bright Light!</Eng>
+					<Jp>光よ!</Jp>
+					<command>A</command>
+				</Skill>
+			</Skills>
+		</Charactor>
+	</text>
+</Root>

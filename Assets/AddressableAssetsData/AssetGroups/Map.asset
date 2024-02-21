@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Map
+  m_EditorClassIdentifier: 
+  m_GroupName: Map
+  m_Data:
+    m_SerializedData: []
+  m_GUID: efd332bf916aff644b3ed2462c5678e5
+  m_SerializeEntries:
+  - m_GUID: 826c670e36751164bba0c29ee796a61d
+    m_Address: Tile1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6e28efbffad8bad46825b39c7c96fc04
+    m_Address: Assets/Sprites/TestTile32.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 30138c02b6ac9274dbf812929a020d0c, type: 2}
+    - {fileID: 11400000, guid: 1ba6bc6345423384889e9210962c6ee5, type: 2}
