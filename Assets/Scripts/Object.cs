@@ -13,7 +13,6 @@ public abstract class Obj : MonoBehaviour
     [SerializeField]
     private float[] alarmTime;
 
-    public AsyncOperationHandle<GameObject> handle;
 
     // Start is called before the first frame update
     public void Awake()

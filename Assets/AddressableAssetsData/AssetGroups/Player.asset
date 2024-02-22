@@ -26,6 +26,34 @@ MonoBehaviour:
     m_Address: ArisBase
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: d56bac8edd5755e4dad85cc863ad9b47
+    m_Address: AliceBaseLeg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d9943a125d279f479ff8857dad9efd3
+    m_Address: AliceBaseLegJump
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 519a811ec8bd6ba45bf728fd7b39c778
+    m_Address: AliceBaseBody
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3b93e1c377c1114fb750c942c20c9fe
+    m_Address: AliceBaseLegMove
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe9da4512be232e4b946479ce447ef59
+    m_Address: AliceBaseAttack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a427d1956caf98d4da0be85e9d0e0289
+    m_Address: AliceBaseLegIdle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5375a7b8765df8f46a633701f7561042
+    m_Address: AliceBaseAttackPref
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

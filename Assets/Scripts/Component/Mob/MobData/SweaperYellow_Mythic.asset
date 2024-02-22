@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b0ac86cb9a69743ab46d4ef7d559b1, type: 3}
+  m_Name: SweaperYellow_Mythic
+  m_EditorClassIdentifier: 
+  maxHP: 6
+  maxSpeed: 3
+  speedAccel: 3
+  attackDelay:
+  - 0.1
+  detectDistance: 0
+  atkType: 0
+  defType: 3
+  atkPref:
+  - {fileID: 0}
+  AIModel: Sweaper

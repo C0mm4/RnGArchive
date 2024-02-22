@@ -24,7 +24,6 @@ public class CharactorController
 
             Type T = Type.GetType(node["class"].InnerText);
             Charactor newChara = Activator.CreateInstance(T) as Charactor;
-            Debug.Log(newChara.GetType().Name);
             SerializeStatus status = new SerializeStatus();
 
             status.id = int.Parse(node["id"].InnerText);
@@ -35,6 +34,8 @@ public class CharactorController
             status.breakAccel = float.Parse(node["breakAccel"].InnerText);
             status.maxSpeed = float.Parse(node["maxSpeed"].InnerText);
             status.prefabPath = node["path"].InnerText;
+
+            
             
             status.skins = new();
 
@@ -54,6 +55,7 @@ public class CharactorController
             {
                 Type skl = Type.GetType(skill["class"].InnerText);
                 Skill target = Activator.CreateInstance(skl) as Skill;
+                target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
                 var cmd = SetCommands(skill["command"].InnerText);
 
                 if(cmd.Count > 0)
@@ -67,6 +69,7 @@ public class CharactorController
 
             }
 
+            newChara.SetType(node["AtkType"].InnerText, node["DefType"].InnerText);
 
             newChara.status = status;
 

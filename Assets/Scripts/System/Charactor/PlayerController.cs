@@ -49,7 +49,8 @@ public class PlayerController : KinematicObject
     public bool isHitState = false;
     public bool isImmune = false;
 
-    public bool isAction = false;
+    public bool _isAction = false;
+    public bool isAction { get { return _isAction; } set { _isAction = value; } }
     public bool isAttack = false;
     public float lastAttackT;
     public bool isAttackInput = false;
@@ -84,16 +85,6 @@ public class PlayerController : KinematicObject
 
     public void CreateHandler()
     {
-        foreach(List<KeyValues> s in charactor.commands.Keys)
-        {
-            foreach(KeyValues a in s)
-            {
-                Debug.Log(a);
-            }
-            Debug.Log("");
-        }
-
-
         charactor.playerController = this;
 
         gameObject.name = charactor.status.Name;
@@ -203,7 +194,7 @@ public class PlayerController : KinematicObject
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            SetSkin(1);
+//            SetSkin(1);
         }
     }
 
@@ -332,7 +323,6 @@ public class PlayerController : KinematicObject
 
     private bool checkCombine(KeyValues kv1, KeyValues kv2)
     {
-        Debug.Log(kv1 + " " +  kv2);
         if(kv1 == kv2)
         {
             return false;
@@ -363,7 +353,7 @@ public class PlayerController : KinematicObject
         (cmd, isLeft) = CheckCommandInputs();
         if(cmd != null)
         {
-            Debug.Log(charactor.commands[cmd].GetType().Name);
+
         }
         else
         {
@@ -501,7 +491,7 @@ public class PlayerController : KinematicObject
     }
     public override void Alarm2()
     {
-        Addressables.ReleaseInstance(handle);
+        Addressables.ReleaseInstance(gameObject);
     }
 
     public override void Alarm3()

@@ -100,7 +100,6 @@ public class SettingManager
     public void SetLanguageList()
     {
         gameData.Language = new List<string>{ "Kr", "Eng", "Jp" };
-        Debug.Log(gameData.Language.Count);
 
     }
 

@@ -2,9 +2,12 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameManager : MonoBehaviour
 {
@@ -50,6 +53,9 @@ public class GameManager : MonoBehaviour
     CharactorController _charactorController = new CharactorController();
     public static CharactorController CharaCon { get { return gm_Instance._charactorController; } }
 
+    MobSpawner _mobSpawner = new MobSpawner();
+    public static MobSpawner MobSpawner { get { return gm_Instance._mobSpawner; } }
+
 
     public static SettingManager.SerializeGameData gameData;
 
@@ -67,6 +73,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     public Transform test;
+
+    public GameObject testObj;
+    public AsyncOperationHandle<GameObject> handle;
+
 
     private void Awake()
     {
@@ -123,6 +133,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Charactor Data Initialize");
         Input.Initialize();
         Debug.Log("Input Manager Initialize");
+        MobSpawner.Initialize();
 
         Task.Run(() =>
         {
@@ -157,6 +168,18 @@ public class GameManager : MonoBehaviour
         {
             CharactorSpawn(test, 10001001);
         }
+
+        MobSpawner.Step();
+
+        if (UnityEngine.Input.GetKeyDown(KeyCode.X))
+        {
+            testObj = InstantiateAsync("test", Vector3.zero, new Quaternion());
+        }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.C))
+        {
+            Addressables.ReleaseInstance(handle);
+        }
+
     }
 
     private void FindPlayer()
@@ -204,17 +227,28 @@ public class GameManager : MonoBehaviour
     public static void CharactorSpawn(Transform transform, int id)
     {
         Vector3 tmp = transform.position;
-        Addressables.InstantiateAsync("Player").Completed += handle =>
-        {
-            GameObject go = handle.Result;
-            go.transform.position = tmp;
-            go.GetComponent<Obj>().handle = handle;
-            go.GetComponent<PlayerController>().controlEnabled = true;
-            go.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
-            go.GetComponent<PlayerController>().CreateHandler();
-            player = go;
-        };
 
+        player = InstantiateAsync("Player");
+        player.transform.position = tmp;
+        player.GetComponent<PlayerController>().controlEnabled = true;
+        player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
+        player.GetComponent<PlayerController>().CreateHandler();
 
+        
+    }
+
+    public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
+    {
+        return Resource.InstantiateAsync(path, pos, rotation);
+    }
+
+    public static void Destroy(GameObject[] gos)
+    {
+        Resource.Destroy(gos);
+    }
+
+    public static void Destroy(GameObject go)
+    {
+        Resource.Destroy(go);
     }
 }

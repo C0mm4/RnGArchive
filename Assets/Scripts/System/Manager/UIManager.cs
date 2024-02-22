@@ -109,7 +109,6 @@ public class UIManager
                 Addressables.InstantiateAsync("MiniMap").Completed += handle => 
                 {
                     GameObject go = handle.Result;
-                    go.GetComponent<Obj>().handle = handle;
                 };
                 isMapToggle = true;
             }

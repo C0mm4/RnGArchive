@@ -14,6 +14,8 @@
 			<maxSpeed>5</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
 			<path>Alice</path>
+			<AtkType>Mystic</AtkType>
+			<DefType>Special</DefType>
 			<Skins>
 				<Skin>AliceBase</Skin>
 				<Skin>TestAnnimate1</Skin>
@@ -55,6 +57,8 @@
 			<maxSpeed>5</maxSpeed>
 			<AttackSpeed>0.7</AttackSpeed>
 			<path>Midori</path>
+			<AtkType>Piercing</AtkType>
+			<DefType>Light</DefType>
 			<Skins>
 				<Skin>TestAnnimate</Skin>
 			</Skins>

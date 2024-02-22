@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArisCleanUp : Skill
 {
     float startT;
-    bool isCharge;
+    bool isCharge = false;
     float chargeT;
 
     public override void PassiveEffect()
@@ -23,10 +23,11 @@ public class ArisCleanUp : Skill
         if (isCharge)
         {
             chargeT = Time.time - startT;
-            player.isAction = true;
+            Debug.Log(chargeT);
+//            player.isAction = true;
         }
         base.PassiveStep();
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) || !player.isSit)
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !player.isSit)
         {
             startT = Time.time;
             isCharge = true;

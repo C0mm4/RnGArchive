@@ -6,6 +6,7 @@ public abstract class Skill
 {
     public PlayerController player;
     public bool isPassive;
+    public string name;
 
     public Skill()
     {

@@ -19,6 +19,51 @@ public class Charactor
 
     public string attackPref;
 
+    public AtkType atkType;
+    public DefType defType;
+
+    public void SetType(string atkT, string defT)
+    {
+        atkT = atkT.ToLower();
+        defT = defT.ToLower();
+        switch (atkT)
+        {
+            case "explosive":
+                atkType = AtkType.Explosive;
+                break;
+            case "piercing":
+                atkType = AtkType.Piercing;
+                break;
+            case "mystic":
+                atkType = AtkType.Mystic;
+                break;
+            case "sonic":
+                atkType = AtkType.Sonic;
+                break;
+            case "normal":
+                atkType = AtkType.Normal;
+                break;
+        }
+        switch (defT)
+        {
+            case "normal":
+                defType = DefType.Normal;
+                break;
+            case "light":
+                defType = DefType.Light;
+                break;
+            case "heavy":
+                defType = DefType.Heavy;
+                break;
+            case "special":
+                defType = DefType.Special;
+                break;
+            case "elastic":
+                defType = DefType.Elastic;
+                break;
+        }
+    }
+
     public void Step()
     {
         if(stateMachine == null)
@@ -59,15 +104,9 @@ public class Charactor
         playerController.isAttack = true;
         playerController.lastAttackT = Time.time;
 
-        Addressables.InstantiateAsync(attackPref, position: playerController.transform.position, rotation: playerController.transform.rotation).Completed += handle =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                GameObject go = handle.Result;
-                go.GetComponent<Obj>().handle = handle;
-                go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir);
-            });
-        };
+        GameObject go = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
+        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir);
+
     }
 
     public virtual void Jump()

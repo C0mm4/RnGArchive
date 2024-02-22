@@ -20,7 +20,7 @@ public class Bullet : Attack
         base.CheckCollision(rh, yMovement);
         if(rh.collider.tag == "Wall")
         {
-            Addressables.ReleaseInstance(handle);
+            GameManager.Destroy(gameObject);
         }
     }
 }

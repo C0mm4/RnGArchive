@@ -21,6 +21,16 @@ public enum KeyValues
 
 };
 
+public enum AtkType
+{
+    Normal, Explosive, Piercing, Mystic, Sonic,
+}
+
+public enum DefType
+{
+    Normal, Light, Heavy, Special, Elastic,
+}
+
 public static class Func
 {
     public static KeyValues Reverse(KeyValues kv)
