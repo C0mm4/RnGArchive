@@ -116,7 +116,15 @@ public class KinematicObject : Obj
 
     public virtual void FlipX(bool isFlip)
     {
-        GetComponent<SpriteRenderer>().flipX = isFlip;
+        try
+        {
+            GetComponent<SpriteRenderer>().flipX = isFlip;
+
+        }
+        catch
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = false; 
+        }
     }
 
     public override void BeforeStep()

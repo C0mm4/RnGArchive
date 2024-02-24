@@ -66,6 +66,10 @@ public class PlayerController : KinematicObject
 
     public bool isInit = false;
 
+    public List<InteractionTrigger> triggers;
+    public int triggerIndex;
+    
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -75,6 +79,7 @@ public class PlayerController : KinematicObject
         inputbuffers = new();
         previousinputbuffers = new();
         commandInputs = new();
+        triggers = new();
         body.gravityScale = 1.0f;
 
         sawDir = new Vector2(1, 0);
@@ -87,7 +92,7 @@ public class PlayerController : KinematicObject
     {
         charactor.playerController = this;
 
-        gameObject.name = charactor.status.Name;
+        gameObject.name = charactor.charaData.Name;
 
         charactor.stateMachine = new(this);
 
@@ -148,7 +153,7 @@ public class PlayerController : KinematicObject
                         }
                     }
                     charactor.Attack();
-                    SetAlarm(4, charactor.status.attackSpeed);
+                    SetAlarm(4, charactor.charaData.attackSpeed);
                 }
             }
             if (!isAction && IsGrounded && Mathf.Abs(velocity.x) == 0 && !isAttack)
@@ -175,7 +180,7 @@ public class PlayerController : KinematicObject
     {
         if (controlEnabled)
         {
-            if ((GameManager.GetUIState() == UIManager.UIState.InPlay || true))
+            if ((GameManager.GetUIState() == UIManager.UIState.InPlay) || true)
             {
                 base.KeyInput();
                 if (!isHitState)
@@ -189,6 +194,10 @@ public class PlayerController : KinematicObject
                     lastInputTime = Time.time;
                 }
 
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+                {
+
+                }
             }
         }
 
@@ -574,17 +583,17 @@ public class PlayerController : KinematicObject
         {
             if (moveAccel.x < 0)
             {
-                moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.status.breakAccel;
+                moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
             }
             else
             {
-                if (Math.Abs(moveAccel.x) < charactor.status.activeMaxSpeed)
+                if (Math.Abs(moveAccel.x) < charactor.charaData.activeMaxSpeed)
                 {
-                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.status.moveAccelSpeed;
+                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.moveAccelSpeed;
                 }
                 else
                 {
-                    moveAccel.x = charactor.status.activeMaxSpeed;
+                    moveAccel.x = charactor.charaData.activeMaxSpeed;
                 }
             }
         }
@@ -592,17 +601,17 @@ public class PlayerController : KinematicObject
         {
             if (moveAccel.x > 0)
             {
-                moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.status.breakAccel;
+                moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
             }
             else
             {
-                if (Math.Abs(moveAccel.x) < charactor.status.activeMaxSpeed)
+                if (Math.Abs(moveAccel.x) < charactor.charaData.activeMaxSpeed)
                 {
-                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.status.moveAccelSpeed;
+                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.moveAccelSpeed;
                 }
                 else
                 {
-                    moveAccel.x = -charactor.status.activeMaxSpeed;
+                    moveAccel.x = -charactor.charaData.activeMaxSpeed;
                 }
             }
         }
@@ -611,9 +620,9 @@ public class PlayerController : KinematicObject
             if (Mathf.Abs(moveAccel.x) > 0.1f)
             {
                 if (moveAccel.x < 0)
-                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.status.breakAccel;
+                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
                 else
-                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.status.breakAccel;
+                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
             }
             else
             {
@@ -634,13 +643,13 @@ public class PlayerController : KinematicObject
             Addressables.Release(legSkinHandler);
         currentSkin = index;
 
-        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.status.skins[currentSkin]+"Body").Completed += handle =>
+        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Body").Completed += handle =>
         {
             bodySkinHandler = handle;
             bodyAnimator.runtimeAnimatorController = handle.Result;
             isSetBody = true;
         };
-        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.status.skins[currentSkin] + "Leg").Completed += handle =>
+        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Leg").Completed += handle =>
         {
             legSkinHandler = handle;
             legAnimator.runtimeAnimatorController = handle.Result;
@@ -669,24 +678,75 @@ public class PlayerController : KinematicObject
         }
     }
 
-    public void AnimationPlayLeg(string clip, float spd = 1)
+    public void AnimationPlayLeg(string clip, float spd = 1, bool isReverse = false)
     {
         if (isSetLeg)
         {
-            if (clip != currentAnimationLeg)
+            if (isReverse)
             {
-                if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                if (clip != currentAnimationLeg)
                 {
-                    currentAnimationLeg = clip;
-                    legAnimator.speed = spd;
-                    legAnimator.Play(clip);
+                    if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                    {
+                        var stateinfo = legAnimator.GetCurrentAnimatorStateInfo(0);
+                        float normalizeT = stateinfo.normalizedTime;
+                        float animationLength = stateinfo.length;
+
+                        currentAnimationLeg = clip;
+                        legAnimator.speed = spd;
+                        legAnimator.Play(clip, 0, normalizeT / animationLength);
+                    }
+                    else
+                    {
+                        Debug.Log($"Can't Find Clip : {clip}");
+                    }
                 }
                 else
                 {
-                    Debug.Log($"Can't Find Clip : {clip}");
+                    legAnimator.speed = spd;
                 }
             }
+            else
+            {
+                if (clip != currentAnimationLeg)
+                {
+                    if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                    {
+                        currentAnimationLeg = clip;
+                        legAnimator.speed = spd;
+                        legAnimator.Play(clip);
+                    }
+                    else
+                    {
+                        Debug.Log($"Can't Find Clip : {clip}");
+                    }
+                }
+                else
+                {
+                    legAnimator.speed = spd;
+                }
 
+            }
+
+        }
+    }
+    public void AddInterractionTrigger(InteractionTrigger trigger)
+    {
+        if (!triggers.Contains(trigger))
+        {
+            triggers.Add(trigger);
+        }
+    }
+
+    public void RemoveInteractionTrigger(InteractionTrigger trigger)
+    {
+        if (triggers.Contains(trigger))
+        {
+            triggers.Remove(trigger);
+            if (triggerIndex >= triggers.Count)
+            {
+                triggerIndex = triggers.Count - 1;
+            }
         }
     }
 }

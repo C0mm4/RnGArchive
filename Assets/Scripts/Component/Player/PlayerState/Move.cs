@@ -15,8 +15,15 @@ public class Move : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("Move");
-        player.AnimationPlayLeg("Move");
-
+        float animationSpd = player.velocity.x * player.sawDir.x / player.charactor.charaData.maxSpeed;
+        if (animationSpd > 0)
+        {
+            player.AnimationPlayLeg("Move", animationSpd);
+        }
+        else
+        {
+            player.AnimationPlayLeg("BackMove", -animationSpd);
+        }
 
         // Translate State on player action
         if (!player.IsGrounded)

@@ -44,10 +44,16 @@ public abstract class Obj : MonoBehaviour
         {
             KeyInput();
             Step();
-            AfterStep();
         }
     }
 
+    private void LateUpdate()
+    {
+        if(!GameManager.isPaused)
+        {
+            AfterStep();
+        }
+    }
 
     public virtual void OnCreate()
     {

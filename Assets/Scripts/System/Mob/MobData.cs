@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "MobData", menuName = "ScriptableObjects/MobData", order = 1)]
 public class MobData : ScriptableObject
@@ -17,4 +18,5 @@ public class MobData : ScriptableObject
     public GameObject[] atkPref;
 
     public string AIModel;
+    public AssetReference animatorAsset;
 }

@@ -14,7 +14,7 @@ public class MiniMap : Menu
     {
         base.show();
         miniMapCam = GameObject.Find("MiniMapCamera").GetComponent<Camera>();
-        miniMapCam.transform.position = GameManager.Camera.gameObject.transform.position;
+        miniMapCam.transform.position = GameManager.CameraManager.gameObject.transform.position;
 
         RawImage rawImage = GetComponent<RawImage>();
         rawImage.texture = miniMapCam.targetTexture;

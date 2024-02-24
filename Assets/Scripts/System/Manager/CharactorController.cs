@@ -24,28 +24,28 @@ public class CharactorController
 
             Type T = Type.GetType(node["class"].InnerText);
             Charactor newChara = Activator.CreateInstance(T) as Charactor;
-            SerializeStatus status = new SerializeStatus();
+            CharactorData charaData = new CharactorData();
 
-            status.id = int.Parse(node["id"].InnerText);
+            charaData.id = int.Parse(node["id"].InnerText);
 
-            status.attackSpeed = float.Parse(node["AttackSpeed"].InnerText);
+            charaData.attackSpeed = float.Parse(node["AttackSpeed"].InnerText);
 
-            status.moveAccelSpeed = float.Parse(node["moveAccelSpeed"].InnerText);
-            status.breakAccel = float.Parse(node["breakAccel"].InnerText);
-            status.maxSpeed = float.Parse(node["maxSpeed"].InnerText);
-            status.prefabPath = node["path"].InnerText;
+            charaData.moveAccelSpeed = float.Parse(node["moveAccelSpeed"].InnerText);
+            charaData.breakAccel = float.Parse(node["breakAccel"].InnerText);
+            charaData.maxSpeed = float.Parse(node["maxSpeed"].InnerText);
+            charaData.prefabPath = node["path"].InnerText;
 
             
             
-            status.skins = new();
+            charaData.skins = new();
 
             XmlNode name = node.SelectSingleNode("name").SelectSingleNode(GameManager.gameData.Language[GameManager.gameData.LanguageIndex]);
 
-            status.Name = name.InnerText;
+            charaData.Name = name.InnerText;
 
             foreach (XmlNode skin in node.SelectNodes("Skins/Skin"))
             {
-                status.skins.Add(skin.InnerText);
+                charaData.skins.Add(skin.InnerText);
             }
 
             newChara.commands = new();
@@ -71,7 +71,7 @@ public class CharactorController
 
             newChara.SetType(node["AtkType"].InnerText, node["DefType"].InnerText);
 
-            newChara.status = status;
+            newChara.charaData = charaData;
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
 

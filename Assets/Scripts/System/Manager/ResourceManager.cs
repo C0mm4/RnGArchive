@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Xml;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,7 +10,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 // 리소스의 Load, Instantiate, Destroy 를 관리하는 리소스 매니저. 
 public class ResourceManager
 {
-    public Dictionary<string, Object> LoadResources = new();
+    public Dictionary<string, AsyncOperationHandle> LoadResources = new();
 
     // path에 있느 파일을 로드하는 함수, 로드되는 조건은 Object 일 때
     public T Load<T>(string path) where T : Object
@@ -50,39 +51,72 @@ public class ResourceManager
     {
         if (LoadResources.ContainsKey(path))
         {
-            GameObject go = Instantiate((GameObject)LoadResources[path], pos, rotation);
+            GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
             return go;
         }
         else
         {
-            var op = Addressables.LoadAssetAsync<GameObject>(path);
-            op.WaitForCompletion();
-            LoadResources[path] = op.Result;
+            var op = LoadAssetAsync<GameObject>(path);
+            if(!op.Equals(default))
+            {
+                LoadResources[path] = op;
+            }
             Debug.Log(op.Result);
-            GameObject go = Instantiate(op.Result, pos, rotation);
-            return go;
+            if (LoadResources.ContainsKey(path))
+            {
+                GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
+                return go;
+
+            }
+            else
+            {
+                Debug.Log($"Failed to load GameObject : {path}");
+                return null;
+            }
         }
     }
 
+    public AsyncOperationHandle LoadAssetAsync<T>(string path) where T : Object
+    {
+        if (LoadResources.ContainsKey(path))
+        {
+            return LoadResources[path];
+        }
+        else
+        {
+            var op = Addressables.LoadAssetAsync<T>(path);
+            op.WaitForCompletion();
+            LoadResources[path] = op;
+            return op;
+        }
+    }
 
-    // Loading Sprites in path
     public Sprite LoadSprite(string path)
     {
-        Sprite spr;
-        spr = Load<Sprite>($"Sprites/{path}");
-        if (spr == null)
+        if (LoadResources.ContainsKey(path))
         {
-            Debug.Log($"Failed to load Sprite : {path}");
-            spr = Load<Sprite>($"Sprites/default");
-            if (spr == null)
-            {
-                Debug.Log($"Failed to load Sprite : default");
-            }
-            Debug.Log(spr.name);
+            Sprite spr = (Sprite)LoadResources[path].Result;
             return spr;
         }
+        else
+        {
+            var op = LoadAssetAsync<Sprite>(path);
+            if (!op.Equals(default))
+            {
+                LoadResources[path] = op;
+            }
+            if (LoadResources.ContainsKey(path))
+            {
+                Sprite spr = (Sprite)LoadResources[path].Result;
+                return spr;
 
-        return spr;
+            }
+            else
+            {
+                Debug.Log($"Failed to load Sprite : {path}");
+                return null;
+            }
+        }
     }
 
     // Loading XML Datas in path

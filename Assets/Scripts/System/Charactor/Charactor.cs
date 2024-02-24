@@ -13,7 +13,7 @@ public class Charactor
 
     public StateMachine stateMachine;
 
-    public SerializeStatus status;
+    public CharactorData charaData;
 
     public PlayerController playerController;
 
@@ -74,11 +74,11 @@ public class Charactor
 
         if (playerController.isAttack && playerController.IsGrounded)
         {
-            status.activeMaxSpeed = status.maxSpeed * 0.4f;
+            charaData.activeMaxSpeed = charaData.maxSpeed * 0.4f;
         }
         else
         {
-            status.activeMaxSpeed = status.maxSpeed;
+            charaData.activeMaxSpeed = charaData.maxSpeed;
         }
 
     }
@@ -105,7 +105,7 @@ public class Charactor
         playerController.lastAttackT = Time.time;
 
         GameObject go = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
-        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir);
+        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);
 
     }
 

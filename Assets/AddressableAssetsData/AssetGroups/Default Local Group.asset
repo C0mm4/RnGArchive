@@ -39,6 +39,18 @@ MonoBehaviour:
     m_Address: MobData_Sweaper_Yellow_Mythic
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ce0e1845bacf8e54a977765a63e9e64d
+    m_Address: test
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e37f26010075940468177f3f0c830b2d
+    m_Address: SweaperAnimator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: eeca8c04b2596654b81e509d879dbc8d
+    m_Address: SweaperIdle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

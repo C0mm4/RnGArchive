@@ -13,5 +13,5 @@ public class KeySettings : ScriptableObject
     public KeyCode Shot = KeyCode.A;
     public KeyCode Jump = KeyCode.S;
     public KeyCode Call = KeyCode.D;
-
+    public KeyCode Interaction = KeyCode.F;
 }

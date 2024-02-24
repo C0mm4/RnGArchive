@@ -8,6 +8,7 @@ using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -67,15 +68,15 @@ public class GameManager : MonoBehaviour
     public static GameObject Player { get { return player; } }
 
 
+    public static CameraManager _cameraManager;
+    public static CameraManager CameraManager { get { return _cameraManager; }  set { _cameraManager = value; } }
 
-    public static CameraManager camera;
-    public static CameraManager Camera { get { return camera; } }
 
     [SerializeField]
     public Transform test;
 
-    public GameObject testObj;
-    public AsyncOperationHandle<GameObject> handle;
+    public Tilemap testT;
+    public TileBase tile;
 
 
     private void Awake()
@@ -115,7 +116,6 @@ public class GameManager : MonoBehaviour
         DataInit();
         isPaused = false;
         FindPlayer();
-        camera = GameObject.Find("Main Camera").GetComponent<CameraManager>();
     }
 
 
@@ -159,9 +159,10 @@ public class GameManager : MonoBehaviour
 
         FindPlayer();
         ManagerUpdate();
-        if(camera == null)
+        if(CameraManager == null)
         {
-            camera = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+            CameraManager cm = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+            CameraManager = cm;
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Z))
@@ -169,17 +170,26 @@ public class GameManager : MonoBehaviour
             CharactorSpawn(test, 10001001);
         }
 
-        MobSpawner.Step();
-
         if (UnityEngine.Input.GetKeyDown(KeyCode.X))
         {
-            testObj = InstantiateAsync("test", Vector3.zero, new Quaternion());
-        }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.C))
-        {
-            Addressables.ReleaseInstance(handle);
-        }
+            BoundsInt bounds = new BoundsInt(testT.cellBounds.min, testT.cellBounds.size);
 
+            // Iterate over all tiles in the tilemap
+            foreach (Vector3Int pos in testT.cellBounds.allPositionsWithin)
+            {
+                // Check if the tile is present
+                if (testT.HasTile(pos))
+                {
+                    // Update bounds to include the position of the tile
+                    bounds.min = Vector3Int.Min(bounds.min, pos);
+                    bounds.max = Vector3Int.Max(bounds.max, pos);
+                }
+            }
+
+            Debug.Log("Rectangle Bounds min: " + bounds.min);
+            Debug.Log("Rectangle Bounds max: " + bounds.max);
+            testT.SetTile(bounds.min, null);
+        }
     }
 
     private void FindPlayer()
@@ -214,7 +224,7 @@ public class GameManager : MonoBehaviour
     public static void NextCharactor()
     {
         player.GetComponent<PlayerController>().controlEnabled = false;
-        CharactorSpawn(player.transform, Stage.party[Stage.currentIndex].status.id);
+        CharactorSpawn(player.transform, Stage.party[Stage.currentIndex].charaData.id);
     }
 
     public void ManagerUpdate()
@@ -234,12 +244,18 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
         player.GetComponent<PlayerController>().CreateHandler();
 
+        _cameraManager.SetBounds();
         
     }
 
     public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
     {
         return Resource.InstantiateAsync(path, pos, rotation);
+    }
+
+    public static T LoadAssetDataAsync<T>(string path) where T : Object
+    {
+        return (T)Resource.LoadAssetAsync<T>(path).Result;
     }
 
     public static void Destroy(GameObject[] gos)

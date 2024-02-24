@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sweaper : AIModel
+public class MobAttack : State
 {
-    public override void Step()
-    {
-
-    }
 
 }

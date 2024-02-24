@@ -18,11 +18,20 @@ public class MoveShot : PlayerState
     public override void UpdateState()
     {
         player.AnimationPlayBody("Move");
-        player.AnimationPlayLeg("Move");
+        float animationSpd = player.velocity.x / player.charactor.charaData.maxSpeed;
+        Debug.Log(animationSpd);
+        if(animationSpd > 0)
+        {
+            player.AnimationPlayLeg("Move", animationSpd);
+        }
+        else
+        {
+            player.AnimationPlayLeg("BackMove", -animationSpd);
+        }
 
         base.UpdateState();
-        if (Time.time - player.lastAttackT >= player.charactor.status.attackSpeed)
-        {
+        if (Time.time - player.lastAttackT >= player.charactor.charaData.attackSpeed)
+        {   
             player.charactor.EndState();
         }
         if (!player.IsGrounded)

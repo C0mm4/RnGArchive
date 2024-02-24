@@ -21,7 +21,7 @@ public class Shot : PlayerState
         player.AnimationPlayLeg("Idle");
 
         base.UpdateState();
-        if (Time.time - player.lastAttackT >= player.charactor.status.attackSpeed)
+        if (Time.time - player.lastAttackT >= player.charactor.charaData.attackSpeed)
         {
             player.charactor.EndState();
         }

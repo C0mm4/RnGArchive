@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct SerializeStatus 
+public struct CharactorData 
 {
     public string Name;
     public int id;

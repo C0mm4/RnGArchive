@@ -22,7 +22,7 @@ public class JumpShot : PlayerState
 
 
         base.UpdateState();
-        if (Time.time - player.lastAttackT >= player.charactor.status.attackSpeed)
+        if (Time.time - player.lastAttackT >= player.charactor.charaData.attackSpeed)
         {
             player.charactor.EndState();
         }

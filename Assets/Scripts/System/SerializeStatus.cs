@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sweaper : AIModel
+public struct SerializeStatus 
 {
-    public override void Step()
-    {
+    public int maxHP;
+    public int currentHP;
 
-    }
 
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 public enum KeyValues
 {
@@ -55,6 +56,76 @@ public static class Func
             revKvs.Add(Reverse(kv));
         }
         return revKvs;
+    }
+
+    public static float GetDmgMultiplier(AtkType atk, DefType def)
+    {
+        switch (atk)
+        {
+            case AtkType.Normal:
+                return 1;
+            case AtkType.Explosive:
+                switch (def)
+                {
+                    case DefType.Normal :
+                        return 1;
+                    case DefType.Light:
+                        return 2;
+                    case DefType.Heavy:
+                        return 1f;
+                    case DefType.Special:
+                        return 0.4f;
+                    case DefType.Elastic:
+                        return 0.4f;
+                }
+                break;
+            case AtkType.Piercing:
+                switch (def)
+                {
+                    case DefType.Normal:
+                        return 1f;
+                    case DefType.Light:
+                        return 0.4f;
+                    case DefType.Heavy:
+                        return 2f;
+                    case DefType.Special:
+                        return 1f;
+                    case DefType.Elastic:
+                        return 1f;
+                }
+                break;
+            case AtkType.Mystic:
+                switch (def)
+                {
+                    case DefType.Normal:
+                        return 1;
+                    case DefType.Light:
+                        return 1;
+                    case DefType.Heavy:
+                        return 0.4f;
+                    case DefType.Special:
+                        return 2f;
+                    case DefType.Elastic:
+                        return 1f;
+                }
+                break;
+            case AtkType.Sonic:
+                switch (def)
+                {
+                    case DefType.Normal:
+                        return 1;
+                    case DefType.Light:
+                        return 1;
+                    case DefType.Heavy:
+                        return 0.4f;
+                    case DefType.Special:
+                        return 1.5f;
+                    case DefType.Elastic:
+                        return 2f;
+                }
+                break;
+        }
+        return 1;
     }
 
     public static List<KeyValues> arrows = new() { KeyValues.Up, KeyValues.Left, KeyValues.Down, KeyValues.Right};

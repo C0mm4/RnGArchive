@@ -5,9 +5,9 @@ using UnityEngine.AddressableAssets;
 
 public class Bullet : Attack
 {
-    public override void CreateHandler(int dmg, Vector2 dir)
+    public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
-        base.CreateHandler(dmg, dir);
+        base.CreateHandler(dmg, dir, t);
         if(dir.y == 0)
         {
             moveAccel.x = 10 * dir.x;
@@ -19,6 +19,10 @@ public class Bullet : Attack
     {
         base.CheckCollision(rh, yMovement);
         if(rh.collider.tag == "Wall")
+        {
+            GameManager.Destroy(gameObject);
+        }
+        if(rh.collider.tag == "Enemy")
         {
             GameManager.Destroy(gameObject);
         }

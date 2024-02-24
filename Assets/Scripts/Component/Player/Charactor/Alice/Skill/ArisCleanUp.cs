@@ -23,7 +23,6 @@ public class ArisCleanUp : Skill
         if (isCharge)
         {
             chargeT = Time.time - startT;
-            Debug.Log(chargeT);
 //            player.isAction = true;
         }
         base.PassiveStep();

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : KinematicObject
 {
     public int dmg;
+    public AtkType type;
 
     public override void OnCreate()
     {
@@ -15,9 +16,10 @@ public class Attack : KinematicObject
         transform.tag = "Attack";
     }
 
-    public virtual void CreateHandler(int dmg, Vector2 dir)
+    public virtual void CreateHandler(int dmg, Vector2 dir, AtkType type)
     {
         this.dmg = dmg;
+        this.type = type;
     }
 
     protected override void ComputeVelocity()
@@ -31,7 +33,7 @@ public class Attack : KinematicObject
         var currentNormal = rh.normal;
         if(rh.collider.tag == "Enemy")
         {
-            rh.collider.GetComponent<Enemy>().GetDMG(dmg);
+            rh.collider.GetComponent<Mob>().GetDMG(dmg, type);
         }
     }
 }
