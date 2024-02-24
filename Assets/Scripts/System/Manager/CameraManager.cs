@@ -52,13 +52,13 @@ public class CameraManager : Obj
             Debug.Log(height);
             Debug.Log(width);
 
-            float minX = field.CellToWorld(fieldBound.min).x + width / 2f;
+            float minX = field.CellToWorld(fieldBound.min).x + width;
                         Debug.Log("minX : " + minX);
-            float maxX = field.CellToWorld(fieldBound.max).x - width / 2f;
+            float maxX = field.CellToWorld(fieldBound.max).x - width ;
                         Debug.Log("maxX : " + maxX);
-            float minY = field.CellToWorld(fieldBound.min).y + height / 2f;
+            float minY = field.CellToWorld(fieldBound.min).y + height;
                         Debug.Log("minY : " + minY);
-            float maxY = field.CellToWorld(fieldBound.max).y - height / 2f;
+            float maxY = field.CellToWorld(fieldBound.max).y - height ;
                         Debug.Log("maxY : " + maxY);
             //Limit camera movement range
 
