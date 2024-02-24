@@ -104,7 +104,7 @@ public class Charactor
         playerController.isAttack = true;
         playerController.lastAttackT = Time.time;
 
-        GameObject go = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
+        GameObject go = GameManager.InstantiateAsync(attackPref, playerController.transform);
         go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);
 
     }

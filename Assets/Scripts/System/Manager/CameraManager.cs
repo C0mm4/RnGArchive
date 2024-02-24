@@ -32,7 +32,6 @@ public class CameraManager : Obj
             player = FindPlayerTransform();
         }
         cameraWidth = maincamera.pixelWidth; cameraHeight = maincamera.pixelHeight;
-        Debug.Log(cameraWidth + " " + cameraHeight);
     }
 
     // Update is called once per frame
@@ -46,11 +45,7 @@ public class CameraManager : Obj
 
             float distance = - maincamera.transform.position.z;
             float height = distance * Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2);
-            Debug.Log(maincamera.fieldOfView);
             float width = (cameraWidth / cameraHeight) * height;
-            Debug.Log(distance);
-            Debug.Log(height);
-            Debug.Log(width);
 
             float minX = field.CellToWorld(fieldBound.min).x + width;
                         Debug.Log("minX : " + minX);

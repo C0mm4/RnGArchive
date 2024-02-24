@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 public enum KeyValues
 {
@@ -126,6 +127,14 @@ public static class Func
                 break;
         }
         return 1;
+    }
+
+    public static void SetRectTransform(GameObject go, Vector3 pos = default)
+    {
+        RectTransform rt = go.GetComponent<RectTransform>();
+        rt.transform.SetParent(GameManager.UIManager.canvas.transform, false);
+        rt.transform.localScale = Vector3.one;
+        rt.transform.localPosition = pos;
     }
 
     public static List<KeyValues> arrows = new() { KeyValues.Up, KeyValues.Left, KeyValues.Down, KeyValues.Right};

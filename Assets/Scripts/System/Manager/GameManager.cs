@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
+    public static GameObject InstantiateAsync(string path, Transform pos = default, Quaternion rotation = default)
     {
         return Resource.InstantiateAsync(path, pos, rotation);
     }
