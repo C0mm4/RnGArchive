@@ -10,6 +10,7 @@ public class TutorialMask : Obj
     public Vector2 currentTopLeft;
     public Vector2 currentBottomRight;
 
+    public Vector2 mouseRectPos;
 
     bool isSet = false;
 

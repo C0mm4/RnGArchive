@@ -47,11 +47,11 @@ public class ResourceManager
         }
     }
     
-    public GameObject InstantiateAsync(string path, Transform pos = default, Quaternion rotation = default)
+    public GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
     {
         if (LoadResources.ContainsKey(path))
         {
-            GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos.position, rotation);
+            GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
             return go;
         }
         else
@@ -64,7 +64,7 @@ public class ResourceManager
             Debug.Log(op.Result);
             if (LoadResources.ContainsKey(path))
             {
-                GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos.position, rotation);
+                GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
                 return go;
 
             }

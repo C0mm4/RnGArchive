@@ -5,7 +5,9 @@ using UnityEngine;
 public class InteractionTrigger : Obj
 {
 
-    PlayerController player;
+    public PlayerController player;
+    public float detectDistance;
+
 
     public override void OnCreate()
     {
@@ -18,7 +20,7 @@ public class InteractionTrigger : Obj
         {
             FindPlayer();
         }
-        else if(PlayerDistance() <= GameManager.tileOffset.x * 2)
+        else if(PlayerDistance() <= detectDistance)
         {
             player.AddInterractionTrigger(this);
         }
@@ -43,4 +45,8 @@ public class InteractionTrigger : Obj
         }
     }
 
+    public virtual void Interaction()
+    {
+
+    }
 }
