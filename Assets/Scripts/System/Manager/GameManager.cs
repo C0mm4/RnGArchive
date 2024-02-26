@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
     MobSpawner _mobSpawner = new MobSpawner();
     public static MobSpawner MobSpawner { get { return gm_Instance._mobSpawner; } }
 
+    TriggerManager _triggerManager = new TriggerManager();
+    public static TriggerManager Trigger { get { return gm_Instance._triggerManager; } }
 
     public static SettingManager.SerializeGameData gameData;
 
@@ -134,6 +136,8 @@ public class GameManager : MonoBehaviour
         Input.Initialize();
         Debug.Log("Input Manager Initialize");
         MobSpawner.Initialize();
+        Debug.Log("");
+        Trigger.Initialize();
 
         Task.Run(() =>
         {

@@ -48,19 +48,13 @@ public class CameraManager : Obj
             float width = (cameraWidth / cameraHeight) * height;
 
             float minX = field.CellToWorld(fieldBound.min).x + width;
-                        Debug.Log("minX : " + minX);
             float maxX = field.CellToWorld(fieldBound.max).x - width ;
-                        Debug.Log("maxX : " + maxX);
             float minY = field.CellToWorld(fieldBound.min).y + height;
-                        Debug.Log("minY : " + minY);
             float maxY = field.CellToWorld(fieldBound.max).y - height ;
-                        Debug.Log("maxY : " + maxY);
             //Limit camera movement range
 
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
-                        Debug.Log("targetPos.x : " + targetPos.x);
             targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
-                        Debug.Log("targetPos.y : " + targetPos.y);
             maincamera.transform.position = Vector3.Lerp(maincamera.transform.position, targetPos, Time.deltaTime * 5f);
             // Relatively smooth tracking of playr positions
         }
