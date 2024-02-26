@@ -1,20 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class TriggerManager
 {
-    public Dictionary<string, Trigger> activeTriggerLists;
+    public Dictionary<string, TriggerData> activeTriggerLists;
 
     public void Initialize()
     {
-        activeTriggerLists = new Dictionary<string, Trigger>();
+        if(activeTriggerLists == null)
+            activeTriggerLists = new Dictionary<string, TriggerData>();
         
     }
 
-    public void ActiveTrigger(Trigger trig)
+    public void ActiveTrigger(TriggerData trig)
     {
-        activeTriggerLists.Add(trig.id, trig);
+        if (activeTriggerLists == null)
+            activeTriggerLists = new Dictionary<string, TriggerData>();
+        activeTriggerLists[trig.id] = trig;
+
         trig.isActivate = true;
     }
 }

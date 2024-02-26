@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
     TriggerManager _triggerManager = new TriggerManager();
     public static TriggerManager Trigger { get { return gm_Instance._triggerManager; } }
 
+    GameSavemanager _gameSaveManager = new GameSavemanager();
+    public static GameSavemanager Save { get { return gm_Instance._gameSaveManager; } }
+
     public static SettingManager.SerializeGameData gameData;
 
     public static Vector2 tileOffset = new Vector2(0.32f, 0.32f);
@@ -137,6 +140,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Input Manager Initialize");
         MobSpawner.Initialize();
         Debug.Log("");
+        Save.initialize();
         Trigger.Initialize();
 
         Task.Run(() =>
@@ -176,23 +180,15 @@ public class GameManager : MonoBehaviour
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.X))
         {
-            BoundsInt bounds = new BoundsInt(testT.cellBounds.min, testT.cellBounds.size);
-
-            // Iterate over all tiles in the tilemap
-            foreach (Vector3Int pos in testT.cellBounds.allPositionsWithin)
-            {
-                // Check if the tile is present
-                if (testT.HasTile(pos))
-                {
-                    // Update bounds to include the position of the tile
-                    bounds.min = Vector3Int.Min(bounds.min, pos);
-                    bounds.max = Vector3Int.Max(bounds.max, pos);
-                }
-            }
-
-            Debug.Log("Rectangle Bounds min: " + bounds.min);
-            Debug.Log("Rectangle Bounds max: " + bounds.max);
-            testT.SetTile(bounds.min, null);
+            Save.NewGame();
+        }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.C))
+        {
+            Save.SaveGameprogress();
+        }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.V))
+        {
+            Save.LoadProgress();
         }
     }
 

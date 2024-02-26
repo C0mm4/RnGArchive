@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]   
 public class GameProgress 
 {
-    public List<Trigger> triggers = new List<Trigger>();
+
     public Vector3 saveP;
     public List<Charactor> openCharactors;
 

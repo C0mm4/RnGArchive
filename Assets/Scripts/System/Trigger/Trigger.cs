@@ -8,22 +8,21 @@ public class Trigger : Obj
 
     protected Collider2D triggerBox;
 
-    public string id;
-    public bool isActivate;
+    public TriggerData data;
 
     public override void OnCreate()
     {
         base.OnCreate();
         triggerBox = GetComponent<Collider2D>();
         triggerBox.isTrigger = true;
-        isActivate = false;
+        data.isActivate = false;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject == GameManager.player)
         {
-            if (!isActivate)
+            if (!data.isActivate)
             {
                 if(nodeIds.Count == 0)
                 {
@@ -42,8 +41,8 @@ public class Trigger : Obj
 
     public virtual void TriggerActive()
     {
-        Debug.Log(id);
-        GameManager.Trigger.ActiveTrigger(this);
+        Debug.Log(data.id);
+        GameManager.Trigger.ActiveTrigger(data);
     }
 
     public bool CheckNodesActive()
@@ -56,5 +55,18 @@ public class Trigger : Obj
             }
         }
         return true;
+    }
+
+    public override void Step()
+    {
+        base.Step();
+        if (GameManager.Trigger.activeTriggerLists.ContainsKey(data.id))
+        {
+            data.isActivate = true;
+        }
+        else
+        {
+            data.isActivate = false;
+        }
     }
 }
