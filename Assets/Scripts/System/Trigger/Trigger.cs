@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Trigger : Obj
@@ -18,7 +19,7 @@ public class Trigger : Obj
         data.isActivate = false;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public async void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject == GameManager.player)
         {
@@ -26,23 +27,26 @@ public class Trigger : Obj
             {
                 if(nodeIds.Count == 0)
                 {
-                    TriggerActive();
+                    await TriggerActive();
                 }
                 else
                 {
                     if (CheckNodesActive())
                     {
-                        TriggerActive();
+                        await TriggerActive();
                     }
                 }
             }
         }
     }
 
-    public virtual void TriggerActive()
+    public virtual async Task TriggerActive()
     {
-        Debug.Log(data.id);
-        GameManager.Trigger.ActiveTrigger(data);
+        await Task.Run(() =>
+        {
+            Debug.Log(data.id);
+            GameManager.Trigger.ActiveTrigger(data);
+        });
     }
 
     public bool CheckNodesActive()

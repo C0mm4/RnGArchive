@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -87,5 +89,32 @@ public class CameraManager : Obj
         }
         fieldBound = bounds;
         isSet = true;
+    }
+
+    public void CameraMove(Transform trans)
+    {
+        player = trans;
+
+    }
+
+    public async Task CameraMoveV2V(Vector3 startPos, Vector3 endPos, float spd = 1f)
+    {
+        Debug.Log("Move Start");
+        GameObject go = new GameObject();
+        go.transform.position = startPos;
+        player = go.transform;
+        float startTime = Time.time; // 시작 시간 기록
+
+        while ((go.transform.position - endPos).magnitude >= 0.05f)
+        {
+            float distanceCovered = (Time.time - startTime) * spd;
+            float fractionOfJourney = distanceCovered / Vector3.Distance(startPos, endPos);
+            go.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney); 
+            await Task.Delay(TimeSpan.FromSeconds(0.016f)); 
+        }
+
+        player = GameManager.player.transform;
+        // 이동 완료 후 게임 오브젝트 제거
+        Destroy(go);
     }
 }

@@ -35,8 +35,6 @@ public class PlayerController : KinematicObject
     /*internal new*/
     public bool controlEnabled = true;
 
-
-
     public Charactor charactor;
     public AsyncOperationHandle<RuntimeAnimatorController> bodySkinHandler, legSkinHandler;
     public Animator bodyAnimator, legAnimator;
@@ -182,29 +180,33 @@ public class PlayerController : KinematicObject
         {
             if ((GameManager.GetUIState() == UIManager.UIState.InPlay) || true)
             {
-                base.KeyInput();
-                if (!isHitState)
+                if (!isForceMoving)
                 {
-                    MoveKey();
-                }
-                var items = setInputBuffer();
-                inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
-                if (inputbuffers.Count > 0)
-                {
-                    lastInputTime = Time.time;
-                }
+                    base.KeyInput();
+                    if (!isHitState)
+                    {
+                        MoveKey();
+                    }
+                    var items = setInputBuffer();
+                    inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
+                    if (inputbuffers.Count > 0)
+                    {
+                        lastInputTime = Time.time;
+                    }
 
-                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
-                {
+                    if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+                    {
+                        triggers[triggerIndex].Interaction();
+                    }
 
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        //            SetSkin(1);
+                    }
                 }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-//            SetSkin(1);
-        }
     }
 
     private List<(KeyValues, float)> setInputBuffer()
@@ -485,6 +487,18 @@ public class PlayerController : KinematicObject
 
     protected override void ComputeVelocity()
     {
+        if (isForceMoving)
+        {
+            var dir = moveTargetPos - transform.position;
+            if(dir.x < 0)
+            {
+                moveAccel.x -= charactor.charaData.moveAccelSpeed * Time.deltaTime;
+            }
+            else
+            {
+                moveAccel.x += charactor.charaData.moveAccelSpeed * Time.deltaTime;
+            }
+        }
         targetVelocity = moveAccel;
     }
 

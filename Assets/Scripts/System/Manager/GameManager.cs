@@ -1,6 +1,8 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -82,6 +84,8 @@ public class GameManager : MonoBehaviour
 
     public Tilemap testT;
     public TileBase tile;
+
+    public GameObject testDoor;
 
 
     private void Awake()
@@ -180,15 +184,7 @@ public class GameManager : MonoBehaviour
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.X))
         {
-            Save.NewGame();
-        }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.C))
-        {
-            Save.SaveGameprogress();
-        }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.V))
-        {
-            Save.LoadProgress();
+            Debug.Log(testDoor.transform.position);
         }
     }
 
@@ -238,7 +234,8 @@ public class GameManager : MonoBehaviour
     {
         Vector3 tmp = transform.position;
 
-        player = InstantiateAsync("Player");
+        var awaitObj = InstantiateAsync("Player");
+        player = awaitObj;
         player.transform.position = tmp;
         player.GetComponent<PlayerController>().controlEnabled = true;
         player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
@@ -253,7 +250,8 @@ public class GameManager : MonoBehaviour
         return Resource.InstantiateAsync(path, pos, rotation);
     }
 
-    public static T LoadAssetDataAsync<T>(string path) where T : Object
+
+    public static T LoadAssetDataAsync<T>(string path) where T : UnityEngine.Object
     {
         return (T)Resource.LoadAssetAsync<T>(path).Result;
     }

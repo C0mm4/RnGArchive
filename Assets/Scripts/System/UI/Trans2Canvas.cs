@@ -12,7 +12,8 @@ public class Trans2Canvas : MonoBehaviour
 
     public void GenerateUI(string prefabPath)
     {
-        UIObj = GameManager.InstantiateAsync(UIPrefab, GameManager.UIManager.canvas.transform.position);
+        var awaitObj = GameManager.InstantiateAsync(UIPrefab, GameManager.UIManager.canvas.transform.position);
+        UIObj = awaitObj;
         Func.SetRectTransform(UIObj, GameManager.CameraManager.maincamera.WorldToScreenPoint(UIIngameTransform.transform.position) - new Vector3((float)Screen.width / 2f, (float)Screen.height / 2f));
     }
 

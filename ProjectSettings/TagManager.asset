@@ -41,24 +41,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
-  - name: UI
-    uniqueID: 1745314517
-    locked: 0
-  - name: FrontInGame
-    uniqueID: 2018573283
-    locked: 0
-  - name: Player
-    uniqueID: 1562918333
-    locked: 0
-  - name: BackwordInGame
-    uniqueID: 3095113591
+  - name: FarBackGround
+    uniqueID: 436120117
     locked: 0
   - name: BackGround
     uniqueID: 3245096703
     locked: 0
-  - name: FarBackGround
-    uniqueID: 436120117
+  - name: BackwordInGame
+    uniqueID: 3095113591
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 1562918333
+    locked: 0
+  - name: FrontInGame
+    uniqueID: 2018573283
+    locked: 0
+  - name: UI
+    uniqueID: 1745314517
     locked: 0

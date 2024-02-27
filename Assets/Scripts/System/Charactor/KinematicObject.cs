@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
@@ -25,6 +27,7 @@ public class KinematicObject : Obj
     /// The current velocity of the entity.
     /// </summary>
     public Vector2 velocity;
+    protected Vector2 moveAccel;
 
     /// <summary>
     /// Is the entity currently sitting on a surface?
@@ -34,9 +37,9 @@ public class KinematicObject : Obj
     public bool IsGrounded;
 
     public bool canMove = true;
+    public bool isForceMoving;
 
     [SerializeField]
-    protected Vector2 moveAccel;
     protected Vector2 targetVelocity;
     protected Vector2 groundNormal;
     protected Rigidbody2D body;
@@ -49,6 +52,7 @@ public class KinematicObject : Obj
     public Animator animator;
     public string currentAnimation;
 
+    public Vector3 moveTargetPos;
 
     public Vector2 _sawDir;
     public Vector2 sawDir {  get { return _sawDir; } set {  _sawDir = value; } }
@@ -60,7 +64,7 @@ public class KinematicObject : Obj
     public void Bounce(Vector2 dir)
     {
         velocity.y = dir.y;
-        moveAccel.x = dir.x;
+        velocity.x = dir.x;
     }
 
     /// <summary>
@@ -98,6 +102,7 @@ public class KinematicObject : Obj
         contactFilter.useLayerMask = true;
         sawDir = new Vector2(1, 0);
         canMove = true;
+        isForceMoving = false;
     }
 
 
@@ -256,7 +261,7 @@ public class KinematicObject : Obj
                 //We are airborne, but hit something, so cancel vertical up and horizontal velocity.
                 if (!isCorrection)
                 {
-                    moveAccel.x *= 0;
+                    velocity.x *= 0;
 
                 }
             }
@@ -264,7 +269,7 @@ public class KinematicObject : Obj
             {
                 if (!yMovement && !isCorrection)
                 {
-                    moveAccel.x *= 0;
+                    velocity.x *= 0;
                 }
             }
         }
@@ -288,4 +293,59 @@ public class KinematicObject : Obj
             }
         }
     }
+
+    public async Task InDoor(Door door)
+    {
+        isForceMoving = true;
+        List<SpriteRenderer> renderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+        foreach (var renderer in renderers)
+        {
+            renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        }
+        moveTargetPos = door.transform.position;
+
+
+        await AwaitMoveToPosition(() => (Mathf.Abs(transform.position.x - moveTargetPos.x)) >= 0.05f);
+        foreach (var renderer in renderers)
+        {
+            renderer.maskInteraction = SpriteMaskInteraction.None;
+        }
+        isForceMoving = false;
+    }
+
+    public async Task OutDoor(Door door)
+    {
+        isForceMoving = true;
+        var dist = Vector2.Dot(transform.position - door.transform.position, door.InDir);
+        Debug.Log(dist);
+        // If IncorrectPosition move to correct position
+        if (dist > 0)
+        {
+            moveTargetPos = door.transform.position;
+            await AwaitMoveToPosition(() => Vector2.Dot(transform.position - door.transform.position, door.InDir) > 0);
+        }
+
+        moveTargetPos = door.transform.position;
+        moveTargetPos.x += door.InDir.x * 1.5f * door.transform.localScale.x;
+        Debug.Log(moveTargetPos);
+
+        await AwaitMoveToPosition(() => (Mathf.Abs(transform.position.x - door.transform.position.x)) >= 0.05f);
+        List<SpriteRenderer> renderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+        foreach (var renderer in renderers)
+        {
+            renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        }
+
+        await AwaitMoveToPosition(() => (Mathf.Abs(transform.position.x - moveTargetPos.x)) >= 0.05f);
+        isForceMoving = false;
+    }
+
+    private async Task AwaitMoveToPosition(Func<bool> condition)
+    {
+        while (condition())
+        {
+            await Task.Yield();
+        }
+    }
+
 }

@@ -1,91 +1,117 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class NPC : InteractionTrigger
 {
+    // Say Script
     public string script;
+
+    // Distance to say
     public float sayDistance;
-    public bool isSaying = false;
-    public bool isSayingDelay = false;
-    public int sayingIndex = 0;
+    
+    public bool isSaying;
+
+    public int sayingIndex;
 
     [SerializeField]
-    public float sayingDelay = 0.1f;
+    public float sayingDelay;
+    public float nextSayDelay;
     public GameObject letterBox;
 
     public override void OnCreate()
     {
         base.OnCreate();
         sayDistance = 5f;
-        script = "설명해 드리도록 하지요! 팬 게임이라 함은 원본 컨텐츠로부터 설정과 배경을 그대로 이어받아 2차 창작하여 새로운 게임을 만들어내는 것으로 개발하는 입장에서는 기존의 설정과 캐릭터, 배경등을 사용하므로 이미 구축된 세계관을 이용하기에 기획하기 쉽다라는 장점이 있으며, 홍보하는 과정에서도 해당 원본 컨텐트의 파이를 타겟으로 제작되기 때문에 새로 제작되는 컨텐츠 치고 쉬운 홍보 과정을 가질 수 있다는 장점을 가지고 있죠!";
         sayingIndex = 0;
         isSaying = false;
     }
 
-    public override void Step()
+    public override async void Step()
     {
         base.Step();
         if (player != null)
         {
-            if (PlayerDistance() <= sayDistance)
+            if(GameManager.GetUIState() == UIManager.UIState.InPlay)
             {
-                isSaying = true;
-                if(letterBox == null)
+                if (PlayerDistance() <= sayDistance)
                 {
-                    letterBox = GameManager.InstantiateAsync("LetterBox", transform.position);
-                    letterBox.GetComponent<LetterBox>().npc = this;
-                    letterBox.GetComponent<LetterBox>().SetPosition();
-                    letterBox.transform.SetParent(GameManager.UIManager.canvas.transform, false);
-                }
-                if(sayingIndex < script.Length - 1)
-                {
-                    if (!isSayingDelay)
+                    if (!isSaying && script.Length > 0)
                     {
-                        SetAlarm(0, sayingDelay);
+                        isSaying = true;
+                        await Say();
+                    }
+
+                }
+                else
+                {
+                    if (isSaying)
+                    {
+                        sayingIndex = script.Length;
                     }
                 }
-                else
-                {
-                    letterBox.GetComponent<LetterBox>().SetText(script);
-                }
-
-            }
-            else if (PlayerDistance() > sayDistance)
-            {
-                if(isSaying)
-                {
-                    isSaying = false;
-                    sayingIndex = 0;
-                }
-                else
-                {
-                    GameManager.Destroy(letterBox);
-                }
             }
         }
     }
 
-    public override void Alarm0()
+    public void SetScript(string txt)
     {
-        if (isSaying)
+        script = txt;
+    }
+
+    public async Task Say()
+    {
+
+        if (letterBox != null)
         {
-            sayingIndex++;
-            if (script[sayingIndex].Equals(" "))
+            GameManager.Destroy(letterBox);
+        }
+
+        isSaying = true;
+        sayingIndex = 0;
+
+        var awaitObj = GameManager.InstantiateAsync("LetterBox");
+        letterBox = awaitObj;
+        letterBox.GetComponent<LetterBox>().npc = this;
+        letterBox.GetComponent<LetterBox>().SetPosition();
+        letterBox.transform.SetParent(GameManager.UIManager.canvas.transform, false);
+
+
+        while (sayingIndex <= script.Length - 1)
+        {
+            if (!isSaying)
             {
-                sayingIndex++;
+                break;
+            }
+            sayingIndex++;
+            if(sayingIndex < script.Length)
+            {
+                if (script[sayingIndex].Equals(" "))
+                {
+                    sayingIndex++;
+                }
             }
             var cuttext = script[..sayingIndex];
-            isSayingDelay = true;
+            
             letterBox.GetComponent<LetterBox>().SetText(cuttext);
-            SetAlarm(1, sayingDelay);
+            await Task.Delay(TimeSpan.FromSeconds(sayingDelay));
         }
-    }
 
-    public override void Alarm1()
-    {
-        base.Alarm1();
-        isSayingDelay = false;
+        if(sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1f));
+        }
+
+        GameManager.Destroy(letterBox);
+
+        await Task.Delay(TimeSpan.FromSeconds(nextSayDelay));
+        
+
+        isSaying = false;
     }
 
 }

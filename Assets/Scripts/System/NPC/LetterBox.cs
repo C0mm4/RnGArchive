@@ -23,7 +23,14 @@ public class LetterBox : Obj
     public override void BeforeStep()
     {
         base.BeforeStep();
-        SetPosition();
+        if(npc == null)
+        {
+            GameManager.Destroy(gameObject);
+        }
+        else
+        {
+            SetPosition();
+        }
     }
 
     public override void AfterStep()

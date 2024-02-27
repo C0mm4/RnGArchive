@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Address: LetterBox
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: b65a14eb7f248404a987844a0962184b
+    m_Address: TestNPC
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

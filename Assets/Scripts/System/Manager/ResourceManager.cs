@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
 using Unity.VisualScripting.Dependencies.NCalc;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -46,35 +48,37 @@ public class ResourceManager
             return null;
         }
     }
-    
+
     public GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
-    {
-        if (LoadResources.ContainsKey(path))
         {
-            GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
-            return go;
-        }
-        else
-        {
-            var op = LoadAssetAsync<GameObject>(path);
-            if(!op.Equals(default))
-            {
-                LoadResources[path] = op;
-            }
-            Debug.Log(op.Result);
+
             if (LoadResources.ContainsKey(path))
             {
                 GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
                 return go;
-
             }
             else
             {
-                Debug.Log($"Failed to load GameObject : {path}");
-                return null;
+                var op = LoadAssetAsync<GameObject>(path);
+                if(!op.Equals(default))
+                {
+                    LoadResources[path] = op;
+                }
+                Debug.Log(op.Result);
+                if (LoadResources.ContainsKey(path))
+                {
+                    GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
+                    return go;
+
+                }
+                else
+                {
+                    Debug.Log($"Failed to load GameObject : {path}");
+                    return null;
+                }
             }
         }
-    }
+    
 
     public AsyncOperationHandle LoadAssetAsync<T>(string path) where T : Object
     {
@@ -91,7 +95,8 @@ public class ResourceManager
         }
     }
 
-    public Sprite LoadSprite(string path)
+
+public Sprite LoadSprite(string path)
     {
         if (LoadResources.ContainsKey(path))
         {
@@ -140,7 +145,12 @@ public class ResourceManager
         if (obj == null) return;
         if (!Addressables.ReleaseInstance(obj))
         {
+            Debug.Log("Destroy by Object.Destry()");
             Object.Destroy(obj);
+        }
+        else
+        {
+            Debug.Log("Destroy by Release");
         }
     }
 

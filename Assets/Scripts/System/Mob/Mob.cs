@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 
 public class Mob : KinematicObject
 {
@@ -19,6 +20,7 @@ public class Mob : KinematicObject
     public SerializeStatus status;
 
     public StateMachine stateMachine;
+
     
 
     public override void OnCreate()
@@ -29,13 +31,15 @@ public class Mob : KinematicObject
         stateMachine = new StateMachine(this);
     }
 
-    public void CreateHandler()
+    public void CreateHandler(Vector3 pos)
     {
         AIGen();
         status.maxHP = data.maxHP;
         status.currentHP = status.maxHP;
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>("SweaperAnimator");
+
+        SetTargetPosition(pos);
         ChangeState(new MobIdle());
     }
 
@@ -45,15 +49,38 @@ public class Mob : KinematicObject
         AI = Activator.CreateInstance(T) as AIModel;
     }
 
+    public override void BeforeStep()
+    {
+        var dir = moveTargetPos - transform.position;
+        if (dir.x < 0)
+        {
+            sawDir = new Vector2(-1, 0);
+            moveAccel.x -= data.speedAccel * Time.deltaTime;
+        }
+        else
+        {
+            sawDir = new Vector2(1, 0);
+            moveAccel.x += data.speedAccel * Time.deltaTime;
+        }
+
+        if(Mathf.Abs(moveAccel.x) > data.maxSpeed)
+        {
+            moveAccel.x = Vector2.Dot(sawDir, Vector2.one) * data.maxSpeed;
+        }
+
+        base.BeforeStep();
+    }
+
     public override void Step()
     {
         base.Step();
-        AI.Step();
+//        AI.Step();
     }
 
     protected override void ComputeVelocity()
     {
         targetVelocity.x = moveAccel.x;
+
     }
 
     public override void CheckCollision(RaycastHit2D rh, bool yMovement)
@@ -94,5 +121,9 @@ public class Mob : KinematicObject
         }
     }
 
+    public void SetTargetPosition(Vector3 pos)
+    {
+        moveTargetPos = pos;
+    }
 
 }
