@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class TestTrig1 : Trigger
 {
     public Transform utahaSpawn;
+    public Door Door;
 
     public Transform cameraMoveStart;
     public Transform cameraMoveEnd;
@@ -31,7 +33,29 @@ public class TestTrig1 : Trigger
         npc.SetScript("아리스, 잠깐의 테스트를 위해 드론을 보냈어.");
         await npc.Say();
 
-        GameObject go = GameManager.InstantiateAsync("");
+        var pos = Door.transform.position;
+        pos.x += Door.InDir.x * 1.5f * Door.transform.localScale.x;
+
+        GameObject go = GameManager.InstantiateAsync("Sweaper", pos);
+        go.GetComponent<Mob>().InDoor(Door);
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        go = GameManager.InstantiateAsync("Sweaper", pos);
+        go.GetComponent<Mob>().InDoor(Door);
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        go = GameManager.InstantiateAsync("Sweaper", pos);
+        go.GetComponent<Mob>().InDoor(Door);
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        go = GameManager.InstantiateAsync("Sweaper", pos);
+        go.GetComponent<Mob>().InDoor(Door);
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
         await GameManager.CameraManager.CameraMoveV2V(cameraMoveStart.position, cameraMoveEnd.position);
 
         GameManager.CameraManager.CameraMove(player.transform);
