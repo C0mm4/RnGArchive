@@ -29,77 +29,70 @@ public class SettingManager
         public int LanguageIndex;
     }
 
-    public SerializeGameData gameData;
 
     public void SetResolution()
     {
-        Screen.SetResolution(gameData.resolution.width, gameData.resolution.height, gameData.isFullScreen);
+        Screen.SetResolution(GameManager.gameData.resolution.width, GameManager.gameData.resolution.height, GameManager.gameData.isFullScreen);
     }
 
-    public SerializeGameData SetFirstSetting()
+    public void SetFirstSetting()
     {
-        SerializeGameData ret = new SerializeGameData();
+        GameManager.gameData.masterVolume = 0.5f;
+        GameManager.gameData.musicVolume = 0.5f;
+        GameManager.gameData.effectVolume = 0.5f;
+        GameManager.gameData.charactorVolume = 0.5f;
+        GameManager.gameData.resolutionIndex = 0;
+        GameManager.gameData.isFullScreen = true;
+        GameManager.gameData.FrameRate = 60;
 
-        ret.masterVolume = 0.5f;
-        ret.musicVolume = 0.5f;
-        ret.effectVolume = 0.5f;
-        ret.charactorVolume = 0.5f;
-        ret.resolutionIndex = 0;
-        ret.isFullScreen = true;
-        ret.FrameRate = 60;
+        GameManager.gameData.resolution = GameManager.gameData.resolutionLists[0];
 
-        ret.resolution = ret.resolutionLists[0];
-
-        ret.LanguageIndex = 0;
+        GameManager.gameData.LanguageIndex = 0;
 
         PlayerPrefs.SetInt("FirstRun", 1);
 
-        gameData = ret;
-
-        return gameData;
     }
 
     public void SaveSettingData()
     {
-        PlayerPrefs.SetFloat("masterVolume", gameData.masterVolume);
-        PlayerPrefs.SetFloat("musicVolume", gameData.musicVolume);
-        PlayerPrefs.SetFloat("effectVolume", gameData.effectVolume);
-        PlayerPrefs.SetFloat("charactorVolume", gameData.charactorVolume);
-        PlayerPrefs.SetInt("FullScreen", gameData.isFullScreen ? 1 : 0);
-        PlayerPrefs.SetInt("FrameRate", gameData.FrameRate);
-        PlayerPrefs.SetInt("Language", gameData.LanguageIndex);
+        PlayerPrefs.SetFloat("masterVolume", GameManager.gameData.masterVolume);
+        PlayerPrefs.SetFloat("musicVolume", GameManager.gameData.musicVolume);
+        PlayerPrefs.SetFloat("effectVolume", GameManager.gameData.effectVolume);
+        PlayerPrefs.SetFloat("charactorVolume", GameManager.gameData.charactorVolume);
+        PlayerPrefs.SetInt("FullScreen", GameManager.gameData.isFullScreen ? 1 : 0);
+        PlayerPrefs.SetInt("FrameRate", GameManager.gameData.FrameRate);
+        PlayerPrefs.SetInt("Language", GameManager.gameData.LanguageIndex);
 
-        PlayerPrefs.SetInt("resolution", gameData.resolutionIndex);
+        PlayerPrefs.SetInt("resolution", GameManager.gameData.resolutionIndex);
     }
 
 
-    public SerializeGameData LoadSettingData()
+    public void LoadSettingData()
     {
-        gameData.masterVolume = PlayerPrefs.GetFloat("masterVolume");
-        gameData.musicVolume = PlayerPrefs.GetFloat("musicVolume");
-        gameData.effectVolume = PlayerPrefs.GetFloat("effectVolume");
-        gameData.charactorVolume = PlayerPrefs.GetFloat("charactorVolume");
-        gameData.resolutionIndex = PlayerPrefs.GetInt("resolution");
-        gameData.isFullScreen = PlayerPrefs.GetInt("FullScreen") == 1;
-        gameData.FrameRate = PlayerPrefs.GetInt("FrameRate");
-        gameData.LanguageIndex = PlayerPrefs.GetInt("Language");
+        GameManager.gameData.masterVolume = PlayerPrefs.GetFloat("masterVolume");
+        GameManager.gameData.musicVolume = PlayerPrefs.GetFloat("musicVolume");
+        GameManager.gameData.effectVolume = PlayerPrefs.GetFloat("effectVolume");
+        GameManager.gameData.charactorVolume = PlayerPrefs.GetFloat("charactorVolume");
+        GameManager.gameData.resolutionIndex = PlayerPrefs.GetInt("resolution");
+        GameManager.gameData.isFullScreen = PlayerPrefs.GetInt("FullScreen") == 1;
+        GameManager.gameData.FrameRate = PlayerPrefs.GetInt("FrameRate");
+        GameManager.gameData.LanguageIndex = PlayerPrefs.GetInt("Language");
 
-        gameData.resolution = gameData.resolutionLists[gameData.resolutionIndex];
+        GameManager.gameData.resolution = GameManager.gameData.resolutionLists[GameManager.gameData.resolutionIndex];
 
-        return gameData;
     }
     public void SetResolutionList()
     {
-        gameData.resolutionLists = new List<Resolution>();
+        GameManager.gameData.resolutionLists = new List<Resolution>();
         Resolution resolution = new Resolution();
         // 1920 * 1080 resolution
         resolution.width = 1920; resolution.height = 1080;
-        gameData.resolutionLists.Add(resolution);
+        GameManager.gameData.resolutionLists.Add(resolution);
     }
 
     public void SetLanguageList()
     {
-        gameData.Language = new List<string>{ "Kr", "Eng", "Jp" };
+        GameManager.gameData.Language = new List<string>{ "Kr", "Eng", "Jp" };
 
     }
 
@@ -108,26 +101,26 @@ public class SettingManager
         switch (name)
         {
             case "masterVolume":
-                gameData.masterVolume = value;
+                GameManager.gameData.masterVolume = value;
                 break;
             case "musicVolume":
-                gameData.musicVolume = value;
+                GameManager.gameData.musicVolume = value;
                 break;
             case "effectVolume":
-                gameData.effectVolume = value;
+                GameManager.gameData.effectVolume = value;
                 break;
             case "charactorVolume":
-                gameData.charactorVolume = value;
+                GameManager.gameData.charactorVolume = value;
                 break;
             case "resolution":
-                gameData.resolutionIndex = (int)value;
-                gameData.resolution = gameData.resolutionLists[gameData.resolutionIndex];
+                GameManager.gameData.resolutionIndex = (int)value;
+                GameManager.gameData.resolution = GameManager.gameData.resolutionLists[GameManager.gameData.resolutionIndex];
                break;
             case "fullScreen":
-                gameData.isFullScreen = value == 1f;
+                GameManager.gameData.isFullScreen = value == 1f;
                 break;
             case "frameRate":
-                gameData.FrameRate = (int)value;
+                GameManager.gameData.FrameRate = (int)value;
                 break;
         }
 

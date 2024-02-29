@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+[Serializable]
 public partial class InputManager
 {
 
@@ -10,17 +11,14 @@ public partial class InputManager
     public float MenuCloseT { set { _MenuCloseT = value; } get { return _MenuCloseT; } }
     private string screenshotFolder = "Screenshots";
 
-    public KeySettings _keySettings;
+    public KeySetting _keySettings;
 
 
     // Key Input Event Check
 
     public void Initialize()
     {
-        Addressables.LoadAssetAsync<KeySettings>("KeySetting").Completed += handle =>
-        {
-            _keySettings = handle.Result;
-        };
+        _keySettings = GameManager.Instance.keysetting;
     }
 
     // Check Mouse position and key inputs

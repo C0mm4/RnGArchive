@@ -10,6 +10,7 @@ public class CameraManager : Obj
 {
     public Transform player;
     public Camera maincamera;
+    public Camera minimapCam;
 
     private float cameraWidth, cameraHeight;
 
@@ -24,6 +25,10 @@ public class CameraManager : Obj
         player = FindPlayerTransform();
         maincamera = GetComponent<Camera>();
         isSet = false;
+        if(minimapCam == null)
+        {
+            minimapCam = GameManager.InstantiateAsync("MiniMapCam").GetComponent<Camera>();
+        }
     }
 
     public override void Step()
@@ -34,6 +39,10 @@ public class CameraManager : Obj
             player = FindPlayerTransform();
         }
         cameraWidth = maincamera.pixelWidth; cameraHeight = maincamera.pixelHeight;
+        if (minimapCam == null)
+        {
+            minimapCam = GameManager.InstantiateAsync("MiniMapCam").GetComponent<Camera>();
+        }
     }
 
     // Update is called once per frame

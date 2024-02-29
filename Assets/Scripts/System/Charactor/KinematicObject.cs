@@ -3,10 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
-using UnityEditor.U2D;
 using UnityEngine;
 
 
@@ -294,8 +290,9 @@ public class KinematicObject : Obj
         }
     }
 
-    public async Task InDoor(Door door)
+    public async Task InDoor(Door door, Vector3 endPos = default)
     {
+        
         isForceMoving = true;
         List<SpriteRenderer> renderers = GetComponentsInChildren<SpriteRenderer>().ToList();
         foreach (var renderer in renderers)
@@ -310,6 +307,19 @@ public class KinematicObject : Obj
         {
             renderer.maskInteraction = SpriteMaskInteraction.None;
         }
+        if(endPos != default)
+        {
+            moveTargetPos = endPos;
+
+            await AwaitMoveToPosition(() => (Mathf.Abs(transform.position.x - moveTargetPos.x)) >= 0.05f);
+
+            canMove = false;
+        }
+        else
+        {
+            canMove = false;
+        }
+
         isForceMoving = false;
     }
 

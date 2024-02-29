@@ -27,10 +27,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
-  - m_GUID: 42402a454ee822c4688cf8217e31bc92
-    m_Address: KeySetting
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 7790fa79609879b4f9817ad1f52c0fe9
     m_Address: Sweaper
     m_ReadOnly: 0
@@ -61,6 +57,34 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: b65a14eb7f248404a987844a0962184b
     m_Address: TestNPC
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b964558740da77245b9395e74a33d6e4
+    m_Address: Sweaper
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4a18ea208c19d824f9c9398a7430db36
+    m_Address: MainThread
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6c36d2e5af16e9d43a236e8badd3964d
+    m_Address: GameManager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d7da9d0d2379f4b488f9b44bf74d095c
+    m_Address: MiniMapCam
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: adce2de598e20d04689336376b5a4bb9
+    m_Address: Assets/Sprites/Title/Title.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 236f8b77f421f3340846581b3171bf53
+    m_Address: Assets/Sprites/Title/Logo.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 172a7969546a2aa4f9fcdf124e11e2d7
+    m_Address: FadeOut
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

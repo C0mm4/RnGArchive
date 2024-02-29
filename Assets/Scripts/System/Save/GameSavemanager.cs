@@ -12,7 +12,6 @@ public class GameSavemanager
     public void initialize()
     {
         saveFilePath = "SaveData.dat";
-
     }
 
     public void NewGame()
@@ -35,6 +34,7 @@ public class GameSavemanager
             }
         }
     }
+
     public void LoadProgress()
     {
         if(File.Exists(saveFilePath))

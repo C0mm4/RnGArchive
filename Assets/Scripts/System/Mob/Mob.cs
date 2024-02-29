@@ -15,6 +15,8 @@ public class Mob : KinematicObject
     public List<float> lastAttackT = new List<float>();
     public MobData data;
 
+    private Vector3 presentsawDir;
+
     public AIModel AI;
 
     public SerializeStatus status;
@@ -31,7 +33,7 @@ public class Mob : KinematicObject
         stateMachine = new StateMachine(this);
     }
 
-    public void CreateHandler(Vector3 pos)
+    public void CreateHandler(Vector3 pos = default)
     {
         AIGen();
         status.maxHP = data.maxHP;
@@ -45,27 +47,40 @@ public class Mob : KinematicObject
 
     public void AIGen()
     {
+        Debug.Log(data.AIModel);
         Type T = Type.GetType(data.AIModel);
         AI = Activator.CreateInstance(T) as AIModel;
+        AI.target = this;
+        AI.player = GameManager.player.GetComponent<PlayerController>();
+        Debug.Log(AI.GetType().Name);   
     }
 
     public override void BeforeStep()
     {
-        var dir = moveTargetPos - transform.position;
-        if (dir.x < 0)
+        if (canMove)
         {
-            sawDir = new Vector2(-1, 0);
-            moveAccel.x -= data.speedAccel * Time.deltaTime;
+            var dir = moveTargetPos - transform.position;
+            if (dir.x < 0)
+            {
+                sawDir = new Vector2(-1, 0);
+                moveAccel.x -= data.speedAccel * Time.deltaTime;
+            }
+            else
+            {
+                sawDir = new Vector2(1, 0);
+                moveAccel.x += data.speedAccel * Time.deltaTime;
+            }
+
+            if (Mathf.Abs(moveAccel.x) > data.maxSpeed)
+            {
+                moveAccel.x = Vector2.Dot(sawDir, Vector2.one) * data.maxSpeed;
+            }
+
+            presentsawDir = dir;
         }
         else
         {
-            sawDir = new Vector2(1, 0);
-            moveAccel.x += data.speedAccel * Time.deltaTime;
-        }
-
-        if(Mathf.Abs(moveAccel.x) > data.maxSpeed)
-        {
-            moveAccel.x = Vector2.Dot(sawDir, Vector2.one) * data.maxSpeed;
+            moveAccel *= 0f;
         }
 
         base.BeforeStep();
@@ -74,7 +89,15 @@ public class Mob : KinematicObject
     public override void Step()
     {
         base.Step();
-//        AI.Step();
+        if(AI != null)
+        {
+            AI.player = GameManager.player.GetComponent<PlayerController>();
+            AI.Step();
+        }
+        else
+        {
+            Debug.Log("AI is Null");
+        }
     }
 
     protected override void ComputeVelocity()

@@ -36,27 +36,23 @@ public class TestTrig1 : Trigger
         var pos = Door.transform.position;
         pos.x += Door.InDir.x * 1.5f * Door.transform.localScale.x;
 
-        GameObject go = GameManager.InstantiateAsync("Sweaper", pos);
-        go.GetComponent<Mob>().InDoor(Door);
+        GameManager.CameraManager.CameraMove(Door.transform);
 
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+#pragma warning disable CS4014
+        GameObject[] gos = new GameObject[4];
+        for(int i = 0; i < 4; i++)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(0.5f));
+            GameObject go = GameManager.InstantiateAsync("Sweaper", pos);
+            go.GetComponent<Mob>().CreateHandler();
+            Vector3 movePos = Door.transform.position;
+            movePos.x += -Door.InDir.x * ((Door.InDir.x * 1.25f) + (i * 0.9f)); 
+            go.GetComponent<Mob>().InDoor(Door, movePos);
+            gos[i] = go;
+        }
+#pragma warning restore CS4014
 
-        go = GameManager.InstantiateAsync("Sweaper", pos);
-        go.GetComponent<Mob>().InDoor(Door);
-
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
-
-        go = GameManager.InstantiateAsync("Sweaper", pos);
-        go.GetComponent<Mob>().InDoor(Door);
-
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
-
-        go = GameManager.InstantiateAsync("Sweaper", pos);
-        go.GetComponent<Mob>().InDoor(Door);
-
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
-
-        await GameManager.CameraManager.CameraMoveV2V(cameraMoveStart.position, cameraMoveEnd.position);
+        await Task.Delay(TimeSpan.FromSeconds(1f));
 
         GameManager.CameraManager.CameraMove(player.transform);
         npc.SetScript("너의 빛의 검으로 드론을 파괴해");

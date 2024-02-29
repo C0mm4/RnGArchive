@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "KeySettings", menuName = "ScriptableObjects/KeySettings", order = 1)]
-public class KeySettings : ScriptableObject
+[CreateAssetMenu(fileName = "KeySetting", menuName = "ScriptableObjects/KeySettings", order = 1)]
+public class KeySetting : ScriptableObject
 {
-    public KeyCode upKey = KeyCode.UpArrow;
-    public KeyCode downKey = KeyCode.DownArrow;
-    public KeyCode leftKey = KeyCode.LeftArrow;
-    public KeyCode rightKey = KeyCode.RightArrow;
+    public KeyCode upKey;
+    public KeyCode downKey;
+    public KeyCode leftKey;
+    public KeyCode rightKey;
 
-    public KeyCode Shot = KeyCode.A;
-    public KeyCode Jump = KeyCode.S;
-    public KeyCode Call = KeyCode.D;
-    public KeyCode Interaction = KeyCode.F;
+    public KeyCode Shot;
+    public KeyCode Jump;
+    public KeyCode Call;
+    public KeyCode Interaction;
 }

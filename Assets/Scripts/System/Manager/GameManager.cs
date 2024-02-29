@@ -1,15 +1,6 @@
-using JetBrains.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
@@ -65,6 +56,9 @@ public class GameManager : MonoBehaviour
     GameSavemanager _gameSaveManager = new GameSavemanager();
     public static GameSavemanager Save { get { return gm_Instance._gameSaveManager; } }
 
+    SceneController _sceneManager = new SceneController();
+    public static SceneController Scene { get {  return gm_Instance._sceneManager; } } 
+
     public static SettingManager.SerializeGameData gameData;
 
     public static Vector2 tileOffset = new Vector2(0.32f, 0.32f);
@@ -72,7 +66,8 @@ public class GameManager : MonoBehaviour
     public static bool isPaused;
 
     public static GameObject player;
-    public static GameObject Player { get { return player; } }
+    public static GameObject Player { get { return player; } 
+    }
 
 
     public static CameraManager _cameraManager;
@@ -82,11 +77,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public Transform test;
 
-    public Tilemap testT;
-    public TileBase tile;
 
     public GameObject testDoor;
-
+    public KeySetting keysetting;
 
     private void Awake()
     {
@@ -101,6 +94,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1.0f;
 
+        gameData = new SettingManager.SerializeGameData();
 
         _settingManager.SetResolutionList();
         _settingManager.SetLanguageList();
@@ -108,15 +102,15 @@ public class GameManager : MonoBehaviour
         // If Not First Run
         if (PlayerPrefs.HasKey("FirstRun"))
         {
-            gameData = _settingManager.LoadSettingData();
+            _settingManager.LoadSettingData();
 
         }
         // If First Run
         else
         {
-            gameData = _settingManager.SetFirstSetting();
+            _settingManager.SetFirstSetting();
             _settingManager.SaveSettingData();
-            gameData = _settingManager.LoadSettingData();
+            _settingManager.LoadSettingData();
 
         }
 
@@ -162,7 +156,7 @@ public class GameManager : MonoBehaviour
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log(Setting.gameData.masterVolume);
+            Debug.Log(gameData.masterVolume);
         }
         if (UnityEngine.Input.GetKeyDown(KeyCode.G))
         {
@@ -230,6 +224,12 @@ public class GameManager : MonoBehaviour
         Stage.Update();
     }
 
+    public static void CharactorSpawnStartGame()
+    {
+        Transform pos = GameObject.Find("SpawnPoint").GetComponent<Transform>();
+        CharactorSpawn(pos, 10001001);
+    }
+
     public static void CharactorSpawn(Transform transform, int id)
     {
         Vector3 tmp = transform.position;
@@ -265,4 +265,22 @@ public class GameManager : MonoBehaviour
     {
         Resource.Destroy(go);
     }
+
+    public static async void SceneControl(string targetScene)
+    {
+        if(GetUIState() != UIManager.UIState.Loading)
+        {
+            UIManager.ChangeState(UIManager.UIState.Loading);
+            await Scene.SceneLoad(targetScene);
+        }
+    }
+
+    public static void GameStart()
+    {
+        Save.NewGame();
+        SceneControl("InGameScene");
+
+    }
+
+    
 }

@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static UnityEditor.Progress;
 
 public class PlayerController : KinematicObject
 {
@@ -130,7 +129,10 @@ public class PlayerController : KinematicObject
             {
                 SetAlarm(2, 1f);
             }
-            SetCommandBuffer();
+            if(canMove)
+            {
+                SetCommandBuffer();
+            }
             currentState = charactor.stateMachine.getStateStr();
 
             if (isAttackInput)
@@ -198,11 +200,12 @@ public class PlayerController : KinematicObject
                     {
                         triggers[triggerIndex].Interaction();
                     }
-
+/*
                     if (Input.GetKeyDown(KeyCode.X))
                     {
-                        //            SetSkin(1);
+                                    SetSkin(1);
                     }
+*/
                 }
             }
         }
@@ -426,7 +429,7 @@ public class PlayerController : KinematicObject
         {
             for(int i = predefinedCmds.Count - 1; i >= 0; i--)
             {
-                for(int j = inputs.Count - 1; i >= 0; j--)
+                for(int j = inputs.Count - 1; j >= 0; j--)
                 {
                     if (inputs[j].Item1 == KeyValues.O)
                     {
