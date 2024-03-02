@@ -56,7 +56,7 @@ public class KinematicObject : Obj
     public Vector2 _sawDir;
     public Vector2 sawDir {  get { return _sawDir; } set {  _sawDir = value; } }
 
-    public float boundRatio;
+    protected bool isJump;
 
     /// <summary>
     /// Bounce the objects velocity in a direction.
@@ -105,8 +105,7 @@ public class KinematicObject : Obj
         canMove = true;
         isForceMoving = false;
         groundNormal = Vector3.up;
-
-        boundRatio = 0.5f;
+        isJump = false;
     }
 
 
@@ -142,12 +141,10 @@ public class KinematicObject : Obj
         if (velocity.y < 0)
         {
             velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
-            IsGrounded = false;
         }
         else
         {
             velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
-            Debug.Log(velocity.y);
         }
 
 
@@ -164,6 +161,10 @@ public class KinematicObject : Obj
         }
 
         var deltaPosition = velocity * Time.deltaTime;
+        if (isJump)
+        {
+            Debug.Log(deltaPosition.y);
+        }
         PerformMovement(deltaPosition);
 
 
@@ -187,7 +188,6 @@ public class KinematicObject : Obj
             {
                 if (xHitBuffer[i].collider != null)
                 {
-                    Debug.Log(xHitBuffer[i].collider.gameObject);
                     collisionList.Add(xHitBuffer[i].collider.gameObject);
                     applyHitsX.Add(new KeyValuePair<GameObject, RaycastHit2D>(xHitBuffer[i].collider.gameObject, xHitBuffer[i]));
                 }
@@ -198,7 +198,6 @@ public class KinematicObject : Obj
             {
                 if (yHitBuffer[i].collider != null)
                 {
-                    Debug.Log(yHitBuffer[i].collider.gameObject);
                     if (collisionList.Contains(yHitBuffer[i].collider.gameObject))
                     {
                         KeyValuePair<GameObject, RaycastHit2D> kv = applyHitsX.Find((item) => item.Key == yHitBuffer[i].collider.gameObject);
@@ -234,7 +233,6 @@ public class KinematicObject : Obj
 
             foreach(KeyValuePair<GameObject, RaycastHit2D> hit in applyHitsX)
             {
-                Debug.Log(hit.Key);
                 moveAccel.x *= 0f;
                 var modifiedDistance = hit.Value.distance - shellRadius;
                 if (modifiedDistance == -shellRadius)
@@ -265,37 +263,42 @@ public class KinematicObject : Obj
             IsGrounded = false;
             foreach (KeyValuePair<GameObject, RaycastHit2D> hit in applyHitsY)
             {
-                Debug.Log(hit.Key);
-                Debug.Log(hit.Value.point);
-                if(hit.Value.normal.y > minGroundNormalY)
+                if(hit.Value.normal.y > minGroundNormalY && !isJump)
                 {
                     groundNormal = hit.Value.normal;
                     IsGrounded = true;
                     velocity.y = 0;
                 }
                 var modifiedDistance = hit.Value.distance - shellRadius;
-                if (modifiedDistance < 0)
+                if(move.y > 0)
                 {
-                    float collisionDistance = transform.position.y - hit.Value.point.y;
-                    float boundy = GetComponent<Collider2D>().bounds.extents.y;
-                    float offset = GetComponent<Collider2D>().offset.y;
-                    if (collisionDistance < 0)
-                    {
-                        yDistance = -(boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
-                    }
-                    else
-                    {
-                        yDistance = (boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
-
-                    }
+                    yDistance = modifiedDistance < yDistance ? yDistance : modifiedDistance;
                 }
                 else
                 {
-                    yDistance = modifiedDistance < yDistance ? modifiedDistance : yDistance;
+                    if (modifiedDistance == -shellRadius)
+                    {
+                        float collisionDistance = transform.position.y - hit.Value.point.y;
+                        float boundy = GetComponent<Collider2D>().bounds.extents.y;
+                        float offset = GetComponent<Collider2D>().offset.y;
+                        if (collisionDistance < 0)
+                        {
+                            yDistance = -(boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+                        }
+                        else
+                        {
+                            yDistance = (boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+
+                        }
+                        Debug.Log(yDistance);
+                    }
+                    else
+                    {
+                        yDistance = modifiedDistance < yDistance ? modifiedDistance : yDistance;
+                    }
                 }
             }
 
-            Debug.Log(yDistance);
 
 
             body.position += Vector2.up * yDistance;

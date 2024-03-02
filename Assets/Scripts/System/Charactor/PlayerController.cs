@@ -67,6 +67,7 @@ public class PlayerController : KinematicObject
     public int triggerIndex;
     
 
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -536,6 +537,11 @@ public class PlayerController : KinematicObject
         isAction = false;
     }
 
+    public override void Alarm6()
+    {
+        isJump = false;
+    }
+
     public void MoveKey()
     {
         isSit = false;
@@ -583,8 +589,11 @@ public class PlayerController : KinematicObject
         if (Input.GetKeyDown(GameManager.Input._keySettings.Jump) && IsGrounded && canMove)
         {
             charactor.Jump();
+            isJump = true;
             IsGrounded = false;
             jumpTime = 0f;
+            SetAlarm(6, 0.1f);
+            Debug.Log(velocity.y);
         }
 
         if (Input.GetKey(GameManager.Input._keySettings.Jump) && !IsGrounded && canMove)
@@ -655,12 +664,6 @@ public class PlayerController : KinematicObject
 
     public void SetSkin(int index)
     {
-/*        if(bodySkinHandler.IsValid())
-            Addressables.Release(bodySkinHandler);
-        if (legSkinHandler.IsValid())
-            Addressables.Release(legSkinHandler);
-        if(backHairHandler.IsValid())
-            Addressables.Release(backHairHandler);*/
         currentSkin = index;
 
 
@@ -672,25 +675,7 @@ public class PlayerController : KinematicObject
         isSetBackHair = true;
         haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Halo");
         isSetHalo = true;
-        /*
-        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Body").Completed += handle =>
-        {
-            bodySkinHandler = handle;
-            bodyAnimator.runtimeAnimatorController = handle.Result;
-            isSetBody = true;
-        };
-        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Leg").Completed += handle =>
-        {
-            legSkinHandler = handle;
-            legAnimator.runtimeAnimatorController = handle.Result;
-            isSetLeg = true;
-        };
-        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "BackHair").Completed += handle =>
-        {
-            backHairHandler = handle;
-            legAnimator.runtimeAnimatorController = handle.Result;
-            isSetBackHair = true;
-        };*/
+
     }
 
     public void AnimationPlayBody(string clip, float spd = 1)

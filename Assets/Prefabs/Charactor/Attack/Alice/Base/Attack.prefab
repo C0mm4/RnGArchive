@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3232841757730432813}
   - component: {fileID: 691499353326283410}
   - component: {fileID: 193574909118462023}
-  - component: {fileID: 3768138603974495290}
+  - component: {fileID: -2032557861597210149}
   m_Layer: 10
   m_Name: Attack
   m_TagString: Untagged
@@ -134,7 +134,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3768138603974495290
+--- !u!114 &-2032557861597210149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2570546052596934476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b03fd127968f18e42b93bd679b9c35b1, type: 3}
+  m_Script: {fileID: 11500000, guid: b9d31c03c12effe4ca66e8d4f92e93a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -151,10 +151,15 @@ MonoBehaviour:
   minGroundNormalY: 0.45
   gravityModifier: 1
   velocity: {x: 0, y: 0}
+  moveAccel: {x: 0, y: 0}
   IsGrounded: 0
   canMove: 1
-  moveAccel: {x: 0, y: 0}
+  isForceMoving: 0
+  targetVelocity: {x: 0, y: 0}
   animator: {fileID: 0}
   currentAnimation: 
+  moveTargetPos: {x: 0, y: 0, z: 0}
   _sawDir: {x: 0, y: 0}
+  boundRatio: 0
   dmg: 0
+  type: 0

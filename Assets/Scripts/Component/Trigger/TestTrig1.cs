@@ -17,8 +17,7 @@ public class TestTrig1 : Trigger
         PlayerController player = GameManager.player.GetComponent<PlayerController>();
         GameManager.UIManager.ChangeState(UIManager.UIState.CutScene);
         player.canMove = false;
-        /*
-                var awaitNpc = GameManager.InstantiateAsync("TestNPC", utahaSpawn.position);
+        /*        var awaitNpc = GameManager.InstantiateAsync("TestNPC", utahaSpawn.position);
 
                 GameObject npcObj = awaitNpc;
                 NPC npc = npcObj.GetComponent<NPC>();
@@ -41,35 +40,33 @@ public class TestTrig1 : Trigger
 
 
                 GameManager.CameraManager.CameraMove(Door.transform);
-        */
-        var pos = Door.transform.position;
-        pos.x += Door.InDir.x * 1.5f * Door.transform.localScale.x;
-#pragma warning disable CS4014
-        GameObject[] gos = new GameObject[4];
-        for(int i = 0; i < 4; i++)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(0.5f));
-            GameObject go = GameManager.InstantiateAsync("Sweaper", pos);
-            go.GetComponent<Mob>().CreateHandler();
-            Vector3 movePos = Door.transform.position;
-            movePos.x += -Door.InDir.x * ((Door.InDir.x * 1.25f) + (i * 0.9f)); 
-            go.GetComponent<Mob>().InDoor(Door, movePos);
-            gos[i] = go;
-        }
-#pragma warning restore CS4014
-/*
-        await Task.Delay(TimeSpan.FromSeconds(1f));
+                var pos = Door.transform.position;
+                pos.x += Door.InDir.x * 1.5f * Door.transform.localScale.x;
 
-        GameManager.CameraManager.CameraMove(player.transform);
-        npc.SetScript("너의 빛의 검으로 드론을 파괴해");
-        await npc.Say();
-        npc.SetScript("");
-*/
+        #pragma warning disable CS4014
+                GameObject[] gos = new GameObject[4];
+                for(int i = 0; i < 4; i++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1f));
+                    GameObject go = GameManager.InstantiateAsync("Sweaper", pos);
+                    go.GetComponent<Mob>().CreateHandler();
+                    Vector3 movePos = Door.transform.position;
+                    movePos.x += -Door.InDir.x * ((Door.InDir.x * 1.25f) + (i * 0.9f)); 
+                    go.GetComponent<Mob>().InDoor(Door, movePos);
+                    gos[i] = go;
+                }
+        #pragma warning restore CS4014
+                await Task.Delay(TimeSpan.FromSeconds(1f));
+
+                GameManager.CameraManager.CameraMove(player.transform);
+                npc.SetScript("너의 빛의 검으로 드론을 파괴해");
+                await npc.Say();
+                npc.SetScript("");
+                foreach(GameObject go in gos)
+                {
+                    go.GetComponent<Mob>().canMove = true;
+                }*/
         player.canMove = true;
-        foreach(GameObject go in gos)
-        {
-            go.GetComponent<Mob>().canMove = true;
-        }
         GameManager.UIManager.ChangeState(UIManager.UIState.InPlay);
     }
 }
