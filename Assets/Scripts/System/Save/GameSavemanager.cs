@@ -7,7 +7,7 @@ using System.IO;
 public class GameSavemanager
 {
     private string saveFilePath;
-    public GameProgress progress;
+
 
     public void initialize()
     {
@@ -16,18 +16,28 @@ public class GameSavemanager
 
     public void NewGame()
     {
-        progress = new GameProgress();
-        GameManager.Trigger.activeTriggerLists = new Dictionary<string, TriggerData>();
+        GameManager.Progress = new GameProgress();
+        GameManager.Progress.activeTrigs = new Dictionary<string, TriggerData>();
     }
 
-    public void SaveGameprogress()
+    public void SaveGameprogress(SaveObj savePoint)
     {
         using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Create))
         {
             BinaryWriter writer = new BinaryWriter(fileStream);
+            // Save SavePoints and MapData
+            writer.Write(GameManager.Progress.saveMapId);
+            Debug.Log(GameManager.Progress.saveMapId);
+            writer.Write(savePoint.transform.position.x);
+            Debug.Log(savePoint.transform.position.x);
+            writer.Write(savePoint.transform.position.y);
+            Debug.Log(savePoint.transform.position.y);
+            writer.Write(GameManager.Progress.currentCharactorId);
+            Debug.Log(GameManager.Progress.currentCharactorId);
+
             // Save Trigger Datas
-            writer.Write(GameManager.Trigger.activeTriggerLists.Count);
-            foreach(TriggerData trig in GameManager.Trigger.activeTriggerLists.Values)
+            writer.Write(GameManager.Progress.activeTrigs.Count);
+            foreach(TriggerData trig in GameManager.Progress.activeTrigs.Values)
             {
                 writer.Write(trig.id);
                 writer.Write(trig.isActivate);
@@ -40,10 +50,20 @@ public class GameSavemanager
         if(File.Exists(saveFilePath))
         {
             GameProgress saveProgress = new GameProgress();
-            GameManager.Trigger.activeTriggerLists = new();
+            Dictionary<string, TriggerData> trigs = new();
+            saveProgress.activeTrigs = trigs;
+
             using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Open))
             {
                 BinaryReader reader = new BinaryReader(fileStream);
+
+                saveProgress.saveMapId= reader.ReadString();
+                Debug.Log(saveProgress.saveMapId);
+                saveProgress.saveP = new Vector3(reader.ReadSingle(), reader.ReadSingle());
+                Debug.Log(saveProgress.saveP);
+                saveProgress.currentCharactorId = reader.ReadInt32();
+                Debug.Log(saveProgress.currentCharactorId);
+
                 // Load Triggers
                 int cnt = reader.ReadInt32();
                 Debug.Log(cnt);
@@ -52,14 +72,14 @@ public class GameSavemanager
                     string id = reader.ReadString();
                     bool isActive = reader.ReadBoolean();
                     TriggerData trigData = new TriggerData(id, isActive);
-                    GameManager.Trigger.ActiveTrigger(trigData);
+                    saveProgress.activeTrigs[id] = trigData;
                 }
             }
-            progress = saveProgress;
+            GameManager.Progress = saveProgress;
         }
         else
         {
-            progress = new GameProgress();
+            GameManager.Progress = new GameProgress();
         }
     }
 

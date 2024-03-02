@@ -23,6 +23,8 @@ public class NPC : InteractionTrigger
     public float nextSayDelay;
     public GameObject letterBox;
 
+    public Animator animator;
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -113,5 +115,6 @@ public class NPC : InteractionTrigger
 
         isSaying = false;
     }
+
 
 }

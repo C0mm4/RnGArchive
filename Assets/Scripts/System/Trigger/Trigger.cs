@@ -11,34 +11,49 @@ public class Trigger : Obj
 
     public TriggerData data;
 
+    public int SelectIndex;
+
     public override void OnCreate()
     {
         base.OnCreate();
         triggerBox = GetComponent<Collider2D>();
         triggerBox.isTrigger = true;
         data.isActivate = false;
+        if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+        {
+            data.isActivate = true;
+        }
+        else
+        {
+            data.isActivate = false;
+        }
     }
 
-    public async void OnTriggerEnter2D(Collider2D collision)
+    public async void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject == GameManager.player)
         {
-            if (!data.isActivate)
+            if(GameManager.GetUIState() == UIManager.UIState.InPlay)
             {
-                if(nodeIds.Count == 0)
+                if (!data.isActivate)
                 {
-                    await TriggerActive();
-                }
-                else
-                {
-                    if (CheckNodesActive())
+                    if (nodeIds.Count == 0)
                     {
                         await TriggerActive();
                     }
+                    else
+                    {
+                        if (CheckNodesActive())
+                        {
+                            await TriggerActive();
+                        }
+                    }
                 }
+
             }
         }
     }
+
 
     public virtual async Task TriggerActive()
     {
@@ -53,7 +68,7 @@ public class Trigger : Obj
     {
         foreach (string node in nodeIds)
         {
-            if (!GameManager.Trigger.activeTriggerLists.ContainsKey(node))
+            if (!GameManager.Progress.activeTrigs.ContainsKey(node))
             {
                 return false;
             }
@@ -61,10 +76,10 @@ public class Trigger : Obj
         return true;
     }
 
-    public override void Step()
+    public override void BeforeStep()
     {
-        base.Step();
-        if (GameManager.Trigger.activeTriggerLists.ContainsKey(data.id))
+        base.BeforeStep();
+        if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
         {
             data.isActivate = true;
         }

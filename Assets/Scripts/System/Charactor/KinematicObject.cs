@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Schema;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -23,7 +25,7 @@ public class KinematicObject : Obj
     /// The current velocity of the entity.
     /// </summary>
     public Vector2 velocity;
-    protected Vector2 moveAccel;
+    public Vector2 moveAccel;
 
     /// <summary>
     /// Is the entity currently sitting on a surface?
@@ -40,7 +42,8 @@ public class KinematicObject : Obj
     protected Vector2 groundNormal;
     protected Rigidbody2D body;
     protected ContactFilter2D contactFilter;
-    protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+    protected RaycastHit2D[] xHitBuffer = new RaycastHit2D[16];
+    protected RaycastHit2D[] yHitBuffer = new RaycastHit2D[16];
 
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
@@ -52,6 +55,8 @@ public class KinematicObject : Obj
 
     public Vector2 _sawDir;
     public Vector2 sawDir {  get { return _sawDir; } set {  _sawDir = value; } }
+
+    public float boundRatio;
 
     /// <summary>
     /// Bounce the objects velocity in a direction.
@@ -99,6 +104,9 @@ public class KinematicObject : Obj
         sawDir = new Vector2(1, 0);
         canMove = true;
         isForceMoving = false;
+        groundNormal = Vector3.up;
+
+        boundRatio = 0.5f;
     }
 
 
@@ -137,7 +145,10 @@ public class KinematicObject : Obj
             IsGrounded = false;
         }
         else
+        {
             velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+            Debug.Log(velocity.y);
+        }
 
 
 
@@ -152,51 +163,145 @@ public class KinematicObject : Obj
             FlipX(false);
         }
 
-        var deltaPosition = velocity * Time.deltaTime;  
-        var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-        var move = moveAlongGround * deltaPosition.x;
+        var deltaPosition = velocity * Time.deltaTime;
+        PerformMovement(deltaPosition);
 
-
-        // Compute X Axis Move
-        PerformMovement(move, false);
-
-        // Change x, y in move vector
-        move = Vector2.up * deltaPosition.y;
-
-        // Compute Y Axis Move
-        PerformMovement(move, true);
 
     }
 
-    protected void PerformMovement(Vector2 move, bool yMovement)
+    protected void PerformMovement(Vector2 move)
     {
         var distance = move.magnitude;
-
-        if (distance > minMoveDistance)
+        var xDistance = move.x;
+        var yDistance = move.y;
+        xHitBuffer = new RaycastHit2D[16];
+        yHitBuffer = new RaycastHit2D[16];
+        if(distance > minMoveDistance)
         {
-            //check if we hit anything in current direction of travel
-            var count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
-            for (var i = 0; i < count; i++)
+            var xMove = new Vector2(move.x, 0f);
+            var xCount = body.Cast(xMove, contactFilter, xHitBuffer, xDistance + shellRadius);
+            List<GameObject> collisionList = new List<GameObject>();
+            List<KeyValuePair<GameObject, RaycastHit2D>> applyHitsX = new List<KeyValuePair<GameObject, RaycastHit2D>>();
+            List<KeyValuePair<GameObject, RaycastHit2D>> applyHitsY = new List<KeyValuePair<GameObject, RaycastHit2D>>();
+            for(var i = 0; i < xCount; i++)
             {
-                CheckCollision(hitBuffer[i], yMovement);
-
-                //remove shellDistance from actual move distance.
-                if (hitBuffer[i].collider.tag == "Wall")
+                if (xHitBuffer[i].collider != null)
                 {
-                    var modifiedDistance = hitBuffer[i].distance - shellRadius;
-                    distance = modifiedDistance < distance ? modifiedDistance : distance;
-                }
-                if (hitBuffer[i].collider.tag == "Enemy")
-                {
-                    if (hitBuffer[i].normal.y == 1)
-                    {
-                        var modifiedDistance = hitBuffer[i].distance - shellRadius;
-                        distance = modifiedDistance < distance ? modifiedDistance : distance;
-                    }
+                    Debug.Log(xHitBuffer[i].collider.gameObject);
+                    collisionList.Add(xHitBuffer[i].collider.gameObject);
+                    applyHitsX.Add(new KeyValuePair<GameObject, RaycastHit2D>(xHitBuffer[i].collider.gameObject, xHitBuffer[i]));
                 }
             }
+            var yMove = new Vector2(0f, move.y);
+            var yCount = body.Cast(yMove, contactFilter, yHitBuffer, yDistance + shellRadius);
+            for(var i = 0; i <= yCount; i++)
+            {
+                if (yHitBuffer[i].collider != null)
+                {
+                    Debug.Log(yHitBuffer[i].collider.gameObject);
+                    if (collisionList.Contains(yHitBuffer[i].collider.gameObject))
+                    {
+                        KeyValuePair<GameObject, RaycastHit2D> kv = applyHitsX.Find((item) => item.Key == yHitBuffer[i].collider.gameObject);
+                        RaycastHit2D xRay = kv.Value;
+                        try
+                        {
+                            Vector3 dir = new Vector3(xRay.point.x, xRay.point.y) - (kv.Key.transform.position + new Vector3(kv.Key.GetComponent<Collider2D>().offset.x, kv.Key.GetComponent<Collider2D>().offset.y));
+
+                            float xBound = kv.Key.GetComponent<Collider2D>().bounds.extents.x - Mathf.Abs(dir.x);
+                            float yBound = kv.Key.GetComponent<Collider2D>().bounds.extents.y - Mathf.Abs(dir.y);
+
+                            if (yBound < xBound)
+                            {
+                                applyHitsX.Remove(kv);
+                                applyHitsY.Add(new KeyValuePair<GameObject, RaycastHit2D>(yHitBuffer[i].collider.gameObject, yHitBuffer[i]));
+                            }
+
+                        }
+                        catch
+                        {
+                            collisionList.Add(yHitBuffer[i].collider.gameObject);
+                            applyHitsY.Add(new KeyValuePair<GameObject, RaycastHit2D>(yHitBuffer[i].collider.gameObject, yHitBuffer[i]));
+                        }
+                    }
+                    else
+                    {
+                        collisionList.Add(yHitBuffer[i].collider.gameObject);
+                        applyHitsY.Add(new KeyValuePair<GameObject, RaycastHit2D>(yHitBuffer[i].collider.gameObject, yHitBuffer[i]));
+                    }
+
+                }
+            }
+
+            foreach(KeyValuePair<GameObject, RaycastHit2D> hit in applyHitsX)
+            {
+                Debug.Log(hit.Key);
+                moveAccel.x *= 0f;
+                var modifiedDistance = hit.Value.distance - shellRadius;
+                if (modifiedDistance == -shellRadius)
+                {
+                    float collisionDistance = transform.position.x - hit.Value.point.x;
+                    float boundy = GetComponent<Collider2D>().bounds.extents.x;
+                    float offset = GetComponent<Collider2D>().offset.x;
+                    if(collisionDistance < 0)
+                    {
+                        xDistance = -(boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+                    }
+                    else
+                    {
+                        xDistance = (boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+
+                    }
+                }
+                else
+                {
+                    xDistance = modifiedDistance < xDistance ? modifiedDistance : xDistance;
+                }
+            }
+
+
+            body.position += Vector2.right * xDistance;
+
+
+            IsGrounded = false;
+            foreach (KeyValuePair<GameObject, RaycastHit2D> hit in applyHitsY)
+            {
+                Debug.Log(hit.Key);
+                Debug.Log(hit.Value.point);
+                if(hit.Value.normal.y > minGroundNormalY)
+                {
+                    groundNormal = hit.Value.normal;
+                    IsGrounded = true;
+                    velocity.y = 0;
+                }
+                var modifiedDistance = hit.Value.distance - shellRadius;
+                if (modifiedDistance < 0)
+                {
+                    float collisionDistance = transform.position.y - hit.Value.point.y;
+                    float boundy = GetComponent<Collider2D>().bounds.extents.y;
+                    float offset = GetComponent<Collider2D>().offset.y;
+                    if (collisionDistance < 0)
+                    {
+                        yDistance = -(boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+                    }
+                    else
+                    {
+                        yDistance = (boundy - Mathf.Abs(collisionDistance + offset)) * 2f;
+
+                    }
+                }
+                else
+                {
+                    yDistance = modifiedDistance < yDistance ? modifiedDistance : yDistance;
+                }
+            }
+
+            Debug.Log(yDistance);
+
+
+            body.position += Vector2.up * yDistance;
+
         }
-        body.position += move.normalized * distance;
+
     }
 
     public virtual void CheckCollision(RaycastHit2D rh, bool yMovement)
@@ -221,7 +326,7 @@ public class KinematicObject : Obj
         }
         if (rh.collider.tag == "Wall")
         {
-            // Check for X Axis Collision
+/*            // Check for X Axis Collision
             if (!yMovement)
             {
                 if (velocity.y <= 0)
@@ -244,7 +349,7 @@ public class KinematicObject : Obj
                     }
                 }
             }
-            else
+            else*/
             {        
                 // Hit Rooftop Fall down
                 if (currentNormal.y < 0)
@@ -313,11 +418,11 @@ public class KinematicObject : Obj
 
             await AwaitMoveToPosition(() => (Mathf.Abs(transform.position.x - moveTargetPos.x)) >= 0.05f);
 
-            canMove = false;
+            canMove = true;
         }
         else
         {
-            canMove = false;
+            canMove = true;
         }
 
         isForceMoving = false;

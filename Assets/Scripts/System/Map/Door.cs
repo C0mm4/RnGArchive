@@ -6,14 +6,14 @@ public class Door : InteractionTrigger
 {
     public Vector2 InDir;
 
-    public int id;
-    public int connectRoomId;
-    public int connectDoorId;
+    public string id;
+    public string connectRoomId;
+    public string connectDoorId;
 
     public override async void Interaction()
     {
         base.Interaction();
         await GameManager.player.GetComponent<PlayerController>().OutDoor(this);
-
+        await GameManager.Scene.MoveMap(connectRoomId, connectDoorId);
     }
 }

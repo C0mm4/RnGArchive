@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,14 +12,47 @@ public class SceneController
     Image fadeOutImg;
     private float fadeOutTime = 1f;
 
-    public async Task SceneLoad(string scene)
+
+    
+    public async Task StartGame()
     {
         CreateFadeOutObj();
-        await FadeOut(scene);
+        await FadeOut("InGameScene");
 
+        await LoadMap("10012100");
         GameManager.CharactorSpawnStartGame();
+        await Task.Delay(TimeSpan.FromSeconds(.5f));
 
         await FadeIn();
+    }
+
+    public async Task LoadGame()
+    {
+        CreateFadeOutObj();
+        await FadeOut("InGameScene");
+        GameManager.Save.LoadProgress();
+        await LoadMap(GameManager.Progress.saveMapId);
+        GameManager.CharactorSpawnInLoadGame();
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        await FadeIn();
+    }
+
+    public async Task MoveMap(string mapId, string doorId)
+    {
+        CreateFadeOutObj();
+        await FadeOut("InGameScene");
+        GameManager.Stage.LoadMap(mapId);
+        GameManager.CharactorSpawnInLoad(doorId);
+        await FadeIn();
+    }
+
+    public async Task LoadMap(string mapId)
+    {
+        CreateFadeOutObj();
+        await FadeOut("InGameScene");
+        GameManager.Stage.LoadMap(mapId);
     }
 
     public void CreateFadeOutObj()
@@ -65,6 +99,7 @@ public class SceneController
             await Task.Yield();
         }
         CreateFadeOutObj();
+        fadeOutImg.color = Color.black;
     }
 
     private async Task FadeIn()
@@ -80,8 +115,6 @@ public class SceneController
 
             await Task.Yield();
         }
-
-
     }
 
 }

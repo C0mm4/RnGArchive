@@ -8,7 +8,13 @@ public class Sweaper : AIModel
     {
         if(!target.isForceMoving)
         {
-            target.moveTargetPos = player.transform.position;
+            target.SetTargetPosition(player.transform.position);
+            if (target.GetPlayerDistance() <= 0.2f)
+            {
+                Debug.Log("A");
+                // Attack Code Add
+                target.moveAccel *= 0;
+            }
         }
     }
 

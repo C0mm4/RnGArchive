@@ -22,10 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Player
-  - m_GUID: 51f9b3a1f9cd5a446bae266dadea78b2
-    m_Address: ArisBase
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: d56bac8edd5755e4dad85cc863ad9b47
     m_Address: AliceBaseLeg
     m_ReadOnly: 0

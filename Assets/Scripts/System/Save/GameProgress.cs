@@ -6,21 +6,11 @@ using UnityEngine;
 [System.Serializable]   
 public class GameProgress 
 {
-
+    public string saveMapId;
     public Vector3 saveP;
+    public int currentCharactorId;
     public List<Charactor> openCharactors;
-
-    public void WriteToBinary(BinaryWriter writer)
-    {
-
-    }
-
-    public static GameProgress ReadFromBinary(BinaryReader reader)
-    {
-        GameProgress progress = new GameProgress();
+    public Dictionary<string, TriggerData> activeTrigs;
 
 
-
-        return progress;
-    }
 }

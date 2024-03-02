@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class StageController
@@ -34,5 +35,11 @@ public class StageController
     {
         party.Add(GameManager.CharaCon.charactors[10001001]);
         party.Add(GameManager.CharaCon.charactors[10001002]);
+    }
+
+    public void LoadMap(string mapId)
+    {
+        GameObject go = GameManager.InstantiateAsync(mapId);
+        GameManager.Progress.saveMapId = mapId;
     }
 }

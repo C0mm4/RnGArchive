@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 632798970513050772}
   - component: {fileID: 4946874601252786718}
+  - component: {fileID: 5662721222491012449}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -84,6 +85,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5662721222491012449
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785926874402317300}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd586cff403064545a2bf8520db58659, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4380557345466240931
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,11 +158,8 @@ MonoBehaviour:
   script: 
   sayDistance: 0
   isSaying: 0
-  isSayingDelay: 0
-  isNextSayDelay: 0
-  isTrigger: 0
-  isSayEnd: 0
   sayingIndex: 0
   sayingDelay: 0.05
   nextSayDelay: 1
   letterBox: {fileID: 0}
+  animator: {fileID: 5662721222491012449}

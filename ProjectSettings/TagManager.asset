@@ -53,8 +53,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Door
+    uniqueID: 2623169763
+    locked: 0
+  - name: Halo
+    uniqueID: 368192261
+    locked: 0
+  - name: PlayerBack
     uniqueID: 1562918333
+    locked: 0
+  - name: PlayerLeg
+    uniqueID: 527595085
+    locked: 0
+  - name: PlayerBody
+    uniqueID: 4114853079
     locked: 0
   - name: FrontInGame
     uniqueID: 2018573283

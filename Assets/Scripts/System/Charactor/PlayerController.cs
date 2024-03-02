@@ -35,9 +35,9 @@ public class PlayerController : KinematicObject
     public bool controlEnabled = true;
 
     public Charactor charactor;
-    public AsyncOperationHandle<RuntimeAnimatorController> bodySkinHandler, legSkinHandler;
-    public Animator bodyAnimator, legAnimator;
-    public bool isSetBody, isSetLeg;
+//    public AsyncOperationHandle<RuntimeAnimatorController> bodySkinHandler, legSkinHandler, backHairHandler, haloHandler;
+    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation;
+    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo;
 
     public Skill workingSkill;
 
@@ -172,6 +172,7 @@ public class PlayerController : KinematicObject
     {
         bodyAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
         legAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
+        backHairAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
     }
 
 
@@ -654,12 +655,24 @@ public class PlayerController : KinematicObject
 
     public void SetSkin(int index)
     {
-        if(bodySkinHandler.IsValid())
+/*        if(bodySkinHandler.IsValid())
             Addressables.Release(bodySkinHandler);
         if (legSkinHandler.IsValid())
             Addressables.Release(legSkinHandler);
+        if(backHairHandler.IsValid())
+            Addressables.Release(backHairHandler);*/
         currentSkin = index;
 
+
+        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Body");
+        isSetBody = true;
+        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Leg");
+        isSetLeg = true;
+        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Back");
+        isSetBackHair = true;
+        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Halo");
+        isSetHalo = true;
+        /*
         Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Body").Completed += handle =>
         {
             bodySkinHandler = handle;
@@ -672,6 +685,12 @@ public class PlayerController : KinematicObject
             legAnimator.runtimeAnimatorController = handle.Result;
             isSetLeg = true;
         };
+        Addressables.LoadAssetAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "BackHair").Completed += handle =>
+        {
+            backHairHandler = handle;
+            legAnimator.runtimeAnimatorController = handle.Result;
+            isSetBackHair = true;
+        };*/
     }
 
     public void AnimationPlayBody(string clip, float spd = 1)
@@ -747,6 +766,55 @@ public class PlayerController : KinematicObject
 
         }
     }
+
+    public void AnimationPlayHair(string clip, float spd = 1)
+    {
+        if (isSetBackHair)
+        {
+            if (clip != currentAnimationLeg)
+            {
+                if (System.Array.Exists(backHairAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                {
+                    currentAnimationLeg = clip;
+                    backHairAnimator.speed = spd;
+                    backHairAnimator.Play(clip);
+                }
+                else
+                {
+                    Debug.Log($"Can't Find Clip : {clip}");
+                }
+            }
+            else
+            {
+                backHairAnimator.speed = spd;
+            }
+        }
+    }
+
+    public void AnimationPlayHalo(string clip, float spd = 1)
+    {
+        if (isSetHalo)
+        {
+            if (clip != currentAnimationLeg)
+            {
+                if (System.Array.Exists(haloAnimation.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                {
+                    currentAnimationLeg = clip;
+                    haloAnimation.speed = spd;
+                    haloAnimation.Play(clip);
+                }
+                else
+                {
+                    Debug.Log($"Can't Find Clip : {clip}");
+                }
+            }
+            else
+            {
+                haloAnimation.speed = spd;
+            }
+        }
+    }
+
     public void AddInterractionTrigger(InteractionTrigger trigger)
     {
         if (!triggers.Contains(trigger))

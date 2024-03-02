@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Xml;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor;
@@ -15,7 +15,7 @@ public class ResourceManager
     public Dictionary<string, AsyncOperationHandle> LoadResources = new();
 
     // path에 있느 파일을 로드하는 함수, 로드되는 조건은 Object 일 때
-    public T Load<T>(string path) where T : Object
+    public T Load<T>(string path) where T : UnityEngine.Object
     {
         return Resources.Load<T>(path);
     }
@@ -23,7 +23,7 @@ public class ResourceManager
     // Load Game Object by GameObject instance
     public GameObject Instantiate(GameObject gameObject)
     {
-        GameObject prefab = Object.Instantiate(gameObject);
+        GameObject prefab = UnityEngine.Object.Instantiate(gameObject);
         if(prefab != null)
         {
             return prefab;
@@ -37,7 +37,7 @@ public class ResourceManager
 
     public GameObject Instantiate(GameObject gameObject, Vector3 pos, Quaternion rotation)
     {
-        GameObject prefab = Object.Instantiate(gameObject, pos, rotation);
+        GameObject prefab = UnityEngine.Object.Instantiate(gameObject, pos, rotation);
         if (prefab != null)
         {
             return prefab;
@@ -64,7 +64,6 @@ public class ResourceManager
                 {
                     LoadResources[path] = op;
                 }
-                Debug.Log(op.Result);
                 if (LoadResources.ContainsKey(path))
                 {
                     GameObject go = Instantiate((GameObject)LoadResources[path].Result, pos, rotation);
@@ -80,7 +79,7 @@ public class ResourceManager
         }
     
 
-    public AsyncOperationHandle LoadAssetAsync<T>(string path) where T : Object
+    public AsyncOperationHandle LoadAssetAsync<T>(string path) where T : UnityEngine.Object
     {
         if (LoadResources.ContainsKey(path))
         {
@@ -93,6 +92,19 @@ public class ResourceManager
             LoadResources[path] = op;
             return op;
         }
+    }
+
+    public List<AsyncOperationHandle> LoadAssetAsyncWithTag<T>(string label) where T : UnityEngine.Object
+    {
+        var ops = Addressables.LoadResourceLocationsAsync(label);
+        List<AsyncOperationHandle> ret = new();
+        foreach(var location in ops.Result)
+        {
+            AsyncOperationHandle op = LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey);
+            ret.Add(op);
+        }
+
+        return ret;
     }
 
 
@@ -145,8 +157,7 @@ public Sprite LoadSprite(string path)
         if (obj == null) return;
         if (!Addressables.ReleaseInstance(obj))
         {
-            Debug.Log("Destroy by Object.Destry()");
-            Object.Destroy(obj);
+            UnityEngine.Object.Destroy(obj);
         }
         else
         {

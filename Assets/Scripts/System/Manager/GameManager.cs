@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
     public static GameSavemanager Save { get { return gm_Instance._gameSaveManager; } }
 
     SceneController _sceneManager = new SceneController();
-    public static SceneController Scene { get {  return gm_Instance._sceneManager; } } 
+    public static SceneController Scene { get { return gm_Instance._sceneManager; } }
 
     public static SettingManager.SerializeGameData gameData;
 
@@ -66,12 +68,14 @@ public class GameManager : MonoBehaviour
     public static bool isPaused;
 
     public static GameObject player;
-    public static GameObject Player { get { return player; } 
-    }
+    public static GameObject Player { get { return player; } }
+
+    public static GameProgress gameProgress;
+    public static GameProgress Progress { get { return gameProgress; } set { gameProgress = value; } }
 
 
     public static CameraManager _cameraManager;
-    public static CameraManager CameraManager { get { return _cameraManager; }  set { _cameraManager = value; } }
+    public static CameraManager CameraManager { get { return _cameraManager; } set { _cameraManager = value; } }
 
 
     [SerializeField]
@@ -124,20 +128,13 @@ public class GameManager : MonoBehaviour
 
     public void DataInit()
     {
-        Debug.Log("Start Initialize");
         // UI 연동은 나중에 추가 (로딩 텍스트)
         UIManager.initialize();
-        Debug.Log("UIManager Initialize");
         FSM.init();
-        Debug.Log("FSM Manager Initialize");
         Script.init();
-        Debug.Log("Script Manager Initialize");
         CharaCon.initialize();
-        Debug.Log("Charactor Data Initialize");
         Input.Initialize();
-        Debug.Log("Input Manager Initialize");
         MobSpawner.Initialize();
-        Debug.Log("");
         Save.initialize();
         Trigger.Initialize();
 
@@ -149,7 +146,7 @@ public class GameManager : MonoBehaviour
         // Test Area
 
         Stage.SetInitializeParty();
-        
+
     }
 
     public void Update()
@@ -165,7 +162,7 @@ public class GameManager : MonoBehaviour
 
         FindPlayer();
         ManagerUpdate();
-        if(CameraManager == null)
+        if (CameraManager == null)
         {
             CameraManager cm = GameObject.Find("Main Camera").GetComponent<CameraManager>();
             CameraManager = cm;
@@ -185,7 +182,7 @@ public class GameManager : MonoBehaviour
     private void FindPlayer()
     {
         GameObject go = GameObject.Find("Player");
-        if(go != null)
+        if (go != null)
         {
             player = go;
         }
@@ -230,6 +227,23 @@ public class GameManager : MonoBehaviour
         CharactorSpawn(pos, 10001001);
     }
 
+    public static void CharactorSpawnInLoadGame()
+    {
+        GameObject go = new GameObject();
+        go.transform.position = Progress.saveP;
+        CharactorSpawn(go.transform, Progress.currentCharactorId);
+        Debug.Log(go.transform.position);
+        Destroy(go);
+    }
+
+    public static async void CharactorSpawnInLoad(string doorId)
+    {
+        Door go = FindObjectsOfType<GameObject>().FirstOrDefault(go => go.GetComponent<Door>() != null && go.GetComponent<Door>().id == doorId).GetComponent<Door>();
+        Transform pos = go.transform;
+        CharactorSpawn(pos, 10001001);
+        await player.GetComponent<PlayerController>().InDoor(go);
+    }
+
     public static void CharactorSpawn(Transform transform, int id)
     {
         Vector3 tmp = transform.position;
@@ -241,8 +255,10 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
         player.GetComponent<PlayerController>().CreateHandler();
 
+        Progress.currentCharactorId = id;
+
         _cameraManager.SetBounds();
-        
+
     }
 
     public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
@@ -266,21 +282,38 @@ public class GameManager : MonoBehaviour
         Resource.Destroy(go);
     }
 
-    public static async void SceneControl(string targetScene)
+    public static async Task SceneControlStart(string targetScene)
     {
-        if(GetUIState() != UIManager.UIState.Loading)
+        if (GetUIState() != UIManager.UIState.Loading)
         {
             UIManager.ChangeState(UIManager.UIState.Loading);
-            await Scene.SceneLoad(targetScene);
+            await Scene.StartGame();
+            UIManager.ChangeState(UIManager.UIState.InPlay);
+            Debug.Log(GetUIState().ToString());
         }
     }
 
-    public static void GameStart()
+    public static async Task SceneControlLoad(string targetScene)
     {
-        Save.NewGame();
-        SceneControl("InGameScene");
-
+        if (GetUIState() != UIManager.UIState.Loading)
+        {
+            UIManager.ChangeState(UIManager.UIState.Loading);
+            await Scene.LoadGame();
+            UIManager.ChangeState(UIManager.UIState.InPlay);
+            Debug.Log(GetUIState().ToString());
+        }
     }
 
-    
+    public static async void GameStart()
+    {
+        Save.NewGame();
+        await SceneControlStart("InGameScene");
+    }
+
+    public static async void LoadGame()
+    {
+        Save.LoadProgress();
+        await SceneControlLoad("InGameScene");
+    }
+
 }

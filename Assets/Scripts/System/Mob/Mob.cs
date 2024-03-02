@@ -96,7 +96,7 @@ public class Mob : KinematicObject
         }
         else
         {
-            Debug.Log("AI is Null");
+//            Debug.Log("AI is Null");
         }
     }
 
@@ -149,4 +149,8 @@ public class Mob : KinematicObject
         moveTargetPos = pos;
     }
 
+    public float GetPlayerDistance()
+    {
+        return (GameManager.player.transform.position - transform.position).magnitude;
+    }
 }

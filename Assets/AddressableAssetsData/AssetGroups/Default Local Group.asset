@@ -87,6 +87,50 @@ MonoBehaviour:
     m_Address: FadeOut
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 8610934d53cee8a4e888241c846f747b
+    m_Address: SelectUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 81648c2410127954ebaea85ef93a6851
+    m_Address: Assets/Sprites/UI/TextSellect.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f2f2821d79d6eca43a2223d38fe357a1
+    m_Address: SelectButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72786d86df3f15743bf855ce595778c5
+    m_Address: 10012100
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: eb1348abe9cd86e49b72388e850dcaba
+    m_Address: AliceBase
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fccd16f5a25a06b4bae6e17a34181a64
+    m_Address: AliceBaseBack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 294bfc1dc6aa7624f802002777e93e7f
+    m_Address: Assets/Sprites/Alice/Base/Animation/BackHair/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bbc1f43b9c54dd346ae07cc3512aede8
+    m_Address: AliceBaseHalo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b29a8b371815d1e4d8ddd7b44eda6d70
+    m_Address: Assets/Sprites/Alice/Base/Animation/Halo/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd586cff403064545a2bf8520db58659
+    m_Address: Assets/Sprites/NPC/Kotori/Kotori.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a787f8eb0b04132489f2bf57bea6c667
+    m_Address: Assets/Sprites/NPC/Kotori/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

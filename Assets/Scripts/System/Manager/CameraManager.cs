@@ -82,22 +82,30 @@ public class CameraManager : Obj
 
     public void SetBounds()
     {
-        field = GameObject.Find("InPlay").GetComponent<Tilemap>();
-        BoundsInt bounds = new BoundsInt(field.cellBounds.min, field.cellBounds.size);
-
-        // Iterate over all tiles in the tilemap
-        foreach (Vector3Int pos in field.cellBounds.allPositionsWithin)
+        try
         {
-            // Check if the tile is present
-            if (field.HasTile(pos))
+            field = GameObject.Find("InPlay").GetComponent<Tilemap>();
+            BoundsInt bounds = new BoundsInt(field.cellBounds.min, field.cellBounds.size);
+
+            // Iterate over all tiles in the tilemap
+            foreach (Vector3Int pos in field.cellBounds.allPositionsWithin)
             {
-                // Update bounds to include the position of the tile
-                bounds.min = Vector3Int.Min(bounds.min, pos);
-                bounds.max = Vector3Int.Max(bounds.max, pos);
+                // Check if the tile is present
+                if (field.HasTile(pos))
+                {
+                    // Update bounds to include the position of the tile
+                    bounds.min = Vector3Int.Min(bounds.min, pos);
+                    bounds.max = Vector3Int.Max(bounds.max, pos);
+                }
             }
+            fieldBound = bounds;
+            isSet = true;
+
         }
-        fieldBound = bounds;
-        isSet = true;
+        catch
+        {
+
+        }
     }
 
     public void CameraMove(Transform trans)
