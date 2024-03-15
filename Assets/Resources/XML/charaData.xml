@@ -9,10 +9,10 @@
 				<Eng>Alice</Eng>
 				<Jp>アリス</Jp>
 			</name>
-			<moveAccelSpeed>3</moveAccelSpeed>
-			<breakAccel>10</breakAccel>
 			<maxSpeed>5</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
+			<jumpForce>5</jumpForce>
+			<baseHP>3</baseHP>
 			<path>Alice</path>
 			<AtkType>Mystic</AtkType>
 			<DefType>Special</DefType>
@@ -27,6 +27,7 @@
 					<Eng>Bright Light!</Eng>
 					<Jp>光よ!</Jp>
 					<command>-</command>
+					<baseAmmo>4</baseAmmo>
 				</Skill>
 				<Skill>
 					<class>BalanceBreakdown</class>
@@ -34,6 +35,7 @@
 					<Eng>Balance Breakdown</Eng>
 					<Jp>世界の 法則が 崩壊します！</Jp>
 					<command>236236A</command>
+					<baseAmmo>2</baseAmmo>
 				</Skill>
 				<Skill>
 					<class>ArisCleanUp</class>
@@ -41,6 +43,7 @@
 					<Eng>Aris, Clean Up!</Eng>
 					<Jp>アリス、お掃除します！</Jp>
 					<command>-</command>
+					<baseAmmo>3</baseAmmo>
 				</Skill>
 			</Skills>
 		</Charactor>
@@ -52,10 +55,10 @@
 				<Eng>Midori</Eng>
 				<Jp>ミドリ</Jp>
 			</name>
-			<moveAccelSpeed>3.5</moveAccelSpeed>
-			<breakAccel>10</breakAccel>
 			<maxSpeed>5</maxSpeed>
 			<AttackSpeed>0.7</AttackSpeed>
+			<jumpForce>3</jumpForce>
+			<baseHP>3</baseHP>
 			<path>Midori</path>
 			<AtkType>Piercing</AtkType>
 			<DefType>Light</DefType>
@@ -69,6 +72,7 @@
 					<Eng>Bright Light!</Eng>
 					<Jp>光よ!</Jp>
 					<command>A</command>
+					<baseAmmo>2</baseAmmo>
 				</Skill>
 			</Skills>
 		</Charactor>

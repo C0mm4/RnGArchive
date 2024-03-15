@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
@@ -85,6 +83,8 @@ public class GameManager : MonoBehaviour
     public GameObject testDoor;
     public KeySetting keysetting;
 
+    public static UIState uiState;
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -131,9 +131,9 @@ public class GameManager : MonoBehaviour
         // UI 연동은 나중에 추가 (로딩 텍스트)
         UIManager.initialize();
         FSM.init();
+        Input.Initialize();
         Script.init();
         CharaCon.initialize();
-        Input.Initialize();
         MobSpawner.Initialize();
         Save.initialize();
         Trigger.Initialize();
@@ -144,8 +144,8 @@ public class GameManager : MonoBehaviour
         });
 
         // Test Area
-
-        Stage.SetInitializeParty();
+/*
+        Stage.SetInitializeParty();*/
 
     }
 
@@ -188,9 +188,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static UIManager.UIState GetUIState()
+    public static void ChangeUIState(UIState newState)
     {
-        return UIManager.GetUIState();
+        uiState = newState;
+    }
+
+    public static UIState GetUIState()
+    {
+        return uiState;
     }
 
     public static void ESCPause()
@@ -211,7 +216,7 @@ public class GameManager : MonoBehaviour
     public static void NextCharactor()
     {
         player.GetComponent<PlayerController>().controlEnabled = false;
-        CharactorSpawn(player.transform, Stage.party[Stage.currentIndex].charaData.id);
+        CharactorSpawn(player.transform, Progress.currentParty[Stage.currentIndex].charaData.id);
     }
 
     public void ManagerUpdate()
@@ -236,12 +241,12 @@ public class GameManager : MonoBehaviour
         Destroy(go);
     }
 
-    public static async void CharactorSpawnInLoad(string doorId)
+    public static void CharactorSpawnInLoad(string doorId)
     {
         Door go = FindObjectsOfType<GameObject>().FirstOrDefault(go => go.GetComponent<Door>() != null && go.GetComponent<Door>().id == doorId).GetComponent<Door>();
         Transform pos = go.transform;
-        CharactorSpawn(pos, 10001001);
-        await player.GetComponent<PlayerController>().InDoor(go);
+        CharactorSpawn(pos, Progress.currentCharactorId);
+        player.GetComponent<PlayerController>().canMove = true;
     }
 
     public static void CharactorSpawn(Transform transform, int id)
@@ -255,9 +260,10 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
         player.GetComponent<PlayerController>().CreateHandler();
 
+        Stage.currentCharactor = CharaCon.charactors[id];
+
         Progress.currentCharactorId = id;
 
-        _cameraManager.SetBounds();
 
     }
 
@@ -284,22 +290,22 @@ public class GameManager : MonoBehaviour
 
     public static async Task SceneControlStart(string targetScene)
     {
-        if (GetUIState() != UIManager.UIState.Loading)
+        if (GetUIState() != UIState.Loading)
         {
-            UIManager.ChangeState(UIManager.UIState.Loading);
+            ChangeUIState(UIState.Loading);
             await Scene.StartGame();
-            UIManager.ChangeState(UIManager.UIState.InPlay);
+            ChangeUIState(UIState.InPlay);
             Debug.Log(GetUIState().ToString());
         }
     }
 
     public static async Task SceneControlLoad(string targetScene)
     {
-        if (GetUIState() != UIManager.UIState.Loading)
+        if (GetUIState() != UIState.Loading)
         {
-            UIManager.ChangeState(UIManager.UIState.Loading);
+            ChangeUIState(UIState.Loading);
             await Scene.LoadGame();
-            UIManager.ChangeState(UIManager.UIState.InPlay);
+            ChangeUIState(UIState.InPlay);
             Debug.Log(GetUIState().ToString());
         }
     }

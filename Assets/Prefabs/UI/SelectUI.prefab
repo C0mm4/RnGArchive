@@ -51,5 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
+  isGetInput: 0
   ButtonObj: {fileID: 2277926754749367190, guid: f2f2821d79d6eca43a2223d38fe357a1, type: 3}
   selectIndex: 0

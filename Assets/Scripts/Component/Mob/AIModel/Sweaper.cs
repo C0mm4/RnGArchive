@@ -6,14 +6,19 @@ public class Sweaper : AIModel
 {
     public override void Step()
     {
+        string currentState = target.currentState;
+
         if(!target.isForceMoving)
         {
-            target.SetTargetPosition(player.transform.position);
-            if (target.GetPlayerDistance() <= 0.2f)
+            if(currentState == "Idle" || currentState == "MobMove")
             {
-                Debug.Log("A");
+                target.SetTargetPosition(player.transform.position);
+            }
+            if (target.GetPlayerDistance() <= 0.8f)
+            {
                 // Attack Code Add
-                target.moveAccel *= 0;
+
+                target.ChangeState(new MobAttack(0));
             }
         }
     }

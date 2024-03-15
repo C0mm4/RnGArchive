@@ -13,7 +13,7 @@ public class Jump : PlayerState
 
 
         // Translate State on player action
-        if (player.IsGrounded)
+        if (player.isGrounded)
         {
             player.charactor.SetIdle();
         }

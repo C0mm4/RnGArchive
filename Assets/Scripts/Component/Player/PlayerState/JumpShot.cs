@@ -27,7 +27,7 @@ public class JumpShot : PlayerState
             player.charactor.EndState();
         }
 
-        if (player.IsGrounded)
+        if (player.isGrounded)
         {
             player.charactor.ChangeState(new Shot());
         }

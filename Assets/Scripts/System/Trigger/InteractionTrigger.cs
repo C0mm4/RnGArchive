@@ -7,6 +7,7 @@ public class InteractionTrigger : Obj
 
     public PlayerController player;
     public float detectDistance;
+    public string text;
 
 
     public override void OnCreate()

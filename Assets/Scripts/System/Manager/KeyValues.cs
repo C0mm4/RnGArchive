@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public enum KeyValues
@@ -140,4 +142,45 @@ public static class Func
     public static List<KeyValues> arrows = new() { KeyValues.Up, KeyValues.Left, KeyValues.Down, KeyValues.Right};
     public static List<KeyValues> directions = new() { KeyValues.Up, KeyValues.UpLeft, KeyValues.Left, KeyValues.DownLeft, KeyValues.Down, KeyValues.DownRight, KeyValues.Right, KeyValues.UpRight };
     public static List<KeyValues> actions = new() { KeyValues.Shot, KeyValues.Jump, KeyValues.Call };
+
+    public static string ChangeStringToValue(string txt)
+    {
+        string pattern = @"\{(?<varName>.+?)\}";
+
+        // 텍스트 문자열
+        string ret = txt;
+
+        // 정규식을 사용하여 변수 추출
+        MatchCollection matches = Regex.Matches(ret, pattern);
+
+        // 각 변수에 대해 값을 가져와서 텍스트에 대체
+        foreach (Match match in matches)
+        {
+            string varName = match.Groups["varName"].Value;
+
+            // 변수명을 기반으로 해당 변수의 값을 가져옴
+            string value = GetValueFromVariableName(varName);
+
+            // 텍스트에서 변수를 해당 값으로 대체
+            ret = ret.Replace(match.Value, value);
+        }
+
+        return ret;
+    }
+
+    // 변수명을 기반으로 해당 변수의 값을 가져오는 메서드
+    static string GetValueFromVariableName(string varName)
+    {
+        // 여기서는 단순 예제로 고정된 값 반환
+        // 실제로는 Reflection 등을 사용하여 동적으로 변수 값 가져올 수 있음
+        if (varName == "GameManager.Input._keySettings.Call")
+        {
+            return GameManager.Input._keySettings.Call.ToString();
+        }
+        else
+        {
+            // 해당 변수명에 대한 값이 없는 경우 처리
+            return $"Unknown variable: {varName}";
+        }
+    }
 }

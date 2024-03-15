@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 1785926874402317300}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cd586cff403064545a2bf8520db58659, type: 2}
+  m_Controller: {fileID: 9100000, guid: f1f430ae8ff5bab48b5a9c5eb6825c0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   alarmTime: []
   player: {fileID: 0}
   detectDistance: 0
+  text: 
   script: 
   sayDistance: 0
   isSaying: 0

@@ -1,89 +1,73 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PlayerController : KinematicObject
+public class PlayerController : RigidBodyObject
 {
-    // Command Input System Variable
-    // Command Input List in System
-    private List<(KeyValues, float)> commandInputs;
-    [SerializeField] List<KeyValues> cmds;
-    // Check Last Input Time
-    private float lastInputTime;
-    // Input Correction start Time
-    private float lastProcessBufferT;
-    // Is Start Correction
-    private bool isDetectKey;
+    public bool controlEnabled;
 
-    private List<(KeyValues, float)> inputbuffers;
-    private List<(KeyValues, float)> previousinputbuffers;
-
-    /// <summary>
-    /// Initial jump velocity at the start of a jump.
-    /// </summary>
-    public float jumpTakeOffSpeed = 7;
-    public float jumpTime = 0f;
-    private float maxLongJumpTime = 0.5f;
-
-    /*internal new*/
-    public bool controlEnabled = true;
-
-    public Charactor charactor;
-//    public AsyncOperationHandle<RuntimeAnimatorController> bodySkinHandler, legSkinHandler, backHairHandler, haloHandler;
-    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation;
-    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo;
-
-    public Skill workingSkill;
-
-    public string currentAnimationBody, currentAnimationLeg;
 
     public bool isHitState = false;
     public bool isImmune = false;
 
     public bool _isAction = false;
     public bool isAction { get { return _isAction; } set { _isAction = value; } }
-    public bool isAttack = false;
+    public bool isAttack = false; 
+    public bool isMove;
+    public bool isSit;
+    public bool isInit = false;
     public float lastAttackT;
     public bool isAttackInput = false;
 
-    public int currentSkin;
-
-    [SerializeField]
-    public string currentState;
-    public bool isMove;
-    public bool isSit;
+    public Charactor charactor;
 
     public Vector2 presentSawDir;
 
-    public bool isInit = false;
 
     public List<InteractionTrigger> triggers;
     public int triggerIndex;
-    
+
+    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation;
+    public string currentAnimationBody, currentAnimationLeg;
+    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo;
+    public int currentSkin;
+
+    public Skill workingSkill;
+
+
+    public string currentState;
+
+
+    // Command Input System Variable
+    // Command Input List in System
+    private List<(KeyValues, float)> commandInputs;
+    [SerializeField] List<KeyValues> cmds;
+
+    private List<(KeyValues, float)> inputbuffers;
+    private List<(KeyValues, float)> previousinputbuffers;
 
 
     public override void OnCreate()
     {
         base.OnCreate();
-        
-        body = GetComponent<Rigidbody2D>();
+
 
         inputbuffers = new();
         previousinputbuffers = new();
         commandInputs = new();
         triggers = new();
-        body.gravityScale = 1.0f;
+        gravityModifier = 1f;
 
         sawDir = new Vector2(1, 0);
         presentSawDir = new Vector2(1, 0);
 
         currentSkin = 0;
+
+        int layer = LayerMask.NameToLayer("Player");
+        gameObject.layer = layer;
     }
 
     public void CreateHandler()
@@ -95,17 +79,18 @@ public class PlayerController : KinematicObject
         charactor.stateMachine = new(this);
 
         charactor.ChangeState(new Idle());
-        
+
         SetSkin(currentSkin);
         isInit = true;
     }
+
 
     public override void Step()
     {
         if (isInit)
         {
             base.Step();
-            if(velocity.x == 0)
+            if (body.velocity.x == 0)
             {
                 isMove = false;
             }
@@ -113,16 +98,19 @@ public class PlayerController : KinematicObject
             {
                 isMove = true;
             }
-            if(workingSkill != null)
+            if (GameManager.Progress.isActiveSkill)
             {
-                workingSkill.Step();
-            }
-
-            if(charactor.passiveSkill.Count > 0)
-            {
-                foreach(Skill skill in charactor.passiveSkill)
+                if (workingSkill != null)
                 {
-                    skill.PassiveStep();
+                    workingSkill.Step();
+                }
+
+                if (charactor.passiveSkill.Count > 0)
+                {
+                    foreach (Skill skill in charactor.passiveSkill)
+                    {
+                        skill.PassiveStep();
+                    }
                 }
             }
 
@@ -130,7 +118,7 @@ public class PlayerController : KinematicObject
             {
                 SetAlarm(2, 1f);
             }
-            if(canMove)
+            if (canMove)
             {
                 SetCommandBuffer();
             }
@@ -140,7 +128,7 @@ public class PlayerController : KinematicObject
             {
                 if (!isAction && !isAttack)
                 {
-                    if (IsGrounded)
+                    if (isGrounded)
                     {
                         if (Input.GetKey(GameManager.Input._keySettings.leftKey))
                         {
@@ -157,7 +145,7 @@ public class PlayerController : KinematicObject
                     SetAlarm(4, charactor.charaData.attackSpeed);
                 }
             }
-            if (!isAction && IsGrounded && Mathf.Abs(velocity.x) == 0 && !isAttack)
+            if (!isAction && isGrounded && !isMove && !isAttack)
             {
                 charactor.SetIdle();
             }
@@ -169,49 +157,126 @@ public class PlayerController : KinematicObject
         }
     }
 
-    public override void FlipX(bool isFlip)
-    {
-        bodyAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-        legAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-        backHairAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-    }
-
-
 
     public override void KeyInput()
     {
-        if (controlEnabled)
+        if((GameManager.GetUIState() == UIState.InPlay) || true)
         {
-            if ((GameManager.GetUIState() == UIManager.UIState.InPlay) || true)
+            if (!isForceMoving)
             {
-                if (!isForceMoving)
+                base.KeyInput();
+                if (!isHitState)
                 {
-                    base.KeyInput();
-                    if (!isHitState)
-                    {
-                        MoveKey();
-                    }
-                    var items = setInputBuffer();
-                    inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
-                    if (inputbuffers.Count > 0)
-                    {
-                        lastInputTime = Time.time;
-                    }
-
-                    if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
-                    {
-                        triggers[triggerIndex].Interaction();
-                    }
-/*
-                    if (Input.GetKeyDown(KeyCode.X))
-                    {
-                                    SetSkin(1);
-                    }
-*/
+                    MoveKey();
                 }
+                var items = setInputBuffer();
+                inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
+
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+                {
+                    triggers[triggerIndex].Interaction();
+                }
+            }
+            else
+            {
+                Vector2 dir = new Vector2();
+                if(targetMovePos.x > transform.position.x)
+                {
+                    dir.x = 1;
+                }
+                else
+                {
+                    dir.x = -1;
+                }
+                body.velocity = new Vector2(dir.x, body.velocity.y);
+            }
+        }
+    }
+
+    public void MoveKey()
+    {
+        isSit = false;
+        if (Input.GetKey(GameManager.Input._keySettings.upKey))
+        {
+            if(!isAction && !isAttack && canMove)
+            {
+                if (presentSawDir.Equals(sawDir))
+                {
+                    presentSawDir.x = sawDir.x;
+                }
+                charactor.Up();
+            }
+        }
+        else if (Input.GetKey(GameManager.Input._keySettings.downKey))
+        {
+            if (!isAction && !isAttack && canMove)
+            {
+                if (presentSawDir.Equals(sawDir))
+                    presentSawDir.x = sawDir.x;
+                charactor.Down();
             }
         }
 
+        else
+        {
+            sawDir = presentSawDir;
+        }
+        if (Input.GetKey(GameManager.Input._keySettings.leftKey))
+        {
+            if (canMove)
+            {
+                body.velocity = new Vector2(-charactor.charaData.activeMaxSpeed, body.velocity.y);
+                if (!isAction && !isAttack)
+                {
+                    sawDir = new Vector2(-1, sawDir.y);
+                    presentSawDir.x = sawDir.x;
+                }
+            }
+
+        }
+        else if (Input.GetKey(GameManager.Input._keySettings.rightKey))
+        {
+            if (canMove)
+            {
+                body.velocity = new Vector2(charactor.charaData.activeMaxSpeed, body.velocity.y);
+                if (!isAction && !isAttack)
+                {
+                    sawDir = new Vector2(1, sawDir.y);
+                    presentSawDir.x = sawDir.x;
+                }
+            }
+
+        }
+        else
+        {
+            body.velocity = new Vector2(0f , body.velocity.y);
+        }
+
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Jump) && isGrounded && canMove)
+        {
+            charactor.Jump();
+
+
+
+            isGrounded = false;
+        }
+
+    }
+
+    public override void FlipX()
+    {
+        bool isFlip;
+        if(sawDir.x > 0f)
+        {
+            isFlip = false;
+        }
+        else
+        {
+            isFlip = true;
+        }
+        bodyAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
+        legAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
+        backHairAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
     }
 
     private List<(KeyValues, float)> setInputBuffer()
@@ -269,9 +334,9 @@ public class PlayerController : KinematicObject
         else
         {
             var tmp = inputbuffers.ToList();
-            if(commandInputs.Count > 0)
+            if (commandInputs.Count > 0)
             {
-                if(commandInputs.Last().Item1 != KeyValues.O)
+                if (commandInputs.Last().Item1 != KeyValues.O)
                 {
                     inputbuffers.RemoveAll(x => previousinputbuffers.Any(y => y.Item1 == x.Item1));
                 }
@@ -292,7 +357,7 @@ public class PlayerController : KinematicObject
                     // if Last Input is Nearby (6 frame), Combine Input Insert
                     if (inputbuffers[i].Item2 - commandInputs.Last().Item2 <= .1f)
                     {
-                        if(checkCombine(commandInputs.Last().Item1, inputbuffers[i].Item1))
+                        if (checkCombine(commandInputs.Last().Item1, inputbuffers[i].Item1))
                         {
                             KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i].Item1;
                             commandInputs.Add((kv, inputbuffers[i].Item2));
@@ -316,8 +381,8 @@ public class PlayerController : KinematicObject
                         {
                             if (checkCombine(inputbuffers[i].Item1, inputbuffers[i + 1].Item1))
                             {
-                                KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i+1].Item1;
-                                commandInputs.Add((kv, inputbuffers[i+1].Item2));
+                                KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i + 1].Item1;
+                                commandInputs.Add((kv, inputbuffers[i + 1].Item2));
                                 cmds.Add(kv);
                                 CheckCommands();
                             }
@@ -339,11 +404,11 @@ public class PlayerController : KinematicObject
 
     private bool checkCombine(KeyValues kv1, KeyValues kv2)
     {
-        if(kv1 == kv2)
+        if (kv1 == kv2)
         {
             return false;
         }
-        if(Func.arrows.Contains(kv2)) 
+        if (Func.arrows.Contains(kv2))
         {
             if (Func.arrows.Contains(kv1))
             {
@@ -367,13 +432,22 @@ public class PlayerController : KinematicObject
         List<KeyValues> cmd = null;
         bool isLeft;
         (cmd, isLeft) = CheckCommandInputs();
-        if(cmd != null)
+        if (cmd != null)
         {
+            Debug.Log(charactor.commands[cmd].name);
+            if (isLeft)
+            {
+                charactor.commands[cmd].Execute(new Vector2(-1, 0));
 
+            }
+            else
+            {
+                charactor.commands[cmd].Execute(new Vector2(1, 0));
+            }
         }
         else
         {
-            if((commandInputs.Last().Item1 & KeyValues.Shot) == KeyValues.Shot)
+            if ((commandInputs.Last().Item1 & KeyValues.Shot) == KeyValues.Shot)
             {
                 isAttackInput = true;
                 SetAlarm(3, 0.2f);
@@ -388,7 +462,7 @@ public class PlayerController : KinematicObject
         List<KeyValues> ret;
         bool isLeft;
 
-        foreach(List<KeyValues> cmds in charactor.commands.Keys.ToList())
+        foreach (List<KeyValues> cmds in charactor.commands.Keys.ToList())
         {
             var (b1, b2) = CheckCommandsLastEnd(commandInputs, cmds);
             if (b1)
@@ -397,7 +471,7 @@ public class PlayerController : KinematicObject
             }
         }
 
-        if(findCommands.Count > 0)
+        if (findCommands.Count > 0)
         {
             (ret, isLeft) = findCommands.OrderByDescending(item => item.Item1.Count).ToList().First();
             return (ret, isLeft);
@@ -429,15 +503,15 @@ public class PlayerController : KinematicObject
         // If Forward
         if (!isLeft)
         {
-            for(int i = predefinedCmds.Count - 1; i >= 0; i--)
+            for (int i = predefinedCmds.Count - 1; i >= 0; i--)
             {
-                for(int j = inputs.Count - 1; j >= 0; j--)
+                for (int j = inputs.Count - 1; j >= 0; j--)
                 {
                     if (inputs[j].Item1 == KeyValues.O)
                     {
                         continue;
                     }
-                    
+
                     if (predefinedCmds[i] == inputs[j].Item1)
                     {
                         break;
@@ -464,53 +538,34 @@ public class PlayerController : KinematicObject
     }
 
 
-    public float CalculateJumpForce()
-    {
-        // 스페이스바를 길게 누르는 동안의 시간에 따라 증가하는 힘 계산
-        float normalizedJumpTime = Mathf.Clamp01(jumpTime / maxLongJumpTime);
-        float jumpForce = jumpTakeOffSpeed * normalizedJumpTime;
-        return jumpForce;
-    }
 
-    public override void CheckCollision(RaycastHit2D rh, bool yMovement)
+    public override void CheckCollision(Collision2D obj)
     {
-        base.CheckCollision(rh, yMovement);
-        if(rh.collider.tag == "Enemy")
+        base.CheckCollision(obj);
+        if (obj.gameObject.tag == "Enemy")
         {
             if (!isImmune)
             {
-                Debug.Log("Hit");
-                Bounce(new Vector2((-rh.collider.transform.position.x + transform.position.x) * 4, Vector2.up.y * 3));
-                isImmune = true;
-                isHitState = true;
-
-                SetAlarm(0, 2f);
-                SetAlarm(1, 1f);
+                GetDmg(obj.gameObject);
             }
         }
     }
 
-    protected override void ComputeVelocity()
+    public void GetDmg(GameObject obj)
     {
-        if (isForceMoving)
-        {
-            var dir = moveTargetPos - transform.position;
-            if(dir.x < 0)
-            {
-                moveAccel.x -= charactor.charaData.moveAccelSpeed * Time.deltaTime;
-            }
-            else
-            {
-                moveAccel.x += charactor.charaData.moveAccelSpeed * Time.deltaTime;
-            }
-        }
-        targetVelocity = moveAccel;
+        HPDecrease(1);
+        body.AddForce((new Vector2((-obj.transform.position.x + transform.position.x) * 4, Vector2.up.y * 4)), ForceMode2D.Impulse);
+        isImmune = true;
+        isHitState = true;
+        Physics2D.IgnoreLayerCollision(7,8, true);
+        SetAlarm(0, 2f);
+        SetAlarm(1, 1f);
     }
-
 
     public override void Alarm0()
     {
         isImmune = false;
+        Physics2D.IgnoreLayerCollision(7, 8, false);
     }
 
     public override void Alarm1()
@@ -537,129 +592,6 @@ public class PlayerController : KinematicObject
         isAction = false;
     }
 
-    public override void Alarm6()
-    {
-        isJump = false;
-    }
-
-    public void MoveKey()
-    {
-        isSit = false;
-        if (Input.GetKey(GameManager.Input._keySettings.upKey))
-        {
-            if (!isAction && !isAttack && canMove)
-            {
-                if(presentSawDir.Equals(sawDir))
-                {
-                    presentSawDir.x = sawDir.x;
-                }
-                charactor.Up();
-            }
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.downKey))
-        {
-            if (!isAction && !isAttack && canMove)
-            {
-                if(presentSawDir.Equals(sawDir))
-                    presentSawDir.x = sawDir.x;
-                charactor.Down();
-            }
-        }
-        else
-        {
-            sawDir = presentSawDir;
-        }
-        if (Input.GetKey(GameManager.Input._keySettings.leftKey))
-        {
-            if (!isAction && !isAttack && canMove)
-            {
-                sawDir = new Vector2(-1, sawDir.y);
-                presentSawDir.x = sawDir.x;
-            }
-
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.rightKey))
-        {
-            if (!isAction && !isAttack && canMove)
-            {
-                sawDir = new Vector2(1, sawDir.y);
-                presentSawDir.x = sawDir.x;
-            }
-        }
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Jump) && IsGrounded && canMove)
-        {
-            charactor.Jump();
-            isJump = true;
-            IsGrounded = false;
-            jumpTime = 0f;
-            SetAlarm(6, 0.1f);
-            Debug.Log(velocity.y);
-        }
-
-        if (Input.GetKey(GameManager.Input._keySettings.Jump) && !IsGrounded && canMove)
-        {
-            jumpTime += Time.deltaTime;
-            if (jumpTime <= maxLongJumpTime)
-            {
-                float jumpF = CalculateJumpForce();
-
-                velocity.y += jumpF * Time.deltaTime;
-            }
-        }
-        if (Input.GetKey(GameManager.Input._keySettings.rightKey) && canMove)
-        {
-            if (moveAccel.x < 0)
-            {
-                moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
-            }
-            else
-            {
-                if (Math.Abs(moveAccel.x) < charactor.charaData.activeMaxSpeed)
-                {
-                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.moveAccelSpeed;
-                }
-                else
-                {
-                    moveAccel.x = charactor.charaData.activeMaxSpeed;
-                }
-            }
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.leftKey) && canMove)
-        {
-            if (moveAccel.x > 0)
-            {
-                moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
-            }
-            else
-            {
-                if (Math.Abs(moveAccel.x) < charactor.charaData.activeMaxSpeed)
-                {
-                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.moveAccelSpeed;
-                }
-                else
-                {
-                    moveAccel.x = -charactor.charaData.activeMaxSpeed;
-                }
-            }
-        }
-        else
-        {
-            if (Mathf.Abs(moveAccel.x) > 0.1f)
-            {
-                if (moveAccel.x < 0)
-                    moveAccel += new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
-                else
-                    moveAccel -= new Vector2(1, 0) * Time.deltaTime * charactor.charaData.breakAccel;
-            }
-            else
-            {
-                moveAccel.x = 0f;
-            }
-
-        }
-
-
-    }
 
 
     public void SetSkin(int index)
@@ -667,13 +599,13 @@ public class PlayerController : KinematicObject
         currentSkin = index;
 
 
-        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Body");
+        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Body");
         isSetBody = true;
-        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Leg");
+        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Leg");
         isSetLeg = true;
-        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Back");
+        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Back");
         isSetBackHair = true;
-        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin]+"Halo");
+        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Halo");
         isSetHalo = true;
 
     }
@@ -817,8 +749,33 @@ public class PlayerController : KinematicObject
             {
                 triggerIndex = triggers.Count - 1;
             }
+            if (triggerIndex < 0)
+                triggerIndex = 0;
         }
     }
+
+    public void GenInteractionUI()
+    {
+
+    }
+
+    public void DeleteInteractionUI()
+    {
+
+    }
+
+    public void HPIncrease(int value)
+    {
+        charactor.charaData.currentHP += value;
+        if (charactor.charaData.currentHP > charactor.charaData.maxHP)
+        {
+            charactor.charaData.currentHP = charactor.charaData.maxHP;
+        }
+    }
+
+    public void HPDecrease(int value)
+    {
+        charactor.charaData.currentHP -= value;
+        Debug.Log(GameManager.CharaCon.charactors[GameManager.Stage.currentCharactor.charaData.id].charaData.currentHP);
+    }
 }
-
-

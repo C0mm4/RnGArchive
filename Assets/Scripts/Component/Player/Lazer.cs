@@ -1,22 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Lazer : Attack
+public class Lazer : Bullet
 {
+
+    public List<Mob> attackedMobs = new();
     public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
         base.CreateHandler(dmg, dir, t);
         if (dir.y == 0)
         {
-            moveAccel.x = 15 * dir.x;
+            movPos.x = 15 * dir.x;
         }
-        velocity.y = 15 * dir.y;
+        movPos.y = 15 * dir.y;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void OnTriggerEnter2D(Collider2D collider)
     {
-        
+        if(collider.tag == "Wall")
+        {
+            GameManager.Destroy(gameObject);
+
+        }
+
+        if(collider.tag == "Enemy")
+        {
+            if (!attackedMobs.Contains(collider.GetComponent<Mob>()))
+            {
+                collider.GetComponent<Mob>().GetDMG(dmg, type);
+                attackedMobs.Add(collider.GetComponent<Mob>());
+            }
+        }
     }
+
 }

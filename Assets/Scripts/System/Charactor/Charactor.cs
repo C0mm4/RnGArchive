@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+[Serializable]
 public class Charactor
 {
     public Dictionary<List<KeyValues>, Skill> commands;
+    [SerializeField]
     public List<Skill> passiveSkill;
+
+    public List<Skill> skills;
 
     public Animator bodyAnimator;
     public Animator legAnimator;
+    public Animator haloAnimator;
 
     public StateMachine stateMachine;
 
@@ -72,7 +78,7 @@ public class Charactor
         }
         stateMachine.updateState();
 
-        if (playerController.isAttack && playerController.IsGrounded)
+        if (playerController.isAttack && playerController.isGrounded)
         {
             charaData.activeMaxSpeed = charaData.maxSpeed * 0.4f;
         }
@@ -112,11 +118,10 @@ public class Charactor
 
     public virtual void Jump()
     {
-        if (playerController.IsGrounded)
+        if (playerController.isGrounded)
         {
-            playerController.velocity.y += playerController.jumpTakeOffSpeed;
-            playerController.IsGrounded = false;
-            playerController.jumpTime = 0;
+            playerController.body.AddForce(new Vector2(0, charaData.jumpForce), ForceMode2D.Impulse);
+            playerController.isGrounded = false;
         }
     }
 
@@ -128,7 +133,7 @@ public class Charactor
 
     public virtual void Down()
     {
-        if(playerController.IsGrounded)
+        if(playerController.isGrounded)
         {
             playerController.isSit = true;
         }

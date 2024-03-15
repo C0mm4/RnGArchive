@@ -22,17 +22,17 @@ public class UIManager
 
     public GameObject canvas;
 
+    public InGameUI inGameUI;
+
+    public SkillSlotUI skillSlotUI;
+
     public static UIState UI { get { return ui_instance.uiState; } }
 
-    public enum UIState
-    {
-        Loading, InPlay, Title, CutScene, Menu, Pause, 
-    };
 
     public void initialize()
     {
         ui_instance = this;
-        ChangeState(UIState.Title);
+        GameManager.ChangeUIState(UIState.Title);
         GameObject go = GameObject.Find("Canvas");
         if (go != null)
         {
@@ -71,29 +71,21 @@ public class UIManager
     public void ChangeStateOnStack(UIState state)
     {
         uistack.Push(uiState);
-        ChangeState(state);
+        GameManager.ChangeUIState(state);
     }
 
     // When Menu Close Stack UI Change
     public void PopStateStack()
     {
-        ChangeState(uistack.Pop());
+        GameManager.ChangeUIState(uistack.Pop());
     }
 
-    // Change UI State
-    public void ChangeState(UIState state)
-    {
-
-        uiState = state;
-
-//        GameManager.Input.changeInputState();
-
-    }
 
     public UIState GetUIState()
     {
         return uiState;
     }
+
 
     public void MapToggle()
     {
@@ -131,6 +123,35 @@ public class UIManager
             if (go != null)
             {
                 canvas = go;
+            }
+        }
+        if(GameManager.GetUIState() == UIState.InPlay)
+        {
+            if (inGameUI == null)
+            {
+                GameObject go = GameManager.InstantiateAsync("InGameUI");
+                go.GetComponent<InGameUI>();
+                inGameUI = go.GetComponent<InGameUI>();
+
+            }
+            else
+            {
+                if (GameManager.Progress.isActiveSkill)
+                {
+
+                    inGameUI.GetComponent<InGameUI>().EnableUI();
+                }
+                else
+                {
+                    inGameUI.GetComponent<InGameUI>().EnableCharaSlots();
+                }
+            }
+        }
+        else
+        {
+            if(inGameUI != null)
+            {
+                inGameUI.GetComponent<InGameUI>().DisableUI();
             }
         }
     }

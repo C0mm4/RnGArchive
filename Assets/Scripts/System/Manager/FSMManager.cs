@@ -48,6 +48,26 @@ public class FSMManager
         nodes = new List<string> { fsmList[7] , fsmList[0] };
         fsm[fsmList[5]] = new List<string>(nodes);
 
+
+        List<string> mobFsmList = new List<string>()
+        {
+            "Idle", "MobMove", "MobAttack",
+        };
+
+        fsm[mobFsmList[0]].AddRange(
+            new List<string>{
+            mobFsmList[1], mobFsmList[2],
+        }); 
+
+        fsm[mobFsmList[1]] = new List<string>
+        {
+            mobFsmList[0], mobFsmList[2],
+        };
+
+        fsm[mobFsmList[2]] = new List<string>
+        {
+            mobFsmList [0], mobFsmList[1],
+        };
     }
 
     public List<string> getList(string str)

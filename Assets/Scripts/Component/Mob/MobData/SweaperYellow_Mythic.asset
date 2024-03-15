@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b0ac86cb9a69743ab46d4ef7d559b1, type: 3}
   m_Name: SweaperYellow_Mythic
   m_EditorClassIdentifier: 
-  maxHP: 6
+  maxHP: 10
   maxSpeed: 3
   speedAccel: 3
   attackDelay:
@@ -21,5 +21,10 @@ MonoBehaviour:
   atkType: 0
   defType: 3
   atkPref:
-  - {fileID: 0}
+  - {fileID: 9143606469643959943, guid: a9251cff8d96ee343a9bdcaba21deff0, type: 3}
   AIModel: Sweaper
+  animatorAsset:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

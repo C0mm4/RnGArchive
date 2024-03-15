@@ -1,13 +1,13 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
+using System.Linq;
+using static UnityEngine.AudioSettings;
 
-public class Mob : KinematicObject
+public class Mob : RigidBodyObject
 {
+
     // Mob Attack Prefab
     [SerializeField]
     public GameObject[] attackPrefab;
@@ -15,15 +15,24 @@ public class Mob : KinematicObject
     public List<float> lastAttackT = new List<float>();
     public MobData data;
 
-    private Vector3 presentsawDir;
 
     public AIModel AI;
 
+    [SerializeField]
     public SerializeStatus status;
 
     public StateMachine stateMachine;
 
-    
+
+    public string currentState;
+
+    public GameObject attackObj;
+
+    public Animator animator;
+    public string currentAnimation;
+
+    public bool isMove, isAttack;
+    public bool isSet = false;
 
     public override void OnCreate()
     {
@@ -31,18 +40,29 @@ public class Mob : KinematicObject
         animator = GetComponentInChildren<Animator>();
         transform.tag = "Enemy";
         stateMachine = new StateMachine(this);
+        int layer = LayerMask.NameToLayer("Enemy");
+        gameObject.layer = layer;
     }
 
-    public void CreateHandler(Vector3 pos = default)
+    public virtual void CreateHPBar()
+    {
+        GetComponentInChildren<Trans2Canvas>().GenerateUI();
+        GetComponentInChildren<Trans2Canvas>().UIObj.GetComponent<EnemyHPBar>().target = this;
+    }
+
+    public virtual void CreateHandler(Vector3 pos = default)
     {
         AIGen();
+        
         status.maxHP = data.maxHP;
         status.currentHP = status.maxHP;
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>("SweaperAnimator");
 
         SetTargetPosition(pos);
-        ChangeState(new MobIdle());
+        CreateHPBar();
+        ChangeState(new Idle());
+        isSet = true;
     }
 
     public void AIGen()
@@ -52,65 +72,46 @@ public class Mob : KinematicObject
         AI = Activator.CreateInstance(T) as AIModel;
         AI.target = this;
         AI.player = GameManager.player.GetComponent<PlayerController>();
-        Debug.Log(AI.GetType().Name);   
     }
 
     public override void BeforeStep()
     {
         if (canMove)
         {
-            var dir = moveTargetPos - transform.position;
+            var dir = targetMovePos - transform.position;
             if (dir.x < 0)
             {
                 sawDir = new Vector2(-1, 0);
-                moveAccel.x -= data.speedAccel * Time.deltaTime;
+                body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
             }
             else
             {
                 sawDir = new Vector2(1, 0);
-                moveAccel.x += data.speedAccel * Time.deltaTime;
+                body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
             }
-
-            if (Mathf.Abs(moveAccel.x) > data.maxSpeed)
-            {
-                moveAccel.x = Vector2.Dot(sawDir, Vector2.one) * data.maxSpeed;
-            }
-
-            presentsawDir = dir;
         }
         else
         {
-            moveAccel *= 0f;
+            body.velocity = new Vector2(0, body.velocity.y);
         }
 
         base.BeforeStep();
+
+        currentState = stateMachine.getStateStr();
     }
 
     public override void Step()
     {
         base.Step();
-        if(AI != null)
+        if (AI != null)
         {
             AI.player = GameManager.player.GetComponent<PlayerController>();
             AI.Step();
         }
-        else
-        {
-//            Debug.Log("AI is Null");
-        }
+        stateMachine.updateState();
     }
 
-    protected override void ComputeVelocity()
-    {
-        targetVelocity.x = moveAccel.x;
 
-    }
-
-    public override void CheckCollision(RaycastHit2D rh, bool yMovement)
-    {
-        base.CheckCollision(rh, yMovement);
-
-    }
 
     public void ChangeState(State newState)
     {
@@ -127,30 +128,102 @@ public class Mob : KinematicObject
         stateMachine.setIdle();
     }
 
-    // Attack Object Generate
-    public void AttackObjGen(int index)
+    public override void FlipX()
     {
-
+        if(sawDir.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 
     public void GetDMG(int dmg, AtkType type)
     {
         float multiplier = Func.GetDmgMultiplier(type, data.defType);
-        status.currentHP -= (int)(multiplier * dmg);
-        Debug.Log(status.currentHP);
-        if(status.currentHP < 0)
+        int DMG = (int)(multiplier * dmg);
+        GameObject DMGUITrans = GameManager.InstantiateAsync("DMGUI", SetDamageUIPos());
+        DMGUITrans.GetComponent<Trans2Canvas>().GenerateUI();
+        if (DMG == 0)
+        {
+            status.currentHP -= 1;
+            DMGUITrans.GetComponent<Trans2Canvas>().UIObj.GetComponent<DMGUI>().txt.text = "1";
+        }
+        else
+        {
+            status.currentHP -= (int)(multiplier * dmg);
+            DMGUITrans.GetComponent<Trans2Canvas>().UIObj.GetComponent<DMGUI>().txt.text = DMG.ToString();
+        }
+        if (status.currentHP < 0)
         {
             GameManager.Destroy(gameObject);
         }
     }
 
+    public Vector3 SetDamageUIPos()
+    {
+        Vector3 ret = transform.position;
+
+        ret += new Vector3(0, GetComponent<Collider2D>().bounds.extents.y * 2);
+
+        return ret;
+    }
+
     public void SetTargetPosition(Vector3 pos)
     {
-        moveTargetPos = pos;
+        targetMovePos = pos;
     }
 
     public float GetPlayerDistance()
     {
-        return (GameManager.player.transform.position - transform.position).magnitude;
+        float ret;
+        ret = Math.Abs(GameManager.player.transform.position.x - transform.position.x);
+        ret -= GetComponent<Collider2D>().bounds.extents.x;
+        return ret;
+    }
+
+    public void CreateAttackObj(int i)
+    {
+        string objName = gameObject.name.Replace("(Clone)", "").Trim() + " " + i.ToString();
+
+        attackObj = GameManager.InstantiateAsync(objName);
+        attackObj.transform.SetParent(transform);
+        attackObj.transform.localPosition = Vector3.zero;
+
+    }
+
+    public void EndAttackState()
+    {
+        if (attackObj != null)
+        {
+            attackObj.GetComponent<MobAttackObj>().EndAttackState();
+        }
+    }
+
+    public void DeleteAttackObj()
+    {
+        if (attackObj != null)
+        {
+            GameManager.Destroy(attackObj);
+        }
+    }
+
+    public void AnimationPlay(string clip, float spd = 1f)
+    {
+        if (clip != currentAnimation)
+        {
+            if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+            {
+                currentAnimation = clip;
+                animator.speed = spd;
+                animator.Play(clip);
+            }
+            else
+            {
+                Debug.Log($"Can't Find Clip : {clip}");
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3232841757730432813}
   - component: {fileID: 691499353326283410}
   - component: {fileID: 193574909118462023}
-  - component: {fileID: -2032557861597210149}
+  - component: {fileID: 795279371009321836}
   m_Layer: 10
   m_Name: Attack
   m_TagString: Untagged
@@ -134,7 +134,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2032557861597210149
+--- !u!114 &795279371009321836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,6 +160,5 @@ MonoBehaviour:
   currentAnimation: 
   moveTargetPos: {x: 0, y: 0, z: 0}
   _sawDir: {x: 0, y: 0}
-  boundRatio: 0
   dmg: 0
   type: 0

@@ -8,9 +8,12 @@ public class BalanceBreakdown : Skill
 
     public override void Execute(Vector2 dir)
     {
-        base.Execute(dir);
-        player.charactor.ChangeState(new SpecialMove(2f, 1));
-        player.isAction = true;
+        if(currentAmmo > 0)
+        {
+            base.Execute(dir);
+            player.charactor.ChangeState(new SpecialMove(2f, 1));
+            player.isAction = true;
+        }
     }
 
     public override void PassiveEffect()

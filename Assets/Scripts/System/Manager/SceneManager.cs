@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor.AddressableAssets.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,6 +45,7 @@ public class SceneController
         GameManager.Stage.LoadMap(mapId);
         GameManager.CharactorSpawnInLoad(doorId);
         await FadeIn();
+        GameManager.ChangeUIState(UIState.InPlay);
     }
 
     public async Task LoadMap(string mapId)

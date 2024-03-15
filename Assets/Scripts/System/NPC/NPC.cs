@@ -25,6 +25,8 @@ public class NPC : InteractionTrigger
 
     public Animator animator;
 
+    public string npcId;
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -38,7 +40,7 @@ public class NPC : InteractionTrigger
         base.Step();
         if (player != null)
         {
-            if(GameManager.GetUIState() == UIManager.UIState.InPlay)
+            if(GameManager.GetUIState() == UIState.InPlay)
             {
                 if (PlayerDistance() <= sayDistance)
                 {
@@ -62,8 +64,9 @@ public class NPC : InteractionTrigger
 
     public void SetScript(string txt)
     {
-        script = txt;
+        script = Func.ChangeStringToValue(txt);
     }
+
 
     public async Task Say()
     {

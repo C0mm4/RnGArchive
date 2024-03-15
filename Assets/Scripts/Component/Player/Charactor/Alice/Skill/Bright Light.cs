@@ -28,7 +28,10 @@ public class BrightLight : Skill
         {
             if (Input.GetKeyDown(GameManager.Input._keySettings.Shot))
             {
-                Execute(player.sawDir);
+                if(currentAmmo > 0)
+                {
+                    Execute(player.sawDir);
+                }
             }
         }
 

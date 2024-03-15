@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>아, 당신이군요</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>…..?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>마치 영문을 모르겠다는 표정이군요</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>큭큭큭. </kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>여기는 그저…</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>한 가능성에 실험해보는 실험실 같은 겁니다.</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>그렇다면 불가해한 존재여</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10011000">
+		<trigID name="40011000">
+			<script>
+				<NPCID>20009001</NPCID>
+				<kr>잠시 제가 준비한 연극을 감상하시지요</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>눈을 뜬다</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>정신이 들어 아리스?</kr>
+				<eng>Hey you, finally awake up</eng>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>여기는…?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>90000001</NPCID>
+				<kr>시스템 가동 준비완료</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>정신을 차렸나 보네</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>일어나자마자 미안하지만 아리스, 테스트를 위해 전투용 드론을 보냈어</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>빛의 검을 사용해 드론을 파괴해봐</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>역시 우리 엔지니어부가 만든 빛의 검이야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>보급형 드론은 가볍게 처리하네</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>하지만 아직 표본이 부족한걸</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>계속해서 드론을 보낼게</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>이번에는 이쪽에서도 서포트 할께</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012101">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>{GameManager.Input._keySettings.Call} 키를 누르면 그쪽으로 천둥이를 보낼게</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012102">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>이정도면 전투용 샘플은 충분한 것 같네</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012102">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>이걸로 마지막 테스트야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012102">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>이번 녀석은 좀 까다로울 거야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012102">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>우리 엔지니어부가 심혈을 기울여 새로 설계한 경비용 전투 드론이거든</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012102">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>해당 드론의 내구성 테스트도 겸할 겸 그 아이와도 전투를 치뤄봐</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012103">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>역시 우리가 만든 드론이야. 내구도는 확실하지</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012103">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>장갑을 뚫지 못하는 무기라니 마치 실패한 무기 같잖아?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012103">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>하지만 우리 엔지니어부에게 실패란 없지</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012103">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>빛의 검의 특수 능력을 개방했어</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012103">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>자, 날뛰어봐 아리스</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>역시 우리가 만든 대 우주전 함포야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>그렇지만 우타하 선배</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>응?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>빛의 검으로 보스를 처치한 것이라면</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>해당 보스의 방어력도 실패한 것이 아닙니까?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>아 그거라면 문제 없어</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>자고로 방패란 무기의 발전에 따라 발전하니까</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>그러니까 내 폭풍의 장갑은 실패한 게 아니야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>폭풍…?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>아 폭풍은 방금 아리스 너가 쓰러뜨린 드론의 이름이야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>어찌되었든 아리스 너의 전투능력 테스트는 이걸로 종료야</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012104">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>도어를 열어줄게 부실로 올라와 결과를 알려줄게</kr>
+			</script>
+		</trigID>
+	</mapID>
+</Root>

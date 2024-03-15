@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class State
 {
-    protected KinematicObject charactor;
+    [SerializeField]
+    protected Mob charactor;
+    [SerializeField]
     protected PlayerController player;
 
     // State handers
-    public virtual void EnterState(KinematicObject chr)
+    public virtual void EnterState(Mob chr)
     {
         charactor = chr;
     }

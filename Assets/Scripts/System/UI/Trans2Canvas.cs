@@ -8,13 +8,14 @@ public class Trans2Canvas : MonoBehaviour
     public GameObject UIIngameTransform;
 
     public GameObject UIObj;
+    private bool isActivate = false;
 
-
-    public void GenerateUI(string prefabPath)
+    public void GenerateUI()
     {
         var awaitObj = GameManager.InstantiateAsync(UIPrefab, GameManager.UIManager.canvas.transform.position);
         UIObj = awaitObj;
         Func.SetRectTransform(UIObj, GameManager.CameraManager.maincamera.WorldToScreenPoint(UIIngameTransform.transform.position) - new Vector3((float)Screen.width / 2f, (float)Screen.height / 2f));
+        isActivate = true;
     }
 
     public void Update()
@@ -22,6 +23,13 @@ public class Trans2Canvas : MonoBehaviour
         if (UIObj != null)
         {
             Func.SetRectTransform(UIObj, GameManager.CameraManager.maincamera.WorldToScreenPoint(UIIngameTransform.transform.position) - new Vector3((float)Screen.width / 2f, (float)Screen.height / 2f));
+        }
+        else
+        {
+            if (isActivate) 
+            {
+                GameManager.Destroy(gameObject);
+            }
         }
     }
 }

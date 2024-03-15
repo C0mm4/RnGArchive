@@ -31,7 +31,7 @@ public class Shot : PlayerState
             player.charactor.ChangeState(new MoveShot());
         }
 
-        if (!player.IsGrounded)
+        if (!player.isGrounded)
         {
             player.charactor.ChangeState(new JumpShot());
         }

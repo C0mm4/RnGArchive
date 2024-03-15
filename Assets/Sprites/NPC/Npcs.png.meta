@@ -192,8 +192,8 @@ TextureImporter:
       name: Npcs_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 512
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -213,8 +213,8 @@ TextureImporter:
       name: Npcs_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
+        x: 640
+        y: 256
         width: 128
         height: 128
       alignment: 0
@@ -234,7 +234,7 @@ TextureImporter:
       name: Npcs_6
       rect:
         serializedVersion: 2
-        x: 384
+        x: 0
         y: 128
         width: 128
         height: 128
@@ -247,6 +247,48 @@ TextureImporter:
       bones: []
       spriteID: 7d9aa2c4edddeaf408546f0d33b27c0c
       internalID: 589769422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Npcs_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6396cd9dadd32b443b7785e26fed4c1a
+      internalID: -250806515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Npcs_8
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21bbb4cfebe463145bec644212bc8e17
+      internalID: 1682183836
       vertices: []
       indices: 
       edges: []
@@ -269,6 +311,8 @@ TextureImporter:
       Npcs_4: -941919183
       Npcs_5: -2116224772
       Npcs_6: 589769422
+      Npcs_7: -250806515
+      Npcs_8: 1682183836
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+
 
 [Serializable]
 public partial class InputManager
@@ -20,6 +22,7 @@ public partial class InputManager
     {
         _keySettings = GameManager.Instance.keysetting;
     }
+
 
     // Check Mouse position and key inputs
     public void Update()

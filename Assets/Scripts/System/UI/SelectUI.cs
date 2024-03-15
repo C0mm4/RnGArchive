@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SelectUI : Obj
+public class SelectUI : Menu
 {
     [SerializeField]
     GameObject ButtonObj;
@@ -13,6 +14,7 @@ public class SelectUI : Obj
     List<SelectButton> buttons;
 
     int listSize;
+    int currentIndex;
     public int selectIndex;
 
     public override void OnCreate()
@@ -24,6 +26,9 @@ public class SelectUI : Obj
 
     public void CreateHandler(int size, List<string> txts)
     {
+        listSize = size;
+        currentIndex = 0;
+        buttons = new List<SelectButton>();
         for(int i = 0; i < size; i++)
         {
             GameObject go = GameManager.InstantiateAsync("SelectButton");
@@ -31,8 +36,8 @@ public class SelectUI : Obj
             sb.CreateHandler(i, txts[i]);
             sb.SetUI(this);
             go.transform.SetParent(transform, false);
-            go.transform.localPosition = new Vector3();
-
+            go.transform.localPosition = new Vector3(0, ((size - 1 - i) * 150), 0);
+            buttons.Add(sb);
         }
     }
 
@@ -42,8 +47,35 @@ public class SelectUI : Obj
         {
             await Task.Yield();
         }
-        GameManager.Destroy(gameObject);
+        GameManager.UIManager.endMenu();
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         return selectIndex;
+    }
+
+    public override void KeyInput()
+    {
+        base.KeyInput();
+        if(Input.GetKeyDown(GameManager.Input._keySettings.upKey))
+        {
+            currentIndex--;
+            currentIndex %= listSize;
+        }
+        if (Input.GetKeyDown(GameManager.Input._keySettings.downKey))
+        {
+            currentIndex++;
+            currentIndex %= listSize;
+        }
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        ExecuteEvents.Execute(buttons[currentIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
+
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+        {
+            ConfirmAction();
+        }
+    }
+
+    public override void ConfirmAction()
+    {
+        ExecuteEvents.Execute(buttons[currentIndex].button.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
     }
 }

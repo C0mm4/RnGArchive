@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialMask : Obj
+public class TutorialMask : Menu
 {
     public Vector2 topLeft;
     public Vector2 bottomRight;
@@ -13,6 +14,7 @@ public class TutorialMask : Obj
     public Vector2 mouseRectPos;
 
     bool isSet = false;
+    bool isPressed = false;
 
     public Image up, left, down, right, upleft, upright, downleft, downright;
 
@@ -37,8 +39,14 @@ public class TutorialMask : Obj
         yield return new WaitForSeconds(0.5f);
 
         isSet = true;
+    }
 
-
+    public override void KeyInput()
+    {
+        if (Input.anyKeyDown)
+        {
+            ConfirmAction();
+        }
     }
 
     public override void AfterStep()
@@ -64,5 +72,24 @@ public class TutorialMask : Obj
             downleft.GetComponent<RectTransform>().sizeDelta = new Vector2(currentTopLeft.x, currentBottomRight.y);
             downright.GetComponent<RectTransform>().sizeDelta = new Vector2(1920 - currentBottomRight.x, currentBottomRight.y);
         }
+    }
+
+    public override void ConfirmAction()
+    {
+        isPressed = true;
+    }
+
+    public async Task WaitClose()
+    {
+        while (true)
+        {
+            if(isPressed)
+            {
+                break;
+            }
+            await Task.Yield();
+        }
+
+        GameManager.UIManager.endMenu();
     }
 }

@@ -1,17 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class StateMachine
 {
+    [SerializeField]
     private State currentState = null;
 
-    private KinematicObject target;
+    [SerializeField]
+    private Mob target;
+    [SerializeField]
     private PlayerController playerT;
 
     private bool isPlayer;
 
-    public StateMachine(KinematicObject chr)
+    public StateMachine(Mob chr)
     {
         target = chr;
         isPlayer = false;
@@ -21,6 +26,7 @@ public class StateMachine
     {
         playerT = chr;
         isPlayer = true;
+        setIdle();
     }
 
     // change charator state
@@ -33,6 +39,7 @@ public class StateMachine
         // check this first regist state
         else if (currentState != null) {
             // check FSM
+
             if (GameManager.FSM.getList(currentState.GetType().Name).Contains(newState.GetType().Name))
             {
                 // past state add to stack, new state regist on currentstate
@@ -71,14 +78,12 @@ public class StateMachine
         }
         else
         {
-            Debug.Log("Initialize");
             currentState = newState;
 
             if (isPlayer)
             {
                 currentState.EnterState(playerT);
 
-                Debug.Log("Initialize");
             }
             else
             {

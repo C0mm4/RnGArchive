@@ -30,9 +30,12 @@ public class CharactorController
 
             charaData.attackSpeed = float.Parse(node["AttackSpeed"].InnerText);
 
-            charaData.moveAccelSpeed = float.Parse(node["moveAccelSpeed"].InnerText);
-            charaData.breakAccel = float.Parse(node["breakAccel"].InnerText);
             charaData.maxSpeed = float.Parse(node["maxSpeed"].InnerText);
+            charaData.jumpForce = float.Parse(node["jumpForce"].InnerText);
+
+            charaData.maxHP = int.Parse(node["baseHP"].InnerText);
+            charaData.currentHP = charaData.maxHP;
+
             charaData.prefabPath = node["path"].InnerText;
 
             
@@ -50,6 +53,8 @@ public class CharactorController
 
             newChara.commands = new();
             newChara.passiveSkill = new();
+            newChara.skills = new();
+
             XmlNode Skills = node.SelectSingleNode("Skills");
             foreach(XmlNode skill in Skills.SelectNodes("Skill"))
             {
@@ -67,6 +72,12 @@ public class CharactorController
                     newChara.passiveSkill.Add(target);
                 }
 
+                target.maxAmmo = int.Parse(skill["baseAmmo"].InnerText);
+                target.currentAmmo = target.maxAmmo;
+
+
+                newChara.skills.Add(target);
+
             }
 
             newChara.SetType(node["AtkType"].InnerText, node["DefType"].InnerText);
@@ -75,7 +86,6 @@ public class CharactorController
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
 
-            
         }
     }
 

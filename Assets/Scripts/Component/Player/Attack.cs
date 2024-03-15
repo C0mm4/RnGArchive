@@ -2,38 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : KinematicObject
+public class Attack : Obj
 {
     public int dmg;
+    public Vector2 dir;
     public AtkType type;
 
     public override void OnCreate()
     {
         base.OnCreate();
-        gravityModifier = 0f;
-        body = GetComponent<Rigidbody2D>();
-        groundNormal = new Vector2(0, 1);
+        GetComponent<Collider2D>().isTrigger = true;
         transform.tag = "Attack";
     }
 
     public virtual void CreateHandler(int dmg, Vector2 dir, AtkType type)
     {
         this.dmg = dmg;
+        this.dir = dir;
         this.type = type;
     }
 
-    protected override void ComputeVelocity()
+    public virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        base.ComputeVelocity();
-        targetVelocity.x = moveAccel.x;
-    }
-
-    public override void CheckCollision(RaycastHit2D rh, bool yMovement)
-    {
-        var currentNormal = rh.normal;
-        if(rh.collider.tag == "Enemy")
+        if (collider.tag == "Enemy")
         {
-            rh.collider.GetComponent<Mob>().GetDMG(dmg, type);
+
+            collider.GetComponent<Mob>().GetDMG(dmg, type);
         }
     }
+
 }

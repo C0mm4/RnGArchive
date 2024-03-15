@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CustomButton : Obj
+public class CustomButton : Obj, IPointerClickHandler
 {
 
-    Button button;
+    public Button button;
 
     public override void OnCreate()
     {
@@ -28,5 +27,10 @@ public class CustomButton : Obj
     public virtual void OnClick()
     {
         GameManager.GameStart();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        OnClick();
     }
 }

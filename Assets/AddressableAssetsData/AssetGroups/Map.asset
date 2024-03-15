@@ -17,10 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: efd332bf916aff644b3ed2462c5678e5
   m_SerializeEntries:
-  - m_GUID: 826c670e36751164bba0c29ee796a61d
-    m_Address: Tile1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 6e28efbffad8bad46825b39c7c96fc04
     m_Address: Assets/Sprites/TestTile32.asset
     m_ReadOnly: 0

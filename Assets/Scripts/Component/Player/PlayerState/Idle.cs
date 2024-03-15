@@ -12,24 +12,32 @@ public class Idle : PlayerState
 
     public override void UpdateState()
     {
-        // Animate Idle Animation
-        player.AnimationPlayBody("Idle");
-        player.AnimationPlayLeg("Idle");
-
-
-
-        // Translate State on player action
-        if (!player.IsGrounded)
+        if(player != null)
         {
-            player.charactor.ChangeState(new Jump());
+            // Animate Idle Animation
+            player.AnimationPlayBody("Idle");
+            player.AnimationPlayLeg("Idle");
+
+
+
+            // Translate State on player action
+            if (!player.isGrounded)
+            {
+                player.charactor.ChangeState(new Jump());
+            }
+            else if (player.isMove)
+            {
+                player.charactor.ChangeState(new Move());
+            }
+            else if (player.isAttackInput && player.isAttack && !player.isAction)
+            {
+                player.charactor.ChangeState(new Shot());
+            }
+
         }
-        else if (Mathf.Abs(player.velocity.x) != 0)
+        else if(charactor != null)
         {
-            player.charactor.ChangeState(new Move());
-        }
-        else if (player.isAttackInput && player.isAttack && !player.isAction)
-        {
-            player.charactor.ChangeState(new Shot());
+            charactor.AnimationPlay("Idle");
         }
     }
 

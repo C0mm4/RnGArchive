@@ -124,11 +124,111 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: cd586cff403064545a2bf8520db58659
-    m_Address: Assets/Sprites/NPC/Kotori/Kotori.controller
+    m_Address: KotoriAnimator
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: a787f8eb0b04132489f2bf57bea6c667
     m_Address: Assets/Sprites/NPC/Kotori/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d58be587bc7d75f4590b179fc6a2aa5c
+    m_Address: 10012200
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 954420008248b3e45a5fd47fc0c7cbc7
+    m_Address: SweaperBoss
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ded1a5de43964764b9255c0537f80a18
+    m_Address: ArisCleanUp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d1799b4b092a04e4796557680fe7cc6a
+    m_Address: Assets/Sprites/Alice/Base/AliceCleanUp.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 01987e78f459d8b40b02517ddb547c79
+    m_Address: SkillSlotUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d656b5f2d6d1d834ab4cb0a58987dd82
+    m_Address: Assets/Sprites/UI/LetterBox.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 38279fd06d7b2d84bb43c3584bfaf91e
+    m_Address: UtahaAnimator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b032303468a5b0c4eac651ae588aeb71
+    m_Address: UtahaIdle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe678d09b1136b04eaeb3d82d17ae31c
+    m_Address: EnemyHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1c15ea85253a21a49bec947855bfe236
+    m_Address: MidoriAnimator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c0cf886de1c63ac499a289a8ed169087
+    m_Address: MilleniumMob1Animator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f1f430ae8ff5bab48b5a9c5eb6825c0e
+    m_Address: MilleniumMob2Animator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0a0bb8a3892c5874ca4c2a3d498fa03e
+    m_Address: DMGUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5d66e00fd2e40654a9c900fb488a2801
+    m_Address: DMGUIVisual
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ff41c60c648dc34408c90411ba34f024
+    m_Address: InGameUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ad6684a732d66d54ea8f933dee777b3a
+    m_Address: BossAlert
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc0fd32b157b5f14ab35a6a8365dbb57
+    m_Address: BossHPBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a9251cff8d96ee343a9bdcaba21deff0
+    m_Address: Sweaper 0
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 54cbdea651fe95542b8a55a8a14c0eaa
+    m_Address: SweaperBoss 0
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 16a68796f59f54b469dfd659d0ad6236
+    m_Address: 20001001
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 92131b46b9558ac43af8cd707a0023f4
+    m_Address: 20001002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 249b199f2c7d2924e884ca362cc6e193
+    m_Address: 20001003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 732e42b578554d54a862f70281275534
+    m_Address: 20001004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fb8bb9ab5b06ee54c9f6cb22cba7fff6
+    m_Address: 20001005
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1bafdbf4df062d94cae11e5324e60272
+    m_Address: 20009001
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

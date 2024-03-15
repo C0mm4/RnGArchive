@@ -18,6 +18,10 @@ public class GameSavemanager
     {
         GameManager.Progress = new GameProgress();
         GameManager.Progress.activeTrigs = new Dictionary<string, TriggerData>();
+        GameManager.Progress.isActiveSkill = false;
+        GameManager.Progress.openCharactors = new();
+        GameManager.Progress.currentParty = new();
+        GameManager.Stage.SetInitializeParty();
     }
 
     public void SaveGameprogress(SaveObj savePoint)
@@ -34,6 +38,7 @@ public class GameSavemanager
             Debug.Log(savePoint.transform.position.y);
             writer.Write(GameManager.Progress.currentCharactorId);
             Debug.Log(GameManager.Progress.currentCharactorId);
+            writer.Write(GameManager.Progress.isActiveSkill ? 1 : 0);
 
             // Save Trigger Datas
             writer.Write(GameManager.Progress.activeTrigs.Count);
@@ -63,6 +68,7 @@ public class GameSavemanager
                 Debug.Log(saveProgress.saveP);
                 saveProgress.currentCharactorId = reader.ReadInt32();
                 Debug.Log(saveProgress.currentCharactorId);
+                saveProgress.isActiveSkill = reader.ReadInt32() == 1;
 
                 // Load Triggers
                 int cnt = reader.ReadInt32();

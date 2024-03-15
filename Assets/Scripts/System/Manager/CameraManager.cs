@@ -14,17 +14,12 @@ public class CameraManager : Obj
 
     private float cameraWidth, cameraHeight;
 
-    private Tilemap field;
-
-    private BoundsInt fieldBound;
-
-    private bool isSet;
+    public SpriteRenderer background;
 
     public override void OnCreate()
     {
         player = FindPlayerTransform();
         maincamera = GetComponent<Camera>();
-        isSet = false;
         if(minimapCam == null)
         {
             minimapCam = GameManager.InstantiateAsync("MiniMapCam").GetComponent<Camera>();
@@ -48,8 +43,7 @@ public class CameraManager : Obj
     // Update is called once per frame
     public override void AfterStep()
     {
-        SetBounds();
-        if(player != null && fieldBound != null && isSet)
+        if(player != null && background != null)
         {
 
             Vector3 targetPos = new Vector3(player.position.x, player.position.y, maincamera.transform.position.z);
@@ -58,10 +52,10 @@ public class CameraManager : Obj
             float height = distance * Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2);
             float width = (cameraWidth / cameraHeight) * height;
 
-            float minX = field.CellToWorld(fieldBound.min).x + width;
-            float maxX = field.CellToWorld(fieldBound.max).x - width ;
-            float minY = field.CellToWorld(fieldBound.min).y + height;
-            float maxY = field.CellToWorld(fieldBound.max).y - height ;
+            float minX = background.bounds.min.x + width;
+            float minY = background.bounds.min.y + height;
+            float maxX = background.bounds.max.x - width;
+            float maxY = background.bounds.max.y - height;
             //Limit camera movement range
 
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
@@ -80,33 +74,6 @@ public class CameraManager : Obj
         return null;
     }
 
-    public void SetBounds()
-    {
-        try
-        {
-            field = GameObject.Find("InPlay").GetComponent<Tilemap>();
-            BoundsInt bounds = new BoundsInt(field.cellBounds.min, field.cellBounds.size);
-
-            // Iterate over all tiles in the tilemap
-            foreach (Vector3Int pos in field.cellBounds.allPositionsWithin)
-            {
-                // Check if the tile is present
-                if (field.HasTile(pos))
-                {
-                    // Update bounds to include the position of the tile
-                    bounds.min = Vector3Int.Min(bounds.min, pos);
-                    bounds.max = Vector3Int.Max(bounds.max, pos);
-                }
-            }
-            fieldBound = bounds;
-            isSet = true;
-
-        }
-        catch
-        {
-
-        }
-    }
 
     public void CameraMove(Transform trans)
     {

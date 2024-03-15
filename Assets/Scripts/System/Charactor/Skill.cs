@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public abstract class Skill
 {
     public PlayerController player;
     public bool isPassive;
     public string name;
+
+    public int maxAmmo;
+    public int currentAmmo;
 
     public Skill()
     {
@@ -15,8 +20,12 @@ public abstract class Skill
     public abstract void PassiveEffect();
     public virtual void Execute(Vector2 dir)
     {
-        player = GameManager.player.GetComponent<PlayerController>();
-        player.workingSkill = this;
+        if(currentAmmo > 0)
+        {
+            player = GameManager.player.GetComponent<PlayerController>();
+            player.workingSkill = this;
+            currentAmmo--;
+        }
     }
 
     public abstract void Step();

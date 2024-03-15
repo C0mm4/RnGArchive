@@ -15,7 +15,7 @@ public class Move : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("Move");
-        float animationSpd = player.velocity.x * player.sawDir.x / player.charactor.charaData.maxSpeed;
+        float animationSpd = player.body.velocity.x * player.sawDir.x / player.charactor.charaData.maxSpeed;
         if (animationSpd > 0)
         {
             player.AnimationPlayLeg("Move", animationSpd);
@@ -26,7 +26,7 @@ public class Move : PlayerState
         }
 
         // Translate State on player action
-        if (!player.IsGrounded)
+        if (!player.isGrounded)
         {
             player.charactor.ChangeState(new Jump());
         }

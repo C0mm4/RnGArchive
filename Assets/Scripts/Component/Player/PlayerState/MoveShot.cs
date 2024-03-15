@@ -18,8 +18,7 @@ public class MoveShot : PlayerState
     public override void UpdateState()
     {
         player.AnimationPlayBody("Move");
-        float animationSpd = player.velocity.x / player.charactor.charaData.maxSpeed;
-        Debug.Log(animationSpd);
+        float animationSpd = player.body.velocity.x / player.charactor.charaData.maxSpeed;
         if(animationSpd > 0)
         {
             player.AnimationPlayLeg("Move", animationSpd);
@@ -34,7 +33,7 @@ public class MoveShot : PlayerState
         {   
             player.charactor.EndState();
         }
-        if (!player.IsGrounded)
+        if (!player.isGrounded)
         {
             player.charactor.ChangeState(new JumpShot());
         } 
