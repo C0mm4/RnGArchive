@@ -151,3 +151,4 @@ MonoBehaviour:
   dmg: 0
   dir: {x: 0, y: 0}
   type: 2
+  spd: 7

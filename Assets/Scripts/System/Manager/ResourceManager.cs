@@ -94,6 +94,14 @@ public class ResourceManager
         }
     }
 
+    public AsyncOperationHandle LoadAssetAsync<T>(AssetReference assetReference) where T : UnityEngine.Object
+    {
+        var op = Addressables.LoadAssetAsync<T>(assetReference);
+        op.WaitForCompletion();
+        return op;
+    }
+
+
     public List<AsyncOperationHandle> LoadAssetAsyncWithTag<T>(string label) where T : UnityEngine.Object
     {
         var ops = Addressables.LoadResourceLocationsAsync(label);

@@ -48,18 +48,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.01}
+  m_Offset: {x: 0, y: -0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.32}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.64, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.13}
+  m_Size: {x: 0.64, y: 0.2}
   m_EdgeRadius: 0
 --- !u!50 &691499353326283410
 Rigidbody2D:
@@ -148,17 +148,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
-  minGroundNormalY: 0.45
-  gravityModifier: 1
-  velocity: {x: 0, y: 0}
-  moveAccel: {x: 0, y: 0}
-  IsGrounded: 0
-  canMove: 1
-  isForceMoving: 0
-  targetVelocity: {x: 0, y: 0}
-  animator: {fileID: 0}
-  currentAnimation: 
-  moveTargetPos: {x: 0, y: 0, z: 0}
-  _sawDir: {x: 0, y: 0}
   dmg: 0
+  dir: {x: 0, y: 0}
   type: 0
+  spd: 5
+  attackedMobs: []

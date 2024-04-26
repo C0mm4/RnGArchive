@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MobAttack : State
@@ -25,6 +24,7 @@ public class MobAttack : State
 
         charactor.canMove = false;
 
+        charactor.data.attackCooltime[attackIndex] = true;
         t = 0;
     }
 
@@ -45,6 +45,7 @@ public class MobAttack : State
         charactor.canMove = true;
         charactor.EndAttackState();
         charactor.isAttack = false;
+        charactor.SetAlarm(attackIndex, charactor.data.attackDelay[attackIndex]);
         base.ExitState();
     }
 

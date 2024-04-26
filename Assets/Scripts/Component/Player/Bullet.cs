@@ -6,21 +6,46 @@ using UnityEngine.AddressableAssets;
 public class Bullet : Attack
 {
     protected Vector3 movPos = new Vector3();
+    protected ContactFilter2D contactFilter;
+    protected Rigidbody2D body;
+    public float spd;
+
 
     public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
         base.CreateHandler(dmg, dir, t);
-        if(dir.y == 0)
-        {
-            movPos.x = 10 * dir.x;
-        }
-        movPos.y = 10 * dir.y;
+        movPos = dir;
+        contactFilter.useTriggers = true;
+        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        contactFilter.useLayerMask = true;
+
+        body = GetComponent<Rigidbody2D>();
+        body.isKinematic = true;
     }
 
     public override void BeforeStep()
     {
         base.BeforeStep();
-        transform.position += movPos * Time.deltaTime;
+        RaycastHit2D[] hits = new RaycastHit2D[16];
+
+        var cnt = body.Cast(movPos, contactFilter, hits, spd * Time.deltaTime + 0.05f);
+
+        Debug.Log(hits.Length);
+
+        for (int i = 0; i < cnt; i++)
+        {
+            if (hits[i].collider.CompareTag("Wall"))
+            {
+                GameManager.Destroy(gameObject);
+                break;
+            }
+            if (hits[i].collider.CompareTag("Enemy"))
+            {
+                EnterEnemy(hits[i].collider.GetComponent<Mob>());
+            }
+        }
+
+        transform.position += movPos * Time.deltaTime * spd;
 
         Vector3 viewportPosition = GameManager.CameraManager.maincamera.WorldToViewportPoint(transform.position);
 
@@ -32,7 +57,7 @@ public class Bullet : Attack
             GameManager.Destroy(gameObject);
         }
     }
-
+/*
     public override void OnTriggerEnter2D(Collider2D collider)
     {
         base.OnTriggerEnter2D(collider);
@@ -45,5 +70,5 @@ public class Bullet : Attack
             GameManager.Destroy(gameObject);
         }
     }
-
+*/
 }

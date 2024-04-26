@@ -26,6 +26,8 @@ public class UIManager
 
     public SkillSlotUI skillSlotUI;
 
+    public InteractionUI interactionUI;
+
     public static UIState UI { get { return ui_instance.uiState; } }
 
 
@@ -136,14 +138,17 @@ public class UIManager
             }
             else
             {
-                if (GameManager.Progress.isActiveSkill)
+                if(GameManager.Progress != null)
                 {
+                    if (GameManager.Progress.isActiveSkill)
+                    {
 
-                    inGameUI.GetComponent<InGameUI>().EnableUI();
-                }
-                else
-                {
-                    inGameUI.GetComponent<InGameUI>().EnableCharaSlots();
+                        inGameUI.GetComponent<InGameUI>().EnableUI();
+                    }
+                    else
+                    {
+                        inGameUI.GetComponent<InGameUI>().EnableCharaSlots();
+                    }
                 }
             }
         }
@@ -153,6 +158,30 @@ public class UIManager
             {
                 inGameUI.GetComponent<InGameUI>().DisableUI();
             }
+        }
+    }
+
+    public void GenerateInteractionUI()
+    {
+        if(interactionUI == null)
+        {
+            GameObject go = GameManager.InstantiateAsync("InteractionUI");
+            Func.SetRectTransform(go);
+            interactionUI = go.GetComponent<InteractionUI>();
+            Debug.Log("A");
+        }
+        else
+        {
+            Debug.Log("B0");
+        }
+    }
+
+    public void DeleteInteractionUI()
+    {
+        if(interactionUI != null)
+        {
+            GameManager.Destroy(interactionUI.gameObject);
+            interactionUI = null;
         }
     }
 }

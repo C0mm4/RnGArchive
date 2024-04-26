@@ -12,6 +12,29 @@ public class Door : InteractionTrigger
 
     public bool isActivate;
 
+    public override void OnCreate()
+    {
+        base.OnCreate();
+        text = "이동한다";
+        if (isActivate)
+        {
+            detectDistance = 1f;
+        }
+    }
+
+    public override void Step()
+    {
+        base.Step();
+        if (isActivate)
+        {
+            detectDistance = 1f;
+        }
+        else
+        {
+            detectDistance = 0f;
+        }
+    }
+
     public override async void Interaction()
     {
         if (isActivate)

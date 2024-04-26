@@ -57,7 +57,7 @@
 			</name>
 			<maxSpeed>5</maxSpeed>
 			<AttackSpeed>0.7</AttackSpeed>
-			<jumpForce>3</jumpForce>
+			<jumpForce>5</jumpForce>
 			<baseHP>3</baseHP>
 			<path>Midori</path>
 			<AtkType>Piercing</AtkType>

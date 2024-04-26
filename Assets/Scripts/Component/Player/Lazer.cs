@@ -7,6 +7,7 @@ public class Lazer : Bullet
 {
 
     public List<Mob> attackedMobs = new();
+
     public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
         base.CreateHandler(dmg, dir, t);
@@ -15,25 +16,45 @@ public class Lazer : Bullet
             movPos.x = 15 * dir.x;
         }
         movPos.y = 15 * dir.y;
+
     }
 
-
-    public override void OnTriggerEnter2D(Collider2D collider)
+    public override void BeforeStep()
     {
-        if(collider.tag == "Wall")
-        {
-            GameManager.Destroy(gameObject);
+        RaycastHit2D[] hits = new RaycastHit2D[16];
+        var cnt = body.Cast(movPos, contactFilter, hits, (spd * Time.deltaTime) * 1.1f + 0.05f);
 
-        }
+        Debug.Log(hits.Length);
 
-        if(collider.tag == "Enemy")
+        for(int i = 0; i < cnt; i++)
         {
-            if (!attackedMobs.Contains(collider.GetComponent<Mob>()))
+            if (hits[i].collider.CompareTag("Wall"))
             {
-                collider.GetComponent<Mob>().GetDMG(dmg, type);
-                attackedMobs.Add(collider.GetComponent<Mob>());
+                GameManager.Destroy(gameObject);
+                break;
+            }
+            if (hits[i].collider.CompareTag("Enemy"))
+            {
+                if (!attackedMobs.Contains(hits[i].collider.GetComponent<Mob>()))
+                {
+                    EnterEnemy(hits[i].collider.GetComponent<Mob>());
+                    attackedMobs.Add(hits[i].collider.GetComponent<Mob>());
+                }
             }
         }
-    }
 
+        transform.position += movPos * Time.deltaTime * spd;
+
+        Vector3 viewportPosition = GameManager.CameraManager.maincamera.WorldToViewportPoint(transform.position);
+
+        // Check if the object is outside the camera's viewport
+        if (viewportPosition.x < 0 || viewportPosition.x > 1 ||
+            viewportPosition.y < 0 || viewportPosition.y > 1)
+        {
+            // Object is outside the camera's viewport, destroy it
+            GameManager.Destroy(gameObject);
+        }
+
+
+    }
 }

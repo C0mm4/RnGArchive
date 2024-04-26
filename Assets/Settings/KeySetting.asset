@@ -20,3 +20,6 @@ MonoBehaviour:
   Jump: 115
   Call: 100
   Interaction: 102
+  Skill1: 113
+  Skill2: 119
+  Skill3: 101

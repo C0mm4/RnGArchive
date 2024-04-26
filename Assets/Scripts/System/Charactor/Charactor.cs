@@ -13,9 +13,6 @@ public class Charactor
 
     public List<Skill> skills;
 
-    public Animator bodyAnimator;
-    public Animator legAnimator;
-    public Animator haloAnimator;
 
     public StateMachine stateMachine;
 
@@ -77,15 +74,7 @@ public class Charactor
             stateMachine = new StateMachine(playerController);
         }
         stateMachine.updateState();
-
-        if (playerController.isAttack && playerController.isGrounded)
-        {
-            charaData.activeMaxSpeed = charaData.maxSpeed * 0.4f;
-        }
-        else
-        {
-            charaData.activeMaxSpeed = charaData.maxSpeed;
-        }
+        charaData.activeMaxSpeed = charaData.maxSpeed;
 
     }
 
@@ -106,7 +95,6 @@ public class Charactor
 
     public virtual void Attack()
     {
-        Debug.Log("Attack in charactor");
         playerController.isAttack = true;
         playerController.lastAttackT = Time.time;
 
@@ -125,26 +113,5 @@ public class Charactor
         }
     }
 
-    public virtual void Up()
-    {
-        playerController.sawDir = new Vector2(playerController.presentSawDir.x, 1);
-        
-    }
 
-    public virtual void Down()
-    {
-        if(playerController.isGrounded)
-        {
-            playerController.isSit = true;
-        }
-        else
-        {
-            playerController.sawDir = new Vector2(playerController.presentSawDir.x, -1);
-        }
-    }    
-
-    public virtual void SpecialMove(int index)
-    {
-
-    }
 }

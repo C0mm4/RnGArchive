@@ -16,15 +16,11 @@ MonoBehaviour:
   maxSpeed: 3
   speedAccel: 3
   attackDelay:
-  - 0.1
+  - 1.5
+  attackCooltime: 
   detectDistance: 0
   atkType: 0
   defType: 3
   atkPref:
-  - {fileID: 0}
+  - {fileID: 9143606469643959943, guid: 06b672e8ba511bf4bbb1e23261a3e04f, type: 3}
   AIModel: FlyingDrone
-  animatorAsset:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0

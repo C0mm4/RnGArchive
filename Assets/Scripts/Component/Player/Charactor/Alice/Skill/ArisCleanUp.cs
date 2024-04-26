@@ -21,6 +21,7 @@ public class ArisCleanUp : Skill
         if (!isRunning)
         {
             isRunning = true;
+            player.isAction = true;
             player.canMove = false;
             GameObject Fire = GameManager.InstantiateAsync("ArisCleanUp", player.transform.position);
             if(player.sawDir.x < 0)
@@ -33,6 +34,7 @@ public class ArisCleanUp : Skill
 
             player.charactor.EndState();
             player.canMove = true;
+            player.isAction = false;
             player.workingSkill = null;
             isRunning = false;
         }
@@ -44,7 +46,6 @@ public class ArisCleanUp : Skill
         if (isCharge)
         {
             chargeT = Time.time - startT;
-            player.isAction = true;
         }
         base.PassiveStep();
         if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !player.isSit)

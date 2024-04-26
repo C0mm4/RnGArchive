@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<text>
+		<Charactor>
+			<id>10002001</id>
+			<name>Utaha</name>
+			<maxAmmo>3</maxAmmo>
+			<maxHP>3</maxHP>
+			<coolTime>10</coolTime>
+			<objName>Utaha</objName>
+		</Charactor>
+	</text>
+</Root>

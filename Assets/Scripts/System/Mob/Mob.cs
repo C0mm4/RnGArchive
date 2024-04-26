@@ -31,7 +31,7 @@ public class Mob : RigidBodyObject
     public Animator animator;
     public string currentAnimation;
 
-    public bool isMove, isAttack;
+    public bool isAttack;
     public bool isSet = false;
 
     public override void OnCreate()
@@ -57,7 +57,14 @@ public class Mob : RigidBodyObject
         status.maxHP = data.maxHP;
         status.currentHP = status.maxHP;
         animator = GetComponentInChildren<Animator>();
-        animator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>("SweaperAnimator");
+        
+
+        data.attackCooltime = new bool[data.attackDelay.Count()];
+
+        for(int i = 0; i < data.attackDelay.Count(); i++)
+        {
+            data.attackCooltime[i] = false;
+        }
 
         SetTargetPosition(pos);
         CreateHPBar();
@@ -67,7 +74,6 @@ public class Mob : RigidBodyObject
 
     public void AIGen()
     {
-        Debug.Log(data.AIModel);
         Type T = Type.GetType(data.AIModel);
         AI = Activator.CreateInstance(T) as AIModel;
         AI.target = this;
@@ -76,7 +82,29 @@ public class Mob : RigidBodyObject
 
     public override void BeforeStep()
     {
-        if (canMove)
+        if (isForceMoving)
+        {
+            if(Mathf.Abs(targetMovePos.x - transform.position.x) <= 0.5f)
+            {
+                canMove = false;
+                isForceMoving = false;
+            }
+            else
+            {
+                var dir = targetMovePos - transform.position; 
+                if (dir.x < 0)
+                {
+                    sawDir = new Vector2(-1, 0);
+                    body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
+                }
+                else
+                {
+                    sawDir = new Vector2(1, 0);
+                    body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
+                }
+            }
+        }
+        else if (canMove)
         {
             var dir = targetMovePos - transform.position;
             if (dir.x < 0)
@@ -89,10 +117,12 @@ public class Mob : RigidBodyObject
                 sawDir = new Vector2(1, 0);
                 body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
             }
+
         }
         else
         {
             body.velocity = new Vector2(0, body.velocity.y);
+            isMove = false;
         }
 
         base.BeforeStep();
@@ -190,6 +220,8 @@ public class Mob : RigidBodyObject
 
         attackObj = GameManager.InstantiateAsync(objName);
         attackObj.transform.SetParent(transform);
+        attackObj.GetComponent<MobAttackObj>().SetData(this);
+        attackObj.GetComponent<MobAttackObj>().CreateHandler();
         attackObj.transform.localPosition = Vector3.zero;
 
     }
@@ -225,5 +257,36 @@ public class Mob : RigidBodyObject
                 Debug.Log($"Can't Find Clip : {clip}");
             }
         }
+    }
+
+    public override void Alarm0()
+    {
+        base.Alarm0();
+        data.attackCooltime[0] = false;
+
+    }
+    public override void Alarm1()
+    {
+        base.Alarm0();
+        data.attackCooltime[1] = false;
+
+    }
+    public override void Alarm2()
+    {
+        base.Alarm0();
+        data.attackCooltime[2] = false;
+
+    }
+    public override void Alarm3()
+    {
+        base.Alarm0();
+        data.attackCooltime[3] = false;
+
+    }
+    public override void Alarm4()
+    {
+        base.Alarm0();
+        data.attackCooltime[4] = false;
+
     }
 }

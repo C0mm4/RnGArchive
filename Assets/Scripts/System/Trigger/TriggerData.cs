@@ -7,7 +7,7 @@ public class TriggerData
 {
     public string id;
     public bool isActivate;
-
+    public string startNPCId;
     public TriggerData(string id, bool isActive)
     {
         this.id = id;

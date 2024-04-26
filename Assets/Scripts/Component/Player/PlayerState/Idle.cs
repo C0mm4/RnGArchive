@@ -38,6 +38,11 @@ public class Idle : PlayerState
         else if(charactor != null)
         {
             charactor.AnimationPlay("Idle");
+
+            if (charactor.isMove)
+            {
+                charactor.ChangeState(new MobMove());
+            }
         }
     }
 

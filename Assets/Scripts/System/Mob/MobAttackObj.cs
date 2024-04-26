@@ -26,6 +26,11 @@ public class MobAttackObj : Obj
         }
     }
 
+    public virtual void CreateHandler()
+    {
+
+    }
+
     public virtual void SetData(Mob mob)
     {
         shooter = mob;
@@ -36,7 +41,10 @@ public class MobAttackObj : Obj
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<PlayerController>().GetDmg(gameObject);
+            if (!other.GetComponent<PlayerController>().isImmune)
+            {
+                other.GetComponent<PlayerController>().GetDmg(gameObject);
+            }
         }
     }
 

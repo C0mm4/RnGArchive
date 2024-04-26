@@ -11,7 +11,11 @@ public class CharactorController
     public Dictionary<int, Charactor> _charactors;
     public Dictionary<int, Charactor> charactors { get { return _charactors; } }
 
+    public Dictionary<int, Supporter> _supporters;
+    public Dictionary<int, Supporter> supporters { get { return _supporters; } }
+
     public string charactorDataXML = "charaData";
+    public string supportDataXML = "Supporter";
 
     XmlDocument text;
 
@@ -87,6 +91,24 @@ public class CharactorController
             charactors[int.Parse(node["id"].InnerText)] = newChara;
 
         }
+
+        _supporters = new();
+        text = GameManager.Resource.LoadXML(supportDataXML);
+        foreach(XmlNode node in text.SelectNodes("/Root/text/Charactor"))
+        {
+            Supporter supporter = new Supporter();
+            SupporterData data = new SupporterData();
+            data.id = node["id"].InnerText;
+            data.name = node["name"].InnerText;
+            data.maxAmmo = int.Parse(node["maxAmmo"].InnerText);
+            data.currentAmmo = data.maxAmmo;
+            data.maxHP = int.Parse(node["maxHP"].InnerText);
+            data.objName = node["objName"].InnerText;
+            data.coolTime = float.Parse(node["coolTime"].InnerText);
+            supporter.data = data;
+
+            supporters[int.Parse(data.id)] = supporter;
+        }
     }
 
     public List<KeyValues> SetCommands(string command)
@@ -150,5 +172,28 @@ public class CharactorController
         }
 
         return ret;
+    }
+
+    public void Update()
+    {
+        if(GameManager.Progress != null)
+        {
+            if (supporters.ContainsKey(GameManager.Progress.currentSupporterId))
+            {
+                Supporter supporter = supporters[GameManager.Progress.currentSupporterId];
+
+                if (supporter.isCool)
+                {
+                    supporter.data.leftCoolTime -= Time.deltaTime;
+                    if (supporter.data.leftCoolTime < 0)
+                    {
+                        supporter.isCool = false;
+                        Debug.Log("Cool is Done");
+                    }
+                }
+
+            }
+
+        }
     }
 }

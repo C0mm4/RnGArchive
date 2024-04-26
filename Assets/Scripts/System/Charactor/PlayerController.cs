@@ -15,25 +15,23 @@ public class PlayerController : RigidBodyObject
 
     public bool _isAction = false;
     public bool isAction { get { return _isAction; } set { _isAction = value; } }
-    public bool isAttack = false; 
-    public bool isMove;
+    public bool isAttack = false;
     public bool isSit;
     public bool isInit = false;
     public float lastAttackT;
     public bool isAttackInput = false;
 
     public Charactor charactor;
+    public Supporter supporter;
 
-    public Vector2 presentSawDir;
 
 
     public List<InteractionTrigger> triggers;
     public int triggerIndex;
 
-    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation;
+    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation, glassAnimation;
     public string currentAnimationBody, currentAnimationLeg;
-    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo;
-    public int currentSkin;
+    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo, isglassAnimation;
 
     public Skill workingSkill;
 
@@ -41,13 +39,6 @@ public class PlayerController : RigidBodyObject
     public string currentState;
 
 
-    // Command Input System Variable
-    // Command Input List in System
-    private List<(KeyValues, float)> commandInputs;
-    [SerializeField] List<KeyValues> cmds;
-
-    private List<(KeyValues, float)> inputbuffers;
-    private List<(KeyValues, float)> previousinputbuffers;
 
 
     public override void OnCreate()
@@ -55,16 +46,12 @@ public class PlayerController : RigidBodyObject
         base.OnCreate();
 
 
-        inputbuffers = new();
-        previousinputbuffers = new();
-        commandInputs = new();
         triggers = new();
         gravityModifier = 1f;
 
         sawDir = new Vector2(1, 0);
-        presentSawDir = new Vector2(1, 0);
-
-        currentSkin = 0;
+        
+        charactor.charaData.currentSkin = 0;
 
         int layer = LayerMask.NameToLayer("Player");
         gameObject.layer = layer;
@@ -80,16 +67,15 @@ public class PlayerController : RigidBodyObject
 
         charactor.ChangeState(new Idle());
 
-        SetSkin(currentSkin);
+        SetSkin(charactor.charaData.currentSkin);
         isInit = true;
     }
 
 
     public override void Step()
     {
-        if (isInit)
+        if (isInit && controlEnabled)
         {
-            base.Step();
             if (body.velocity.x == 0)
             {
                 isMove = false;
@@ -98,53 +84,53 @@ public class PlayerController : RigidBodyObject
             {
                 isMove = true;
             }
-            if (GameManager.Progress.isActiveSkill)
-            {
-                if (workingSkill != null)
-                {
-                    workingSkill.Step();
-                }
 
-                if (charactor.passiveSkill.Count > 0)
+            if (GameManager.GetUIState() == UIState.InPlay)
+            {
+                if(GameManager.Progress != null)
                 {
-                    foreach (Skill skill in charactor.passiveSkill)
+                    // ActiveSkills, And Supporter Action
+                    if (GameManager.Progress.isActiveSkill)
                     {
-                        skill.PassiveStep();
+                        if (workingSkill != null)
+                        {
+                            workingSkill.Step();
+                        }
+
+                        if (charactor.passiveSkill.Count > 0)
+                        {
+                            foreach (Skill skill in charactor.passiveSkill)
+                            {
+                                skill.PassiveStep();
+                            }
+                        }
                     }
                 }
-            }
+                // Calculate Skill CoolTime
+                foreach (Skill skill in charactor.skills)
+                {
+                    if (skill.isCool)
+                    {
+                        skill.leftCoolTime -= Time.deltaTime;
+                        if (skill.leftCoolTime < 0)
+                        {
+                            skill.isCool = false;
+                        }
+                    }
+                }
 
-            if (!controlEnabled && !isAction)
-            {
-                SetAlarm(2, 1f);
+                // Interaction UI Generate
+                if (triggers.Count > 0)
+                {
+                    GenInteractionUI();
+                }
+
             }
-            if (canMove)
-            {
-                SetCommandBuffer();
-            }
+            base.Step();
+
+
             currentState = charactor.stateMachine.getStateStr();
 
-            if (isAttackInput)
-            {
-                if (!isAction && !isAttack)
-                {
-                    if (isGrounded)
-                    {
-                        if (Input.GetKey(GameManager.Input._keySettings.leftKey))
-                        {
-                            sawDir = new Vector2(-1, sawDir.y);
-                            presentSawDir.x = sawDir.x;
-                        }
-                        else if (Input.GetKey(GameManager.Input._keySettings.rightKey))
-                        {
-                            sawDir = new Vector2(1, sawDir.y);
-                            presentSawDir.x = sawDir.x;
-                        }
-                    }
-                    charactor.Attack();
-                    SetAlarm(4, charactor.charaData.attackSpeed);
-                }
-            }
             if (!isAction && isGrounded && !isMove && !isAttack)
             {
                 charactor.SetIdle();
@@ -155,26 +141,34 @@ public class PlayerController : RigidBodyObject
                 charactor.Step();
             }
         }
+        else
+        {
+            if (isAction)
+            {
+                SetAlarm(2, 1f);
+            }
+        }
     }
 
 
     public override void KeyInput()
     {
-        if((GameManager.GetUIState() == UIState.InPlay) || true)
+        if((GameManager.GetUIState() == UIState.InPlay))
         {
             if (!isForceMoving)
             {
                 base.KeyInput();
                 if (!isHitState)
                 {
-                    MoveKey();
+                    if(canMove)
+                        MoveKey();
+                    SkillKey();
                 }
-                var items = setInputBuffer();
-                inputbuffers.AddRange(items.Where(item => !inputbuffers.Any(x => x.Item1 == item.Item1)));
-
                 if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
                 {
-                    triggers[triggerIndex].Interaction();
+                    if(triggers.Count > 0)
+                        triggers[triggerIndex].Interaction();
+                    DeleteInteractionUI();
                 }
             }
             else
@@ -196,40 +190,15 @@ public class PlayerController : RigidBodyObject
     public void MoveKey()
     {
         isSit = false;
-        if (Input.GetKey(GameManager.Input._keySettings.upKey))
-        {
-            if(!isAction && !isAttack && canMove)
-            {
-                if (presentSawDir.Equals(sawDir))
-                {
-                    presentSawDir.x = sawDir.x;
-                }
-                charactor.Up();
-            }
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.downKey))
-        {
-            if (!isAction && !isAttack && canMove)
-            {
-                if (presentSawDir.Equals(sawDir))
-                    presentSawDir.x = sawDir.x;
-                charactor.Down();
-            }
-        }
 
-        else
-        {
-            sawDir = presentSawDir;
-        }
         if (Input.GetKey(GameManager.Input._keySettings.leftKey))
         {
             if (canMove)
             {
                 body.velocity = new Vector2(-charactor.charaData.activeMaxSpeed, body.velocity.y);
-                if (!isAction && !isAttack)
+                if (!isAction)
                 {
                     sawDir = new Vector2(-1, sawDir.y);
-                    presentSawDir.x = sawDir.x;
                 }
             }
 
@@ -239,10 +208,9 @@ public class PlayerController : RigidBodyObject
             if (canMove)
             {
                 body.velocity = new Vector2(charactor.charaData.activeMaxSpeed, body.velocity.y);
-                if (!isAction && !isAttack)
+                if (!isAction)
                 {
                     sawDir = new Vector2(1, sawDir.y);
-                    presentSawDir.x = sawDir.x;
                 }
             }
 
@@ -255,12 +223,41 @@ public class PlayerController : RigidBodyObject
         if (Input.GetKeyDown(GameManager.Input._keySettings.Jump) && isGrounded && canMove)
         {
             charactor.Jump();
-
-
-
             isGrounded = false;
         }
 
+    }
+
+    public void SkillKey()
+    {
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !isAttack)
+        {
+            charactor.Attack();
+            SetAlarm(4, charactor.charaData.attackSpeed);
+        }
+        if(GameManager.Progress != null)
+        {
+            if (GameManager.Progress.isActiveSkill)
+            {
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Skill1))
+                {
+                    if (!charactor.skills[0].isCool)
+                        charactor.skills[0].Execute(sawDir);
+                }
+
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Skill2))
+                {
+                    if (!charactor.skills[1].isCool)
+                        charactor.skills[1].Execute(sawDir);
+                }
+
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Skill3))
+                {
+                    if (!charactor.skills[2].isCool)
+                        charactor.skills[2].Execute(sawDir);
+                }
+            }
+        }
     }
 
     public override void FlipX()
@@ -277,264 +274,6 @@ public class PlayerController : RigidBodyObject
         bodyAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
         legAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
         backHairAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-    }
-
-    private List<(KeyValues, float)> setInputBuffer()
-    {
-        List<(KeyValues, float)> ret = new List<(KeyValues, float)>();
-        float time = Time.time;
-        if (Input.GetKey(GameManager.Input._keySettings.upKey))
-        {
-            ret.Add((KeyValues.Up, time));
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.downKey))
-        {
-            ret.Add((KeyValues.Down, time));
-        }
-
-        if (Input.GetKey(GameManager.Input._keySettings.leftKey))
-        {
-            ret.Add((KeyValues.Left, time));
-        }
-        else if (Input.GetKey(GameManager.Input._keySettings.rightKey))
-        {
-            ret.Add((KeyValues.Right, time));
-        }
-
-        if (Input.GetKey(GameManager.Input._keySettings.Shot))
-        {
-            ret.Add((KeyValues.Shot, time));
-        }
-        if (Input.GetKey(GameManager.Input._keySettings.Jump))
-        {
-            ret.Add((KeyValues.Jump, time));
-        }
-        if (Input.GetKey(GameManager.Input._keySettings.Call))
-        {
-            ret.Add((KeyValues.Call, time));
-        }
-
-        return ret;
-    }
-
-    private void SetCommandBuffer()
-    {
-        if (inputbuffers.Count == 0)
-        {
-            if (commandInputs.Count > 0)
-            {
-                if (commandInputs.Last().Item1 != KeyValues.O)
-                {
-                    commandInputs.Add((KeyValues.O, Time.time));
-                    cmds.Add(KeyValues.O);
-                    CheckCommands();
-                }
-            }
-        }
-        else
-        {
-            var tmp = inputbuffers.ToList();
-            if (commandInputs.Count > 0)
-            {
-                if (commandInputs.Last().Item1 != KeyValues.O)
-                {
-                    inputbuffers.RemoveAll(x => previousinputbuffers.Any(y => y.Item1 == x.Item1));
-                }
-            }
-            previousinputbuffers.Clear();
-            previousinputbuffers.AddRange(tmp);
-            for (int i = 0; i < inputbuffers.Count; i++)
-            {
-                // if First Input, Set Buffer Data
-                if (commandInputs.Count == 0)
-                {
-                    commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
-                    cmds.Add(inputbuffers[i].Item1);
-                    CheckCommands();
-                }
-                else
-                {
-                    // if Last Input is Nearby (6 frame), Combine Input Insert
-                    if (inputbuffers[i].Item2 - commandInputs.Last().Item2 <= .1f)
-                    {
-                        if (checkCombine(commandInputs.Last().Item1, inputbuffers[i].Item1))
-                        {
-                            KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i].Item1;
-                            commandInputs.Add((kv, inputbuffers[i].Item2));
-                            cmds.Add(kv);
-                            CheckCommands();
-                        }
-                    }
-                    commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
-                    cmds.Add(inputbuffers[i].Item1);
-                    CheckCommands();
-                    // Last Input is not input buffer, input insert
-                    if (commandInputs.Last().Item1 != inputbuffers[i].Item1)
-                    {
-                        commandInputs.Add((inputbuffers[i].Item1, inputbuffers[i].Item2));
-                        cmds.Add(inputbuffers[i].Item1);
-                        CheckCommands();
-                    }
-                    if (i < inputbuffers.Count - 1)
-                    {
-                        if (inputbuffers[i + 1].Item2 - inputbuffers[i].Item2 <= .1f)
-                        {
-                            if (checkCombine(inputbuffers[i].Item1, inputbuffers[i + 1].Item1))
-                            {
-                                KeyValues kv = (KeyValues)(int)commandInputs.Last().Item1 + (int)inputbuffers[i + 1].Item1;
-                                commandInputs.Add((kv, inputbuffers[i + 1].Item2));
-                                cmds.Add(kv);
-                                CheckCommands();
-                            }
-                            else
-                            {
-                                commandInputs.Add((KeyValues.O, inputbuffers[i].Item2));
-                                cmds.Add(KeyValues.O);
-                                CheckCommands();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        inputbuffers.Clear();
-
-    }
-
-    private bool checkCombine(KeyValues kv1, KeyValues kv2)
-    {
-        if (kv1 == kv2)
-        {
-            return false;
-        }
-        if (Func.arrows.Contains(kv2))
-        {
-            if (Func.arrows.Contains(kv1))
-            {
-                return true;
-            }
-            else return false;
-        }
-        if (Func.actions.Contains(kv2))
-        {
-            if (Func.directions.Contains(kv1))
-            {
-                return true;
-            }
-            else return false;
-        }
-        return false;
-    }
-
-    private void CheckCommands()
-    {
-        List<KeyValues> cmd = null;
-        bool isLeft;
-        (cmd, isLeft) = CheckCommandInputs();
-        if (cmd != null)
-        {
-            Debug.Log(charactor.commands[cmd].name);
-            if (isLeft)
-            {
-                charactor.commands[cmd].Execute(new Vector2(-1, 0));
-
-            }
-            else
-            {
-                charactor.commands[cmd].Execute(new Vector2(1, 0));
-            }
-        }
-        else
-        {
-            if ((commandInputs.Last().Item1 & KeyValues.Shot) == KeyValues.Shot)
-            {
-                isAttackInput = true;
-                SetAlarm(3, 0.2f);
-            }
-        }
-    }
-
-    private (List<KeyValues>, bool) CheckCommandInputs()
-    {
-        List<(List<KeyValues>, bool)> findCommands = new List<(List<KeyValues>, bool)>();
-
-        List<KeyValues> ret;
-        bool isLeft;
-
-        foreach (List<KeyValues> cmds in charactor.commands.Keys.ToList())
-        {
-            var (b1, b2) = CheckCommandsLastEnd(commandInputs, cmds);
-            if (b1)
-            {
-                findCommands.Add((cmds, b2));
-            }
-        }
-
-        if (findCommands.Count > 0)
-        {
-            (ret, isLeft) = findCommands.OrderByDescending(item => item.Item1.Count).ToList().First();
-            return (ret, isLeft);
-        }
-
-        return (null, false);
-    }
-
-    private (bool, bool) CheckCommandsLastEnd(List<(KeyValues, float)> inputs, List<KeyValues> predefinedCmds)
-    {
-        if (inputs.Count < predefinedCmds.Count) return (false, false);
-        List<KeyValues> reverseCmds = Func.Reverse(predefinedCmds);
-        bool isLeft;
-
-        // Check command is Left command
-        if ((inputs.Last().Item1 & predefinedCmds.Last()) == predefinedCmds.Last())
-        {
-            isLeft = false;
-        }
-        else if ((inputs.Last().Item1 & reverseCmds.Last()) == reverseCmds.Last())
-        {
-            isLeft = true;
-        }
-        else
-        {
-            return (false, false);
-        }
-
-        // If Forward
-        if (!isLeft)
-        {
-            for (int i = predefinedCmds.Count - 1; i >= 0; i--)
-            {
-                for (int j = inputs.Count - 1; j >= 0; j--)
-                {
-                    if (inputs[j].Item1 == KeyValues.O)
-                    {
-                        continue;
-                    }
-
-                    if (predefinedCmds[i] == inputs[j].Item1)
-                    {
-                        break;
-                    }
-
-
-                }
-            }
-        }
-        // If Reverse
-        else
-        {
-            return (false, true);
-        }
-
-        if (isLeft)
-        {
-            return (true, true);
-        }
-        else
-        {
-            return (true, false);
-        }
     }
 
 
@@ -596,16 +335,16 @@ public class PlayerController : RigidBodyObject
 
     public void SetSkin(int index)
     {
-        currentSkin = index;
+        charactor.charaData.currentSkin = index;
 
 
-        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Body");
+        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Body");
         isSetBody = true;
-        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Leg");
+        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Leg");
         isSetLeg = true;
-        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Back");
+        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Back");
         isSetBackHair = true;
-        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[currentSkin] + "Halo");
+        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Halo");
         isSetHalo = true;
 
     }
@@ -756,26 +495,26 @@ public class PlayerController : RigidBodyObject
 
     public void GenInteractionUI()
     {
-
+        GameManager.UIManager.GenerateInteractionUI();
     }
 
     public void DeleteInteractionUI()
     {
-
+        GameManager.UIManager.DeleteInteractionUI();
     }
 
     public void HPIncrease(int value)
     {
-        charactor.charaData.currentHP += value;
-        if (charactor.charaData.currentHP > charactor.charaData.maxHP)
+        GameManager.CharaCon.charactors[charactor.charaData.id].charaData.currentHP += value;
+        if (GameManager.CharaCon.charactors[charactor.charaData.id].charaData.currentHP > GameManager.CharaCon.charactors[charactor.charaData.id].charaData.maxHP)
         {
-            charactor.charaData.currentHP = charactor.charaData.maxHP;
+            GameManager.CharaCon.charactors[charactor.charaData.id].charaData.currentHP = GameManager.CharaCon.charactors[charactor.charaData.id].charaData.maxHP;
         }
     }
 
     public void HPDecrease(int value)
     {
-        charactor.charaData.currentHP -= value;
-        Debug.Log(GameManager.CharaCon.charactors[GameManager.Stage.currentCharactor.charaData.id].charaData.currentHP);
+        GameManager.CharaCon.charactors[charactor.charaData.id].charaData.currentHP -= value;
+        
     }
 }

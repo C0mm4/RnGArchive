@@ -14,4 +14,8 @@ public class KeySetting : ScriptableObject
     public KeyCode Jump;
     public KeyCode Call;
     public KeyCode Interaction;
+
+    public KeyCode Skill1;
+    public KeyCode Skill2;
+    public KeyCode Skill3;
 }

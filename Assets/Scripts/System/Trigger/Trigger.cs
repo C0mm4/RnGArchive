@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -14,7 +17,12 @@ public abstract class Trigger : Obj
     public int SelectIndex;
 
     public TrigText trigText;
-    public List<NPC> npcList;
+
+    public List<string> nextTriggerId;
+    public List<Trigger> nextTrigger;
+
+    public List<GameObject> conditionObjs;
+    public List<GameObject> spawnObjs;
 
     public override void OnCreate()
     {
@@ -22,6 +30,8 @@ public abstract class Trigger : Obj
         triggerBox = GetComponent<Collider2D>();
         triggerBox.isTrigger = true;
         data.isActivate = false;
+        conditionObjs = new();
+        spawnObjs = new();
         if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
         {
             data.isActivate = true;
@@ -30,32 +40,38 @@ public abstract class Trigger : Obj
         {
             data.isActivate = false;
         }
+        string id = GetType().Name;
+        id = id.Replace("Trig", "");
+        data.id = id;
     }
 
-    public async void OnTriggerStay2D(Collider2D collision)
+    public async virtual void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject == GameManager.player)
+        if (data.startNPCId.Equals(""))
         {
-            if (GameManager.GetUIState() == UIState.InPlay)
+            if (collision.gameObject == GameManager.player)
             {
-                if (!data.isActivate)
+                if (GameManager.GetUIState() == UIState.InPlay)
                 {
-                    if (nodeIds.Count == 0)
+                    if (!data.isActivate)
                     {
-                        if (AdditionalCondition())
+                        if (nodeIds.Count == 0)
                         {
-                            await TriggerActive();
+                            if (AdditionalCondition())
+                            {
+                                await TriggerActive();
+                            }
+                        }
+                        else
+                        {
+                            if (CheckNodesActive())
+                            {
+                                await TriggerActive();
+                            }
                         }
                     }
-                    else
-                    {
-                        if (CheckNodesActive())
-                        {
-                            await TriggerActive();
-                        }
-                    }
-                }
 
+                }
             }
         }
     }
@@ -66,7 +82,6 @@ public abstract class Trigger : Obj
         StartCutScene(); 
         await Task.Run(() =>
         {
-            Debug.Log(data.id);
             GameManager.Trigger.ActiveTrigger(data);
         });
     }
@@ -123,9 +138,8 @@ public abstract class Trigger : Obj
 
     public async Task NPCSay(Script script, NPC targetNPC)
     {
-        targetNPC.SetScript(script.script);
-        await targetNPC.Say();
-        targetNPC.SetScript("");
+        string applyScript = Func.ChangeStringToValue(script.script);
+        await targetNPC.Say(applyScript);
     }
 
     public async void StartCutScene()
@@ -142,15 +156,75 @@ public abstract class Trigger : Obj
 
     public abstract Task Action();
 
-    public NPC FindNPC(string id)
+    public NPC FindNPC(string id, Transform trans)
     {
-        return npcList.Find(item => item.npcId.Equals(id));
+        /*NPC ret = npcList.Find(item => item.npcId.Equals(id));*/
+        List<NPC> npcs = GameManager.Instance.currentMapObj.GetComponentsInChildren<NPC>().ToList();
+        NPC ret = npcs.Find(item => item.npcId.Equals(id));
+        if(ret == null)
+        {
+            ret = NPCSpawn(id, trans);
+        }
+        return ret;
 
     }
+
+    public NPC FindNPC(string id)
+    {
+        List<NPC> npcs = GameManager.Instance.currentMapObj.GetComponentsInChildren<NPC>().ToList();
+        NPC ret = npcs.Find(item => item.npcId.Equals(id));
+
+        return ret;
+    }
     
-    public void NPCSpawn(string id, Transform trans)
+    public NPC NPCSpawn(string id, Transform trans)
     {
         NPC ret = GameManager.MobSpawner.NPCSpawn(id, trans.position).GetComponent<NPC>();
-        npcList.Add(ret);
+        return ret;
     }
+
+    public async Task ScriptPlay()
+    {
+        for(int i = 0; i < trigText.scripts.Count; i++)
+        {
+            string npcId = trigText.scripts[i].npcId;
+            if (npcId.Equals("90000000"))
+            {
+                List<Script> selections = new List<Script>();
+                selections.Add(trigText.scripts[i]);
+                if (i != trigText.scripts.Count - 1)
+                {
+                    for (int j = i + 1; j < trigText.scripts.Count && trigText.scripts[j].npcId.Equals("90000001"); j++)
+                    {
+                        selections.Add(trigText.scripts[j]);
+                        i++;
+                    }
+                }
+                await GenSelectionUI(selections);
+            }
+            else
+            {
+                NPC targetNPC = FindNPC(npcId);
+                await NPCSay(trigText.scripts[i], targetNPC);
+            }
+            if (!trigText.scripts[i].subTriggerId.Equals(""))
+            {
+                Type t = Type.GetType("SubTrig" + trigText.scripts[i].subTriggerId);
+                SubTrigger subTrigger;
+                subTrigger = Activator.CreateInstance(t) as SubTrigger;
+                subTrigger.originTrig = this;
+                await subTrigger.Action();
+            }
+        }
+    }
+
+    public void ActiveSpawnObjs()
+    {
+        foreach(GameObject go in spawnObjs)
+        {
+            go.GetComponent<Mob>().isForceMoving = false;
+            go.GetComponent<Mob>().canMove = true;
+        }
+    }
+
 }

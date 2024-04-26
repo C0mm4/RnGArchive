@@ -8,12 +8,6 @@ using UnityEngine;
 
 public class NPC : InteractionTrigger
 {
-    // Say Script
-    public string script;
-
-    // Distance to say
-    public float sayDistance;
-    
     public bool isSaying;
 
     public int sayingIndex;
@@ -27,45 +21,63 @@ public class NPC : InteractionTrigger
 
     public string npcId;
 
+    public List<string> scripts;
+    public int scriptIndex;
+    public List<ScriptTrigger> SaveScripts;
+
+    public Trigger sayTrigger;
+
+    public GameObject triggerEffect;
+
     public override void OnCreate()
     {
         base.OnCreate();
-        sayDistance = 5f;
         sayingIndex = 0;
+        scriptIndex = 0;
         isSaying = false;
+        text = "대화한다";
     }
 
-    public override async void Step()
+    public override void Step()
     {
         base.Step();
-        if (player != null)
+        sayTrigger = CheckTriggerStart();
+        if(GameManager.uiState == UIState.InPlay)
         {
-            if(GameManager.GetUIState() == UIState.InPlay)
+            if (sayTrigger != null)
             {
-                if (PlayerDistance() <= sayDistance)
+                triggerEffect = GameManager.InstantiateAsync("TriggerEffect");
+                triggerEffect.transform.position = transform.position + new Vector3(0, 1);
+            }
+            else
+            {
+                if (triggerEffect != null)
                 {
-                    if (!isSaying && script.Length > 0)
-                    {
-                        isSaying = true;
-                        await Say();
-                    }
+                    GameManager.Destroy(triggerEffect);
+                    triggerEffect = null;
+                }
+            }
 
-                }
-                else
-                {
-                    if (isSaying)
-                    {
-                        sayingIndex = script.Length;
-                    }
-                }
+            if (sayTrigger != null || scripts.Count != 0)
+            {
+                detectDistance = 2f;
+            }
+            else
+            {
+                detectDistance = 0f;
+            }
+
+        }
+        else
+        {
+            if(triggerEffect != null)
+            {
+                GameManager.Destroy(triggerEffect);
+                triggerEffect = null;
             }
         }
     }
 
-    public void SetScript(string txt)
-    {
-        script = Func.ChangeStringToValue(txt);
-    }
 
 
     public async Task Say()
@@ -85,25 +97,42 @@ public class NPC : InteractionTrigger
         letterBox.GetComponent<LetterBox>().SetPosition();
         letterBox.transform.SetParent(GameManager.UIManager.canvas.transform, false);
 
+        float sayStartT = 0f;
+        float sayT = 0f;
 
-        while (sayingIndex <= script.Length - 1)
+        while (sayingIndex <= scripts[scriptIndex].Length - 1)
         {
+            sayT += Time.deltaTime;
+            sayStartT += Time.deltaTime;
+            if(sayT >= sayingDelay)
+            {
+                sayingIndex++; 
+                if (sayingIndex < scripts[scriptIndex].Length)
+                {
+                    if (scripts[scriptIndex][sayingIndex].Equals(" "))
+                    {
+                        sayingIndex++;
+                    }
+                }
+                var cuttext = scripts[scriptIndex][..sayingIndex];
+
+                letterBox.GetComponent<LetterBox>().SetText(cuttext);
+                sayT = 0f;
+            }
             if (!isSaying)
             {
                 break;
             }
-            sayingIndex++;
-            if(sayingIndex < script.Length)
+            if(sayStartT > 0.5f)
             {
-                if (script[sayingIndex].Equals(" "))
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
                 {
-                    sayingIndex++;
+                    sayingIndex = scripts[scriptIndex].Length - 1;
+                    var cuttext = scripts[scriptIndex][..sayingIndex];    
+                    letterBox.GetComponent<LetterBox>().SetText(cuttext);
                 }
             }
-            var cuttext = script[..sayingIndex];
-            
-            letterBox.GetComponent<LetterBox>().SetText(cuttext);
-            await Task.Delay(TimeSpan.FromSeconds(sayingDelay));
+            await Task.Yield();
         }
 
         if(sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
@@ -120,4 +149,145 @@ public class NPC : InteractionTrigger
     }
 
 
+    public async Task Say(string script)
+    {
+        
+        if (letterBox != null)
+        {
+            GameManager.Destroy(letterBox);
+        }
+
+        isSaying = true;
+        sayingIndex = 0;
+
+        var awaitObj = GameManager.InstantiateAsync("LetterBox");
+        letterBox = awaitObj;
+        letterBox.GetComponent<LetterBox>().npc = this;
+        letterBox.GetComponent<LetterBox>().SetPosition();
+        letterBox.transform.SetParent(GameManager.UIManager.canvas.transform, false);
+
+        float sayStartT = 0f;
+        float sayT = 0f;
+
+        while (sayingIndex <= script.Length - 1)
+        {
+            sayT += Time.deltaTime;
+            sayStartT += Time.deltaTime;
+            if (sayT >= sayingDelay)
+            {
+                sayingIndex++;
+                if (sayingIndex < script.Length)
+                {
+                    if (script[sayingIndex].Equals(" "))
+                    {
+                        sayingIndex++;
+                    }
+                }
+                var cuttext = script[..sayingIndex];
+
+                letterBox.GetComponent<LetterBox>().SetText(cuttext);
+                sayT = 0f;
+            }
+            if (!isSaying)
+            {
+                break;
+            }
+            if (sayStartT > 0.5f)
+            {
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+                {
+                    sayingIndex = script.Length - 1;
+                    var cuttext = script[..sayingIndex];
+                    letterBox.GetComponent<LetterBox>().SetText(cuttext);
+                }
+            }
+            await Task.Yield();
+        }
+
+        if (sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1f));
+        }
+
+        GameManager.Destroy(letterBox);
+
+        await Task.Delay(TimeSpan.FromSeconds(nextSayDelay));
+
+
+        isSaying = false;
+    }
+
+    public override async void Interaction()
+    {
+        base.Interaction();
+        Trigger trig = CheckTriggerStart();
+        if(trig != null)
+        {
+            await trig.TriggerActive();
+        }
+        else
+        {
+            GameManager.ChangeUIState(UIState.CutScene);
+            await Say();
+            if (scriptIndex < scripts.Count - 1)
+            {
+                scriptIndex++;
+            }
+            GameManager.ChangeUIState(UIState.InPlay);
+
+        }
+    }
+
+    public void AddScripts(TrigScript trigScript)
+    {
+        ScriptTrigger newScriptTrig = new ScriptTrigger();
+        newScriptTrig.triggerID = trigScript.trigId;
+        newScriptTrig.NPCID = npcId;
+        newScriptTrig.scripts = new();
+        foreach (NPCScript script in trigScript.scripts)
+        {
+            if(script.npcId.Equals(npcId))
+            {
+                newScriptTrig.scripts.Add(script.script);
+            }
+        }
+        if(newScriptTrig.scripts.Count > 0)
+        {
+            SaveScripts.Add(newScriptTrig);
+        }
+    }
+
+    public void SetScripts()
+    {
+        foreach(ScriptTrigger scriptData in SaveScripts)
+        {
+            string targetTrig = scriptData.triggerID;
+            if (targetTrig.Equals(""))
+            {
+                scripts = scriptData.scripts;
+                scriptIndex = 0;
+            }
+            else if (GameManager.Progress.activeTrigs.ContainsKey(targetTrig))
+            {
+                scripts = scriptData.scripts;
+                scriptIndex = 0;
+            }
+        }
+    }
+
+    private Trigger CheckTriggerStart()
+    {
+        foreach(Trigger trig in GameManager.Stage.currentMapTrigger)
+        {
+            if (!trig.data.isActivate && trig.CheckNodesActive())
+            {
+                if (trig.data.startNPCId.Equals(npcId))
+                {
+                    return trig;
+                }
+            }
+        }
+
+        return null;
+    }
 }

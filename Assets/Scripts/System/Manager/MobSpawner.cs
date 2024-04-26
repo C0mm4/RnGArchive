@@ -20,11 +20,12 @@ public class MobSpawner
 
     }
 
-    public GameObject MobSpawn(string id, Vector3 pos)
+    public GameObject MobSpawn(string id, Vector3 pos, bool isForceMove = false)
     {
         GameObject ret = GameManager.InstantiateAsync(id, pos);
+        ret.GetComponent<Mob>().isForceMoving = isForceMove;
         ret.GetComponent<Mob>().CreateHandler();
-        
+        ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
         return ret;
     }
 
@@ -42,6 +43,8 @@ public class MobSpawner
     {
         GameObject ret = GameManager.InstantiateAsync(id, pos);
         ret.GetComponent<NPC>().npcId = id;
+        ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
+        GameManager.Stage.NPCScriptSet(ret.GetComponent<NPC>());
         return ret.GetComponent<NPC>();
     }
 }

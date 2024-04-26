@@ -40,6 +40,7 @@ public class SceneController
 
     public async Task MoveMap(string mapId, string doorId)
     {
+        GameManager.ChangeUIState(UIState.Loading);
         CreateFadeOutObj();
         await FadeOut("InGameScene");
         GameManager.Stage.LoadMap(mapId);
@@ -50,6 +51,7 @@ public class SceneController
 
     public async Task LoadMap(string mapId)
     {
+        GameManager.ChangeUIState(UIState.Loading);
         CreateFadeOutObj();
         await FadeOut("InGameScene");
         GameManager.Stage.LoadMap(mapId);

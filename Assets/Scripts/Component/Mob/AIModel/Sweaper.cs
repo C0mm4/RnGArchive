@@ -8,6 +8,8 @@ public class Sweaper : AIModel
     {
         string currentState = target.currentState;
 
+
+
         if(!target.isForceMoving)
         {
             if(currentState == "Idle" || currentState == "MobMove")
@@ -17,8 +19,8 @@ public class Sweaper : AIModel
             if (target.GetPlayerDistance() <= 0.8f)
             {
                 // Attack Code Add
-
-                target.ChangeState(new MobAttack(0));
+                if (!target.data.attackCooltime[0])
+                    target.ChangeState(new MobAttack(0));
             }
         }
     }

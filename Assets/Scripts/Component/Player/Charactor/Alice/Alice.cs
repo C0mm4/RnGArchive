@@ -10,7 +10,6 @@ public class Alice : Charactor
     {
         attackPref = "AliceBaseAttackPref";
         base.Attack();
-        Debug.Log("Attack");
 
     }
 

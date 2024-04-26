@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<mapID name ="10012200">
+		<trigID name ="">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>테스트</kr>
+			</script>
+		</trigID>"
+	</mapID>
+	<mapID name ="10012200">
+		<trigID name ="">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>싸엘레싸티디비</kr>
+			</script>
+		</trigID>"
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>조심히 다녀와 아리스</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001002</NPCID>
+				<kr>그럼 아리스 성공적인 레이드를 기원합니다! 참고로 레이드…(이하생략)</kr>
+			</script>
+		</trigID>
+	</mapID>
+</Root>

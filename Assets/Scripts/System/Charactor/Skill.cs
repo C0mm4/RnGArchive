@@ -13,6 +13,10 @@ public abstract class Skill
     public int maxAmmo;
     public int currentAmmo;
 
+    public float coolTime = 5;
+    public bool isCool = false;
+    public float leftCoolTime;
+
     public Skill()
     {
     }
@@ -20,11 +24,17 @@ public abstract class Skill
     public abstract void PassiveEffect();
     public virtual void Execute(Vector2 dir)
     {
-        if(currentAmmo > 0)
+        if (!isCool)
         {
-            player = GameManager.player.GetComponent<PlayerController>();
-            player.workingSkill = this;
-            currentAmmo--;
+            if (currentAmmo > 0)
+            {
+                player = GameManager.player.GetComponent<PlayerController>();
+                player.workingSkill = this;
+                currentAmmo--;
+                isCool = true;
+                leftCoolTime = coolTime;
+                Debug.Log(GetType().Name);
+            }
         }
     }
 

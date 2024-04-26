@@ -231,6 +231,74 @@ MonoBehaviour:
     m_Address: 20009001
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: ca95b190ede2d854eaaeae36e959ffaf
+    m_Address: FlyingDrone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 06b672e8ba511bf4bbb1e23261a3e04f
+    m_Address: FlyingDrone 0
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ad3c23680421a1841baca942d0139e81
+    m_Address: Utaha
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6aa672843468a3d4e8ad6ebec82dbf09
+    m_Address: UtahaBullet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c6960708514827a45b1a06350fd7c8ff
+    m_Address: testMap
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 03b9d565ef3ef924da956c1adc79cb1e
+    m_Address: Assets/Sprites/Mob/Drone/Animation/Drone.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 17648b6ee3877ea46983caf656ab3819
+    m_Address: Assets/Sprites/Mob/Drone/Animation/Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b7b629d2eb4acb545ad7a9e4ecf77d6c
+    m_Address: Assets/Sprites/Mob/Drone/Animation/Move.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 909a38f187ca68f46b38a926bd2f218e
+    m_Address: Assets/Sprites/Mob/Drone/Animation/Attack 0.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bbbe4267d4feb854fb6efe3697f8b1b5
+    m_Address: Assets/Scripts/Component/Mob/MobData/TestSweaper.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 22ed0f1e367730e499459af623143547
+    m_Address: Assets/Scripts/Component/Mob/MobData/FlyingDrone.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b8d5a5686195f4a408f3dd8c9d1c060e
+    m_Address: InteractionSelectionUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 232fcb854d0b4df44a2fc77449a38128
+    m_Address: InteractionUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d206437f2616b3c42be827220f711c8c
+    m_Address: TriggerEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a1a1f1868d511e54d8526ef438cbab53
+    m_Address: Assets/Sprites/NPC/TriggerEffect.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6dd4f791aea3b7440a05a144f112d986
+    m_Address: dealmeter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1fff64d2c78488c469ad0a8629d03176
+    m_Address: DealMeterData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

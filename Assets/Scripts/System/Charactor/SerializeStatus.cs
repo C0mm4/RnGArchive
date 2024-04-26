@@ -20,4 +20,5 @@ public struct CharactorData
     public int currentHP;
 
     public List<string> skins;
+    public int currentSkin;
 }

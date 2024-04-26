@@ -21,7 +21,7 @@ public class Attack : Obj
         this.dir = dir;
         this.type = type;
     }
-
+/*
     public virtual void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Enemy")
@@ -29,6 +29,11 @@ public class Attack : Obj
 
             collider.GetComponent<Mob>().GetDMG(dmg, type);
         }
-    }
+    }*/
 
+
+    public virtual void EnterEnemy(Mob target)
+    {
+        target.GetDMG(dmg, type);
+    }
 }

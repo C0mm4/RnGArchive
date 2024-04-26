@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class GameManager : MonoBehaviour
 {
@@ -84,6 +85,8 @@ public class GameManager : MonoBehaviour
     public KeySetting keysetting;
 
     public static UIState uiState;
+
+    public GameObject currentMapObj;
 
     private void Awake()
     {
@@ -224,6 +227,7 @@ public class GameManager : MonoBehaviour
         Input.Update();
         UIManager.Update();
         Stage.Update();
+        CharaCon.Update();
     }
 
     public static void CharactorSpawnStartGame()
@@ -262,9 +266,10 @@ public class GameManager : MonoBehaviour
 
         Stage.currentCharactor = CharaCon.charactors[id];
 
-        Progress.currentCharactorId = id;
+        if(Progress != null)
+            Progress.currentCharactorId = id;
 
-
+        CameraManager.player = player.transform;
     }
 
     public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
@@ -276,6 +281,11 @@ public class GameManager : MonoBehaviour
     public static T LoadAssetDataAsync<T>(string path) where T : UnityEngine.Object
     {
         return (T)Resource.LoadAssetAsync<T>(path).Result;
+    }
+
+    public static T LoadAssetDataAsync<T>(AssetReference assetReference) where T : UnityEngine.Object
+    {
+        return (T)Resource.LoadAssetAsync<T>(assetReference).Result;
     }
 
     public static void Destroy(GameObject[] gos)

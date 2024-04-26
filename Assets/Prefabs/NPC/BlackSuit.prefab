@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -156,12 +156,15 @@ MonoBehaviour:
   player: {fileID: 0}
   detectDistance: 0
   text: 
-  script: 
-  sayDistance: 0
   isSaying: 0
   sayingIndex: 0
   sayingDelay: 0.05
   nextSayDelay: 1
   letterBox: {fileID: 0}
   animator: {fileID: 5662721222491012449}
-  npcId: 
+  npcId: 20009001
+  scripts: []
+  scriptIndex: 0
+  SaveScripts: []
+  sayTrigger: {fileID: 0}
+  triggerEffect: {fileID: 0}

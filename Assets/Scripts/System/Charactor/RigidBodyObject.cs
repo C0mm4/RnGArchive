@@ -16,6 +16,8 @@ public class RigidBodyObject : Obj
 
     public bool canMove;
 
+    public bool isMove;
+
     public bool isForceMoving;
 
     public Vector3 targetMovePos;
@@ -37,6 +39,7 @@ public class RigidBodyObject : Obj
     public override void BeforeStep()
     {
         base.BeforeStep();
+        body.gravityScale = gravityModifier;
         isGrounded = false;
         FlipX();
     }

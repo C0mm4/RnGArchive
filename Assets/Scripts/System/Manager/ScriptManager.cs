@@ -11,6 +11,7 @@ public class ScriptManager
     public List<MapScript> scripts = new List<MapScript>();
 
     string scriptXMLFile = "Scripts";
+    string NPCScriptXMLFile = "NPCScripts";
 
     XmlDocument text;
 
@@ -18,6 +19,7 @@ public class ScriptManager
     // Road Text Script XML
     public void init()
     {
+        
         text = GameManager.Resource.LoadXML(scriptXMLFile);
         // Initialize Trigger Texts
         MapTrigText mapTrigText = new MapTrigText();
@@ -43,6 +45,34 @@ public class ScriptManager
             Script script = new Script();
             script.npcId = trigData["script"]["NPCID"].InnerText;
             script.script = trigData["script"]["kr"].InnerText;
+            if(trigData["script"]["isAwait"] != null)
+            {
+                script.isAwait = true;
+                Debug.Log("Node is exists");
+            }
+            else
+            {
+                script.isAwait = false;
+            }
+
+            if (trigData["script"]["startNPC"] != null)
+            {
+                script.startNPCId = trigData["script"]["startNPC"].InnerText;
+
+            }
+            else
+            {
+                script.startNPCId = "";
+            }
+
+            if (trigData["script"]["subTrig"] != null)
+            {
+                script.subTriggerId = trigData["script"]["subTrig"].InnerText;
+            }
+            else
+            {
+                script.subTriggerId = "";
+            }
             trigs.scripts.Add(script);
 
             // if not Same Map Id
@@ -64,27 +94,80 @@ public class ScriptManager
         mapTrigText.trigTexts.Add(trigs);
         mapTexts.Add(mapTrigText);
 
-        // Script Data Testing
-/*   
-        foreach(var map in mapTexts)
+        text = GameManager.Resource.LoadXML(NPCScriptXMLFile);
+
+        MapScript mapScript = new MapScript();
+        XmlNodeList mapScriptNode = text.SelectNodes("//mapID");
+        TrigScript mapTrigScript = new TrigScript();
+        foreach (XmlNode node in mapScriptNode)
         {
-            foreach(var trig in map.trigTexts)
+            XmlNode trigData = node.SelectSingleNode("trigID");
+
+
+            // if not Same Trigger Id
+            if (!trigData.Attributes["name"].Value.Equals(mapTrigScript.trigId))
             {
-                foreach(var script in trig.scripts)
+                // Save Previous Trigger Script Data
+                if (mapTrigScript.trigId != null)
                 {
-                    Debug.Log(script.script);
+                    mapScript.scripts.Add(mapTrigScript);
                 }
-                Debug.Log("EndTrig " + trig.trigId);
+                mapTrigScript = new TrigScript();
+                mapTrigScript.trigId = trigData.Attributes["name"].Value;
             }
-            Debug.Log("EndMap " + map.mapId);
+
+            NPCScript script = new NPCScript();
+            script.npcId = trigData["script"]["NPCID"].InnerText;
+            script.script = trigData["script"]["kr"].InnerText;
+
+
+            mapTrigScript.scripts.Add(script);
+
+            // if not Same Map Id
+            if (!node.Attributes["name"].Value.Equals(mapScript.mapId))
+            {
+
+                // Save Previous Map Script Data
+                if (mapScript.mapId != null)
+                {
+                    scripts.Add(mapScript);
+                }
+                // Create new MapScript
+                mapScript = new MapScript();
+                mapScript.mapId = node.Attributes["name"].Value;
+            }
+
         }
-*/
+
+        mapScript.scripts.Add(mapTrigScript);
+        scripts.Add(mapScript);
+
+
+        foreach(MapScript script in scripts)
+        {
+            foreach(TrigScript a in script.scripts)
+            {
+                foreach(NPCScript b in a.scripts)
+                {
+                    Debug.Log(b.script);
+                }
+                Debug.Log("");
+            }
+            Debug.Log("");
+        }
     }
 
 
     public MapTrigText getMapTrigTextData(string mapId)
     {
         MapTrigText ret = mapTexts.Find(item => item.mapId.Equals(mapId));
+        return ret;
+    }
+
+    public MapScript getMapScriptsData(string mapId)
+    {
+        MapScript ret = scripts.Find(item => item.mapId.Equals(mapId));
+
         return ret;
     }
 }
@@ -108,9 +191,11 @@ public class TrigText
 public class Script 
 {
     public string npcId;
+    public string startNPCId;
     public string script;
     public bool isAwait;
     public string nextTextTrig;
+    public string subTriggerId;
 }
 
 // Use General NPC Texts
@@ -118,14 +203,14 @@ public class Script
 public class MapScript
 {
     public string mapId;
-    List<TrigScript> scripts = new List<TrigScript>();
+    public List<TrigScript> scripts = new List<TrigScript>();
 }
 
 [Serializable]
 public class TrigScript
 {
     public string trigId;
-    List<NPCScript> scripts = new List<NPCScript>();
+    public List<NPCScript> scripts = new List<NPCScript>();
 }
 
 [Serializable]

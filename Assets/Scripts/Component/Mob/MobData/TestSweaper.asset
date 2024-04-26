@@ -17,14 +17,10 @@ MonoBehaviour:
   speedAccel: 3
   attackDelay:
   - 0.1
+  attackCooltime: 
   detectDistance: 0
   atkType: 0
   defType: 2
   atkPref:
   - {fileID: 0}
   AIModel: Sweaper
-  animatorAsset:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0

@@ -164,4 +164,4 @@ MonoBehaviour:
   nextSayDelay: 1
   letterBox: {fileID: 0}
   animator: {fileID: 5662721222491012449}
-  npcId: 
+  npcId: 20001003

@@ -50,11 +50,11 @@ TagManager:
   - name: BackwordInGame
     uniqueID: 3095113591
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Door
     uniqueID: 2623169763
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Halo
     uniqueID: 368192261

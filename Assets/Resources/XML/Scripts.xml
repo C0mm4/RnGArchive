@@ -5,6 +5,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>아, 당신이군요</kr>
+				<eng>Ah, It's you</eng>
+				<jp>あ、あなたですか</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -13,6 +15,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>…..?</kr>
+				<eng>…..?</eng>
+				<jp>….？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -21,6 +25,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>마치 영문을 모르겠다는 표정이군요</kr>
+				<eng>You look like you don't know what's going on.</eng>
+				<jp>まるでなにかなんだかわからないようですね。</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -29,6 +35,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>큭큭큭. </kr>
+				<eng>(Laughing)</eng>
+				<jp>クックっく</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -37,6 +45,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>여기는 그저…</kr>
+				<eng>This place is just…</eng>
+				<jp>ここはただ….</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -45,6 +55,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>한 가능성에 실험해보는 실험실 같은 겁니다.</kr>
+				<eng>It's like a laboratory where you experiment with one possibility.</eng>
+				<jp>一つの可能性を実験する実験室みたいな物です。</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -53,6 +65,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>그렇다면 불가해한 존재여</kr>
+				<eng>Then let's enjoy the play</eng>
+				<jp>ならば不可解な存在よ</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -61,6 +75,8 @@
 			<script>
 				<NPCID>20009001</NPCID>
 				<kr>잠시 제가 준비한 연극을 감상하시지요</kr>
+				<eng>I've prepared.</eng>
+				<jp>私が準備したステージを楽しみに。</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -69,6 +85,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>눈을 뜬다</kr>
+				<jp>目を開ける</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -78,6 +95,7 @@
 				<NPCID>20001001</NPCID>
 				<kr>정신이 들어 아리스?</kr>
 				<eng>Hey you, finally awake up</eng>
+				<jp>気が覚めたか、アリス？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -86,6 +104,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>여기는…?</kr>
+				<jp>ここは。。。？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -94,6 +113,7 @@
 			<script>
 				<NPCID>90000001</NPCID>
 				<kr>시스템 가동 준비완료</kr>
+				<jp>システム起動、準備完了</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -102,6 +122,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>정신을 차렸나 보네</kr>
+				<jp>気を覚めたようだね</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -110,6 +131,8 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>일어나자마자 미안하지만 아리스, 테스트를 위해 전투용 드론을 보냈어</kr>
+				<jp>早速で悪いけどテストのためにドローンを送った。</jp>
+				<subTrig>40012200</subTrig>
 			</script>
 		</trigID>
 	</mapID>
@@ -118,14 +141,17 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>빛의 검을 사용해 드론을 파괴해봐</kr>
+				<jp>光の剣を使って破壊して</jp>
 			</script>
 		</trigID>
 	</mapID>
 	<mapID name="10012100">
 		<trigID name="40012101">
 			<script>
+				<startNPC>20001001</startNPC>
 				<NPCID>20001001</NPCID>
 				<kr>역시 우리 엔지니어부가 만든 빛의 검이야</kr>
+				<jp>流石私たちエンジニア部が作った光の剣だね</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -134,6 +160,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>보급형 드론은 가볍게 처리하네</kr>
+				<jp>補給型ドローンは簡単に破壊するね</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -142,6 +169,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>하지만 아직 표본이 부족한걸</kr>
+				<jp>だけどまだ表本が足りない</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -150,6 +178,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>계속해서 드론을 보낼게</kr>
+				<jp>続けてドローンを送れるね</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -158,6 +187,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>이번에는 이쪽에서도 서포트 할께</kr>
+				<jp>今回はこっちからもサポートするから</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -166,14 +196,18 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>{GameManager.Input._keySettings.Call} 키를 누르면 그쪽으로 천둥이를 보낼게</kr>
+				<jp>{GameManager.Input._keySettings.Call}キーで天ちゃんを呼べる</jp>
+				<subTrig>40012201</subTrig>
 			</script>
 		</trigID>
 	</mapID>
 	<mapID name="10012100">
 		<trigID name="40012102">
 			<script>
+				<startNPC>20001001</startNPC>
 				<NPCID>20001001</NPCID>
 				<kr>이정도면 전투용 샘플은 충분한 것 같네</kr>
+				<jp>これくらいなら戦闘用サンプルは十分かな</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -182,6 +216,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>이걸로 마지막 테스트야</kr>
+				<jp>これで最後のテストよ</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -190,6 +225,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>이번 녀석은 좀 까다로울 거야</kr>
+				<jp>今回はかなり厄介になるよ</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -198,6 +234,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>우리 엔지니어부가 심혈을 기울여 새로 설계한 경비용 전투 드론이거든</kr>
+				<jp>私たちエンジニア部が真剣になって新たに設計した警備用戦闘ドローンだから</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -206,6 +243,8 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>해당 드론의 내구성 테스트도 겸할 겸 그 아이와도 전투를 치뤄봐</kr>
+				<jp>このドローンのストレステストのためにも戦ってくれ</jp>
+				<subTrig>40012202</subTrig>
 			</script>
 		</trigID>
 	</mapID>
@@ -214,6 +253,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>역시 우리가 만든 드론이야. 내구도는 확실하지</kr>
+				<jp>流石私たちが作ったドローンだ硬さは確実だな</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -222,6 +262,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>장갑을 뚫지 못하는 무기라니 마치 실패한 무기 같잖아?</kr>
+				<jp>装備を貫通できない武器ってまるで失敗したそうだろ？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -230,6 +271,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>하지만 우리 엔지니어부에게 실패란 없지</kr>
+				<jp>だが私たちエンジニア部には失敗はいない</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -238,6 +280,8 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>빛의 검의 특수 능력을 개방했어</kr>
+				<jp>光の剣の特殊能力を開放した</jp>
+				<subTrig>40012203</subTrig>
 			</script>
 		</trigID>
 	</mapID>
@@ -246,6 +290,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>자, 날뛰어봐 아리스</kr>
+				<jp>さ、あばれろアリス</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -254,6 +299,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>역시 우리가 만든 대 우주전 함포야</kr>
+				<jp>やはり私たちが作った対宇宙戦艦砲だな</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -262,6 +308,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>그렇지만 우타하 선배</kr>
+				<jp>ですがうたは先輩</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -270,6 +317,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>응?</kr>
+				<jp>うん？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -278,6 +326,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>빛의 검으로 보스를 처치한 것이라면</kr>
+				<jp>光の剣でボスを倒したなら</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -286,6 +335,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>해당 보스의 방어력도 실패한 것이 아닙니까?</kr>
+				<jp>そのボスの崩御力は失敗したことは？</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -294,6 +344,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>아 그거라면 문제 없어</kr>
+				<jp>あ、それなら問題ない</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -302,6 +353,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>자고로 방패란 무기의 발전에 따라 발전하니까</kr>
+				<jp>ちなみに</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -342,6 +394,185 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<kr>도어를 열어줄게 부실로 올라와 결과를 알려줄게</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>아리스!</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001002</NPCID>
+				<isAwait>x</isAwait>
+				<kr>아리스! 성능 테스트는 어떠셨나요? 대충 잡다한 TMI…</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>코토리 그것보다 테스트 결과를</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001002</NPCID>
+				<kr>알겠습니다! 테스트 결과에 대한 설명이군요!</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001002</NPCID>
+				<isAwait>x</isAwait>
+				<kr>대충 설명….</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>요약하자면 큰 외상이나 기능적인 문제는 없다는 소리지</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>하지만 아리스 최근들어 의식이 사라진다고 했지?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>실험실에 들어가서도 같은 느낌이야?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>그렇습니다. 방금도 무언가 무서운 것을 본듯한 느낌입니다.</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>아리스 꿈을 꾼거야?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001002</NPCID>
+				<isAwait>x</isAwait>
+				<kr>꿈이라면…. 대충 TMI…</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>하지만 안타깝게도 현재 우리의 지식으로는 해당 현상을 해석하진 못해</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>트리니티처럼 고서가 잘 정리되어 있다면 모르겠지만…</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>그러면 우리가 트리니티로 가서 정보를 찾아보면 되지 않을까?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>언니 그래도 갑작스럽게 찾아가는건 실례가 아닐까?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>RPG게임에서의 용사는 처음 가는 마을에서도 사람들을 돕고 친해지잖아?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>용사...!</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>90000001</NPCID>
+				<kr>용사의 모험인 것이군요!</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>정해진 것 같네. 트리니티의 좌표를 보내놨어</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012200">
+		<trigID name="40012200">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>나도 천둥이로 서포트 할 테니까 갔다 오는게 어때?</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012300">
+		<trigID name="40012300">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>요즘따라 전투드론이 많이 보이는 것 같아</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012300">
+		<trigID name="40012300">
+			<script>
+				<NPCID>20001003</NPCID>
+				<kr>조심해서 가자 아리스쨩</kr>
 			</script>
 		</trigID>
 	</mapID>

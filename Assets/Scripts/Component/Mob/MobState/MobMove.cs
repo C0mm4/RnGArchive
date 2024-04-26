@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MobMove : MonoBehaviour
+public class MobMove : State
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(Mob chr)
     {
-        
+        base.EnterState(chr);
+        charactor.isMove = true;
+        charactor.AnimationPlay("Move");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ExitState()
     {
-        
+        charactor.isMove = false;
+        base.ExitState();
+
     }
+
 }
