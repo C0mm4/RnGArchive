@@ -12,10 +12,48 @@ public class GameProgress
     public int currentSupporterId;
     public bool isActiveSkill;
     public bool isActiveSupport;
-    public List<Charactor> openCharactors;
-    public List<Supporter> openSupporeters;
-    public List<Charactor> currentParty;
+    public List<int> openCharactors = new();
+    public Dictionary<int, CharactorProgress> charaDatas = new();
+    public List<Supporter> openSupporeters = new();
+    public List<Charactor> currentParty = new();
+    public List<string> openDoors = new();
 
 
     public Dictionary<string, TriggerData> activeTrigs;
+
+    public struct CharactorProgress
+    {
+        public Charactor charactor;
+        public bool isOpen;
+
+    }
+
+    public void AddNewCharas(int charactorId)
+    {
+        CharactorProgress charaPros = new CharactorProgress();
+        charaPros.charactor = GameManager.CharaCon.charactors[charactorId];
+        charaPros.isOpen = true;
+
+        if (!openCharactors.Contains(charactorId))
+        {
+            openCharactors.Add(charactorId);
+        }
+        if (!charaDatas.ContainsKey(charactorId))
+        {
+            charaDatas[charactorId] = charaPros;
+        }
+    }
+
+    public void AddNewCharas(CharactorProgress progress)
+    {
+        int id = progress.charactor.charaData.id;
+        if(!openCharactors.Contains(id))
+        {
+            openCharactors.Add(id);
+        }
+        if (!charaDatas.ContainsKey(id))
+        {
+            charaDatas[id] = progress;
+        }
+    }
 }

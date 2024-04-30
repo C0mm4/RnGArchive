@@ -106,18 +106,20 @@ public class Mob : RigidBodyObject
         }
         else if (canMove)
         {
-            var dir = targetMovePos - transform.position;
-            if (dir.x < 0)
+            if(GameManager.GetUIState() == UIState.InPlay)
             {
-                sawDir = new Vector2(-1, 0);
-                body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
+                var dir = targetMovePos - transform.position;
+                if (dir.x < 0)
+                {
+                    sawDir = new Vector2(-1, 0);
+                    body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
+                }
+                else
+                {
+                    sawDir = new Vector2(1, 0);
+                    body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
+                }
             }
-            else
-            {
-                sawDir = new Vector2(1, 0);
-                body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
-            }
-
         }
         else
         {
@@ -186,7 +188,7 @@ public class Mob : RigidBodyObject
             status.currentHP -= (int)(multiplier * dmg);
             DMGUITrans.GetComponent<Trans2Canvas>().UIObj.GetComponent<DMGUI>().txt.text = DMG.ToString();
         }
-        if (status.currentHP < 0)
+        if (status.currentHP <= 0)
         {
             GameManager.Destroy(gameObject);
         }
@@ -196,7 +198,7 @@ public class Mob : RigidBodyObject
     {
         Vector3 ret = transform.position;
 
-        ret += new Vector3(0, GetComponent<Collider2D>().bounds.extents.y * 2);
+        ret += new Vector3(0, GetComponent<Collider2D>().bounds.extents.y + 1);
 
         return ret;
     }

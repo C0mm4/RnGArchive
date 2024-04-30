@@ -261,10 +261,10 @@ public class GameManager : MonoBehaviour
         player = awaitObj;
         player.transform.position = tmp;
         player.GetComponent<PlayerController>().controlEnabled = true;
-        player.GetComponent<PlayerController>().charactor = CharaCon.charactors[id];
+        player.GetComponent<PlayerController>().charactor = gameProgress.charaDatas[id].charactor;
         player.GetComponent<PlayerController>().CreateHandler();
 
-        Stage.currentCharactor = CharaCon.charactors[id];
+        Stage.currentCharactor = Progress.charaDatas[id].charactor;
 
         if(Progress != null)
             Progress.currentCharactorId = id;

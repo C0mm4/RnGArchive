@@ -90,7 +90,11 @@ public class CharactorController
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
 
+
+            
         }
+
+        
 
         _supporters = new();
         text = GameManager.Resource.LoadXML(supportDataXML);

@@ -14,7 +14,8 @@ public class CharaSlotUI : Obj
         base.BeforeStep();
         try
         {
-            Charactor targetCharactor = GameManager.CharaCon.charactors[GameManager.Progress.currentParty[index].charaData.id];
+            
+            Charactor targetCharactor = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
             if(targetCharactor != null)
             {
                 gameObject.SetActive(true);

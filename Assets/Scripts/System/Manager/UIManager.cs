@@ -166,13 +166,9 @@ public class UIManager
         if(interactionUI == null)
         {
             GameObject go = GameManager.InstantiateAsync("InteractionUI");
+            GameManager.player.GetComponentInChildren<Trans2Canvas>().UIObj = go;
             Func.SetRectTransform(go);
             interactionUI = go.GetComponent<InteractionUI>();
-            Debug.Log("A");
-        }
-        else
-        {
-            Debug.Log("B0");
         }
     }
 

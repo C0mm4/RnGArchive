@@ -5,8 +5,11 @@ using UnityEngine.AddressableAssets;
 
 public class Bullet : Attack
 {
+    [SerializeField]
     protected Vector3 movPos = new Vector3();
+    [SerializeField]
     protected ContactFilter2D contactFilter;
+    [SerializeField]
     protected Rigidbody2D body;
     public float spd;
 
@@ -27,34 +30,39 @@ public class Bullet : Attack
     {
         base.BeforeStep();
         RaycastHit2D[] hits = new RaycastHit2D[16];
-
-        var cnt = body.Cast(movPos, contactFilter, hits, spd * Time.deltaTime + 0.05f);
-
-        Debug.Log(hits.Length);
-
-        for (int i = 0; i < cnt; i++)
+        if(body != null)
         {
-            if (hits[i].collider.CompareTag("Wall"))
+            var cnt = body.Cast(movPos, contactFilter, hits, spd * Time.deltaTime + 0.05f);
+
+            Debug.Log(hits.Length);
+
+            for (int i = 0; i < cnt; i++)
             {
+                if (hits[i].collider.CompareTag("Wall"))
+                {
+                    GameManager.Destroy(gameObject);
+                    return;
+                }
+                if (hits[i].collider.CompareTag("Enemy"))
+                {
+                    EnterEnemy(hits[i].collider.GetComponent<Mob>());
+                    GameManager.Destroy(gameObject);
+                    return;
+                }
+            }
+
+            transform.position += movPos * Time.deltaTime * spd;
+
+            Vector3 viewportPosition = GameManager.CameraManager.maincamera.WorldToViewportPoint(transform.position);
+
+            // Check if the object is outside the camera's viewport
+            if (viewportPosition.x < 0 || viewportPosition.x > 1 ||
+                viewportPosition.y < 0 || viewportPosition.y > 1)
+            {
+                // Object is outside the camera's viewport, destroy it
                 GameManager.Destroy(gameObject);
-                break;
             }
-            if (hits[i].collider.CompareTag("Enemy"))
-            {
-                EnterEnemy(hits[i].collider.GetComponent<Mob>());
-            }
-        }
 
-        transform.position += movPos * Time.deltaTime * spd;
-
-        Vector3 viewportPosition = GameManager.CameraManager.maincamera.WorldToViewportPoint(transform.position);
-
-        // Check if the object is outside the camera's viewport
-        if (viewportPosition.x < 0 || viewportPosition.x > 1 ||
-            viewportPosition.y < 0 || viewportPosition.y > 1)
-        {
-            // Object is outside the camera's viewport, destroy it
-            GameManager.Destroy(gameObject);
         }
     }
 /*

@@ -16,6 +16,8 @@ public class CameraManager : Obj
 
     public SpriteRenderer background;
 
+    public GameObject sideWall1, sideWall2;
+
     public override void OnCreate()
     {
         player = FindPlayerTransform();
@@ -45,6 +47,17 @@ public class CameraManager : Obj
     {
         if(player != null && background != null)
         {
+            // If Game State is not InPlay, side wall collision disabled
+            if(GameManager.GetUIState() != UIState.InPlay)
+            {
+                sideWall1.SetActive(false);
+                sideWall2.SetActive(false);
+            }
+            else
+            {
+                sideWall1.SetActive(true);
+                sideWall2.SetActive(true);
+            }
 
             Vector3 targetPos = new Vector3(player.position.x, player.position.y, maincamera.transform.position.z);
 
@@ -62,6 +75,12 @@ public class CameraManager : Obj
             targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
             maincamera.transform.position = Vector3.Lerp(maincamera.transform.position, targetPos, Time.deltaTime * 5f);
             // Relatively smooth tracking of playr positions
+        }
+
+        if(sideWall1 != null)
+        {
+            sideWall1.transform.position = transform.position - new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * 2, 0);
+            sideWall2.transform.position = transform.position + new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * 2, 0);
         }
     }
 
@@ -101,4 +120,5 @@ public class CameraManager : Obj
         // 이동 완료 후 게임 오브젝트 제거
         Destroy(go);
     }
+
 }

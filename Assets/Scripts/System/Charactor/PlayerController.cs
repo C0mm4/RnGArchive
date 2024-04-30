@@ -76,7 +76,7 @@ public class PlayerController : RigidBodyObject
     {
         if (isInit && controlEnabled)
         {
-            if (body.velocity.x == 0)
+            if (Mathf.Abs(body.velocity.x) <= 0.05)
             {
                 isMove = false;
             }
@@ -514,7 +514,6 @@ public class PlayerController : RigidBodyObject
 
     public void HPDecrease(int value)
     {
-        GameManager.CharaCon.charactors[charactor.charaData.id].charaData.currentHP -= value;
-        
+        GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP -= value;
     }
 }

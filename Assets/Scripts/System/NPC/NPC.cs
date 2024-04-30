@@ -46,8 +46,11 @@ public class NPC : InteractionTrigger
         {
             if (sayTrigger != null)
             {
-                triggerEffect = GameManager.InstantiateAsync("TriggerEffect");
-                triggerEffect.transform.position = transform.position + new Vector3(0, 1);
+                if(triggerEffect == null)
+                {
+                    triggerEffect = GameManager.InstantiateAsync("TriggerEffect");
+                    triggerEffect.transform.position = transform.position + new Vector3(0, 1);
+                }
             }
             else
             {
