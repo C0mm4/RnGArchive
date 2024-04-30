@@ -13,7 +13,7 @@ public class Trig40012104 : CutSceneTrigger
     {
         FindNPC("20001001", utahaSpawn);
         await base.Action();
-        door.isActivate = true;
+        GameManager.Stage.DoorActivate("10012210");
     }
 
     public override bool AdditionalCondition()

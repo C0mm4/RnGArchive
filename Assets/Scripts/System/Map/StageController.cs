@@ -10,6 +10,8 @@ public class StageController
     public Charactor currentCharactor;
     public int currentIndex;
 
+    public Map currentMap;
+
     public MapTrigText currentMapTrigTexts;
     public MapScript currentMapNPCTexts;
 
@@ -46,6 +48,7 @@ public class StageController
     {
 
         GameObject go = GameManager.InstantiateAsync(mapId);
+        currentMap = go.GetComponent<Map>();
         GameManager.Progress.saveMapId = mapId;
         GameManager.CameraManager.background = go.GetComponent<Map>().bound;
         
@@ -92,6 +95,17 @@ public class StageController
             {
                 npc.SetScripts();
             }
+
+
+        // Set Doors Activate Datas
+        var doors = currentMap.GetComponentsInChildren<Door>().ToList();
+        foreach(Door door in doors)
+        {
+            if (GameManager.Progress.openDoors.Contains(door.id))
+            {
+                door.isActivate = true;
+            }
+        }
     }
 
     public void NPCScriptSet(NPC npc)
@@ -102,6 +116,32 @@ public class StageController
             {
                 npc.AddScripts(script);
             }
+        }
+    }
+
+    public void DoorActivate(string id)
+    {
+        GameManager.Progress.openDoors.Add(id);
+        var doors = currentMap.GetComponentsInChildren<Door>().ToList();
+        Door targetDoor = doors.Find(item => item.id == id);
+        if(targetDoor != null)
+        {
+            targetDoor.isActivate = true;
+        }
+    }
+
+    public void DoorDeActivate(string id)
+    {
+        if (GameManager.Progress.openDoors.Contains(id))
+        {
+            GameManager.Progress.openDoors.Remove(id);
+        }
+
+        var doors = currentMap.GetComponentsInChildren<Door>().ToList();
+        Door targetDoor = doors.Find(item => item.id == id);
+        if (targetDoor != null)
+        {
+            targetDoor.isActivate = false;
         }
     }
 }
