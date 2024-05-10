@@ -21,7 +21,7 @@ public class MobAttackObj : Obj
         {
             if(shooter == null)
             {
-                GameManager.Destroy(gameObject);
+                Destroy();
             }
         }
     }

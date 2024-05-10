@@ -26,8 +26,8 @@ public class CustomButton : Obj, IPointerClickHandler
 
     public virtual void OnClick()
     {
-//        GameManager.GameStart();
-        GameManager.LoadGame();
+        GameManager.GameStart();
+//        GameManager.LoadGame();
     }
 
     public void OnPointerClick(PointerEventData eventData)

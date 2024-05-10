@@ -203,7 +203,14 @@ public class GameManager : MonoBehaviour
 
     public static void ESCPause()
     {
-        PauseGame();
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
     }
 
     public static void PauseGame()
@@ -233,7 +240,7 @@ public class GameManager : MonoBehaviour
     public static void CharactorSpawnStartGame()
     {
         Transform pos = GameObject.Find("SpawnPoint").GetComponent<Transform>();
-        CharactorSpawn(pos, 10001001);
+        CharactorSpawn(pos, Progress.currentCharactorId);
     }
 
     public static void CharactorSpawnInLoadGame()
@@ -241,7 +248,6 @@ public class GameManager : MonoBehaviour
         GameObject go = new GameObject();
         go.transform.position = Progress.saveP;
         CharactorSpawn(go.transform, Progress.currentCharactorId);
-        Debug.Log(go.transform.position);
         Destroy(go);
     }
 
@@ -332,4 +338,21 @@ public class GameManager : MonoBehaviour
         await SceneControlLoad("InGameScene");
     }
 
+    public static void ParticleGen(string target, Vector3 startPos, Vector3 endPos, float time = 1f)
+    {
+        GameObject particle = InstantiateAsync(target, startPos);
+        particle.GetComponent<Particle>().CreateHandler(startPos, endPos, time);
+    }
+
+    public static async void PlayerDie()
+    {
+        ChangeUIState(UIState.PlayerDie);
+        ParticleGen("Particle_PlayerDie", player.transform.position, player.transform.position + new Vector3(0, 10), 3);
+        ParticleGen("Particle_PlayerDie", player.transform.position, player.transform.position + new Vector3(0, -10), 3);
+        ParticleGen("Particle_PlayerDie", player.transform.position, player.transform.position + new Vector3(10, 0), 3);
+        ParticleGen("Particle_PlayerDie", player.transform.position, player.transform.position + new Vector3(-10, 0), 3);
+        Destroy(Player);
+        await Task.Delay(TimeSpan.FromSeconds(3f));
+        LoadGame();
+    }
 }

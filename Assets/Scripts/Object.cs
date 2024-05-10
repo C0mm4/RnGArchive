@@ -120,4 +120,9 @@ public abstract class Obj : MonoBehaviour
     public virtual void Alarm7() { }
     public virtual void Alarm8() { }
     public virtual void Alarm9() { }
+
+    public void Destroy()
+    {
+        GameManager.Destroy(gameObject);
+    }
 }

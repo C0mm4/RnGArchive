@@ -44,6 +44,32 @@ public class GameProgress
         }
     }
 
+    public void InsertCharaInParty(int charactorId)
+    {
+        if (!openCharactors.Contains(charactorId))
+        {
+            AddNewCharas(charactorId);
+        }
+        if(currentParty.Count == 0)
+        {
+            currentCharactorId = charactorId;
+        }
+        currentParty.Add(GameManager.Progress.charaDatas[charactorId].charactor);
+    }
+
+    public void DeleteCharaInParty(int charactorId)
+    {
+        if (currentParty.Contains(GameManager.Progress.charaDatas[charactorId].charactor))
+        {
+            int index = currentParty.FindIndex(item => item.charaData.id == charactorId);
+            if(index > 0)
+            {
+                currentCharactorId = currentParty[index - 1].charaData.id;
+            }
+            currentParty.RemoveAt(index);
+        }
+    }
+
     public void AddNewCharas(CharactorProgress progress)
     {
         int id = progress.charactor.charaData.id;

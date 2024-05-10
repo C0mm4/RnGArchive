@@ -22,6 +22,6 @@ public class DMGUI : Obj
     public override void Alarm0()
     {
         base.Alarm0();
-        GameManager.Destroy(gameObject);
+        Destroy();
     }
 }

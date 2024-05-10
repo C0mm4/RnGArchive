@@ -48,7 +48,6 @@ public class ScriptManager
             if(trigData["script"]["isAwait"] != null)
             {
                 script.isAwait = true;
-                Debug.Log("Node is exists");
             }
             else
             {
@@ -142,19 +141,6 @@ public class ScriptManager
         mapScript.scripts.Add(mapTrigScript);
         scripts.Add(mapScript);
 
-
-        foreach(MapScript script in scripts)
-        {
-            foreach(TrigScript a in script.scripts)
-            {
-                foreach(NPCScript b in a.scripts)
-                {
-                    Debug.Log(b.script);
-                }
-                Debug.Log("");
-            }
-            Debug.Log("");
-        }
     }
 
 

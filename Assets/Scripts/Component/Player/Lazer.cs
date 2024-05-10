@@ -30,7 +30,7 @@ public class Lazer : Bullet
         {
             if (hits[i].collider.CompareTag("Wall"))
             {
-                GameManager.Destroy(gameObject);
+                Destroy();
                 break;
             }
             if (hits[i].collider.CompareTag("Enemy"))
@@ -52,7 +52,7 @@ public class Lazer : Bullet
             viewportPosition.y < 0 || viewportPosition.y > 1)
         {
             // Object is outside the camera's viewport, destroy it
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
 
 

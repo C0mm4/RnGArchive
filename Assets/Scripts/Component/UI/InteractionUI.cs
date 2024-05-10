@@ -39,14 +39,14 @@ public class InteractionUI : Obj
             }
             else
             {
-                GameManager.Destroy(gameObject);
+                Destroy();
             }
         }
         
 
         if(player == null)
         {
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
     }
 }

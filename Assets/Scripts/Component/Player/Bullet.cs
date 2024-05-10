@@ -40,13 +40,13 @@ public class Bullet : Attack
             {
                 if (hits[i].collider.CompareTag("Wall"))
                 {
-                    GameManager.Destroy(gameObject);
+                    Destroy();
                     return;
                 }
                 if (hits[i].collider.CompareTag("Enemy"))
                 {
                     EnterEnemy(hits[i].collider.GetComponent<Mob>());
-                    GameManager.Destroy(gameObject);
+                    Destroy();
                     return;
                 }
             }
@@ -60,7 +60,7 @@ public class Bullet : Attack
                 viewportPosition.y < 0 || viewportPosition.y > 1)
             {
                 // Object is outside the camera's viewport, destroy it
-                GameManager.Destroy(gameObject);
+                Destroy();
             }
 
         }

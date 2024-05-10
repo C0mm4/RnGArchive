@@ -7,6 +7,6 @@ public class MobAttackHitBox : MobAttackObj
     public override void EndAttackState()
     {
         base.EndAttackState();
-        GameManager.Destroy(gameObject);
+        Destroy();
     }
 }

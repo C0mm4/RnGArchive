@@ -339,13 +339,25 @@ public class PlayerController : RigidBodyObject
 
 
         bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Body");
-        isSetBody = true;
+        if(bodyAnimator.runtimeAnimatorController != null)
+        {
+            isSetBody = true;
+        }
         legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Leg");
-        isSetLeg = true;
+        if(legAnimator.runtimeAnimatorController != null)
+        {
+            isSetLeg = true;
+        }
         backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Back");
-        isSetBackHair = true;
+        if(backHairAnimator.runtimeAnimatorController != null)
+        {
+            isSetBackHair = true;
+        }
         haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Halo");
-        isSetHalo = true;
+        if(haloAnimation.runtimeAnimatorController != null)
+        {
+            isSetHalo = true;
+        }
 
     }
 
@@ -353,7 +365,7 @@ public class PlayerController : RigidBodyObject
     {
         if (isSetBody)
         {
-            if (clip != currentAnimationBody)
+            if (!clip.Equals(currentAnimationBody))
             {
                 if (System.Array.Exists(bodyAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
                 {
@@ -370,54 +382,30 @@ public class PlayerController : RigidBodyObject
         }
     }
 
-    public void AnimationPlayLeg(string clip, float spd = 1, bool isReverse = false)
+    public void AnimationPlayLeg(string clip, float spd = 1)
     {
         if (isSetLeg)
         {
-            if (isReverse)
-            {
-                if (clip != currentAnimationLeg)
+             if (!clip.Equals(currentAnimationLeg))
+             {
+                if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
                 {
-                    if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
-                    {
-                        var stateinfo = legAnimator.GetCurrentAnimatorStateInfo(0);
-                        float normalizeT = stateinfo.normalizedTime;
-                        float animationLength = stateinfo.length;
+                    var stateinfo = legAnimator.GetCurrentAnimatorStateInfo(0);
+                    float normalizeT = stateinfo.normalizedTime;
+                    float animationLength = stateinfo.length;
 
-                        currentAnimationLeg = clip;
-                        legAnimator.speed = spd;
-                        legAnimator.Play(clip, 0, normalizeT / animationLength);
-                    }
-                    else
-                    {
-                        Debug.Log($"Can't Find Clip : {clip}");
-                    }
+                    currentAnimationLeg = clip;
+                    legAnimator.speed = spd;
+                    legAnimator.Play(clip, 0, normalizeT / animationLength);
                 }
                 else
                 {
-                    legAnimator.speed = spd;
+                    Debug.Log($"Can't Find Clip : {clip}");
                 }
             }
             else
             {
-                if (clip != currentAnimationLeg)
-                {
-                    if (System.Array.Exists(legAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
-                    {
-                        currentAnimationLeg = clip;
-                        legAnimator.speed = spd;
-                        legAnimator.Play(clip);
-                    }
-                    else
-                    {
-                        Debug.Log($"Can't Find Clip : {clip}");
-                    }
-                }
-                else
-                {
-                    legAnimator.speed = spd;
-                }
-
+                legAnimator.speed = spd;
             }
 
         }
@@ -427,7 +415,7 @@ public class PlayerController : RigidBodyObject
     {
         if (isSetBackHair)
         {
-            if (clip != currentAnimationLeg)
+            if (!clip.Equals(currentAnimationLeg))
             {
                 if (System.Array.Exists(backHairAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
                 {
@@ -451,7 +439,7 @@ public class PlayerController : RigidBodyObject
     {
         if (isSetHalo)
         {
-            if (clip != currentAnimationLeg)
+            if (!clip.Equals(currentAnimationLeg))
             {
                 if (System.Array.Exists(haloAnimation.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
                 {
@@ -515,5 +503,10 @@ public class PlayerController : RigidBodyObject
     public void HPDecrease(int value)
     {
         GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP -= value;
+        if (GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP <= 0)
+        {
+            //            GameManager.ParticleGen("Particle_PlayerDie", transform.position, transform.position + new Vector3(0,10), 3);
+            GameManager.PlayerDie();
+        }
     }
 }

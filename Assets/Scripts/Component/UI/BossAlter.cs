@@ -52,6 +52,6 @@ public class BossAlter : Obj
             await Task.Yield();
         }
 
-        GameManager.Destroy(gameObject);
+        Destroy();
     }
 }

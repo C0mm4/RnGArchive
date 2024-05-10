@@ -87,10 +87,17 @@ public class ResourceManager
         }
         else
         {
-            var op = Addressables.LoadAssetAsync<T>(path);
-            op.WaitForCompletion();
-            LoadResources[path] = op;
-            return op;
+            try
+            {
+                var op = Addressables.LoadAssetAsync<T>(path);
+                op.WaitForCompletion();
+                LoadResources[path] = op;
+                return op;
+            }
+            catch
+            {
+                return default;
+            }
         }
     }
 

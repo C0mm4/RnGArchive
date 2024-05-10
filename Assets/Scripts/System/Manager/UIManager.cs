@@ -159,6 +159,18 @@ public class UIManager
                 inGameUI.GetComponent<InGameUI>().DisableUI();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(GameManager.GetUIState() == UIState.InPlay)
+            {
+                GameManager.ESCPause();
+            }
+            else if(GameManager.GetUIState() == UIState.Menu)
+            {
+                endMenu();
+            }
+        }
     }
 
     public void GenerateInteractionUI()

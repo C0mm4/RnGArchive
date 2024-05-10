@@ -17,7 +17,7 @@ public class EnemyHPBar : Obj
         }
         else
         {
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
     }
     

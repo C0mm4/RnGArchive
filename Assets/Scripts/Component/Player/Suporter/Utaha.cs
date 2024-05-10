@@ -46,7 +46,7 @@ public class Utaha : SupportObj
         }
         if(spawnT > 5f)
         {
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
 
     }

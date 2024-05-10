@@ -13,6 +13,6 @@ public class SaveObj : InteractionTrigger
     public override void Interaction()
     {
         base.Interaction();
-        GameManager.Save.SaveGameprogress(this);
+        GameManager.Save.SaveGameprogress(transform);
     }
 }

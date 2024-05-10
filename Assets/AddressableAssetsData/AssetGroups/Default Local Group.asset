@@ -299,6 +299,14 @@ MonoBehaviour:
     m_Address: DealMeterData
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: db55edf16e4ffcf40a1dfae7c7624555
+    m_Address: Particle_PlayerDie
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1536e62ebded80b4f8765f0569531da5
+    m_Address: 10011000
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

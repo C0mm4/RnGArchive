@@ -2,6 +2,27 @@
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<text>
 		<Charactor>
+			<id>10001000</id>
+			<class>Alice</class>
+			<name>
+				<Kr>더미</Kr>
+				<Eng>Dummy</Eng>
+				<Jp>ダミー</Jp>
+			</name>
+			<maxSpeed>0</maxSpeed>
+			<AttackSpeed>0</AttackSpeed>
+			<jumpForce>0</jumpForce>
+			<baseHP>100</baseHP>
+			<path>Dummy</path>
+			<AtkType>Mystic</AtkType>
+			<DefType>Special</DefType>
+			<Skins>
+				<Skin>DummyBase</Skin>
+			</Skins>
+			<Skills>
+			</Skills>
+		</Charactor>
+		<Charactor>
 			<id>10001001</id>
 			<class>Alice</class>
 			<name>

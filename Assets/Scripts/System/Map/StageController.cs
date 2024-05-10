@@ -60,7 +60,6 @@ public class StageController
         currentMapTrigger = new();
         foreach (Trigger trig in triggers)
         {
-            Debug.Log(trig.data.id);
             if (!trig.data.id.Equals("Spawnger"))
             {
                 TrigText trigText = currentMapTrigTexts.trigTexts.Find(item => item.trigId.Equals(trig.data.id));

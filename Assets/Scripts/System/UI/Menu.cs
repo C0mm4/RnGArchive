@@ -36,7 +36,7 @@ public abstract class Menu : Obj
         hide();
         GameManager.Input.MenuCloseT = Time.time;
         GameManager.ResumeGame();
-        GameManager.Destroy(gameObject);
+        Destroy();
     }
 
     // some menus have confirm button. that buttons action

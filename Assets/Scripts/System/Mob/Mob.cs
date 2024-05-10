@@ -190,7 +190,7 @@ public class Mob : RigidBodyObject
         }
         if (status.currentHP <= 0)
         {
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
     }
 

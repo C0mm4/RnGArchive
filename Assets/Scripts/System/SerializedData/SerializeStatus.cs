@@ -12,5 +12,5 @@ public class SerializeStatus
 
 public enum UIState
 {
-    Loading, InPlay, Title, CutScene, Menu, Pause,
+    Loading, InPlay, Title, CutScene, Menu, Pause, PlayerDie,
 };

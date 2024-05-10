@@ -86,6 +86,7 @@
 				<NPCID>90000000</NPCID>
 				<kr>눈을 뜬다</kr>
 				<jp>目を開ける</jp>
+				<subTrig>4001220</subTrig>
 			</script>
 		</trigID>
 	</mapID>

@@ -25,7 +25,7 @@ public class LetterBox : Obj
         base.BeforeStep();
         if(npc == null)
         {
-            GameManager.Destroy(gameObject);
+            Destroy();
         }
         else
         {
