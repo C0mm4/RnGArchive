@@ -30,7 +30,7 @@ public class SceneController
         CreateFadeOutObj();
         await FadeOut("InGameScene");
 
-        await LoadMap("10012200");
+        await LoadMap("10012100");
         GameManager.CharactorSpawnStartGame();
 
         GameManager.Save.SaveGameprogress(GameManager.Player.transform);
