@@ -107,22 +107,6 @@ MonoBehaviour:
     m_Address: AliceBase
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: fccd16f5a25a06b4bae6e17a34181a64
-    m_Address: AliceBaseBack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 294bfc1dc6aa7624f802002777e93e7f
-    m_Address: Assets/Sprites/Alice/Base/Animation/BackHair/Idle.anim
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: bbc1f43b9c54dd346ae07cc3512aede8
-    m_Address: AliceBaseHalo
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: b29a8b371815d1e4d8ddd7b44eda6d70
-    m_Address: Assets/Sprites/Alice/Base/Animation/Halo/Idle.anim
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: cd586cff403064545a2bf8520db58659
     m_Address: KotoriAnimator
     m_ReadOnly: 0
@@ -305,6 +289,14 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 1536e62ebded80b4f8765f0569531da5
     m_Address: 10011000
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2c04ac6db66c1534ab3a61175bec92b7
+    m_Address: AliceBase
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 60e85438ca2690a4c83d72cd6d71925c
+    m_Address: DummyBase
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

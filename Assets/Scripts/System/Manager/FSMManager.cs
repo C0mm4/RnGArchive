@@ -13,39 +13,32 @@ public class FSMManager
 
         List<string> fsmList = new List<string>
         {
-            // 0    1       2       3       4           5           6           7               8
-            "Idle", "Move", "Shot", "Jump", "MoveShot", "JumpSit", "JumpShot", "JumpSitShot", "SpecialMove"
+            // 0    1       2               3             4           5         6
+            "Idle", "Move", "PrepareJump", "JumpFinish", "Falling", "Landing", "SpecialMove"
         };
 
         // Set Idle State Nodes
-        List<string> nodes = new List<string> { fsmList[1], fsmList[2], fsmList[3], fsmList[8] };
+        List<string> nodes = new List<string> { fsmList[1], fsmList[2], fsmList[4] };
         fsm[fsmList[0]] = new List<string>(nodes);
 
         // Set Move State Nodes
-        nodes = new List<string> { fsmList[3], fsmList[4], fsmList[8], fsmList[0] };
+        nodes = new List<string> { fsmList[0], fsmList[2], fsmList[6] };
         fsm[fsmList[1]] = new List<string>(nodes);
 
-        // Set Shot State Nodes
-        nodes = new List<string> { fsmList[4], fsmList[3], fsmList[0], fsmList[6] };
+        // Set PrepareJump State Nodes
+        nodes = new List<string> { fsmList[3], fsmList[6] };
         fsm[fsmList[2]] = new List<string>(nodes);
 
-        // Set Jump State Nodes
-        nodes = new List<string> { fsmList[5], fsmList[6], fsmList[7], fsmList[0] };
+        // Set FinishJump State Nodes
+        nodes = new List<string> { fsmList[2], fsmList[4], fsmList[6] };
         fsm[fsmList[3]] = new List<string>(nodes);
 
-
-        // Set MoveShot
-        nodes = new List<string> { fsmList[0], fsmList[2], fsmList[6] };
+        // Set Falling State Nodes
+        nodes = new List<string> { fsmList[2], fsmList[5], fsmList[6] };
         fsm[fsmList[4]] = new List<string>(nodes);
-        // Set JumpShot, JumpSitShot State Nodes
-        nodes = new List<string> { fsmList[0], fsmList[2], fsmList[6] };
-        fsm[fsmList[6]] = new List<string>(nodes);
-        fsm[fsmList[7]] = new List<string>(nodes);
-        nodes = new List<string> { fsmList[0] };
-        fsm[fsmList[8]] = new List<string>(nodes);
 
-        // Set JumpSit State Nodes
-        nodes = new List<string> { fsmList[7] , fsmList[0] };
+        // Set Landing State Nodes
+        nodes = new List<string> { fsmList[0], fsmList[1], fsmList[6] };
         fsm[fsmList[5]] = new List<string>(nodes);
 
 

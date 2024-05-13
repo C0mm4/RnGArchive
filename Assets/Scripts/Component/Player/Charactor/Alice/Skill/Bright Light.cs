@@ -23,7 +23,7 @@ public class BrightLight : Skill
 
     public override void PassiveStep()
     {
-        base.PassiveStep();
+        base.PassiveStep();/*
         if (player.isSit)
         {
             if (Input.GetKeyDown(GameManager.Input._keySettings.Shot))
@@ -34,6 +34,6 @@ public class BrightLight : Skill
                 }
             }
         }
-
+*/
     }
 }

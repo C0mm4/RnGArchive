@@ -16,7 +16,7 @@ public class PlayerController : RigidBodyObject
     public bool _isAction = false;
     public bool isAction { get { return _isAction; } set { _isAction = value; } }
     public bool isAttack = false;
-    public bool isSit;
+    public bool isLanding = false;
     public bool isInit = false;
     public float lastAttackT;
     public bool isAttackInput = false;
@@ -29,9 +29,9 @@ public class PlayerController : RigidBodyObject
     public List<InteractionTrigger> triggers;
     public int triggerIndex;
 
-    public Animator bodyAnimator, legAnimator, backHairAnimator, haloAnimation, glassAnimation;
-    public string currentAnimationBody, currentAnimationLeg;
-    public bool isSetBody, isSetLeg, isSetBackHair, isSetHalo, isglassAnimation;
+    public Animator animator;
+    public string currentAnimation;
+    public bool isSetAnimator;
 
     public Skill workingSkill;
 
@@ -45,7 +45,7 @@ public class PlayerController : RigidBodyObject
     {
         base.OnCreate();
 
-
+        animator = GetComponent<Animator>();
         triggers = new();
         gravityModifier = 1f;
 
@@ -131,7 +131,7 @@ public class PlayerController : RigidBodyObject
 
             currentState = charactor.stateMachine.getStateStr();
 
-            if (!isAction && isGrounded && !isMove && !isAttack)
+            if (!isAction && isGrounded && !isMove && !isAttack && !isLanding)
             {
                 charactor.SetIdle();
             }
@@ -160,8 +160,14 @@ public class PlayerController : RigidBodyObject
                 base.KeyInput();
                 if (!isHitState)
                 {
-                    if(canMove)
+                    if (canMove)
+                    {
                         MoveKey();
+                    }
+                    else
+                    {
+                        body.velocity = new Vector2(0, body.velocity.y);
+                    }
                     SkillKey();
                 }
                 if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
@@ -189,8 +195,6 @@ public class PlayerController : RigidBodyObject
 
     public void MoveKey()
     {
-        isSit = false;
-
         if (Input.GetKey(GameManager.Input._keySettings.leftKey))
         {
             if (canMove)
@@ -266,14 +270,15 @@ public class PlayerController : RigidBodyObject
         if(sawDir.x > 0f)
         {
             isFlip = false;
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
+
         }
         else
         {
             isFlip = true;
+            transform.localRotation = new Quaternion(0, 180, 0, 0);
         }
-        bodyAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-        legAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
-        backHairAnimator.GetComponent<SpriteRenderer>().flipX = isFlip;
+        
     }
 
 
@@ -337,41 +342,27 @@ public class PlayerController : RigidBodyObject
     {
         charactor.charaData.currentSkin = index;
 
+        animator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>
+            (charactor.charaData.skins[charactor.charaData.currentSkin]);
 
-        bodyAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Body");
-        if(bodyAnimator.runtimeAnimatorController != null)
+        
+        if(animator.runtimeAnimatorController != null)
         {
-            isSetBody = true;
+            isSetAnimator = true;
         }
-        legAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Leg");
-        if(legAnimator.runtimeAnimatorController != null)
-        {
-            isSetLeg = true;
-        }
-        backHairAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Back");
-        if(backHairAnimator.runtimeAnimatorController != null)
-        {
-            isSetBackHair = true;
-        }
-        haloAnimation.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>(charactor.charaData.skins[charactor.charaData.currentSkin] + "Halo");
-        if(haloAnimation.runtimeAnimatorController != null)
-        {
-            isSetHalo = true;
-        }
-
     }
 
     public void AnimationPlayBody(string clip, float spd = 1)
     {
-        if (isSetBody)
+        if (isSetAnimator)
         {
-            if (!clip.Equals(currentAnimationBody))
+            if (!clip.Equals(currentAnimation))
             {
-                if (System.Array.Exists(bodyAnimator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
+                if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
                 {
-                    currentAnimationBody = clip;
-                    bodyAnimator.speed = spd;
-                    bodyAnimator.Play(clip);
+                    currentAnimation = clip;
+                    animator.speed = spd;
+                    animator.Play(clip);
                 }
                 else
                 {
@@ -381,7 +372,7 @@ public class PlayerController : RigidBodyObject
 
         }
     }
-
+/*
     public void AnimationPlayLeg(string clip, float spd = 1)
     {
         if (isSetLeg)
@@ -457,7 +448,7 @@ public class PlayerController : RigidBodyObject
                 haloAnimation.speed = spd;
             }
         }
-    }
+    }*/
 
     public void AddInterractionTrigger(InteractionTrigger trigger)
     {
@@ -508,5 +499,10 @@ public class PlayerController : RigidBodyObject
             //            GameManager.ParticleGen("Particle_PlayerDie", transform.position, transform.position + new Vector3(0,10), 3);
             GameManager.PlayerDie();
         }
+    }
+
+    public void EndCurrentState()
+    {
+        charactor.EndState();
     }
 }

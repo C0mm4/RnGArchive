@@ -48,7 +48,7 @@ public class ArisCleanUp : Skill
             chargeT = Time.time - startT;
         }
         base.PassiveStep();
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !player.isSit)
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && player.isGrounded)
         {
             if(currentAmmo > 0)
             {

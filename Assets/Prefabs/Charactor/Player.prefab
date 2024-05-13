@@ -251,18 +251,9 @@ MonoBehaviour:
     defType: 0
   triggers: []
   triggerIndex: 0
-  bodyAnimator: {fileID: 4027555978535289280}
-  legAnimator: {fileID: 5563967454004709990}
-  backHairAnimator: {fileID: 1723705071455696008}
-  haloAnimation: {fileID: 6509508238169108390}
-  glassAnimation: {fileID: 0}
-  currentAnimationBody: 
-  currentAnimationLeg: 
-  isSetBody: 0
-  isSetLeg: 0
-  isSetBackHair: 0
-  isSetHalo: 0
-  isglassAnimation: 0
+  animator: {fileID: 0}
+  currentAnimation: 
+  isSetAnimator: 0
   currentState: 
 --- !u!212 &1518355516389332187
 SpriteRenderer:
@@ -305,15 +296,15 @@ SpriteRenderer:
   m_SortingLayerID: 1562918333
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b7a94f1e6562b8e46819914b84487773, type: 3}
+  m_Sprite: {fileID: 2070076491, guid: eb1348abe9cd86e49b72388e850dcaba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &1518355516389332189
@@ -374,21 +365,19 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.5, y: 0.6}
-      - {x: -0.5, y: -0.48}
-      - {x: -0.45, y: -0.6}
-      - {x: 0.45, y: -0.6}
-      - {x: 0.5, y: -0.48}
-      - {x: 0.5, y: 0.6}
+    - - {x: -0.07, y: 0.12}
+      - {x: -0.07, y: -0.16}
+      - {x: 0.07, y: -0.16}
+      - {x: 0.07, y: 0.12}
 --- !u!1 &2399709400426330592
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class CameraManager : Obj
 
     public GameObject sideWall1, sideWall2;
 
+    public float wallBios = 2.75f;
+
     public override void OnCreate()
     {
         player = FindPlayerTransform();
@@ -79,8 +81,8 @@ public class CameraManager : Obj
 
         if(sideWall1 != null)
         {
-            sideWall1.transform.position = transform.position - new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * 2, 0);
-            sideWall2.transform.position = transform.position + new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * 2, 0);
+            sideWall1.transform.position = transform.position - new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * wallBios, 0);
+            sideWall2.transform.position = transform.position + new Vector3(Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2) * 7 * wallBios, 0);
         }
     }
 

@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrepareJump : PlayerState
+public class JumpFinish : PlayerState
 {
 
     public override void UpdateState()
     {
         // Animate Idle Animation
-        player.AnimationPlayBody("PrepareJump");
+        player.AnimationPlayBody("JumpFinish");
 
-        
+        if(player.body.velocity.y <= 0)
+        {
+            player.EndCurrentState();
+        }
     }
 
     public override void ExitState()
     {
-        player.charactor.ChangeState(new JumpFinish());
+        player.charactor.ChangeState(new Falling());
         base.ExitState();
     }
 }

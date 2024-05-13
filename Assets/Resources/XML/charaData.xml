@@ -30,7 +30,7 @@
 				<Eng>Alice</Eng>
 				<Jp>アリス</Jp>
 			</name>
-			<maxSpeed>5</maxSpeed>
+			<maxSpeed>4</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
 			<jumpForce>5</jumpForce>
 			<baseHP>3</baseHP>
@@ -76,9 +76,9 @@
 				<Eng>Midori</Eng>
 				<Jp>ミドリ</Jp>
 			</name>
-			<maxSpeed>5</maxSpeed>
-			<AttackSpeed>0.7</AttackSpeed>
-			<jumpForce>5</jumpForce>
+			<maxSpeed>1.2</maxSpeed>
+			<AttackSpeed>0.2</AttackSpeed>
+			<jumpForce>1.3</jumpForce>
 			<baseHP>3</baseHP>
 			<path>Midori</path>
 			<AtkType>Piercing</AtkType>

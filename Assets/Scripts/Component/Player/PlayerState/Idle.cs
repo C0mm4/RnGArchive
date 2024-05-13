@@ -8,6 +8,8 @@ public class Idle : PlayerState
     {
         base.EnterState(chr);
         chr.isMove = false;
+
+        Debug.Log("Idle");
     }
 
     public override void UpdateState()
@@ -16,22 +18,24 @@ public class Idle : PlayerState
         {
             // Animate Idle Animation
             player.AnimationPlayBody("Idle");
-            player.AnimationPlayLeg("Idle");
 
 
 
             // Translate State on player action
             if (!player.isGrounded)
             {
-                player.charactor.ChangeState(new Jump());
+                if(player.body.velocity.y > 0)
+                {
+                    player.charactor.ChangeState(new PrepareJump());
+                }
+                else
+                {
+                    player.charactor.ChangeState(new Falling());
+                }
             }
             else if (player.isMove)
             {
                 player.charactor.ChangeState(new Move());
-            }
-            else if (player.isAttackInput && player.isAttack && !player.isAction)
-            {
-                player.charactor.ChangeState(new Shot());
             }
 
         }

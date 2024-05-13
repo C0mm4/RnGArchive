@@ -106,7 +106,7 @@ public class StateMachine
     {
         if(currentState != null)
             currentState.ExitState();
-        setIdle();
+//        setIdle();
     }
 
     // set current state on idle and state stack empty

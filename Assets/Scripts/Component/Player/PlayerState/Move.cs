@@ -15,24 +15,11 @@ public class Move : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("Move");
-        float animationSpd = player.body.velocity.x * player.sawDir.x / player.charactor.charaData.maxSpeed;
-        if (animationSpd > 0)
-        {
-            player.AnimationPlayLeg("Move", animationSpd);
-        }
-        else
-        {
-            player.AnimationPlayLeg("BackMove", -animationSpd);
-        }
 
         // Translate State on player action
         if (!player.isGrounded)
         {
-            player.charactor.ChangeState(new Jump());
-        }
-        else if (player.isAttack)
-        {
-            player.charactor.ChangeState(new MoveShot());
+            player.charactor.ChangeState(new PrepareJump());
         }
 
         previousPos = player.transform.position;
