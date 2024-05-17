@@ -19,6 +19,9 @@
 			<Skins>
 				<Skin>DummyBase</Skin>
 			</Skins>
+			<Halos>
+				<Halo>DummyHalo</Halo>
+			</Halos>
 			<Skills>
 			</Skills>
 		</Charactor>
@@ -41,6 +44,9 @@
 				<Skin>AliceBase</Skin>
 				<Skin>TestAnnimate1</Skin>
 			</Skins>
+			<Halos>
+				<Halo>AliceHalo</Halo>
+			</Halos>
 			<Skills>
 				<Skill>
 					<class>BrightLight</class>
@@ -86,6 +92,9 @@
 			<Skins>
 				<Skin>TestAnnimate</Skin>
 			</Skins>
+			<Halos>
+				<Halo>MidoriHalo</Halo>
+			</Halos>
 			<Skills>
 				<Skill>
 					<class>BrightLight</class>

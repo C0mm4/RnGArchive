@@ -24,7 +24,7 @@ public class GameSavemanager
         GameManager.Progress.isActiveSupport = false;
         GameManager.Progress.openCharactors = new();
         GameManager.Progress.currentParty = new();
-        GameManager.Stage.SetInitializeParty();
+//        GameManager.Stage.SetInitializeParty();
         GameManager.Progress.currentSupporterId = 10002001;
         GameManager.Progress.currentCharactorId = 10001000;
 

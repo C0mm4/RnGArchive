@@ -28,7 +28,7 @@ public class CharactorController
 
             Type T = Type.GetType(node["class"].InnerText);
             Charactor newChara = Activator.CreateInstance(T) as Charactor;
-            CharactorData charaData = new CharactorData();
+            CharactorData charaData = new();
 
             charaData.id = int.Parse(node["id"].InnerText);
 
@@ -53,6 +53,15 @@ public class CharactorController
             foreach (XmlNode skin in node.SelectNodes("Skins/Skin"))
             {
                 charaData.skins.Add(skin.InnerText);
+            }
+
+            charaData.haloSkins = new();
+
+            foreach(XmlNode skin in node.SelectNodes("Halos/Halo"))
+            {
+                charaData.haloSkins.Add(skin.InnerText);
+
+                Debug.Log(skin.InnerText);
             }
 
             newChara.commands = new();

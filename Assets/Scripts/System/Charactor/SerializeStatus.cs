@@ -20,5 +20,9 @@ public struct CharactorData
     public int currentHP;
 
     public List<string> skins;
-    public int currentSkin;
+    public int _currentSkin;
+    public int currentSkin { get { return _currentSkin; }  set { _currentSkin = value; } }
+
+    public List<string> haloSkins;
+    public int currentHalo;
 }

@@ -88,6 +88,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject currentMapObj;
 
+    public UIState asdf;
+    public UIManager uimanager;
+
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -180,6 +184,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(testDoor.transform.position);
         }
+        asdf = GetUIState();
+        uimanager = UIManager;
     }
 
     private void FindPlayer()
@@ -194,6 +200,32 @@ public class GameManager : MonoBehaviour
     public static void ChangeUIState(UIState newState)
     {
         uiState = newState;
+
+        switch (uiState)
+        {
+            case UIState.InPlay:
+                if(Progress != null)
+                {
+                    if(UIManager.inGameUI != null)
+                    {
+                        if (Progress.isActiveSkill)
+                        {
+                            UIManager.inGameUI.EnableUI();
+                        }
+                        else
+                        {
+                            UIManager.inGameUI.EnableCharaSlots();
+                        }
+                    }
+                }
+                break;
+            default:
+                if(UIManager.inGameUI != null)
+                {
+                    UIManager.inGameUI.DisableUI();
+                }
+                break;
+        }
     }
 
     public static UIState GetUIState()

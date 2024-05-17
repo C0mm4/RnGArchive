@@ -96,7 +96,6 @@ public class Charactor
     public virtual void Attack()
     {
         playerController.isAttack = true;
-        playerController.lastAttackT = Time.time;
 
         var awaitGo = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
         GameObject go = awaitGo;

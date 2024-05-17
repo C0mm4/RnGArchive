@@ -76,13 +76,15 @@ public class RigidBodyObject : Obj
 
     public virtual void FlipX()
     {
-        if(sawDir.x < 0f)
+        if (sawDir.x > 0f)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
+
         }
         else
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            transform.localRotation = new Quaternion(0, 180, 0, 0);
         }
+
     }
 }

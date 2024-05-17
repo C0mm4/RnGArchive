@@ -29,7 +29,6 @@ public class Mob : RigidBodyObject
     public GameObject attackObj;
 
     public Animator animator;
-    public string currentAnimation;
 
     public bool isAttack;
     public bool isSet = false;
@@ -160,17 +159,6 @@ public class Mob : RigidBodyObject
         stateMachine.setIdle();
     }
 
-    public override void FlipX()
-    {
-        if(sawDir.x < 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-        }
-    }
 
     public void GetDMG(int dmg, AtkType type)
     {

@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerTest : Obj
 {
     public Animator animator;
-    public string currentAnimation;
 
     public bool isJump;
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,6 +14,8 @@ public abstract class Obj : MonoBehaviour
     [SerializeField]
     private float[] alarmTime;
 
+    [SerializeField]
+    protected string currentAnimation;
 
     // Start is called before the first frame update
     public void Awake()
@@ -124,5 +127,27 @@ public abstract class Obj : MonoBehaviour
     public void Destroy()
     {
         GameManager.Destroy(gameObject);
+    }
+
+    public void AnimationPlay(Animator animator, string clip, float spd = 1f)
+    {
+        if(animator != null)
+        {
+            if (!clip.Equals(currentAnimation))
+            { 
+                if(System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findClip => findClip.name.Equals(clip)))
+                {
+                    currentAnimation = clip;
+                    animator.speed = spd;
+                    animator.Play(clip);
+                }
+                else
+                {
+                    Debug.Log($"Can't Find Clip : {clip}");
+                }
+            }
+
+
+        }
     }
 }

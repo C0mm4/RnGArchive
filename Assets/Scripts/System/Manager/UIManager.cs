@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -5,7 +6,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-
+[Serializable]
 public class UIManager
 {
     static UIManager ui_instance;
@@ -127,39 +128,11 @@ public class UIManager
                 canvas = go;
             }
         }
-        if(GameManager.GetUIState() == UIState.InPlay)
-        {
-            if (inGameUI == null)
-            {
-                GameObject go = GameManager.InstantiateAsync("InGameUI");
-                go.GetComponent<InGameUI>();
-                inGameUI = go.GetComponent<InGameUI>();
-
-            }
-            else
-            {
-                if(GameManager.Progress != null)
-                {
-                    if (GameManager.Progress.isActiveSkill)
-                    {
-
-                        inGameUI.GetComponent<InGameUI>().EnableUI();
-                    }
-                    else
-                    {
-                        inGameUI.GetComponent<InGameUI>().EnableCharaSlots();
-                    }
-                }
-            }
-        }
         else
         {
-            if(inGameUI != null)
-            {
-                inGameUI.GetComponent<InGameUI>().DisableUI();
-            }
+            if(inGameUI == null)
+                GenerateInGameUI();
         }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(GameManager.GetUIState() == UIState.InPlay)
@@ -191,5 +164,11 @@ public class UIManager
             GameManager.Destroy(interactionUI.gameObject);
             interactionUI = null;
         }
+    }
+
+    public void GenerateInGameUI()
+    {
+        GameObject go = GameManager.InstantiateAsync("InGameUI");
+        inGameUI = go.GetComponent<InGameUI>();
     }
 }

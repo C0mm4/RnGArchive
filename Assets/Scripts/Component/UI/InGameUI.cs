@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,65 +9,55 @@ public class InGameUI : Obj
     public List<GameObject> charas;
     public List<GameObject> skillSlots;
 
+    public bool isShow;
 
     public override void OnCreate()
     {
         base.OnCreate();
         Func.SetRectTransform(gameObject);
-        DisableSkillSLots();
+        isShow = false;
     }
 
     public void EnableUI()
     {
         EnableCharaSlots();
-        EnableSkillSlots();
+        isShow = true;
     }
 
     public void DisableUI()
     {
         DisableCharaSlots();
-        DisableSkillSLots();
+        isShow = false;
     }
 
     public void EnableCharaSlots()
     {
-        int i;
-        for(i = 0; i < GameManager.Progress.currentParty.Count; i++) 
+        if (!isShow)
         {
-            charas[i].gameObject.SetActive(true);
-        }
-        for(; i < charas.Count; i++)
-        {
-            charas[i].gameObject.SetActive(false);
+            int i;
+            Debug.Log("Enable");
+            for (i = 0; i < GameManager.Progress.currentParty.Count; i++)
+            {
+                charas[i].GetComponent<CharaSlotUI>().Enable();
+            }
+            for (; i < charas.Count; i++)
+            {
+                charas[i].gameObject.SetActive(false);
+            }
         }
     }
 
     public void DisableCharaSlots()
     {
-        foreach(var chara in charas)
+        if(isShow)
         {
-            chara.gameObject.SetActive(false);
-        }
-    }
-
-    public void EnableSkillSlots()
-    {
-        for(int i = 0; i < skillSlots.Count; i++)
-        {
-            if (skillSlots[i] != null)
+            int i;
+            for (i = 0; i < GameManager.Progress.currentParty.Count; i++)
             {
-                skillSlots[i].GetComponent<SkillSlotUI>().targetSkill = GameManager.player.GetComponent<PlayerController>().charactor.skills[i];
-                skillSlots[i].GetComponent<SkillSlotUI>().SetData();
-                skillSlots[i].gameObject.SetActive(true);
+                charas[i].GetComponent<CharaSlotUI>().Disable();
             }
+
         }
     }
 
-    public void DisableSkillSLots()
-    {
-        foreach(var slot in skillSlots)
-        {
-            slot.gameObject.SetActive(false);
-        }
-    }
 }

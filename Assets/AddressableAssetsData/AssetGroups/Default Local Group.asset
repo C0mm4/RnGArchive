@@ -299,6 +299,10 @@ MonoBehaviour:
     m_Address: DummyBase
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 10063b01b79a363488b2a8e6d6b6a2c3
+    m_Address: AliceHalo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

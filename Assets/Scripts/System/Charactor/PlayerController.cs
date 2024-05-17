@@ -18,7 +18,6 @@ public class PlayerController : RigidBodyObject
     public bool isAttack = false;
     public bool isLanding = false;
     public bool isInit = false;
-    public float lastAttackT;
     public bool isAttackInput = false;
 
     public Charactor charactor;
@@ -30,7 +29,7 @@ public class PlayerController : RigidBodyObject
     public int triggerIndex;
 
     public Animator animator;
-    public string currentAnimation;
+    public Animator haloAnimator;
     public bool isSetAnimator;
 
     public Skill workingSkill;
@@ -38,20 +37,19 @@ public class PlayerController : RigidBodyObject
 
     public string currentState;
 
-
-
+    
 
     public override void OnCreate()
     {
         base.OnCreate();
 
-        animator = GetComponent<Animator>();
         triggers = new();
         gravityModifier = 1f;
 
         sawDir = new Vector2(1, 0);
         
         charactor.charaData.currentSkin = 0;
+        charactor.charaData.currentHalo = 0;
 
         int layer = LayerMask.NameToLayer("Player");
         gameObject.layer = layer;
@@ -131,7 +129,7 @@ public class PlayerController : RigidBodyObject
 
             currentState = charactor.stateMachine.getStateStr();
 
-            if (!isAction && isGrounded && !isMove && !isAttack && !isLanding)
+            if (!isAction && isGrounded && !isMove && !isLanding)
             {
                 charactor.SetIdle();
             }
@@ -266,16 +264,13 @@ public class PlayerController : RigidBodyObject
 
     public override void FlipX()
     {
-        bool isFlip;
         if(sawDir.x > 0f)
         {
-            isFlip = false;
             transform.localRotation = new Quaternion(0, 0, 0, 0);
 
         }
         else
         {
-            isFlip = true;
             transform.localRotation = new Quaternion(0, 180, 0, 0);
         }
         
@@ -345,6 +340,8 @@ public class PlayerController : RigidBodyObject
         animator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>
             (charactor.charaData.skins[charactor.charaData.currentSkin]);
 
+        haloAnimator.runtimeAnimatorController = GameManager.LoadAssetDataAsync<RuntimeAnimatorController>
+            (charactor.charaData.haloSkins[charactor.charaData.currentHalo]);
         
         if(animator.runtimeAnimatorController != null)
         {

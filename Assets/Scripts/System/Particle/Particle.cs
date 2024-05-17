@@ -11,7 +11,6 @@ public class Particle : Obj
     float t;
 
     public Animator animator;
-    public string currentAnimation;
 
     public override void OnCreate()
     {
@@ -27,7 +26,7 @@ public class Particle : Obj
         ableTime = time;
 
         animator = GetComponent<Animator>();
-        AnimationPlay("Play", 1);
+        AnimationPlay(animator, "Play", 1);
     }
 
     public override void BeforeStep()
@@ -42,31 +41,4 @@ public class Particle : Obj
     }
 
 
-    public void AnimationPlay(string clip, float spd)
-    {
-        if(animator != null)
-        {
-            if (!currentAnimation.Equals(clip))
-            {
-                if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findClip => findClip.name.Equals(clip)))
-                {
-                    var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
-                    float normalizeT = stateinfo.normalizedTime;
-                    float animationLength = stateinfo.length;
-
-                    currentAnimation = clip;
-                    animator.speed = spd;
-                    animator.Play(clip, 0, normalizeT / animationLength);
-                }
-                else
-                {
-                    Debug.Log($"Can't Find Clip {clip}");
-                }
-            }
-            else
-            {
-                animator.speed = spd;
-            }
-        }
-    }
 }
