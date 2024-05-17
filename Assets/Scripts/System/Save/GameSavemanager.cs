@@ -63,8 +63,6 @@ public class GameSavemanager
                 {
                     // Write Skill data
                     writer.Write(skill.name);
-                    writer.Write(skill.maxAmmo);
-                    writer.Write(skill.currentAmmo);
                 }
                 // Save Charactor Status
                 writer.Write(targetChara.charaData.maxHP);
@@ -139,8 +137,6 @@ public class GameSavemanager
                     {
                         string name = reader.ReadString();
                         int skill = targetChara.skills.FindIndex(item => item.name == name);
-                        targetChara.skills[skill].maxAmmo = reader.ReadInt32();
-                        targetChara.skills[skill].currentAmmo = reader.ReadInt32();
 
                     }
 

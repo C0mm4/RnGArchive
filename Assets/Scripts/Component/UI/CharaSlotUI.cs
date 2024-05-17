@@ -12,12 +12,18 @@ public class CharaSlotUI : Obj
     public Image HPBar;
 
     public int currentCharaId;
+    [SerializeField]
+    Charactor target;
 
 
     public float movingT = 0;
     public float enableXePos = 180, disableXPos = -310;
 
     RectTransform rect;
+
+    public List<Image> emptyCostBar;
+    public List<Image> fillInCostBar;
+    private bool isCostSet = false;
 
     public override void OnCreate()
     {
@@ -36,7 +42,44 @@ public class CharaSlotUI : Obj
             {
                 gameObject.SetActive(true);
                 HPBar.fillAmount = (float)targetCharactor.charaData.currentHP / (float)targetCharactor.charaData.maxHP;
-                currentCharaId = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor.charaData.id;
+                
+
+                if (!isCostSet && target != null)
+                {
+                    int maxCost = ((int)target.charaData.maxCost);
+                    int i;
+                    for(i = 0; i < maxCost; i++) 
+                    {
+                        emptyCostBar[i].color = Color.white;
+                    }
+                    for(; i < 10; i++)
+                    {
+                        emptyCostBar[i].color = new Color(1, 1, 1, 0);
+                    }
+                    isCostSet = true;
+                }
+
+                float targetCost = target.charaData.currentCost;
+                int manaIndex = 0;
+                while(targetCost > 0)
+                {
+                    if(targetCost >= 1f)
+                    {
+                        fillInCostBar[manaIndex].fillAmount = 1f;
+                        manaIndex++;
+                        targetCost -= 1f;
+                    }
+                    else
+                    {
+                        fillInCostBar[manaIndex].fillAmount = targetCost;
+                        targetCost = 0f;
+                        manaIndex++;
+                    }
+                }
+                for(; manaIndex < 10; manaIndex++)
+                {
+                    fillInCostBar[manaIndex ].fillAmount = 0f;
+                }
 
             }
             else
@@ -56,7 +99,10 @@ public class CharaSlotUI : Obj
     public async void Enable(float t = 0)
     {
         Debug.Log("Enable Charactor Slot UI");
-        gameObject.SetActive(true); 
+        gameObject.SetActive(true);
+        isCostSet = false;
+        target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
+        currentCharaId = target.charaData.id;
         movingT = t;
         while (movingT < 1f)
         {
@@ -91,6 +137,7 @@ public class CharaSlotUI : Obj
 
         rect.localPosition = new Vector3(disableXPos - Screen.width / 2, rect.localPosition.y);
         movingT = 0f;
+        target = null;
         gameObject.SetActive(false);
     }
 
@@ -98,5 +145,6 @@ public class CharaSlotUI : Obj
     {
         gameObject.SetActive(false);
     }
+
 
 }

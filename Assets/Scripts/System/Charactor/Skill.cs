@@ -7,11 +7,9 @@ using UnityEngine;
 public abstract class Skill
 {
     public PlayerController player;
-    public bool isPassive;
     public string name;
 
-    public int maxAmmo;
-    public int currentAmmo;
+    public int cost;
 
     public float coolTime = 5;
     public bool isCool = false;
@@ -26,14 +24,16 @@ public abstract class Skill
     {
         if (!isCool)
         {
-            if (currentAmmo > 0)
+            player = GameManager.player.GetComponent<PlayerController>();
+            if (player.charactor.charaData.currentCost >= cost && ExecuteCondition())
             {
-                player = GameManager.player.GetComponent<PlayerController>();
                 player.workingSkill = this;
-                currentAmmo--;
                 isCool = true;
                 leftCoolTime = coolTime;
                 Debug.Log(GetType().Name);
+                player.charactor.charaData.currentCost -= cost;
+
+                Action();
             }
         }
     }
@@ -52,4 +52,8 @@ public abstract class Skill
             player = GameManager.player.GetComponent<PlayerController>();
         }
     }
+
+    public abstract bool ExecuteCondition();
+
+    public abstract void Action();
 }

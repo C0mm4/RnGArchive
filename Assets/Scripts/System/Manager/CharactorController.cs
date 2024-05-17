@@ -40,6 +40,10 @@ public class CharactorController
             charaData.maxHP = int.Parse(node["baseHP"].InnerText);
             charaData.currentHP = charaData.maxHP;
 
+            charaData.maxCost = float.Parse(node["maxCost"].InnerText);
+            charaData.currentCost = charaData.maxCost;
+            charaData.costRecovery = float.Parse(node["costRecovery"].InnerText);
+
             charaData.prefabPath = node["path"].InnerText;
 
             
@@ -72,6 +76,7 @@ public class CharactorController
             foreach(XmlNode skill in Skills.SelectNodes("Skill"))
             {
                 Type skl = Type.GetType(skill["class"].InnerText);
+                Debug.Log(skill["class"].InnerText);
                 Skill target = Activator.CreateInstance(skl) as Skill;
                 target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
                 var cmd = SetCommands(skill["command"].InnerText);
@@ -85,9 +90,7 @@ public class CharactorController
                     newChara.passiveSkill.Add(target);
                 }
 
-                target.maxAmmo = int.Parse(skill["baseAmmo"].InnerText);
-                target.currentAmmo = target.maxAmmo;
-
+                target.cost = int.Parse(skill["cost"].InnerText);
 
                 newChara.skills.Add(target);
 

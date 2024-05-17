@@ -13,6 +13,8 @@
 			<AttackSpeed>0</AttackSpeed>
 			<jumpForce>0</jumpForce>
 			<baseHP>100</baseHP>
+			<maxCost>10</maxCost>
+			<costRecovery>0.5</costRecovery>
 			<path>Dummy</path>
 			<AtkType>Mystic</AtkType>
 			<DefType>Special</DefType>
@@ -37,6 +39,8 @@
 			<AttackSpeed>1.2</AttackSpeed>
 			<jumpForce>5</jumpForce>
 			<baseHP>3</baseHP>
+			<maxCost>10</maxCost>
+			<costRecovery>0.5</costRecovery>
 			<path>Alice</path>
 			<AtkType>Mystic</AtkType>
 			<DefType>Special</DefType>
@@ -49,28 +53,13 @@
 			</Halos>
 			<Skills>
 				<Skill>
-					<class>BrightLight</class>
-					<Kr>빛이여!</Kr>
-					<Eng>Bright Light!</Eng>
-					<Jp>光よ!</Jp>
-					<command>-</command>
-					<baseAmmo>4</baseAmmo>
-				</Skill>
-				<Skill>
-					<class>BalanceBreakdown</class>
-					<Kr>밸런스 붕괴!</Kr>
-					<Eng>Balance Breakdown</Eng>
-					<Jp>世界の 法則が 崩壊します！</Jp>
-					<command>236236A</command>
-					<baseAmmo>2</baseAmmo>
-				</Skill>
-				<Skill>
 					<class>ArisCleanUp</class>
 					<Kr>아리스, 청소합니다!</Kr>
 					<Eng>Aris, Clean Up!</Eng>
 					<Jp>アリス、お掃除します！</Jp>
 					<command>-</command>
 					<baseAmmo>3</baseAmmo>
+					<cost>6</cost>
 				</Skill>
 			</Skills>
 		</Charactor>
@@ -86,6 +75,8 @@
 			<AttackSpeed>0.2</AttackSpeed>
 			<jumpForce>1.3</jumpForce>
 			<baseHP>3</baseHP>
+			<maxCost>10</maxCost>
+			<costRecovery>0.5</costRecovery>
 			<path>Midori</path>
 			<AtkType>Piercing</AtkType>
 			<DefType>Light</DefType>
@@ -97,12 +88,13 @@
 			</Halos>
 			<Skills>
 				<Skill>
-					<class>BrightLight</class>
+					<class>ArisCleanUp</class>
 					<Kr>빛이여!</Kr>
 					<Eng>Bright Light!</Eng>
 					<Jp>光よ!</Jp>
 					<command>A</command>
 					<baseAmmo>2</baseAmmo>
+					<cost>6</cost>
 				</Skill>
 			</Skills>
 		</Charactor>

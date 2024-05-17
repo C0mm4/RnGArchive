@@ -208,14 +208,7 @@ public class GameManager : MonoBehaviour
                 {
                     if(UIManager.inGameUI != null)
                     {
-                        if (Progress.isActiveSkill)
-                        {
-                            UIManager.inGameUI.EnableUI();
-                        }
-                        else
-                        {
-                            UIManager.inGameUI.EnableCharaSlots();
-                        }
+                        UIManager.inGameUI.EnableUI();
                     }
                 }
                 break;

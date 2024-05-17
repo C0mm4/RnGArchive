@@ -117,6 +117,18 @@ public class PlayerController : RigidBodyObject
                     }
                 }
 
+                // Cost Recovery
+                if(charactor.charaData.currentCost < charactor.charaData.maxCost)
+                {
+                    float recoveryCost = charactor.charaData.costRecovery * Time.deltaTime;
+                    charactor.charaData.currentCost += recoveryCost;
+                    if (charactor.charaData.currentCost >= charactor.charaData.maxCost)
+                    {
+                        charactor.charaData.currentCost = charactor.charaData.maxCost;
+                    }
+                }
+
+
                 // Interaction UI Generate
                 if (triggers.Count > 0)
                 {
@@ -255,8 +267,8 @@ public class PlayerController : RigidBodyObject
 
                 if (Input.GetKeyDown(GameManager.Input._keySettings.Skill3))
                 {
-                    if (!charactor.skills[2].isCool)
-                        charactor.skills[2].Execute(sawDir);
+                    if (!charactor.skills[0].isCool)
+                        charactor.skills[0].Execute(sawDir);
                 }
             }
         }

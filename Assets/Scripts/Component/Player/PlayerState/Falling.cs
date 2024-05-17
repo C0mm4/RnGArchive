@@ -10,7 +10,7 @@ public class Falling : PlayerState
         // Animate Idle Animation
         player.AnimationPlayBody("Falling");
 
-        if(player.body.velocity.y >= 0)
+        if(player.isGrounded)
         {
             player.EndCurrentState();
         }

@@ -25,7 +25,6 @@ public class UIManager
 
     public InGameUI inGameUI;
 
-    public SkillSlotUI skillSlotUI;
 
     public InteractionUI interactionUI;
 

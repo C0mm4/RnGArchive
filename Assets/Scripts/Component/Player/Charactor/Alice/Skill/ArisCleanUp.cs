@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class ArisCleanUp : Skill
 {
-    float startT;
-    bool isCharge = false;
-    float chargeT;
     bool isRunning = false;
 
     public override void PassiveEffect()
@@ -16,7 +13,7 @@ public class ArisCleanUp : Skill
 
     }
 
-    public override async void Step()
+    public override async void Action()
     {
         if (!isRunning)
         {
@@ -40,7 +37,7 @@ public class ArisCleanUp : Skill
         }
 
     }
-
+/*
     public override void PassiveStep()
     {
         if (isCharge)
@@ -55,7 +52,6 @@ public class ArisCleanUp : Skill
                 startT = Time.time;
                 isCharge = true;
             }
-            Debug.Log(currentAmmo);
         }
 
         if(Input.GetKeyUp(GameManager.Input._keySettings.Shot))
@@ -75,9 +71,18 @@ public class ArisCleanUp : Skill
             player.isAction = false;
         }
     }
-
+*/
     public override void Execute(Vector2 dir)
     {
         base.Execute(dir);
+    }
+
+    public override bool ExecuteCondition()
+    {
+        return player.isGrounded && !isRunning;
+    }
+
+    public override void Step()
+    {
     }
 }

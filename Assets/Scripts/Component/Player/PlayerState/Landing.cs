@@ -9,7 +9,6 @@ public class Landing : PlayerState
         base.EnterState(controller);
         player.isLanding = true;
         player.body.velocity = new Vector2(0, player.body.velocity.y);
-        Debug.Log("Landing");
     }
 
     public override void UpdateState()
@@ -20,14 +19,12 @@ public class Landing : PlayerState
         player.canMove = false;
         player.isLanding = true;
 
-        Debug.Log("Landing");
     }
 
     public override void ExitState()
     {
         player.canMove = true;
         player.isLanding = false;
-        Debug.Log("LandEnd");
         if (player.isMove)
         {
             player.charactor.ChangeState(new Move());
