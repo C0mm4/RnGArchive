@@ -44,7 +44,7 @@ public class FSMManager
 
         List<string> mobFsmList = new List<string>()
         {
-            //0     1           2               3               4       5           6               7           8
+            //0          1           2               3               4                 5           6               7           8
             "MobIdle", "MobMove", "MobPrepareJump", "MobJumpFinish", "MobFalling", "MobLanding", "PrepareAttack", "MobAttack", "Pattern"
         };
 
@@ -81,14 +81,6 @@ public class FSMManager
         fsm[mobFsmList[7]] = mobFsmNodes;
 
 
-        foreach(var fsmNode in fsm)
-        {
-            Debug.Log("StartNode : " + fsmNode.Key);
-            foreach(var node in fsmNode.Value)
-            {
-                Debug.Log(node);
-            }
-        }
     }
 
     public List<string> getList(string str)
