@@ -22,7 +22,7 @@ public class FSMManager
         fsm[fsmList[0]] = new List<string>(nodes);
 
         // Set Move State Nodes
-        nodes = new List<string> { fsmList[0], fsmList[2], fsmList[6] };
+        nodes = new List<string> { fsmList[0], fsmList[2], fsmList[4], fsmList[6] };
         fsm[fsmList[1]] = new List<string>(nodes);
 
         // Set PrepareJump State Nodes
@@ -44,23 +44,51 @@ public class FSMManager
 
         List<string> mobFsmList = new List<string>()
         {
-            "Idle", "MobMove", "MobAttack",
+            //0     1           2               3               4       5           6               7           8
+            "MobIdle", "MobMove", "MobPrepareJump", "MobJumpFinish", "MobFalling", "MobLanding", "PrepareAttack", "MobAttack", "Pattern"
         };
 
-        fsm[mobFsmList[0]].AddRange(
-            new List<string>{
-            mobFsmList[1], mobFsmList[2],
-        }); 
+        // Set Mob Idle State Nodes
+        List<string> mobFsmNodes = new List<string>() { mobFsmList[1], mobFsmList[2], mobFsmList[4], mobFsmList[8] };
+        fsm[mobFsmList[0]] = mobFsmNodes;
 
-        fsm[mobFsmList[1]] = new List<string>
+        // Set Mob Move State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[2], mobFsmList[4] , mobFsmList[6], mobFsmList[8] };
+        fsm[mobFsmList[1]] = mobFsmNodes;
+
+        // Set Mob PrepareJump State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[3] };
+        fsm[mobFsmList[2]] = mobFsmNodes;
+
+        // Set Mob JumpFinish State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[4] };
+        fsm[mobFsmList[3]] = mobFsmNodes;
+
+        // Set Mob Falling State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[5] };
+        fsm[mobFsmList[4]] = mobFsmNodes;
+
+        // Set Mob Landing State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[0] , mobFsmList[1] };
+        fsm[mobFsmList[5]] = mobFsmNodes;
+
+        // Set Mob PrepareAttack State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[7] };
+        fsm[mobFsmList[6]] = mobFsmNodes;
+
+        // Set Mob Attack State Nodes
+        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[7] };
+        fsm[mobFsmList[7]] = mobFsmNodes;
+
+
+        foreach(var fsmNode in fsm)
         {
-            mobFsmList[0], mobFsmList[2],
-        };
-
-        fsm[mobFsmList[2]] = new List<string>
-        {
-            mobFsmList [0], mobFsmList[1],
-        };
+            Debug.Log("StartNode : " + fsmNode.Key);
+            foreach(var node in fsmNode.Value)
+            {
+                Debug.Log(node);
+            }
+        }
     }
 
     public List<string> getList(string str)

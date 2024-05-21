@@ -121,6 +121,7 @@ public class CharactorController
             data.maxHP = int.Parse(node["maxHP"].InnerText);
             data.objName = node["objName"].InnerText;
             data.coolTime = float.Parse(node["coolTime"].InnerText);
+            data.cost = int.Parse(node["cost"].InnerText);
             supporter.data = data;
 
             supporters[int.Parse(data.id)] = supporter;

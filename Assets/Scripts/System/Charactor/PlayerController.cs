@@ -16,7 +16,8 @@ public class PlayerController : RigidBodyObject
     public bool _isAction = false;
     public bool isAction { get { return _isAction; } set { _isAction = value; } }
     public bool isAttack = false;
-    public bool isLanding = false;
+    public bool _isLanding = false;
+    public bool isLanding { get { return _isLanding;  } set { _isLanding = value; } }   
     public bool isInit = false;
     public bool isAttackInput = false;
 

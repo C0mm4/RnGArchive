@@ -112,7 +112,12 @@ public class StateMachine
     // set current state on idle and state stack empty
     public void setIdle()
     {
-        changeState(new Idle());
+        if(playerT != null)
+            changeState(new Idle());
+        else
+        {
+            changeState(new MobIdle());
+        }
     }
     // return current state name to string
     public string getStateStr()

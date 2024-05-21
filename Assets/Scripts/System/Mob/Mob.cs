@@ -33,6 +33,9 @@ public class Mob : RigidBodyObject
     public bool isAttack;
     public bool isSet = false;
 
+    public bool _isLanding = false;
+    public bool isLanding { get { return _isLanding; } set { _isLanding = value; } }
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -67,7 +70,7 @@ public class Mob : RigidBodyObject
 
         SetTargetPosition(pos);
         CreateHPBar();
-        ChangeState(new Idle());
+        ChangeState(new MobIdle());
         isSet = true;
     }
 
@@ -137,7 +140,17 @@ public class Mob : RigidBodyObject
         if (AI != null)
         {
             AI.player = GameManager.player.GetComponent<PlayerController>();
-            AI.Step();
+            if(AI.player != null) 
+            {
+                AI.Step();
+            }
+            else
+            {
+                if (isGrounded && !isMove && !isLanding)
+                {
+                    SetIdle();
+                }
+            }
         }
         stateMachine.updateState();
     }
@@ -247,6 +260,11 @@ public class Mob : RigidBodyObject
                 Debug.Log($"Can't Find Clip : {clip}");
             }
         }
+    }
+
+    public void EndCurrentState()
+    {
+        stateMachine.exitState();
     }
 
     public override void Alarm0()

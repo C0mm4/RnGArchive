@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
+  currentAnimation: 
   gravityModifier: 1
   body: {fileID: 0}
   isGrounded: 0
@@ -76,7 +77,6 @@ MonoBehaviour:
   currentState: 
   attackObj: {fileID: 0}
   animator: {fileID: 0}
-  currentAnimation: 
   isAttack: 0
   isSet: 0
 --- !u!50 &3760179625236663660
@@ -162,15 +162,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 2093915880, guid: 019d92d4210d6c24ca42b931570c2fd3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &9068204702927172463
@@ -189,21 +189,21 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.3, y: 0.245}
-      - {x: -0.3, y: -0.25}
-      - {x: -0.23, y: -0.305}
-      - {x: 0.23, y: -0.305}
-      - {x: 0.3, y: -0.25}
-      - {x: 0.3, y: 0.245}
+    - - {x: -0.067, y: 0.068}
+      - {x: -0.067, y: -0.06}
+      - {x: -0.06, y: -0.08}
+      - {x: 0.06, y: -0.08}
+      - {x: 0.067, y: -0.06}
+      - {x: 0.067, y: 0.068}
 --- !u!1 &3834162041384197724
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class Idle : PlayerState
 
     public override void UpdateState()
     {
+        // If Target is Player control player state
         if(player != null)
         {
             // Animate Idle Animation
@@ -38,15 +39,6 @@ public class Idle : PlayerState
                 player.charactor.ChangeState(new Move());
             }
 
-        }
-        else if(charactor != null)
-        {
-            charactor.AnimationPlay("Idle");
-
-            if (charactor.isMove)
-            {
-                charactor.ChangeState(new MobMove());
-            }
         }
     }
 

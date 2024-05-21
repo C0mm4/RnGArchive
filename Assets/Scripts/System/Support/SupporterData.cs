@@ -12,4 +12,5 @@ public class SupporterData
     public int currentAmmo;
     public float coolTime;
     public float leftCoolTime;
+    public int cost;
 }
