@@ -25,7 +25,7 @@ public class Idle : PlayerState
             // Translate State on player action
             if (!player.isGrounded)
             {
-                if(player.body.velocity.y > 0)
+                if(player.velocity.y > 0)
                 {
                     player.charactor.ChangeState(new PrepareJump());
                 }

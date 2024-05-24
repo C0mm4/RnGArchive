@@ -8,7 +8,7 @@ public class MobLanding : State
     {
         base.EnterState(controller);
         charactor.isLanding = true;
-        charactor.body.velocity = new Vector2(0, charactor.body.velocity.y);
+        charactor.velocity = new Vector2(0, charactor.velocity.y);
     }
 
     public override void UpdateState()

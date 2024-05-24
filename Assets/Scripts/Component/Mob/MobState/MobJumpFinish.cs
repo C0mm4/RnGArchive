@@ -10,7 +10,7 @@ public class MobJumpFinish : State
         // Animate Idle Animation
         charactor.AnimationPlay("JumpFinish");
 
-        if(charactor.body.velocity.y <= 0)
+        if(charactor.velocity.y <= 0)
         {
             charactor.EndCurrentState();
         }

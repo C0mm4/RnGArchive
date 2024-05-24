@@ -5,65 +5,167 @@ using UnityEngine;
 
 public class PlayerTest : Obj
 {
-    public Animator animator;
+    public float gravityModifier = 1f;
 
-    public bool isJump;
+    public bool isGrounded;
 
-    public override void KeyInput()
+    protected ContactFilter2D contactFilter;
+    protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+
+    protected const float minMoveDistance = 0.001f;
+    protected const float shellRadius = 0.01f;
+
+    public Rigidbody2D body;
+
+    public Vector2 velocity;
+    private Vector2 additionalVelocty;
+
+    public Vector2 groundNormal = new Vector2(0, 1f);
+
+    public Vector2 sawDir;
+
+    public bool canMove;
+    public bool isMove;
+    public bool isForceMoving;
+
+    public Vector3 targetMovePos;
+
+    public bool isLanding;
+
+    protected virtual void OnEnable()
     {
-        base.KeyInput();
+        body = GetComponent<Rigidbody2D>();
+        body.isKinematic = true;
 
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Jump))
+        contactFilter.useTriggers = false;
+        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        contactFilter.useLayerMask = true;
+    }
+
+    public override void BeforeStep()
+    {
+        if(velocity.y < 0)
         {
-            if (!isJump)
-            {
-                isJump = true;
-                AnimationPlay("PrepareJump");
-            }
+            velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+        }
+        else
+        {
+            velocity += Physics2D.gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(GameManager.Input._keySettings.rightKey))
+/*        if (Input.GetKey(KeyCode.D))
         {
-            if (!isJump)
-            {
-                AnimationPlay("Move", 1f);
-                transform.localRotation = new Quaternion(0, 0, 0, 0);
-            }
+            velocity.x = 5f;
         }
-        else if (Input.GetKey(GameManager.Input._keySettings.leftKey))
+        else if(Input.GetKey(KeyCode.A))
         {
-            if (!isJump)
+            velocity.x = -5f;
+        }
+        else
+        {
+            velocity.x = 0f;
+        }*/
+
+        velocity += additionalVelocty;
+
+        base.BeforeStep();
+
+        isGrounded = false;
+
+        var deltaPos = velocity * Time.deltaTime;
+        var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+        var move = moveAlongGround * deltaPos.x;
+        
+
+        PerformMovement(move, false);
+
+        move = Vector2.up * deltaPos.y;
+
+        PerformMovement(move, true);
+
+        DecayAdditionalVelocity();
+
+        FlipX();
+    }
+
+    public virtual void PerformMovement(Vector2 dir, bool yMovement)
+    {
+        var distance = dir.magnitude;
+        if (distance > minMoveDistance)
+        {
+            // Check hit buffer
+            var cnt = body.Cast(dir, contactFilter, hitBuffer, distance + shellRadius);
+
+            for (int i = 0; i < cnt; i++)
             {
-                AnimationPlay("Move", 1f);
-                transform.localRotation = new Quaternion(0, 180, 0, 0);
+                var currentNormal = hitBuffer[i].normal;
+                // Check Bottom hit
+                if (currentNormal.y > 0.5f)
+                {
+                    isGrounded = true;
+                    if (yMovement)
+                    {
+                        velocity.y = 0f;
+                        groundNormal = currentNormal;
+                    }
+                }
+                // Check Head hit
+                if (currentNormal.y < -0.5f)
+                {
+                    velocity.y = Mathf.Min(velocity.y, 0);
+                }
+               
+                if (isGrounded)
+                {
+                    var projection = Vector2.Dot(velocity, currentNormal);
+                    if (projection < 0)
+                    {
+                        velocity = velocity - projection * currentNormal;
+                    }
+                }
+               
+                var modifiedDistance = hitBuffer[i].distance - shellRadius;
+                distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
+            var moveDistance = dir.normalized * distance;
+            body.position = body.position + moveDistance;
+        }
+    }
+
+    public void AddForce(Vector2 force)
+    {
+        additionalVelocty += force;
+    }
+
+    private void DecayAdditionalVelocity()
+    {
+        additionalVelocty.x *= (1 - 0.1f);
+        if(additionalVelocty.y > 0)
+        {
+            additionalVelocty += gravityModifier * Physics2D.gravity * Time.deltaTime;
+        }
+        else
+        {
+            additionalVelocty.y = 0f;
+        }
+        if(additionalVelocty.magnitude <= 0.01f)
+        {
+            additionalVelocty = Vector2.zero;
+        }
+    }
+
+    public virtual void FlipX()
+    {
+        if (sawDir.x > 0f)
+        {
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
 
         }
         else
         {
-            AnimationPlay("Idle");
+            transform.localRotation = new Quaternion(0, 180, 0, 0);
         }
+
     }
 
-    public void AnimationPlay(string clip, float spd = 1)
-    {
-        if (!clip.Equals(currentAnimation))
-        {
-            if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))
-            {
-                currentAnimation = clip;
-                animator.speed = spd;
-                animator.Play(clip);
-            }
-            else
-            {
-                Debug.Log($"Can't Find Clip : {clip}");
-            }
-        }
-    }
-
-    public void Landing()
-    {
-        isJump = false;
-    }
 }

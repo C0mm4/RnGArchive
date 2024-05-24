@@ -18,4 +18,13 @@ public class MobMove : State
 
     }
 
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        if (!charactor.isMove)
+        {
+            charactor.ChangeState(new MobIdle());
+        }
+    }
+
 }

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class PlayerController : RigidBodyObject
+public class PlayerController : PlayerTest
 {
     public bool controlEnabled;
 
@@ -16,8 +16,6 @@ public class PlayerController : RigidBodyObject
     public bool _isAction = false;
     public bool isAction { get { return _isAction; } set { _isAction = value; } }
     public bool isAttack = false;
-    public bool _isLanding = false;
-    public bool isLanding { get { return _isLanding;  } set { _isLanding = value; } }   
     public bool isInit = false;
     public bool isAttackInput = false;
 
@@ -31,6 +29,7 @@ public class PlayerController : RigidBodyObject
 
     public Animator animator;
     public Animator haloAnimator;
+
     public bool isSetAnimator;
 
     public Skill workingSkill;
@@ -75,7 +74,7 @@ public class PlayerController : RigidBodyObject
     {
         if (isInit && controlEnabled)
         {
-            if (Mathf.Abs(body.velocity.x) <= 0.05)
+            if (Mathf.Abs(velocity.x) <= 0.05)
             {
                 isMove = false;
             }
@@ -177,7 +176,7 @@ public class PlayerController : RigidBodyObject
                     }
                     else
                     {
-                        body.velocity = new Vector2(0, body.velocity.y);
+                        velocity = new Vector2(0, velocity.y);
                     }
                     SkillKey();
                 }
@@ -199,7 +198,7 @@ public class PlayerController : RigidBodyObject
                 {
                     dir.x = -1;
                 }
-                body.velocity = new Vector2(dir.x, body.velocity.y);
+                velocity = new Vector2(dir.x, velocity.y);
             }
         }
     }
@@ -210,7 +209,7 @@ public class PlayerController : RigidBodyObject
         {
             if (canMove)
             {
-                body.velocity = new Vector2(-charactor.charaData.activeMaxSpeed, body.velocity.y);
+                velocity = new Vector2(-charactor.charaData.activeMaxSpeed, velocity.y);
                 if (!isAction)
                 {
                     sawDir = new Vector2(-1, sawDir.y);
@@ -222,7 +221,7 @@ public class PlayerController : RigidBodyObject
         {
             if (canMove)
             {
-                body.velocity = new Vector2(charactor.charaData.activeMaxSpeed, body.velocity.y);
+                velocity = new Vector2(charactor.charaData.activeMaxSpeed, velocity.y);
                 if (!isAction)
                 {
                     sawDir = new Vector2(1, sawDir.y);
@@ -232,7 +231,7 @@ public class PlayerController : RigidBodyObject
         }
         else
         {
-            body.velocity = new Vector2(0f , body.velocity.y);
+            velocity = new Vector2(0f , velocity.y);
         }
 
         if (Input.GetKeyDown(GameManager.Input._keySettings.Jump) && isGrounded && canMove)
@@ -274,7 +273,7 @@ public class PlayerController : RigidBodyObject
             }
         }
     }
-
+/*
     public override void FlipX()
     {
         if(sawDir.x > 0f)
@@ -289,8 +288,8 @@ public class PlayerController : RigidBodyObject
         
     }
 
-
-
+*/
+/*
     public override void CheckCollision(Collision2D obj)
     {
         base.CheckCollision(obj);
@@ -302,11 +301,11 @@ public class PlayerController : RigidBodyObject
             }
         }
     }
-
+*/
     public void GetDmg(GameObject obj)
     {
         HPDecrease(1);
-        body.AddForce((new Vector2((-obj.transform.position.x + transform.position.x) * 4, Vector2.up.y * 4)), ForceMode2D.Impulse);
+        AddForce((new Vector2((-obj.transform.position.x + transform.position.x) * 4, Vector2.up.y * 4)));
         isImmune = true;
         isHitState = true;
         Physics2D.IgnoreLayerCollision(7,8, true);

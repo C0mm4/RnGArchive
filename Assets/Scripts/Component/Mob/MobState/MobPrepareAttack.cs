@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MobAttack : State
+public class MobPrepareAttack : State
 {
     int attackIndex;
     float t;
     float animationTime;
 
-    public MobAttack(int index)
+    public MobPrepareAttack(int index)
     {
         attackIndex = index;
     }
@@ -19,8 +19,8 @@ public class MobAttack : State
         Debug.Log("Mob Attack");
         charactor.velocity = new Vector2(0, charactor.velocity.y);
         charactor.isAttack = true;
-        charactor.AnimationPlay("Attack " + attackIndex);
-        var clip = getAnimationClip("Attack " + attackIndex);
+        charactor.AnimationPlay("PrepareAttack " + attackIndex);
+        var clip = getAnimationClip("PrepareAttack " + attackIndex);
         animationTime = clip.length;
 
         charactor.canMove = false;
@@ -43,10 +43,8 @@ public class MobAttack : State
 
     public override void ExitState()
     {
-        charactor.canMove = true;
-        charactor.EndAttackState();
-        charactor.isAttack = false;
-        charactor.SetAlarm(attackIndex, charactor.data.attackDelay[attackIndex]);
+        charactor.ChangeState(new MobAttack(attackIndex));
+
         base.ExitState();
     }
 

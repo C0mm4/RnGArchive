@@ -60,7 +60,7 @@ public class RigidBodyObject : Obj
 
     public virtual void CheckCollision(Collider2D obj)
     {
-
+        
     }
 
     public virtual void CheckCollision(Collision2D obj)

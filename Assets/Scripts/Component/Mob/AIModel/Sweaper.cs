@@ -12,7 +12,7 @@ public class Sweaper : AIModel
 
         if(!target.isForceMoving)
         {
-            if(currentState == "Idle" || currentState == "MobMove")
+            if(currentState == "MobIdle" || currentState == "MobMove")
             {
                 target.SetTargetPosition(player.transform.position);
             }
@@ -20,7 +20,10 @@ public class Sweaper : AIModel
             {
                 // Attack Code Add
                 if (!target.data.attackCooltime[0])
-                    target.ChangeState(new MobAttack(0));
+                {
+                    target.ChangeState(new MobPrepareAttack(0));
+                    Debug.Log("Mob Attack");
+                }
             }
         }
     }

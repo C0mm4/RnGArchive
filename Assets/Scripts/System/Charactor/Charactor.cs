@@ -107,7 +107,7 @@ public class Charactor
     {
         if (playerController.isGrounded)
         {
-            playerController.body.AddForce(new Vector2(0, charaData.jumpForce), ForceMode2D.Impulse);
+            playerController.AddForce(new Vector2(0, charaData.jumpForce));
             playerController.isGrounded = false;
         }
     }

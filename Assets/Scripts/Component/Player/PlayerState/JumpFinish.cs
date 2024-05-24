@@ -10,7 +10,7 @@ public class JumpFinish : PlayerState
         // Animate Idle Animation
         player.AnimationPlayBody("JumpFinish");
 
-        if(player.body.velocity.y <= 0)
+        if(player.velocity.y <= 0)
         {
             player.EndCurrentState();
         }

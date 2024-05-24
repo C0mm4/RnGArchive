@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using static UnityEngine.AudioSettings;
 
-public class Mob : RigidBodyObject
+public class Mob : PlayerTest
 {
 
     // Mob Attack Prefab
@@ -33,8 +33,6 @@ public class Mob : RigidBodyObject
     public bool isAttack;
     public bool isSet = false;
 
-    public bool _isLanding = false;
-    public bool isLanding { get { return _isLanding; } set { _isLanding = value; } }
 
     public override void OnCreate()
     {
@@ -93,16 +91,21 @@ public class Mob : RigidBodyObject
             }
             else
             {
-                var dir = targetMovePos - transform.position; 
-                if (dir.x < 0)
+                var dir = targetMovePos - transform.position;
+                if (!isLanding)
                 {
-                    sawDir = new Vector2(-1, 0);
-                    body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
-                }
-                else
-                {
-                    sawDir = new Vector2(1, 0);
-                    body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
+                    if (dir.x < 0)
+                    {
+                        sawDir = new Vector2(-1, 0);
+                        velocity = new Vector2(-data.maxSpeed, velocity.y);
+                        isMove = true;
+                    }
+                    else
+                    {
+                        sawDir = new Vector2(1, 0);
+                        velocity = new Vector2(data.maxSpeed, velocity.y);
+                        isMove = true;
+                    }
                 }
             }
         }
@@ -111,21 +114,26 @@ public class Mob : RigidBodyObject
             if(GameManager.GetUIState() == UIState.InPlay)
             {
                 var dir = targetMovePos - transform.position;
-                if (dir.x < 0)
+                if (!isLanding)
                 {
-                    sawDir = new Vector2(-1, 0);
-                    body.velocity = new Vector2(-data.maxSpeed, body.velocity.y);
-                }
-                else
-                {
-                    sawDir = new Vector2(1, 0);
-                    body.velocity = new Vector2(data.maxSpeed, body.velocity.y);
+                    if (dir.x < 0)
+                    {
+                        sawDir = new Vector2(-1, 0);
+                        velocity = new Vector2(-data.maxSpeed, velocity.y);
+                        isMove = true;
+                    }
+                    else
+                    {
+                        sawDir = new Vector2(1, 0);
+                        velocity = new Vector2(data.maxSpeed, velocity.y);
+                        isMove = true;
+                    }
                 }
             }
         }
         else
         {
-            body.velocity = new Vector2(0, body.velocity.y);
+            velocity = new Vector2(0, velocity.y);
             isMove = false;
         }
 
@@ -137,9 +145,11 @@ public class Mob : RigidBodyObject
     public override void Step()
     {
         base.Step();
+        stateMachine.updateState();
         if (AI != null)
         {
             AI.player = GameManager.player.GetComponent<PlayerController>();
+            Debug.Log(AI.player);
             if(AI.player != null) 
             {
                 AI.Step();
@@ -152,7 +162,6 @@ public class Mob : RigidBodyObject
                 }
             }
         }
-        stateMachine.updateState();
     }
 
 
@@ -247,6 +256,7 @@ public class Mob : RigidBodyObject
 
     public void AnimationPlay(string clip, float spd = 1f)
     {
+        Debug.Log(clip);
         if (clip != currentAnimation)
         {
             if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))

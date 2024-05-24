@@ -22,7 +22,7 @@ public class MobIdle : State
 
             if (!charactor.isGrounded)
             {
-                if (charactor.body.velocity.y > 0)
+                if (charactor.velocity.y > 0)
                 {
                     charactor.ChangeState(new MobPrepareJump());
                 }
@@ -32,7 +32,7 @@ public class MobIdle : State
                 }
             }
 
-            if (charactor.isMove)
+            if (Mathf.Abs(charactor.velocity.x) > 0.01f )
             {
                 charactor.ChangeState(new MobMove());
             }

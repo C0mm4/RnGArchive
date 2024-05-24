@@ -25,7 +25,7 @@ public class FlyingDrone : AIModel
                 else if (hits[i].distance  < 2.5f)
                 {
                     target.gravityModifier = 0f;
-                    target.body.velocity = new Vector2(target.body.velocity.x, 0f);
+                    target.velocity = new Vector2(target.velocity.x, 0f);
                 }
                 // Too far bottom wall down
                 else

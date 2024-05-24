@@ -45,11 +45,11 @@ public class FSMManager
         List<string> mobFsmList = new List<string>()
         {
             //0          1           2               3               4                 5           6               7           8
-            "MobIdle", "MobMove", "MobPrepareJump", "MobJumpFinish", "MobFalling", "MobLanding", "PrepareAttack", "MobAttack", "Pattern"
+            "MobIdle", "MobMove", "MobPrepareJump", "MobJumpFinish", "MobFalling", "MobLanding", "MobPrepareAttack", "MobAttack", "Pattern"
         };
 
         // Set Mob Idle State Nodes
-        List<string> mobFsmNodes = new List<string>() { mobFsmList[1], mobFsmList[2], mobFsmList[4], mobFsmList[8] };
+        List<string> mobFsmNodes = new List<string>() { mobFsmList[1], mobFsmList[2], mobFsmList[4], mobFsmList[6], mobFsmList[8] };
         fsm[mobFsmList[0]] = mobFsmNodes;
 
         // Set Mob Move State Nodes

@@ -8,7 +8,7 @@ public class Landing : PlayerState
     {
         base.EnterState(controller);
         player.isLanding = true;
-        player.body.velocity = new Vector2(0, player.body.velocity.y);
+        player.velocity = new Vector2(0, player.velocity.y);
     }
 
     public override void UpdateState()
