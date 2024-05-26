@@ -9,7 +9,34 @@ public class Sweaper : AIModel
     {
         string currentState = target.currentState;
 
-        if(!target.isForceMoving)
+        switch (currentState)
+        {
+            case "MobIdle":
+                if (target != null)
+                {
+                    if (!target.isGrounded)
+                    {
+                        if (target.velocity.y > 0)
+                        {
+                            target.ChangeState(new MobPrepareJump());
+                        }
+                        else
+                        {
+                            target.ChangeState(new MobFalling());
+                        }
+                    }
+                    else if (Mathf.Abs(target.velocity.x) > 0.01f)
+                    {
+                        target.ChangeState(new MobMove());
+                    }
+                }
+                break;
+            case "MobMove":
+                break;
+
+        }
+
+        if (!target.isForceMoving)
         {
             if(currentState == "MobIdle" || currentState == "MobMove")
             {
@@ -23,36 +50,6 @@ public class Sweaper : AIModel
                     target.ChangeState(new MobPrepareAttack(0));
                 }
             }
-            switch (currentState)
-            {
-                case "MobIdle":
-                    if (target != null)
-                    {
-                        target.AnimationPlay("Idle");
-
-                        if (!target.isGrounded)
-                        {
-                            if (target.velocity.y > 0)
-                            {
-                                target.ChangeState(new MobPrepareJump());
-                            }
-                            else
-                            {
-                                target.ChangeState(new MobFalling());
-                            }
-                        }
-
-                        if (Mathf.Abs(target.velocity.x) > 0.01f)
-                        {
-                            target.ChangeState(new MobMove());
-                        }
-                    }
-                    break;
-                case "MobMove":
-                    break;
-
-            }
-            
         }
     }
 

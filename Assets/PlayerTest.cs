@@ -37,9 +37,9 @@ public class PlayerTest : Obj
         body = GetComponent<Rigidbody2D>();
         body.isKinematic = true;
 
-        contactFilter.useTriggers = false;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         contactFilter.useLayerMask = true;
+        contactFilter.useTriggers = false;
     }
 
     public override void BeforeStep()
@@ -52,37 +52,28 @@ public class PlayerTest : Obj
         {
             velocity += Physics2D.gravity * Time.deltaTime;
         }
-
-/*        if (Input.GetKey(KeyCode.D))
-        {
-            velocity.x = 5f;
-        }
-        else if(Input.GetKey(KeyCode.A))
-        {
-            velocity.x = -5f;
-        }
-        else
-        {
-            velocity.x = 0f;
-        }*/
-
+        // Add External Force
         velocity += additionalVelocty;
 
         base.BeforeStep();
 
         isGrounded = false;
 
+        // Calculate Movement
         var deltaPos = velocity * Time.deltaTime;
         var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
         var move = moveAlongGround * deltaPos.x;
         
-
         PerformMovement(move, false);
 
         move = Vector2.up * deltaPos.y;
 
         PerformMovement(move, true);
 
+        // Reset External Force
+        velocity -= additionalVelocty;
+
+        // Decay External Force
         DecayAdditionalVelocity();
 
         FlipX();
@@ -98,6 +89,11 @@ public class PlayerTest : Obj
 
             for (int i = 0; i < cnt; i++)
             {
+                if (hitBuffer[i].collider.isTrigger)
+                {
+                    continue;
+                }
+
                 var currentNormal = hitBuffer[i].normal;
                 // Check Bottom hit
                 if (currentNormal.y > 0.5f)
@@ -117,18 +113,19 @@ public class PlayerTest : Obj
                
                 if (isGrounded)
                 {
-                    var projection = Vector2.Dot(velocity, currentNormal);
+/*                    var projection = Vector2.Dot(velocity, currentNormal);
                     if (projection < 0)
                     {
-                        velocity = velocity - projection * currentNormal;
-                    }
+                        if (hitBuffer[i].collider.CompareTag("Wall"))
+                            velocity -= projection * currentNormal;
+                    }*/
                 }
                
                 var modifiedDistance = hitBuffer[i].distance - shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
             var moveDistance = dir.normalized * distance;
-            body.position = body.position + moveDistance;
+            body.position += moveDistance;
         }
     }
 
