@@ -98,7 +98,6 @@ public class CharaSlotUI : Obj
 
     public async void Enable(float t = 0)
     {
-        Debug.Log("Enable Charactor Slot UI");
         gameObject.SetActive(true);
         isCostSet = false;
         target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;

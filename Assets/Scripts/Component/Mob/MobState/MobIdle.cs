@@ -14,12 +14,11 @@ public class MobIdle : State
     public override void UpdateState()
     {
         base.UpdateState();
-
         // if Target is Mob control mob state
         if (charactor != null)
         {
             charactor.AnimationPlay("Idle");
-
+/*
             if (!charactor.isGrounded)
             {
                 if (charactor.velocity.y > 0)
@@ -35,7 +34,7 @@ public class MobIdle : State
             if (Mathf.Abs(charactor.velocity.x) > 0.01f )
             {
                 charactor.ChangeState(new MobMove());
-            }
+            }*/
         }
     }
 }

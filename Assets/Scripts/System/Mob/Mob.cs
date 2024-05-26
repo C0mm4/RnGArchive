@@ -145,11 +145,9 @@ public class Mob : PlayerTest
     public override void Step()
     {
         base.Step();
-        stateMachine.updateState();
         if (AI != null)
         {
             AI.player = GameManager.player.GetComponent<PlayerController>();
-            Debug.Log(AI.player);
             if(AI.player != null) 
             {
                 AI.Step();
@@ -162,6 +160,7 @@ public class Mob : PlayerTest
                 }
             }
         }
+        stateMachine.updateState();
     }
 
 
@@ -235,15 +234,19 @@ public class Mob : PlayerTest
         attackObj.GetComponent<MobAttackObj>().SetData(this);
         attackObj.GetComponent<MobAttackObj>().CreateHandler();
         attackObj.transform.localPosition = Vector3.zero;
+        attackObj.transform.rotation = transform.rotation;
 
     }
 
     public void EndAttackState()
     {
+        Debug.Log(currentState);
+        Debug.Log(attackObj);
         if (attackObj != null)
         {
             attackObj.GetComponent<MobAttackObj>().EndAttackState();
         }
+
     }
 
     public void DeleteAttackObj()
@@ -256,7 +259,6 @@ public class Mob : PlayerTest
 
     public void AnimationPlay(string clip, float spd = 1f)
     {
-        Debug.Log(clip);
         if (clip != currentAnimation)
         {
             if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findclip => findclip.name == clip))

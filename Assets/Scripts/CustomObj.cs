@@ -6,6 +6,8 @@ public class CustomObj : Obj
 {
     public Vector3 dir = new Vector3();
 
+    GameObject attackObj;
+
     public override void BeforeStep()
     {
         base.BeforeStep();
@@ -27,16 +29,14 @@ public class CustomObj : Obj
     {
         if (Input.GetKey(KeyCode.A))
         {
-            dir = new Vector3(-0.01f, 0);
+            string objName = "Sweaper 0";
+
+            attackObj = GameManager.InstantiateAsync(objName);
+            attackObj.transform.SetParent(transform);
+            attackObj.transform.localPosition = Vector3.zero;
+            attackObj.transform.rotation = transform.rotation;
         }
-        if (Input.GetKey(KeyCode.S)) 
-        {
-            SetAlarm(0, 3f);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            SetAlarm(1, 0f);
-        }
+
     }
 
 

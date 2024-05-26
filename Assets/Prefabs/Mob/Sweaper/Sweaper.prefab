@@ -54,13 +54,16 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   gravityModifier: 1
-  body: {fileID: 0}
   isGrounded: 0
+  body: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  groundNormal: {x: 0, y: 1}
   sawDir: {x: 0, y: 0}
   canMove: 1
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
+  isLanding: 0
   attackPrefab: []
   isHitbox: 
   lastAttackT: []

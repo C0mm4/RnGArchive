@@ -20,7 +20,7 @@ public class PlayerTest : Obj
     public Vector2 velocity;
     private Vector2 additionalVelocty;
 
-    public Vector2 groundNormal = new Vector2(0, 1f);
+    public Vector2 groundNormal;
 
     public Vector2 sawDir;
 

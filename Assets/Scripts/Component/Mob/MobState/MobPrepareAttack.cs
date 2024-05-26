@@ -16,7 +16,6 @@ public class MobPrepareAttack : State
     public override void EnterState(Mob chr)
     {
         base.EnterState(chr);
-        Debug.Log("Mob Attack");
         charactor.velocity = new Vector2(0, charactor.velocity.y);
         charactor.isAttack = true;
         charactor.AnimationPlay("PrepareAttack " + attackIndex);
@@ -36,7 +35,7 @@ public class MobPrepareAttack : State
 
         if(t >= animationTime)
         {
-            charactor.stateMachine.exitState();
+            charactor.EndCurrentState();
         }
         
     }

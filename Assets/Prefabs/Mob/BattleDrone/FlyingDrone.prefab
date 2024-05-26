@@ -51,18 +51,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
-    newSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.5}
+  m_Size: {x: 0.26, y: 0.16}
   m_EdgeRadius: 0
 --- !u!114 &8013403715887587842
 MonoBehaviour:
@@ -78,14 +78,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
+  currentAnimation: 
   gravityModifier: 1
-  body: {fileID: 0}
   isGrounded: 0
+  body: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  groundNormal: {x: 0, y: 1}
   sawDir: {x: 0, y: 0}
   canMove: 1
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
+  isLanding: 0
   attackPrefab: []
   isHitbox: 
   lastAttackT: []
@@ -102,7 +106,6 @@ MonoBehaviour:
   currentState: 
   attackObj: {fileID: 0}
   animator: {fileID: 0}
-  currentAnimation: 
   isAttack: 0
   isSet: 0
 --- !u!50 &3760179625236663660
@@ -167,12 +170,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 513f4fd43c7e1bf4da3cffc2e0cc4255, type: 3}
+  m_Sprite: {fileID: -733490669, guid: 513f4fd43c7e1bf4da3cffc2e0cc4255, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

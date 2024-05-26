@@ -126,6 +126,7 @@ public abstract class Obj : MonoBehaviour
 
     public void Destroy()
     {
+        Debug.Log($"Destroy {gameObject.name}");
         GameManager.Destroy(gameObject);
     }
 

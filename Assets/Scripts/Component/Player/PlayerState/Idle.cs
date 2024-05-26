@@ -9,7 +9,6 @@ public class Idle : PlayerState
         base.EnterState(chr);
         chr.isMove = false;
 
-        Debug.Log("Idle");
     }
 
     public override void UpdateState()

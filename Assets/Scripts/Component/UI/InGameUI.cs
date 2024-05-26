@@ -35,7 +35,6 @@ public class InGameUI : Obj
         if (!isShow)
         {
             int i;
-            Debug.Log("Enable");
             for (i = 0; i < GameManager.Progress.currentParty.Count; i++)
             {
                 charas[i].GetComponent<CharaSlotUI>().Enable();
