@@ -10,15 +10,15 @@ public class MobFalling : State
         // Animate Idle Animation
         charactor.AnimationPlay("Falling");
 
-        if(charactor.isGrounded)
+/*        if(charactor.isGrounded)
         {
             charactor.EndCurrentState();
-        }
+        }*/
     }
 
     public override void ExitState()
     {
-        charactor.ChangeState(new MobLanding());
+//        charactor.ChangeState(new MobLanding());
         base.ExitState();
     }
 }

@@ -229,12 +229,9 @@ public class Mob : PlayerTest
     {
         string objName = gameObject.name.Replace("(Clone)", "").Trim() + " " + i.ToString();
 
-        attackObj = GameManager.InstantiateAsync(objName);
-        attackObj.transform.SetParent(transform);
+        attackObj = GameManager.InstantiateAsync(objName, transform.position, transform.rotation);
         attackObj.GetComponent<MobAttackObj>().SetData(this);
         attackObj.GetComponent<MobAttackObj>().CreateHandler();
-        attackObj.transform.localPosition = Vector3.zero;
-        attackObj.transform.rotation = transform.rotation;
 
     }
 

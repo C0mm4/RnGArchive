@@ -49,11 +49,11 @@ public class FSMManager
         };
 
         // Set Mob Idle State Nodes
-        List<string> mobFsmNodes = new List<string>() { mobFsmList[1], mobFsmList[2], mobFsmList[4], mobFsmList[6], mobFsmList[8] };
+        List<string> mobFsmNodes = new List<string>() { mobFsmList[1], mobFsmList[2], mobFsmList[3], mobFsmList[4], mobFsmList[6], mobFsmList[8] };
         fsm[mobFsmList[0]] = mobFsmNodes;
 
         // Set Mob Move State Nodes
-        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[2], mobFsmList[4] , mobFsmList[6], mobFsmList[8] };
+        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[2], mobFsmList[3], mobFsmList[4] , mobFsmList[6], mobFsmList[8] };
         fsm[mobFsmList[1]] = mobFsmNodes;
 
         // Set Mob PrepareJump State Nodes
@@ -61,11 +61,11 @@ public class FSMManager
         fsm[mobFsmList[2]] = mobFsmNodes;
 
         // Set Mob JumpFinish State Nodes
-        mobFsmNodes = new List<string>() { mobFsmList[4] };
+        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[1], mobFsmList[4] };
         fsm[mobFsmList[3]] = mobFsmNodes;
 
         // Set Mob Falling State Nodes
-        mobFsmNodes = new List<string>() { mobFsmList[5] };
+        mobFsmNodes = new List<string>() { mobFsmList[0], mobFsmList[1], mobFsmList[5] };
         fsm[mobFsmList[4]] = mobFsmNodes;
 
         // Set Mob Landing State Nodes

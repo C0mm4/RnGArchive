@@ -15,4 +15,6 @@ public abstract class AIModel
     {
 
     }
+
+    public abstract void StateControl();
 }

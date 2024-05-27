@@ -10,15 +10,11 @@ public class MobJumpFinish : State
         // Animate Idle Animation
         charactor.AnimationPlay("JumpFinish");
 
-        if(charactor.velocity.y <= 0)
-        {
-            charactor.EndCurrentState();
-        }
     }
 
     public override void ExitState()
     {
-        charactor.ChangeState(new MobFalling());
+//        charactor.ChangeState(new MobFalling());
         base.ExitState();
     }
 }

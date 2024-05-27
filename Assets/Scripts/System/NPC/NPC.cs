@@ -36,12 +36,21 @@ public class NPC : InteractionTrigger
         scriptIndex = 0;
         isSaying = false;
         text = "대화한다";
+
     }
 
     public override void Step()
     {
         base.Step();
         sayTrigger = CheckTriggerStart();
+        if (isSaying)
+        {
+            AnimationPlay(animator, "Say");
+        }
+        else
+        {
+            AnimationPlay(animator, "Idle");
+        }
         if(GameManager.uiState == UIState.InPlay)
         {
             if (sayTrigger != null)
@@ -137,8 +146,9 @@ public class NPC : InteractionTrigger
             }
             await Task.Yield();
         }
+        isSaying = false;
 
-        if(sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
+        if (sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
         {
             await Task.Delay(TimeSpan.FromSeconds(1f));
         }
@@ -148,7 +158,6 @@ public class NPC : InteractionTrigger
         await Task.Delay(TimeSpan.FromSeconds(nextSayDelay));
         
 
-        isSaying = false;
     }
 
 
@@ -206,6 +215,7 @@ public class NPC : InteractionTrigger
             }
             await Task.Yield();
         }
+        isSaying = false;
 
         if (sayingIndex == letterBox.GetComponentInChildren<TMP_Text>().text.Length)
         {
@@ -217,7 +227,6 @@ public class NPC : InteractionTrigger
         await Task.Delay(TimeSpan.FromSeconds(nextSayDelay));
 
 
-        isSaying = false;
     }
 
     public override async void Interaction()

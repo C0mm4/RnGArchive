@@ -35,48 +35,63 @@ public class PlayerTest : Obj
     protected virtual void OnEnable()
     {
         body = GetComponent<Rigidbody2D>();
-        body.isKinematic = true;
+        if(body != null)
+        {
+            body.isKinematic = true;
 
-        contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-        contactFilter.useLayerMask = true;
-        contactFilter.useTriggers = false;
+            contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+            contactFilter.useLayerMask = true;
+            contactFilter.useTriggers = false;
+
+        }
     }
 
     public override void BeforeStep()
     {
-        if(velocity.y < 0)
+        if(body != null)
         {
-            velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+
+            if (gravityModifier > 0f)
+            {
+                if (velocity.y < 0)
+                {
+                    velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+                }
+                else
+                {
+                    velocity += Physics2D.gravity * Time.deltaTime;
+                }
+            }
+            else
+            {
+                velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+            }
+            // Add External Force
+            velocity += additionalVelocty;
+
+            base.BeforeStep();
+
+            isGrounded = false;
+
+            // Calculate Movement
+            var deltaPos = velocity * Time.deltaTime;
+            var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+            var move = moveAlongGround * deltaPos.x;
+
+            PerformMovement(move, false);
+
+            move = Vector2.up * deltaPos.y;
+
+            PerformMovement(move, true);
+
+            // Reset External Force
+            velocity -= additionalVelocty;
+
+            // Decay External Force
+            DecayAdditionalVelocity();
+
+            FlipX();
         }
-        else
-        {
-            velocity += Physics2D.gravity * Time.deltaTime;
-        }
-        // Add External Force
-        velocity += additionalVelocty;
-
-        base.BeforeStep();
-
-        isGrounded = false;
-
-        // Calculate Movement
-        var deltaPos = velocity * Time.deltaTime;
-        var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-        var move = moveAlongGround * deltaPos.x;
-        
-        PerformMovement(move, false);
-
-        move = Vector2.up * deltaPos.y;
-
-        PerformMovement(move, true);
-
-        // Reset External Force
-        velocity -= additionalVelocty;
-
-        // Decay External Force
-        DecayAdditionalVelocity();
-
-        FlipX();
     }
 
     public virtual void PerformMovement(Vector2 dir, bool yMovement)
@@ -113,12 +128,12 @@ public class PlayerTest : Obj
                
                 if (isGrounded)
                 {
-/*                    var projection = Vector2.Dot(velocity, currentNormal);
+                    var projection = Vector2.Dot(velocity, currentNormal);
                     if (projection < 0)
                     {
                         if (hitBuffer[i].collider.CompareTag("Wall"))
                             velocity -= projection * currentNormal;
-                    }*/
+                    }
                 }
                
                 var modifiedDistance = hitBuffer[i].distance - shellRadius;
