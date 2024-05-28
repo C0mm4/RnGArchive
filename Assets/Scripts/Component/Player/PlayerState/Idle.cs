@@ -18,7 +18,11 @@ public class Idle : PlayerState
         {
             // Animate Idle Animation
             player.AnimationPlayBody("Idle");
+            if (!player.weapon.currentAnimation.Equals("Fire") && !player.weapon.currentAnimation.Equals("Landing"))
+            {
 
+                player.weapon.AnimationPlay(player.weapon.animator, "Idle");
+            }
 
 
             // Translate State on player action

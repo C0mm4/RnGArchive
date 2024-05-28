@@ -15,6 +15,7 @@ public class Landing : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("Landing");
+        player.weapon.AnimationPlay(player.weapon.animator, "Landing");
 
         player.canMove = false;
         player.isLanding = true;

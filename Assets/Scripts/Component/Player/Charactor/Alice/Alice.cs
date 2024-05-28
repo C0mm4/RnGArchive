@@ -8,7 +8,6 @@ public class Alice : Charactor
 
     public override void Attack()
     {
-        attackPref = "AliceBaseAttackPref";
         base.Attack();
 
     }

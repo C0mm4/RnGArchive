@@ -9,6 +9,7 @@ public class JumpFinish : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("JumpFinish");
+        player.weapon.AnimationPlay(player.weapon.animator, "Falling");
 
         if(player.velocity.y <= 0)
         {

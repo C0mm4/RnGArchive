@@ -13,6 +13,7 @@ public class PlayerTest : Obj
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 
     protected const float minMoveDistance = 0.001f;
+    [SerializeField]
     protected const float shellRadius = 0.01f;
 
     public Rigidbody2D body;

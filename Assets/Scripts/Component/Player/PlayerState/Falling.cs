@@ -9,6 +9,7 @@ public class Falling : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("Falling");
+        player.weapon.AnimationPlay(player.weapon.animator, "Falling");
 
         if(player.isGrounded)
         {

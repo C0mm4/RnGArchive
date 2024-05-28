@@ -46,7 +46,6 @@
 			<DefType>Special</DefType>
 			<Skins>
 				<Skin>AliceBase</Skin>
-				<Skin>TestAnnimate1</Skin>
 			</Skins>
 			<Halos>
 				<Halo>AliceHalo</Halo>
@@ -57,7 +56,6 @@
 					<Kr>아리스, 청소합니다!</Kr>
 					<Eng>Aris, Clean Up!</Eng>
 					<Jp>アリス、お掃除します！</Jp>
-					<command>-</command>
 					<baseAmmo>3</baseAmmo>
 					<cost>6</cost>
 				</Skill>
@@ -92,7 +90,6 @@
 					<Kr>빛이여!</Kr>
 					<Eng>Bright Light!</Eng>
 					<Jp>光よ!</Jp>
-					<command>A</command>
 					<baseAmmo>2</baseAmmo>
 					<cost>6</cost>
 				</Skill>

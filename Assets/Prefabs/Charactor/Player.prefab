@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 5669769137454610963}
   - component: {fileID: 1230530403991297147}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: InteractionUIRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,20 +206,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
+  currentAnimation: 
   gravityModifier: 1
-  body: {fileID: 0}
   isGrounded: 0
+  body: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  groundNormal: {x: 0, y: 0}
   sawDir: {x: 0, y: 0}
   canMove: 1
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
+  isLanding: 0
   controlEnabled: 1
   isHitState: 0
   isImmune: 0
   _isAction: 0
   isAttack: 0
-  isLanding: 0
   isInit: 0
   isAttackInput: 0
   charactor:
@@ -239,19 +242,23 @@ MonoBehaviour:
       prefabPath: 
       maxHP: 0
       currentHP: 0
+      maxCost: 0
+      currentCost: 0
+      costRecovery: 0
       skins: []
       _currentSkin: 0
       haloSkins: []
       currentHalo: 0
     playerController: {fileID: 0}
-    attackPref: 
+    weaponPref: 
     atkType: 0
     defType: 0
+  weapon: {fileID: 0}
+  isWeaponEquip: 0
   triggers: []
   triggerIndex: 0
   animator: {fileID: 3065593238466913069}
   haloAnimator: {fileID: 6509508238169108390}
-  currentAnimation: 
   isSetAnimator: 0
   currentState: 
 --- !u!212 &1518355516389332187
@@ -337,7 +344,7 @@ Animator:
   m_GameObject: {fileID: 1518355516389332259}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2c04ac6db66c1534ab3a61175bec92b7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -374,8 +381,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -0.07, y: 0.12}
-      - {x: -0.07, y: -0.16}
-      - {x: 0.07, y: -0.16}
+      - {x: -0.07, y: -0.145}
+      - {x: 0.07, y: -0.145}
       - {x: 0.07, y: 0.12}
 --- !u!1 &2399709400426330592
 GameObject:
@@ -388,7 +395,7 @@ GameObject:
   - component: {fileID: 605152585020649516}
   - component: {fileID: 5041752177276834426}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: InteractionUILeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

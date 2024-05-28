@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -22,7 +24,8 @@ public class PlayerController : PlayerTest
     public Charactor charactor;
     public Supporter supporter;
 
-
+    public Weapon weapon;
+    public bool isWeaponEquip;
 
     public List<InteractionTrigger> triggers;
     public int triggerIndex;
@@ -55,7 +58,7 @@ public class PlayerController : PlayerTest
         gameObject.layer = layer;
     }
 
-    public void CreateHandler()
+    public async void CreateHandler()
     {
         charactor.playerController = this;
 
@@ -66,6 +69,7 @@ public class PlayerController : PlayerTest
         charactor.ChangeState(new Idle());
 
         SetSkin(charactor.charaData.currentSkin);
+        await CastOn();
         isInit = true;
     }
 
@@ -244,7 +248,7 @@ public class PlayerController : PlayerTest
 
     public void SkillKey()
     {
-        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !isAttack)
+        if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !isAttack && isWeaponEquip)
         {
             charactor.Attack();
             SetAlarm(4, charactor.charaData.attackSpeed);
@@ -358,6 +362,17 @@ public class PlayerController : PlayerTest
         if(animator.runtimeAnimatorController != null)
         {
             isSetAnimator = true;
+        }
+        try
+        {
+            var obj = GameManager.InstantiateAsync(charactor.charaData.skins[charactor.charaData.currentSkin] + "Weapon", transform.position);
+            obj.transform.SetParent(transform, false);
+            weapon = obj.GetComponent<Weapon>();
+            weapon.player = this;
+        }
+        catch
+        {
+
         }
     }
 
@@ -513,5 +528,32 @@ public class PlayerController : PlayerTest
     public void EndCurrentState()
     {
         charactor.EndState();
+    }
+
+    public async Task CastOn()
+    {
+        canMove = false;
+        isWeaponEquip = true;
+
+        weapon.AnimationPlay(weapon.animator, "CastOn");
+
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        weapon.AnimationPlay(weapon.animator, "Idle");
+
+        canMove = true;
+    }
+
+    public async Task CastOff()
+    {
+        canMove = false;
+        isWeaponEquip = false;
+
+        weapon.AnimationPlay(weapon.animator, "CastOff");
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+
+        weapon.AnimationPlay(weapon.animator, "Off");
+
+        canMove = true;
     }
 }

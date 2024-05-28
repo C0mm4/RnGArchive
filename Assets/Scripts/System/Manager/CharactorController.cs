@@ -79,16 +79,6 @@ public class CharactorController
                 Debug.Log(skill["class"].InnerText);
                 Skill target = Activator.CreateInstance(skl) as Skill;
                 target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
-                var cmd = SetCommands(skill["command"].InnerText);
-
-                if(cmd.Count > 0)
-                {
-                    newChara.commands[SetCommands(skill["command"].InnerText)] = target;
-                }
-                else
-                {
-                    newChara.passiveSkill.Add(target);
-                }
 
                 target.cost = int.Parse(skill["cost"].InnerText);
 
@@ -101,9 +91,6 @@ public class CharactorController
             newChara.charaData = charaData;
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
-
-
-            
         }
 
         
@@ -128,68 +115,6 @@ public class CharactorController
         }
     }
 
-    public List<KeyValues> SetCommands(string command)
-    {
-        List<KeyValues> ret = new();
-        KeyValues kv;
-
-        foreach(char c in command)
-        {
-            switch (c)
-            {
-                case 'A':
-                    kv = KeyValues.Shot;
-                    if(ret.Count > 0)
-                    {
-                        kv += (int)ret.Last();
-                    }
-                    ret.Add(kv);
-                    break;
-                case 'B':
-                    kv = (KeyValues)KeyValues.Jump;
-                    if (ret.Count > 0)
-                    {
-                        kv += (int)ret.Last();
-                    }
-                    ret.Add(kv);
-                    break;
-                case 'C':
-                    kv = (KeyValues)KeyValues.Call;
-                    if (ret.Count > 0)
-                    {
-                        kv += (int)ret.Last();
-                    }
-                    ret.Add(kv);
-                    break;
-                case '1':
-                    ret.Add(KeyValues.DownLeft);
-                    break;
-                case '2':
-                    ret.Add(KeyValues.Down);
-                    break;
-                case '3':
-                    ret.Add(KeyValues.DownRight);
-                    break;
-                case '4':
-                    ret.Add(KeyValues.Left);
-                    break;
-                case '6':
-                    ret.Add(KeyValues.Right);
-                    break;
-                case '7':
-                    ret.Add(KeyValues.UpLeft);
-                    break;
-                case '8':
-                    ret.Add(KeyValues.Up);
-                    break;
-                case '9':
-                    ret.Add(KeyValues.UpRight);
-                    break;
-            }
-        }
-
-        return ret;
-    }
 
     public void Update()
     {

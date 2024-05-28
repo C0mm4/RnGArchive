@@ -303,6 +303,14 @@ MonoBehaviour:
     m_Address: AliceHalo
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 148ed90a70be364489efb7bcbdc37df7
+    m_Address: AliceBaseWeapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5b918477a40cbb64fb19175db5c37762
+    m_Address: AliceBaseFire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

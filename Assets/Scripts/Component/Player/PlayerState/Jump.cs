@@ -9,7 +9,7 @@ public class PrepareJump : PlayerState
     {
         // Animate Idle Animation
         player.AnimationPlayBody("PrepareJump");
-
+        player.weapon.AnimationPlay(player.weapon.animator, "PrepareJump");
         
     }
 

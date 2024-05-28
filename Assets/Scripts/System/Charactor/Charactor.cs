@@ -20,7 +20,7 @@ public class Charactor
 
     public PlayerController playerController;
 
-    public string attackPref;
+    public string weaponPref;
 
     public AtkType atkType;
     public DefType defType;
@@ -97,9 +97,10 @@ public class Charactor
     {
         playerController.isAttack = true;
 
-        var awaitGo = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
+        playerController.weapon.Fire();
+/*        var awaitGo = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
         GameObject go = awaitGo;
-        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);
+        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);*/
 
     }
 

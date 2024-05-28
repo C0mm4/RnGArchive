@@ -15,7 +15,7 @@ public abstract class Obj : MonoBehaviour
     private float[] alarmTime;
 
     [SerializeField]
-    protected string currentAnimation;
+    public string currentAnimation;
 
     // Start is called before the first frame update
     public void Awake()

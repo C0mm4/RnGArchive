@@ -13,7 +13,7 @@ public class Bullet : Attack
     protected Rigidbody2D body;
     public float spd;
 
-
+    public Animator animator;
     public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
         base.CreateHandler(dmg, dir, t);
