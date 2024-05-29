@@ -35,7 +35,7 @@
 				<Eng>Alice</Eng>
 				<Jp>アリス</Jp>
 			</name>
-			<maxSpeed>4</maxSpeed>
+			<maxSpeed>3</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
 			<jumpForce>5</jumpForce>
 			<baseHP>3</baseHP>
@@ -69,9 +69,9 @@
 				<Eng>Midori</Eng>
 				<Jp>ミドリ</Jp>
 			</name>
-			<maxSpeed>1.2</maxSpeed>
+			<maxSpeed>4</maxSpeed>
 			<AttackSpeed>0.2</AttackSpeed>
-			<jumpForce>1.3</jumpForce>
+			<jumpForce>4</jumpForce>
 			<baseHP>3</baseHP>
 			<maxCost>10</maxCost>
 			<costRecovery>0.5</costRecovery>
@@ -79,7 +79,7 @@
 			<AtkType>Piercing</AtkType>
 			<DefType>Light</DefType>
 			<Skins>
-				<Skin>TestAnnimate</Skin>
+				<Skin>MidoriBase</Skin>
 			</Skins>
 			<Halos>
 				<Halo>MidoriHalo</Halo>

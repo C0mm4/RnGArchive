@@ -470,7 +470,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18617,7 +18617,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19795,7 +19795,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22996,7 +22996,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23729,7 +23729,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23881,7 +23881,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e356bca6e0c46d945a9f9ff70aae46c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24245,6 +24245,17 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
+  gravityModifier: 1
+  isGrounded: 0
+  body: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  groundNormal: {x: 0, y: 0}
+  sawDir: {x: 0, y: 0}
+  canMove: 0
+  isMove: 0
+  isForceMoving: 0
+  targetMovePos: {x: 0, y: 0, z: 0}
+  isLanding: 0
   player: {fileID: 0}
   detectDistance: 2
   text: 

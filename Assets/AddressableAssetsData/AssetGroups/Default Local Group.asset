@@ -311,6 +311,18 @@ MonoBehaviour:
     m_Address: AliceBaseFire
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: efe912d0c082158449ff864517aa5e93
+    m_Address: MidoriBaseWeapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5cbed92293952e458fe877963de1c8e
+    m_Address: MidoriBase
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f39744afe69c9f847bb5534a43c688f3
+    m_Address: MidoriHalo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:
