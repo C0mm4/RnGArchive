@@ -25,7 +25,8 @@ public class PlayerTest : Obj
 
     public Vector2 sawDir;
 
-    public bool canMove;
+    public bool _canMove;
+    public bool canMove { get { return _canMove; } set { _canMove = value; } }
     public bool isMove;
     public bool isForceMoving;
 

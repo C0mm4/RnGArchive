@@ -73,6 +73,7 @@ public abstract class Obj : MonoBehaviour
 
     public virtual void Step()
     {
+        
         for(int i = 0; i < alarms.Length; i++)
         {
             if (isAlarmRun[i])
@@ -126,7 +127,6 @@ public abstract class Obj : MonoBehaviour
 
     public void Destroy()
     {
-        Debug.Log($"Destroy {gameObject.name}");
         GameManager.Destroy(gameObject);
     }
 

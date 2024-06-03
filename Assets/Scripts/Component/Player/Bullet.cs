@@ -34,7 +34,6 @@ public class Bullet : Attack
         {
             var cnt = body.Cast(movPos, contactFilter, hits, spd * Time.deltaTime + 0.05f);
 
-            Debug.Log(hits.Length);
 
             for (int i = 0; i < cnt; i++)
             {

@@ -252,6 +252,7 @@ public class GameManager : MonoBehaviour
     {
         player.GetComponent<PlayerController>().controlEnabled = false;
         CharactorSpawn(player.transform, Progress.currentParty[Stage.currentIndex].charaData.id);
+        player.GetComponent<PlayerController>().canMove = true;
     }
 
     public void ManagerUpdate()

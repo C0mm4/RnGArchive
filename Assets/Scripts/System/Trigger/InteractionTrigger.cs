@@ -13,9 +13,7 @@ public class InteractionTrigger : PlayerTest
     public override void OnCreate()
     {
         var layerIndex = LayerMask.NameToLayer("InteractionObject");
-        Debug.Log($"Find Layer Index : {layerIndex}");
         gameObject.layer = layerIndex;
-        Debug.Log($"Set Layer {gameObject.layer}");
     }
 
     public override void Step()

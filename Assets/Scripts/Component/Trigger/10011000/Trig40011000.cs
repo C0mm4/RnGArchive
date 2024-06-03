@@ -16,6 +16,7 @@ public class Trig40011000 : CutSceneTrigger
 
         GameManager.Progress.DeleteCharaInParty(10001000);
         GameManager.Progress.InsertCharaInParty(10001001);
+        GameManager.Progress.InsertCharaInParty(10001002);
 
         Debug.Log("Charactor Set");
 

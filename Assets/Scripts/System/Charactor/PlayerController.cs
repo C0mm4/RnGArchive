@@ -68,14 +68,21 @@ public class PlayerController : PlayerTest
 
         charactor.ChangeState(new Idle());
 
-        SetSkin(charactor.charaData.currentSkin);
-        await CastOn();
-        isInit = true;
+        try
+        {
+            SetSkin(charactor.charaData.currentSkin);
+            await CastOn();
+        }
+        finally
+        {
+            isInit = true;
+        }
     }
 
 
     public override void Step()
     {
+        base.Step();
         if (isInit && controlEnabled)
         {
             if (Mathf.Abs(velocity.x) <= 0.05)
@@ -155,54 +162,57 @@ public class PlayerController : PlayerTest
                 charactor.Step();
             }
         }
-        else
-        {
-            if (isAction)
-            {
-                SetAlarm(2, 1f);
-            }
-        }
     }
 
 
     public override void KeyInput()
     {
-        if((GameManager.GetUIState() == UIState.InPlay))
+        if (controlEnabled)
         {
-            if (!isForceMoving)
+            if ((GameManager.GetUIState() == UIState.InPlay))
             {
-                base.KeyInput();
-                if (!isHitState)
+                if (!isForceMoving)
                 {
-                    if (canMove)
+                    base.KeyInput();
+                    if (!isHitState)
                     {
-                        MoveKey();
+                        if (canMove)
+                        {
+                            MoveKey();
+                        }
+                        else
+                        {
+                            velocity = new Vector2(0, velocity.y);
+                        }
+                        SkillKey();
                     }
-                    else
+                    if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
                     {
-                        velocity = new Vector2(0, velocity.y);
+                        if (triggers.Count > 0)
+                            triggers[triggerIndex].Interaction();
+                        DeleteInteractionUI();
                     }
-                    SkillKey();
-                }
-                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
-                {
-                    if(triggers.Count > 0)
-                        triggers[triggerIndex].Interaction();
-                    DeleteInteractionUI();
-                }
-            }
-            else
-            {
-                Vector2 dir = new Vector2();
-                if(targetMovePos.x > transform.position.x)
-                {
-                    dir.x = 1;
                 }
                 else
                 {
-                    dir.x = -1;
+                    Vector2 dir = new Vector2();
+                    if (targetMovePos.x > transform.position.x)
+                    {
+                        dir.x = 1;
+                    }
+                    else
+                    {
+                        dir.x = -1;
+                    }
+                    velocity = new Vector2(dir.x, velocity.y);
                 }
-                velocity = new Vector2(dir.x, velocity.y);
+            }
+        }
+        else
+        {
+            if (!isAction)
+            {
+                SetAlarm(2, 1f);
             }
         }
     }
@@ -329,7 +339,7 @@ public class PlayerController : PlayerTest
     }
     public override void Alarm2()
     {
-        Addressables.ReleaseInstance(gameObject);
+        Destroy();
     }
 
     public override void Alarm3()
