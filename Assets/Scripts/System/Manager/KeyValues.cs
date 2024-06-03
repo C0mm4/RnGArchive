@@ -183,4 +183,17 @@ public static class Func
             return $"Unknown variable: {varName}";
         }
     }
+
+    // Swap List Objects
+    public static void Swap<T>(List<T> list, int index1, int index2)
+    {
+        if (index1 < 0 || index1 >= list.Count || index2 < 0 || index2 >= list.Count)
+        {
+            throw new ArgumentOutOfRangeException("인덱스가 리스트의 범위를 벗어났습니다.");
+        }
+
+        T temp = list[index1];
+        list[index1] = list[index2];
+        list[index2] = temp;
+    }
 }

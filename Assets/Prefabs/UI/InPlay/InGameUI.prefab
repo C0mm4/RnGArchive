@@ -141,7 +141,7 @@ MonoBehaviour:
       haloSkins: []
       currentHalo: 0
     playerController: {fileID: 0}
-    attackPref: 
+    weaponPref: 
     atkType: 0
     defType: 0
   movingT: 0
@@ -1698,7 +1698,7 @@ MonoBehaviour:
       haloSkins: []
       currentHalo: 0
     playerController: {fileID: 0}
-    attackPref: 
+    weaponPref: 
     atkType: 0
     defType: 0
   movingT: 0
@@ -3661,7 +3661,7 @@ MonoBehaviour:
       haloSkins: []
       currentHalo: 0
     playerController: {fileID: 0}
-    attackPref: 
+    weaponPref: 
     atkType: 0
     defType: 0
   movingT: 0

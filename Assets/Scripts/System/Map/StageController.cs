@@ -26,10 +26,10 @@ public class StageController
         {
             if (GameManager.Progress.currentParty.Count > 1)
             {
-                currentIndex++;
-                currentIndex %= GameManager.Progress.currentParty.Count;
-
-                GameManager.NextCharactor();
+                if(!GameManager.Player.GetComponent<PlayerController>().isHitState)
+                {
+                    GameManager.CharactorChange();
+                }
             }
         }
 
@@ -37,11 +37,6 @@ public class StageController
         {
             GameManager.UIManager.MapToggle();
         }
-    }
-
-    public void SetInitializeParty()
-    {
-        GameManager.Progress.currentParty.Add(GameManager.CharaCon.charactors[10001001]);
     }
 
     public void LoadMap(string mapId)

@@ -530,8 +530,13 @@ public class PlayerController : PlayerTest
         GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP -= value;
         if (GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP <= 0)
         {
-            //            GameManager.ParticleGen("Particle_PlayerDie", transform.position, transform.position + new Vector3(0,10), 3);
+            
             GameManager.PlayerDie();
+            
+        }
+        else
+        {
+            GameManager.UIManager.inGameUI.charas[0].GetComponent<CharaSlotUI>().HitAnimation();
         }
     }
 

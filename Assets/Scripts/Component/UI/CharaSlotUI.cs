@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -24,6 +26,9 @@ public class CharaSlotUI : Obj
     public List<Image> emptyCostBar;
     public List<Image> fillInCostBar;
     private bool isCostSet = false;
+
+    // 1 = enableAnimation, 2 = enable, 3 = disableAnimation, 0 = disable, 4 = hitAnimation
+    public int state;
 
     public override void OnCreate()
     {
@@ -96,14 +101,15 @@ public class CharaSlotUI : Obj
         }
     }
 
-    public async void Enable(float t = 0)
+    public async void Enable(float t = 0, float time = 1f)
     {
+        state = 1;
         gameObject.SetActive(true);
         isCostSet = false;
         target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
         currentCharaId = target.charaData.id;
         movingT = t;
-        while (movingT < 1f)
+        while (movingT < time)
         {
             if(GameManager.GetUIState() != UIState.InPlay)
             {
@@ -117,14 +123,21 @@ public class CharaSlotUI : Obj
 
         rect.localPosition = new Vector3(enableXePos - Screen.width / 2, rect.localPosition.y);
         movingT = 0f;
+        state = 2;
     }
 
-    public async void Disable(float t = 0)
+    public async void Disable(float t = 0, float time = 1f)
     {
-        movingT = t;
-        while (movingT < 1f)
+        state = 3;
+        bool playerChange = false;
+        if(GameManager.uiState == UIState.InPlay)
         {
-            if(GameManager.uiState == UIState.InPlay)
+            playerChange = true;
+        }
+        movingT = t;
+        while (movingT < time)
+        {
+            if(GameManager.uiState == UIState.InPlay && !playerChange)
             {
                 return;
             }
@@ -138,6 +151,7 @@ public class CharaSlotUI : Obj
         movingT = 0f;
         target = null;
         gameObject.SetActive(false);
+        state = 0;
     }
 
     public void DisableAfterAnimation()
@@ -145,5 +159,27 @@ public class CharaSlotUI : Obj
         gameObject.SetActive(false);
     }
 
+    public async void HitAnimation()
+    {
+        state = 4;
+        Vector2 originPos = rect.localPosition;
+        float t = 0f;
+        while(state == 4)
+        {
+            if(t >= 0.3f)
+            {
+                break;
+            }
+            rect.localPosition += new Vector3(Random.RandomRange(-10, 10), Random.RandomRange(-10, 10));
+            t += Time.deltaTime;
+            await Task.Yield();
+        }
+        if(state == 4)
+        {
+            state = 2;
+            rect.localPosition = originPos;
+        }
+        
+    }
 
 }

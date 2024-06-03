@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -57,6 +58,19 @@ public class InGameUI : Obj
             }
 
         }
+    }
+
+    public async void CharactorChange(int target1, int target2)
+    {
+        charas[target1].GetComponent<CharaSlotUI>().Disable(0, 0.2f);
+        charas[target2].GetComponent<CharaSlotUI>().Disable(0, 0.2f);
+
+        await Task.Delay(TimeSpan.FromMilliseconds(300));
+        Func.Swap(GameManager.Progress.currentParty, target1, target2);
+        
+        
+        charas[target1].GetComponent<CharaSlotUI>().Enable(0, 0.2f);
+        charas[target2].GetComponent<CharaSlotUI>().Enable(0, 0.2f);
     }
 
 }

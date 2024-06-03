@@ -248,11 +248,12 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 
-    public static void NextCharactor()
+    public static void CharactorChange()
     {
         player.GetComponent<PlayerController>().controlEnabled = false;
-        CharactorSpawn(player.transform, Progress.currentParty[Stage.currentIndex].charaData.id);
+        CharactorSpawn(player.transform, Progress.currentParty[1].charaData.id);
         player.GetComponent<PlayerController>().canMove = true;
+        UIManager.inGameUI.CharactorChange(0, 1);
     }
 
     public void ManagerUpdate()

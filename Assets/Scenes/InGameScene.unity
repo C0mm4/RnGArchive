@@ -271,7 +271,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 30
   field of view: 45
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -340,8 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 32
-  m_RefResolutionX: 640
-  m_RefResolutionY: 288
+  m_RefResolutionX: 342
+  m_RefResolutionY: 192
   m_UpscaleRT: 0
   m_PixelSnapping: 1
   m_CropFrameX: 1
