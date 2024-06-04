@@ -18,6 +18,7 @@ public class NPC : InteractionTrigger
     public GameObject letterBox;
 
     public Animator animator;
+    public Animator glasses;
 
     public string npcId;
 
@@ -46,10 +47,14 @@ public class NPC : InteractionTrigger
         if (isSaying)
         {
             AnimationPlay(animator, "Say");
+            if(glasses != null)
+                AnimationPlay(glasses, "Say");
         }
         else
         {
             AnimationPlay(animator, "Idle");
+            if(glasses != null) 
+                AnimationPlay(glasses, "Idle");
         }
         if(GameManager.uiState == UIState.InPlay)
         {

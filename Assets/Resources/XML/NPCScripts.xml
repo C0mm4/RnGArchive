@@ -3,6 +3,14 @@
 	<mapID name ="10012200">
 		<trigID name ="">
 			<script>
+				<NPCID>20001002</NPCID>
+				<kr>그냥쓸데없이긴대사를출력해야할필요를느꼈기에테스트의목적으로이런대사를말하고있습니다.참고로테스트란정상작동하는지확인해보는절차로써현재하고있는테스트는스크립트와NPC의기본상태에서의애니메이션을검증하기위함입니다.</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name ="10012200">
+		<trigID name ="">
+			<script>
 				<NPCID>20001001</NPCID>
 				<kr>테스트</kr>
 			</script>
