@@ -207,13 +207,27 @@ public class NPC : InteractionTrigger
                     action = script[actionStartIndex..sayingIndex++];
 
                     // Play Action Script
-                    await Action(action);
+
+                    await Func.Action(action);
 
                     // Remove Action Script 
                     script = script.Remove(actionStartIndex, sayingIndex - actionStartIndex);
 
                     // Return Index to action start index;
                     sayingIndex = actionStartIndex;
+                }
+                // if Script Size Select Tokken get
+                // Script Play
+                if (script[sayingIndex].Equals('<'))
+                {
+                    while (!script[sayingIndex].Equals('>'))
+                    {
+                        sayingIndex++;
+                    }
+
+                    var cuttext = script[..++sayingIndex];
+                    letterBox.GetComponent<LetterBox>().SetText(cuttext);
+                    sayT = 0f;
                 }
                 else
                 {

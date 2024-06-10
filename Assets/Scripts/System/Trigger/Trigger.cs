@@ -204,11 +204,16 @@ public abstract class Trigger : Obj
             }
             else if (npcId.Equals("99000000"))
             {
-
+                await Func.Action(trigText.scripts[i].script);
             }
             else
             {
                 NPC targetNPC = FindNPC(npcId);
+                if (trigText.scripts[i].isAwait)
+                {
+                    NPCSay(trigText.scripts[i], targetNPC);
+                    await Task.Delay(TimeSpan.FromSeconds(trigText.scripts[i].delayT));
+                }
                 await NPCSay(trigText.scripts[i], targetNPC);
             }
             if (!trigText.scripts[i].subTriggerId.Equals(""))

@@ -4,7 +4,7 @@
 		<trigID name="40011000">
 			<script>
 				<NPCID>20009001</NPCID>
-				<kr>아, 당신이군요</kr>
+				<kr>아, 당신이군요 &lt;size=24&gt;갈!!!!!&lt;/size&gt; 갈! &lt;size=10&gt;갈...&lt;/size&gt;</kr>
 				<eng>Ah, It's you</eng>
 				<jp>あ、あなたですか</jp>
 			</script>
@@ -411,6 +411,7 @@
 			<script>
 				<NPCID>20001002</NPCID>
 				<isAwait>x</isAwait>
+				<delayT>2</delayT>
 				<kr>아리스! 성능 테스트는 어떠셨나요? 대충 잡다한 TMI…</kr>
 			</script>
 		</trigID>
@@ -436,6 +437,7 @@
 			<script>
 				<NPCID>20001002</NPCID>
 				<isAwait>x</isAwait>
+				<delayT>3</delayT>
 				<kr>대충 설명….</kr>
 			</script>
 		</trigID>
@@ -485,6 +487,7 @@
 			<script>
 				<NPCID>20001002</NPCID>
 				<isAwait>x</isAwait>
+				<delayT>3</delayT>
 				<kr>꿈이라면…. 대충 TMI…</kr>
 			</script>
 		</trigID>

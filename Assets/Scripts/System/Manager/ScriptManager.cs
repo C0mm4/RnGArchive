@@ -48,6 +48,7 @@ public class ScriptManager
             if(trigData["script"]["isAwait"] != null)
             {
                 script.isAwait = true;
+                script.delayT = float.Parse(trigData["script"]["delayT"].InnerText);
             }
             else
             {
@@ -180,6 +181,7 @@ public class Script
     public string startNPCId;
     public string script;
     public bool isAwait;
+    public float delayT;
     public string nextTextTrig;
     public string subTriggerId;
 }

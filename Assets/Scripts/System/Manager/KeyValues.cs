@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum KeyValues
@@ -195,5 +196,22 @@ public static class Func
         T temp = list[index1];
         list[index1] = list[index2];
         list[index2] = temp;
+    }
+
+
+    public static async Task Action(string action)
+    {
+        switch (action.Split('.')[0])
+        {
+            case "#Delay":
+                Debug.Log(action.Split('.')[1]);
+                await Task.Delay(TimeSpan.FromMilliseconds(float.Parse(action.Split('.')[1].Trim())));
+                break;
+            case "Camera":
+                break;
+            case "Spawn":
+                break;
+
+        }
     }
 }
