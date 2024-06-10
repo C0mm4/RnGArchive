@@ -18,12 +18,6 @@ public class Trig40011000 : CutSceneTrigger
         GameManager.Progress.InsertCharaInParty(10001001);
         GameManager.Progress.InsertCharaInParty(10001002);
 
-        Debug.Log("Charactor Set");
-
-        foreach (var chara in GameManager.Progress.currentParty)
-        {
-            Debug.Log(chara.charaData.id);
-        }
 
         await GameManager.Scene.StartGameAfterOpening();
 

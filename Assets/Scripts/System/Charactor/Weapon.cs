@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ public class Weapon : Obj
     public string attackPref;
     public string fireEffectPref;
 
+    public GameObject fireEffect;
+
     public async void Fire()
     {
         AnimationPlay(animator, "Fire");
@@ -22,11 +25,16 @@ public class Weapon : Obj
         GameObject go = awaitGo;
         go.GetComponent<Attack>().CreateHandler(2, player.sawDir, player.charactor.atkType);
 
-        var fireEffect = GameManager.InstantiateAsync(fireEffectPref, muzzle.transform.position, player.transform.rotation);
+        fireEffect = GameManager.InstantiateAsync(fireEffectPref, muzzle.transform.position, player.transform.rotation);
         fireEffect.transform.SetParent(muzzle.transform, true);
 
-        await Task.Delay(200);
-        fireEffect.GetComponent<Obj>().Destroy();
+        await Task.Delay(TimeSpan.FromSeconds(player.charactor.charaData.attackSpeed));
+
+        if (currentAnimation.Equals("Fire"))
+        {
+            SetIdleAnimation();
+        }
+
     }
 
     public void SetIdleAnimation()

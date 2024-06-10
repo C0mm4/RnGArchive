@@ -65,7 +65,6 @@ public class CharactorController
             {
                 charaData.haloSkins.Add(skin.InnerText);
 
-                Debug.Log(skin.InnerText);
             }
 
             newChara.commands = new();
@@ -76,7 +75,6 @@ public class CharactorController
             foreach(XmlNode skill in Skills.SelectNodes("Skill"))
             {
                 Type skl = Type.GetType(skill["class"].InnerText);
-                Debug.Log(skill["class"].InnerText);
                 Skill target = Activator.CreateInstance(skl) as Skill;
                 target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
 

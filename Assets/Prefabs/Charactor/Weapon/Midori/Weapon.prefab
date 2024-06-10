@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8482417622174364970}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 3698493741856586083}
   - component: {fileID: 8966540455690610873}
   - component: {fileID: 6432899406747940701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,8 +136,9 @@ MonoBehaviour:
   player: {fileID: 0}
   animator: {fileID: 6432899406747940701}
   muzzle: {fileID: 2498031765299896221}
-  attackPref: AliceBaseAttackPref
-  fireEffectPref: AliceBaseFire
+  attackPref: MidoriBaseAttackPref
+  fireEffectPref: MidoriBaseFire
+  fireEffect: {fileID: 0}
 --- !u!95 &6432899406747940701
 Animator:
   serializedVersion: 5

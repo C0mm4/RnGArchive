@@ -303,10 +303,6 @@ MonoBehaviour:
     m_Address: AliceHalo
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 148ed90a70be364489efb7bcbdc37df7
-    m_Address: AliceBaseWeapon
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5b918477a40cbb64fb19175db5c37762
     m_Address: AliceBaseFire
     m_ReadOnly: 0
@@ -321,6 +317,22 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: f39744afe69c9f847bb5534a43c688f3
     m_Address: MidoriHalo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2fbd991f0b06b3340ba0589b6d1c02d7
+    m_Address: MidoriBaseAttackPref
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8fff5436153984141a33a9c3ab19bad3
+    m_Address: MidoriHeal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ed36f78687e160d429f398638a468c4b
+    m_Address: MidoriBaseFire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bc127b18a42036e4db8b1d2aaec5ad4c
+    m_Address: AliceBaseWeapon
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

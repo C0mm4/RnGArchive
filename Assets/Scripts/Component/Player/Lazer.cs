@@ -24,8 +24,6 @@ public class Lazer : Bullet
         RaycastHit2D[] hits = new RaycastHit2D[16];
         var cnt = body.Cast(movPos, contactFilter, hits, (spd * Time.deltaTime) * 1.1f + 0.05f);
 
-        Debug.Log(hits.Length);
-
         for(int i = 0; i < cnt; i++)
         {
             if (hits[i].collider.CompareTag("Wall"))

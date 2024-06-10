@@ -86,12 +86,12 @@
 			</Halos>
 			<Skills>
 				<Skill>
-					<class>ArisCleanUp</class>
-					<Kr>빛이여!</Kr>
-					<Eng>Bright Light!</Eng>
-					<Jp>光よ!</Jp>
+					<class>ArtPolicing</class>
+					<Kr>아트 폴리싱!</Kr>
+					<Eng>Artistic Polish</Eng>
+					<Jp>磨き上げるセンス</Jp>
 					<baseAmmo>2</baseAmmo>
-					<cost>6</cost>
+					<cost>10</cost>
 				</Skill>
 			</Skills>
 		</Charactor>
