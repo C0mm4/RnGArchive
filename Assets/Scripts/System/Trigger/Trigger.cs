@@ -202,6 +202,10 @@ public abstract class Trigger : Obj
                 }
                 await GenSelectionUI(selections);
             }
+            else if (npcId.Equals("99000000"))
+            {
+
+            }
             else
             {
                 NPC targetNPC = FindNPC(npcId);

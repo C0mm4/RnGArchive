@@ -192,18 +192,45 @@ public class NPC : InteractionTrigger
             sayStartT += Time.deltaTime;
             if (sayT >= sayingDelay)
             {
-                sayingIndex++;
-                if (sayingIndex < script.Length)
+                // if Script Action Tokken get
+                // Script Action Play
+                if (script[sayingIndex].Equals('#'))
                 {
-                    if (script[sayingIndex].Equals(" "))
+                    int actionStartIndex = sayingIndex;
+                    string action;
+                    // Find Action Escape Tokken
+                    while (!script[sayingIndex].Equals(' '))
                     {
                         sayingIndex++;
                     }
-                }
-                var cuttext = script[..sayingIndex];
+                    // Find Action Script
+                    action = script[actionStartIndex..sayingIndex++];
 
-                letterBox.GetComponent<LetterBox>().SetText(cuttext);
-                sayT = 0f;
+                    // Play Action Script
+                    await Action(action);
+
+                    // Remove Action Script 
+                    script = script.Remove(actionStartIndex, sayingIndex - actionStartIndex);
+
+                    // Return Index to action start index;
+                    sayingIndex = actionStartIndex;
+                }
+                else
+                {
+                    sayingIndex++;
+                    if (sayingIndex < script.Length)
+                    {
+                        if (script[sayingIndex].Equals(" "))
+                        {
+                            sayingIndex++;
+                        }
+                    }
+                    var cuttext = script[..sayingIndex];
+
+                    letterBox.GetComponent<LetterBox>().SetText(cuttext);
+                    sayT = 0f;
+                }
+
             }
             if (!isSaying)
             {
@@ -232,6 +259,21 @@ public class NPC : InteractionTrigger
         await Task.Delay(TimeSpan.FromSeconds(nextSayDelay));
 
 
+    }
+    public async Task Action(string action)
+    {
+        switch (action.Split('.')[0])
+        {
+            case "#Delay":
+                Debug.Log(action.Split('.')[1]);
+                await Task.Delay(TimeSpan.FromMilliseconds(float.Parse(action.Split('.')[1].Trim())));
+                break;
+            case "Camera":
+                break;
+            case "Spawn":
+                break;
+
+        }
     }
 
     public override async void Interaction()
