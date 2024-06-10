@@ -200,7 +200,9 @@ public abstract class Trigger : Obj
                         i++;
                     }
                 }
-                await GenSelectionUI(selections);
+                int select = await GenSelectionUI(selections);
+
+                // Select Split Point
             }
             else if (npcId.Equals("99000000"))
             {
@@ -211,7 +213,9 @@ public abstract class Trigger : Obj
                 NPC targetNPC = FindNPC(npcId);
                 if (trigText.scripts[i].isAwait)
                 {
+                    #pragma warning disable CS4014 
                     NPCSay(trigText.scripts[i], targetNPC);
+                    #pragma warning restore CS4014 
                     await Task.Delay(TimeSpan.FromSeconds(trigText.scripts[i].delayT));
                 }
                 await NPCSay(trigText.scripts[i], targetNPC);

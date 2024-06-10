@@ -40,19 +40,10 @@ public class Test : MonoBehaviour
 
     public void Update()
     {
-        if (!isAction)
-        {
-            isAction = true;
-            A("가나다라마 #Delay.10 아자차카타파하");
-        }
     }
 
-    public async void A(string script)
-    {
-        await Say(script);
-    }
 
-    public async Task Say(string script)
+/*    public async Task Say(string script)
     {
         Debug.Log(script);
         while(sayingIndex <= script.Length - 1)
@@ -88,8 +79,8 @@ public class Test : MonoBehaviour
             }
             await Task.Yield();
         }
-    }
-
+    }*/
+/*
     public async Task Action(string action)
     {
         switch (action.Split('.')[0])
@@ -103,5 +94,5 @@ public class Test : MonoBehaviour
                 break;
 
         }
-    }
+    }*/
 }
