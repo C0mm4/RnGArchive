@@ -185,7 +185,33 @@ public abstract class Trigger : Obj
 
     public async Task ScriptPlay()
     {
-        for(int i = 0; i < trigText.scripts.Count; i++)
+        Charactor currentChara = GameManager.player.GetComponent<PlayerController>().charactor;
+        Debug.Log(currentChara.charaData.id);
+        // if Current Player is Alice, Spawn Midori
+        if (currentChara.charaData.id == 10001001)
+        {
+            Debug.Log("Alice");
+            PlayerController midori = GameManager.CutSceneCharactorSpawn(GameManager.player.transform ,10001002);
+            midori.isForceMoving = true;
+            midori.targetMovePos = GameManager.player.transform.position + GameManager.player.transform.rotation.z * Vector3.left * 0.5f;
+            await midori.ForceMove(GameManager.player.transform.position + new Vector3(-0.5f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
+
+
+        }
+        else
+        {
+            Debug.Log("Not Alice");
+        }
+        // if Current Player is Midori, Spawn Alice, and spawn NPC Midori
+
+        /*else if (currentChara.charaData.id.Equals("10001002"))
+        {
+
+        }
+*/
+        // if Current Player is not Alice and Midori, Spawn Alice and Midori
+
+        for (int i = 0; i < trigText.scripts.Count; i++)
         {
             string npcId = trigText.scripts[i].npcId;
             if (npcId.Equals("90000000"))

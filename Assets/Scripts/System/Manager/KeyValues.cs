@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum KeyValues
 {
@@ -201,17 +203,72 @@ public static class Func
 
     public static async Task Action(string action)
     {
-        switch (action.Split('.')[0])
-        {
-            case "#Delay":
-                Debug.Log(action.Split('.')[1]);
-                await Task.Delay(TimeSpan.FromMilliseconds(float.Parse(action.Split('.')[1].Trim())));
-                break;
-            case "Camera":
-                break;
-            case "Spawn":
-                break;
+        action = action.TrimStart('#');
+        action = action.Trim(' ');
+        string[] actions = action.Split('.');
 
+        string targetNPCID;
+
+        for(int i = 0; i < actions.Length; i++)
+        {
+            switch (actions[i])
+            {
+                case "Delay":
+                    float delayT = float.Parse(actions[++i]);
+                    Debug.Log(delayT);
+                    await Task.Delay(TimeSpan.FromMilliseconds(delayT));
+                    break;
+                case "Camera":
+                    targetNPCID = actions[++i];
+                    if (targetNPCID.Equals("Player"))
+                    {
+                        GameManager.CameraManager.player = GameManager.Player.transform;
+                    }
+                    else
+                    {
+                        NPC npc = FindNPC(targetNPCID, actions[++i]);
+                        GameManager.CameraManager.player = npc.transform;
+                    }
+                    break;
+                case "Spawn":
+                    targetNPCID = actions[++i];
+                    if (targetNPCID[0].Equals('2'))
+                    {
+                        FindNPC(targetNPCID, actions[++i]);
+                    }
+                    break;
+                case "Animation":
+                    targetNPCID = actions[++i];
+                    if (targetNPCID.Equals("Player"))
+                    {
+                        GameManager.player.GetComponent<PlayerController>().AnimationPlayBody(actions[++i]);
+                    }
+                    else
+                    {
+                        NPC npc = FindNPC(targetNPCID, actions[++i]);
+                        npc.AnimationPlay(npc.animator, actions[++i]);
+                    }
+                    break;
+            }
         }
+    }
+
+    public static NPC FindNPC(string id, string spawnP)
+    {
+        List<NPC> npcs = GameManager.Instance.currentMapObj.GetComponentsInChildren<NPC>().ToList();
+        NPC ret = npcs.Find(item => item.npcId.Equals(id));
+
+        if(ret == null)
+        {
+            List<SpawnP> transes = GameManager.Instance.currentMapObj.GetComponentsInChildren<SpawnP>().ToList();
+            foreach(SpawnP p in transes)
+            {
+                Debug.Log(p.id);
+            }
+            Transform trans = transes.Find(item => item.id.Equals(spawnP)).transform;
+            ret = GameManager.MobSpawner.NPCSpawn(id, trans.position);
+        }
+
+        return ret;
     }
 }

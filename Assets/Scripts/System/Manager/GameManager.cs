@@ -305,6 +305,17 @@ public class GameManager : MonoBehaviour
         CameraManager.player = player.transform;
     }
 
+    public static PlayerController CutSceneCharactorSpawn(Transform trans, int id)
+    {
+        GameObject go;
+        go = InstantiateAsync("Player", trans.position);
+        go.GetComponent<PlayerController>().charactor = gameProgress.charaDatas[id].charactor;
+        go.GetComponent<PlayerController>().CreateHandler();
+        go.GetComponent<PlayerController>().controlEnabled = false;
+
+        return go.GetComponent<PlayerController>();
+    }
+
     public static GameObject InstantiateAsync(string path, Vector3 pos = default, Quaternion rotation = default)
     {
         return Resource.InstantiateAsync(path, pos, rotation);

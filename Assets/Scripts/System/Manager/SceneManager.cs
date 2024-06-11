@@ -20,7 +20,7 @@ public class SceneController
 
         await LoadMap("10011000");
         GameManager.CharactorSpawnStartGame();
-        await Task.Delay(TimeSpan.FromSeconds(.5f));
+        await Task.Delay(TimeSpan.FromSeconds(1f));
 
         await FadeIn();
     }

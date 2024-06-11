@@ -15,8 +15,6 @@ public class Trig40012100 : CutSceneTrigger
     {
         
         PlayerController player = GameManager.Player.GetComponent<PlayerController>();
-        FindNPC("20001001", utahaSpawn);
-        FindNPC("20001002", utahaSpawn);
         Door.isActivate = false;
         GameManager.Scene.CreateBlackOutObj();
         await base.Action();

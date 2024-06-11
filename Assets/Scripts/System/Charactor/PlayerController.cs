@@ -167,6 +167,61 @@ public class PlayerController : PlayerTest
 
     public override void KeyInput()
     {
+        if (!isForceMoving)
+        {
+            if(GameManager.GetUIState() == UIState.InPlay)
+            {
+                if (controlEnabled)
+                {
+                    // Move and Skill Key
+                    base.KeyInput();
+                    if (!isHitState)
+                    {
+                        if (canMove)
+                        {
+                            MoveKey();
+                        }
+                        else
+                        {
+                            velocity = new Vector2(0, velocity.y);
+                        }
+                        SkillKey();
+                    }
+                    // Interaction Key
+                    if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+                    {
+                        if (triggers.Count > 0)
+                        {
+                            triggers[triggerIndex].Interaction();
+                        
+                        }
+                        DeleteInteractionUI();
+                    }
+                }
+                else
+                {
+                    if (!isAction)
+                    {
+                        SetAlarm(2, 1f);
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            Vector2 dir = new Vector2();
+            if (targetMovePos.x > transform.position.x)
+            {
+                dir.x = 1;
+            }
+            else
+            {
+                dir.x = -1;
+            }
+            velocity = new Vector2(dir.x, velocity.y);
+        }
+        /*
         if (controlEnabled)
         {
             if ((GameManager.GetUIState() == UIState.InPlay))
@@ -214,7 +269,7 @@ public class PlayerController : PlayerTest
             {
                 SetAlarm(2, 1f);
             }
-        }
+        }*/
     }
 
     public void MoveKey()
@@ -570,5 +625,42 @@ public class PlayerController : PlayerTest
         weapon.AnimationPlay(weapon.animator, "Off");
 
         canMove = true;
+    }
+
+    public async Task ForceMove(Vector3 position, bool isReturn = true)
+    {
+        isForceMoving = true;
+        targetMovePos = position;
+        Vector2 prevSawDir = targetMovePos - transform.position;
+
+        while(Mathf.Abs(position.x - transform.position.x) > 0.05f)
+        {
+            await Task.Yield();
+        }
+        isForceMoving = false;
+        if (isReturn)
+        {
+            if(prevSawDir.x > 0)
+            {
+                sawDir = Vector2.left;
+            }
+            else
+            {
+                sawDir = Vector2.right;
+            }
+        }
+        else
+        {
+            if(prevSawDir.x > 0)
+            {
+                sawDir = Vector2.right;
+            }
+            else
+            {
+                sawDir = Vector2.left;
+            }
+        }
+        velocity = Vector2.zero;
+        canMove = false;
     }
 }

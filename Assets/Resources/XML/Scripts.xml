@@ -93,6 +93,15 @@
 	<mapID name="10012100">
 		<trigID name="40012100">
 			<script>
+				<NPCID>99000000</NPCID>
+				<kr>#Spawn.20001001.utahaSpawn.Delay.1000</kr>
+				<jp>目を開ける</jp>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
 				<NPCID>20001001</NPCID>
 				<kr>정신이 들어 아리스?</kr>
 				<eng>Hey you, finally awake up</eng>
