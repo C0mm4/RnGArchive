@@ -55,6 +55,16 @@ public class ScriptManager
                 script.isAwait = false;
             }
 
+            if (trigData["script"]["junctionID"] != null)
+            {
+                script.junctionID = trigData["script"]["junctionID"].InnerText;
+            }
+            else
+            {
+                script.junctionID = "";
+            }
+
+
             if (trigData["script"]["startNPC"] != null)
             {
                 script.startNPCId = trigData["script"]["startNPC"].InnerText;
@@ -63,6 +73,15 @@ public class ScriptManager
             else
             {
                 script.startNPCId = "";
+            }
+
+            if (trigData["script"]["junction"] != null)
+            {
+                script.junction = trigData["script"]["junction"].InnerText;
+            }
+            else
+            {
+                script.junction = "";
             }
 
             if (trigData["script"]["subTrig"] != null)
@@ -177,6 +196,8 @@ public class TrigText
 [Serializable]
 public class Script 
 {
+    public string junctionID;
+    public string junction;
     public string npcId;
     public string startNPCId;
     public string script;

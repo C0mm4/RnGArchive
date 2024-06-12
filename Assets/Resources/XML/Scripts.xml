@@ -124,6 +124,17 @@
 				<NPCID>90000001</NPCID>
 				<kr>시스템 가동 준비완료</kr>
 				<jp>システム起動、準備完了</jp>
+				<junction>40012100_1</junction>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<junctionID>40012100_1</junctionID>
+				<kr>....?</kr>
+				<jp>システム起動、準備完了</jp>
 			</script>
 		</trigID>
 	</mapID>

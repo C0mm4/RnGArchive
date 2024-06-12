@@ -15,8 +15,8 @@ public class Trig40011000 : CutSceneTrigger
         }
 
         GameManager.Progress.DeleteCharaInParty(10001000);
-        GameManager.Progress.InsertCharaInParty(10001001);
         GameManager.Progress.InsertCharaInParty(10001002);
+        GameManager.Progress.InsertCharaInParty(10001001);
 
 
         await GameManager.Scene.StartGameAfterOpening();

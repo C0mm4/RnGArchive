@@ -308,7 +308,7 @@ public class GameManager : MonoBehaviour
     public static PlayerController CutSceneCharactorSpawn(Transform trans, int id)
     {
         GameObject go;
-        go = InstantiateAsync("Player", trans.position);
+        go = InstantiateAsync("Player", trans.position, trans.rotation);
         go.GetComponent<PlayerController>().charactor = gameProgress.charaDatas[id].charactor;
         go.GetComponent<PlayerController>().CreateHandler();
         go.GetComponent<PlayerController>().controlEnabled = false;

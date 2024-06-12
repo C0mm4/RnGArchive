@@ -261,10 +261,6 @@ public static class Func
         if(ret == null)
         {
             List<SpawnP> transes = GameManager.Instance.currentMapObj.GetComponentsInChildren<SpawnP>().ToList();
-            foreach(SpawnP p in transes)
-            {
-                Debug.Log(p.id);
-            }
             Transform trans = transes.Find(item => item.id.Equals(spawnP)).transform;
             ret = GameManager.MobSpawner.NPCSpawn(id, trans.position);
         }

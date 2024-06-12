@@ -185,22 +185,42 @@ public abstract class Trigger : Obj
 
     public async Task ScriptPlay()
     {
-        Charactor currentChara = GameManager.player.GetComponent<PlayerController>().charactor;
-        Debug.Log(currentChara.charaData.id);
-        // if Current Player is Alice, Spawn Midori
-        if (currentChara.charaData.id == 10001001)
+        PlayerController currentChara = GameManager.player.GetComponent<PlayerController>();
+        Debug.Log(currentChara.charactor.charaData.id);
+        // if Current Player is Alice and Midori is Open, Spawn Midori NPC
+        if (currentChara.charactor.charaData.id == 10001001)
         {
-            Debug.Log("Alice");
-            PlayerController midori = GameManager.CutSceneCharactorSpawn(GameManager.player.transform ,10001002);
-            midori.isForceMoving = true;
-            midori.targetMovePos = GameManager.player.transform.position + GameManager.player.transform.rotation.z * Vector3.left * 0.5f;
-            await midori.ForceMove(GameManager.player.transform.position + new Vector3(-0.5f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
-
+            if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001002) != -1)
+            {
+                Debug.Log("Alice");
+                PlayerController midori = GameManager.CutSceneCharactorSpawn(GameManager.player.transform, 10001002);
+                await midori.ForceMove(GameManager.player.transform.position + new Vector3(-0.25f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
+                NPC midoriNPC = NPCSpawn("20001003", midori.transform);
+                midoriNPC.transform.rotation = midori.transform.rotation;
+                midori.Destroy();
+            }
 
         }
         else
         {
-            Debug.Log("Not Alice");
+            // if Alice is Open, Spawn Alice
+            if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001002) != -1)
+            {
+                PlayerController Alice = GameManager.CutSceneCharactorSpawn(GameManager.player.transform, 10001001);
+
+            }
+
+            // if current Charactor is Midori
+            if(currentChara.charactor.charaData.id == 10001002)
+            {
+                await currentChara.ForceMove(GameManager.player.transform.position + new Vector3(-0.5f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
+
+                NPC midoriNPC = NPCSpawn("20001003", currentChara.transform);
+                midoriNPC.transform.rotation = currentChara.transform.rotation;
+
+            }
+
+            
         }
         // if Current Player is Midori, Spawn Alice, and spawn NPC Midori
 
@@ -211,8 +231,16 @@ public abstract class Trigger : Obj
 */
         // if Current Player is not Alice and Midori, Spawn Alice and Midori
 
+        List<string> junctions = new List<string>();
         for (int i = 0; i < trigText.scripts.Count; i++)
         {
+            if (!trigText.scripts[i].junctionID.Equals(""))
+            {
+                if(junctions.FindIndex(item => item.Equals(trigText.scripts[i].junctionID)) == -1)
+                {
+                    continue;
+                }
+            }
             string npcId = trigText.scripts[i].npcId;
             if (npcId.Equals("90000000"))
             {
@@ -229,6 +257,10 @@ public abstract class Trigger : Obj
                 int select = await GenSelectionUI(selections);
 
                 // Select Split Point
+                if (!selections[select].junction.Equals(""))
+                {
+                    junctions.Add(selections[select].junction);
+                }
             }
             else if (npcId.Equals("99000000"))
             {
