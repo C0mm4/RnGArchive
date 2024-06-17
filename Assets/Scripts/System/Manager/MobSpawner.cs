@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static UnityEditor.PlayerSettings;
 
 public class MobSpawner
 {
@@ -29,6 +30,24 @@ public class MobSpawner
         return ret;
     }
 
+    public GameObject MobSpawn(string id, Transform trans)
+    {
+        GameObject ret = GameManager.InstantiateAsync(id, trans.position);
+        ret.GetComponent<Mob>().CreateHandler();
+        ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
+        return ret;
+    }
+
+    public GameObject MobSpawn(string id, string spawnP)
+    {
+        GameObject ret = GameManager.InstantiateAsync(id, Func.FindSpawnP(spawnP).position);
+        ret.GetComponent<Mob>().CreateHandler();
+        ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
+
+        return ret;
+
+    }
+
     public async Task<GameObject> BossSpawn(string id, Vector3 pos)
     {
         GameObject warning = GameManager.InstantiateAsync("BossAlert");
@@ -37,6 +56,15 @@ public class MobSpawner
 
         return MobSpawn(id, pos);
         
+    }
+
+    public async Task<GameObject> BossSpawn(string id, string trans)
+    {
+        GameObject warning = GameManager.InstantiateAsync("BossAlert");
+        Func.SetRectTransform(warning);
+        await warning.GetComponent<BossAlter>().ShowWarning();
+
+        return MobSpawn(id, Func.FindSpawnP(trans));
     }
 
     public NPC NPCSpawn(string id, Vector3 pos)

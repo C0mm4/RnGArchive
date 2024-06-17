@@ -236,6 +236,14 @@ public static class Func
                     {
                         FindNPC(targetNPCID, actions[++i]);
                     }
+                    if (targetNPCID.Equals("Boss"))
+                    {
+                        await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                    }
+                    else if (targetNPCID.Equals("Mob"))
+                    {
+                        GameManager.MobSpawner.MobSpawn(actions[++i], actions[++i]);
+                    }
                     break;
                 case "Animation":
                     targetNPCID = actions[++i];
@@ -249,6 +257,33 @@ public static class Func
                         npc.AnimationPlay(npc.animator, actions[++i]);
                     }
                     break;
+                case "Party":
+                    string afterAction = actions[++i];
+                    if (afterAction.Equals("Insert"))
+                    {
+                        GameManager.Progress.AddNewCharas(int.Parse(actions[++i]));
+                    }
+                    else if (afterAction.Equals("Delete"))
+                    {
+                        GameManager.Progress.DeleteCharaInParty(int.Parse(actions[++i]));
+                    }
+                    else if (afterAction.Equals("Disable"))
+                    {
+                        GameManager.Progress.DisableChara(int.Parse(actions[++i]));
+                    }
+                    else if (afterAction.Equals("Able"))
+                    {
+                        GameManager.Progress.AbleChara(int.Parse(actions[++i]));
+                    }
+                    break;
+                case "DoorActive":
+                    string door = actions[++i];
+                    GameManager.Stage.DoorActivate(door);
+                    break;
+                case "DoorClose":
+                    door = actions[++i];
+                    GameManager.Stage.DoorDeActivate(door);
+                    break;
             }
         }
     }
@@ -260,12 +295,20 @@ public static class Func
 
         if(ret == null)
         {
-            List<SpawnP> transes = GameManager.Instance.currentMapObj.GetComponentsInChildren<SpawnP>().ToList();
-            Transform trans = transes.Find(item => item.id.Equals(spawnP)).transform;
+            
+            Transform trans = FindSpawnP(spawnP);
             ret = GameManager.MobSpawner.NPCSpawn(id, trans.position);
         }
 
         return ret;
+    }
+
+    public static Transform FindSpawnP(string id)
+    {
+        List<SpawnP> transes = GameManager.Instance.currentMapObj.GetComponentsInChildren<SpawnP>().ToList();
+        Transform trans = transes.Find(item => item.id.Equals(id)).transform;
+
+        return trans;
     }
 
     public static string PlayerIDToNPCID(string id)
@@ -274,6 +317,9 @@ public static class Func
         {
             case "10001002":
                 return "20001003";
+
+            // Add Charactor IDs
+
             default:
                 return null;
         }

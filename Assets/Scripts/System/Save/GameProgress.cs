@@ -44,6 +44,20 @@ public class GameProgress
         }
     }
 
+    public void AbleChara(int charactorId)
+    {
+        CharactorProgress charaPros = charaDatas[charactorId];
+        charaPros.isOpen = true;
+        charaDatas[charactorId] = charaPros;
+    }
+
+    public void DisableChara(int charactorId)
+    {
+        CharactorProgress charaPros = charaDatas[charactorId];
+        charaPros.isOpen = false;
+        charaDatas[charactorId] = charaPros;
+    }
+
     public void InsertCharaInParty(int charactorId)
     {
         if (!openCharactors.Contains(charactorId))

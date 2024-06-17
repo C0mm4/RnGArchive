@@ -212,10 +212,11 @@ public abstract class Trigger : Obj
             // is Not Alice
             if(chara.charaData.id != currentChara.charactor.charaData.id && chara.charaData.id != 10001001)
             {
-                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, chara.charaData.id);
-                playerDummys.Add(dummy);
-
-
+                if (GameManager.Progress.charaDatas[10001001].isOpen) 
+                {
+                    PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, chara.charaData.id);
+                    playerDummys.Add(dummy);
+                }
             }
         }
 
