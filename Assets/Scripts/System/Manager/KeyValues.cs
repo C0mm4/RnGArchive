@@ -267,4 +267,15 @@ public static class Func
 
         return ret;
     }
+
+    public static string PlayerIDToNPCID(string id)
+    {
+        switch (id)
+        {
+            case "10001002":
+                return "20001003";
+            default:
+                return null;
+        }
+    }
 }

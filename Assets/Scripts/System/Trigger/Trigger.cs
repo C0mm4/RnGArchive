@@ -1,8 +1,10 @@
 using JetBrains.Annotations;
+using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -186,50 +188,75 @@ public abstract class Trigger : Obj
     public async Task ScriptPlay()
     {
         PlayerController currentChara = GameManager.player.GetComponent<PlayerController>();
+
+        List<PlayerController> playerDummys = new();
+        List<NPC> spawnNPCs = new();
+
+        int state = 0;
+
         Debug.Log(currentChara.charactor.charaData.id);
-        // if Current Player is Alice and Midori is Open, Spawn Midori NPC
-        if (currentChara.charactor.charaData.id == 10001001)
+
+        if(currentChara.charactor.charaData.id != 10001001)
+        {
+            if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001001) != -1)
+            {
+                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, 10001001);
+                playerDummys.Add(dummy);
+
+                state = 1;
+            }
+        }
+
+        foreach(Charactor chara in GameManager.Progress.currentParty)
+        {
+            // is Not Alice
+            if(chara.charaData.id != currentChara.charactor.charaData.id && chara.charaData.id != 10001001)
+            {
+                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, chara.charaData.id);
+                playerDummys.Add(dummy);
+
+
+            }
+        }
+
+        if(playerDummys.FindIndex(item => item.charactor.charaData.id == 10001002) == 1)
         {
             if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001002) != -1)
             {
-                Debug.Log("Alice");
-                PlayerController midori = GameManager.CutSceneCharactorSpawn(GameManager.player.transform, 10001002);
-                await midori.ForceMove(GameManager.player.transform.position + new Vector3(-0.25f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
-                NPC midoriNPC = NPCSpawn("20001003", midori.transform);
-                midoriNPC.transform.rotation = midori.transform.rotation;
-                midori.Destroy();
+                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, 10001002);
+                if(state == 0)
+                {
+                    playerDummys.Insert(0, dummy);
+                }
+                else
+                {
+                    playerDummys.Insert(1, dummy);
+                }
             }
-
         }
-        else
+
+        for(int i = 0; i < playerDummys.Count; i++)
         {
-            // if Alice is Open, Spawn Alice
-            if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001002) != -1)
+            Transform dummyTrans = playerDummys[i].transform;
+            int index = i;
+            UnityMainThreadDispatcher.Instance().Enqueue(async () =>
             {
-                PlayerController Alice = GameManager.CutSceneCharactorSpawn(GameManager.player.transform, 10001001);
+                await playerDummys[index].ForceMove(dummyTrans.position + new Vector3(-0.3f * (index + 1), 0) * currentChara.sawDir.x);
 
-            }
+                await Task.Delay(TimeSpan.FromMilliseconds(10));
 
-            // if current Charactor is Midori
-            if(currentChara.charactor.charaData.id == 10001002)
-            {
-                await currentChara.ForceMove(GameManager.player.transform.position + new Vector3(-0.5f, 0) * GameManager.player.GetComponent<PlayerController>().sawDir.x);
+                string NPCId = Func.PlayerIDToNPCID(playerDummys[index].charactor.charaData.id.ToString());
+                if(NPCId != null)
+                {
+                    NPC npc = NPCSpawn(NPCId, playerDummys[index].transform);
+                    npc.transform.rotation = playerDummys[index].transform.rotation;
+                    spawnNPCs.Add(npc);
 
-                NPC midoriNPC = NPCSpawn("20001003", currentChara.transform);
-                midoriNPC.transform.rotation = currentChara.transform.rotation;
-
-            }
-
-            
+                    playerDummys[index].gameObject.SetActive(false);
+                }
+            });
         }
-        // if Current Player is Midori, Spawn Alice, and spawn NPC Midori
 
-        /*else if (currentChara.charaData.id.Equals("10001002"))
-        {
-
-        }
-*/
-        // if Current Player is not Alice and Midori, Spawn Alice and Midori
 
         List<string> junctions = new List<string>();
         for (int i = 0; i < trigText.scripts.Count; i++)
@@ -287,6 +314,25 @@ public abstract class Trigger : Obj
                 await subTrigger.Action();
             }
         }
+
+        for(int i = 0; i < spawnNPCs.Count; i++)
+        {
+            spawnNPCs[i].Destroy();
+        }
+        spawnNPCs.Clear();
+
+        for(int i = 0; i < playerDummys.Count;  i++)
+        {
+            playerDummys[i].gameObject.SetActive(true);
+            int index = i;
+            UnityMainThreadDispatcher.Instance().Enqueue(async () =>
+            {
+                await playerDummys[index].ForceMove(currentChara.transform.position, false);
+
+                playerDummys[index].Destroy();
+            });
+        }
+//        playerDummys.Clear();
     }
 
     public void ActiveSpawnObjs()

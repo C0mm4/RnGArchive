@@ -632,6 +632,7 @@ public class PlayerController : PlayerTest
         isForceMoving = true;
         targetMovePos = position;
         Vector2 prevSawDir = targetMovePos - transform.position;
+        sawDir = prevSawDir;
 
         while(Mathf.Abs(position.x - transform.position.x) > 0.05f)
         {
