@@ -41,10 +41,10 @@ public abstract class Trigger : Obj
         else
         {
             data.isActivate = false;
-        }
+        }/*
         string id = GetType().Name;
         id = id.Replace("Trig", "");
-        data.id = id;
+        data.id = id;*/
     }
 
     public async virtual void OnTriggerStay2D(Collider2D collision)
@@ -308,6 +308,7 @@ public abstract class Trigger : Obj
             }
             if (!trigText.scripts[i].subTriggerId.Equals(""))
             {
+                Debug.Log(trigText.scripts[i].subTriggerId);
                 Type t = Type.GetType("SubTrig" + trigText.scripts[i].subTriggerId);
                 SubTrigger subTrigger;
                 subTrigger = Activator.CreateInstance(t) as SubTrigger;

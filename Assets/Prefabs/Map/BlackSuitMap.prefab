@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 7611536934673087368}
   - component: {fileID: 2028070792580802188}
   - component: {fileID: 7367721763478010012}
-  - component: {fileID: 7042094097465780934}
+  - component: {fileID: 6567408273748641410}
   m_Layer: 0
   m_Name: Trig40011000
   m_TagString: Untagged
@@ -757,7 +757,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &7042094097465780934
+--- !u!114 &6567408273748641410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -766,7 +766,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5029700706758426379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4084ebb44bc20794d8a6fa816b7eab4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -774,7 +774,7 @@ MonoBehaviour:
   currentAnimation: 
   nodeIds: []
   data:
-    id: 
+    id: 40011000
     isActivate: 0
     startNPCId: 
   SelectIndex: 0

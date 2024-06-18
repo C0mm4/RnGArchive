@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &400979870591345440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1025150293748628932}
+  m_Layer: 0
+  m_Name: SpawnP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1025150293748628932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400979870591345440}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.931176, y: -4.01594, z: 11.885818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6463705222775148553}
+  m_Father: {fileID: 6463705222932089686}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &670822092684378747
 GameObject:
   m_ObjectHideFlags: 0
@@ -18719,7 +18751,7 @@ GameObject:
   - component: {fileID: 8676592001457959762}
   - component: {fileID: 8377615491689098840}
   - component: {fileID: 376332182425197814}
-  - component: {fileID: 4680626234751530266}
+  - component: {fileID: 6716304491317519599}
   m_Layer: 0
   m_Name: Static Sprite (1)
   m_TagString: Untagged
@@ -18823,7 +18855,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &4680626234751530266
+--- !u!114 &6716304491317519599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18832,7 +18864,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3973603732450215330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33106bc896711624f88065dafbd3c7e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -18853,8 +18885,6 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
-  utahaSpawn: {fileID: 7600180037598162106}
-  Door: {fileID: 6463705222528535041}
 --- !u!1 &4164020000148661081
 GameObject:
   m_ObjectHideFlags: 0
@@ -19851,7 +19881,7 @@ GameObject:
   - component: {fileID: 3053192474274757731}
   - component: {fileID: 7102705249103230091}
   - component: {fileID: 569455034327433517}
-  - component: {fileID: 2094221404548151052}
+  - component: {fileID: 7777946704004424795}
   m_Layer: 0
   m_Name: Static Sprite (2)
   m_TagString: Untagged
@@ -19955,7 +19985,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &2094221404548151052
+--- !u!114 &7777946704004424795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19964,7 +19994,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4446308674495104884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77a6fd4b541b12e448f88aac05bb90d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -19986,8 +20016,6 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
-  utahaSpawn: {fileID: 6526251748778397756}
-  Door: {fileID: 6463705222528535041}
 --- !u!1 &5029700706758426379
 GameObject:
   m_ObjectHideFlags: 0
@@ -19999,7 +20027,7 @@ GameObject:
   - component: {fileID: 7611536934673087368}
   - component: {fileID: 2028070792580802188}
   - component: {fileID: 7367721763478010012}
-  - component: {fileID: 5579372727484597513}
+  - component: {fileID: 4696942497874843984}
   m_Layer: 0
   m_Name: Static Sprite (4)
   m_TagString: Untagged
@@ -20103,7 +20131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &5579372727484597513
+--- !u!114 &4696942497874843984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20112,7 +20140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5029700706758426379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd043ec936c366849a3b0a5d60ea46c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -20132,8 +20160,6 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
-  utahaSpawn: {fileID: 9194408947112575510}
-  door: {fileID: 6463705222528535041}
 --- !u!1 &6202325324858637068
 GameObject:
   m_ObjectHideFlags: 0
@@ -20145,7 +20171,7 @@ GameObject:
   - component: {fileID: 6755373350917022029}
   - component: {fileID: 2657459302741491052}
   - component: {fileID: 5920437972567640886}
-  - component: {fileID: 2257104853147395157}
+  - component: {fileID: 8026787520976476674}
   m_Layer: 0
   m_Name: Static Sprite (3)
   m_TagString: Untagged
@@ -20249,7 +20275,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &2257104853147395157
+--- !u!114 &8026787520976476674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20258,7 +20284,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6202325324858637068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c14476de50f8e724cab6f89f7a4f7fe8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -20279,7 +20305,6 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
-  utahaSpawn: {fileID: 3308493383276762728}
 --- !u!1 &6325884557005164446
 GameObject:
   m_ObjectHideFlags: 0
@@ -20310,37 +20335,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8676592001457959762}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6463705221200037360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6463705221200037363}
-  m_Layer: 0
-  m_Name: GameObject (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6463705221200037363
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6463705221200037360}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.46, y: -0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6463705222489011737}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6463705221392211379
 GameObject:
@@ -23910,37 +23904,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!1 &6463705221964615459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6463705221964615458}
-  m_Layer: 0
-  m_Name: GameObject (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6463705221964615458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6463705221964615459}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.39, y: -0.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6463705222489011737}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6463705222489011813
 GameObject:
   m_ObjectHideFlags: 0
@@ -23952,7 +23915,7 @@ GameObject:
   - component: {fileID: 6463705222489011737}
   - component: {fileID: 6463705222489011814}
   - component: {fileID: 6463705222489011815}
-  - component: {fileID: 6463705222489011812}
+  - component: {fileID: 8055077856927287603}
   m_Layer: 0
   m_Name: Static Sprite
   m_TagString: Untagged
@@ -23971,10 +23934,7 @@ Transform:
   m_LocalPosition: {x: -16.43, y: -3.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6463705222775148553}
-  - {fileID: 6463705221200037363}
-  - {fileID: 6463705221964615458}
+  m_Children: []
   m_Father: {fileID: 6463705221427923196}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24056,7 +24016,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
---- !u!114 &6463705222489011812
+--- !u!114 &8055077856927287603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24065,7 +24025,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6463705222489011813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd111367a5070348bd2eb820bba64b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a54dbc38eb019a4eba12919a8df2d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
@@ -24073,27 +24033,18 @@ MonoBehaviour:
   currentAnimation: 
   nodeIds: []
   data:
-    id: 
+    id: 40012100
     isActivate: 0
     startNPCId: 
   SelectIndex: 0
   trigText:
     trigId: 
-    scripts:
-    - npcId: 
-      startNPCId: 
-      script: 
-      isAwait: 0
-      delayT: 0
-      nextTextTrig: 
-      subTriggerId: 
+    scripts: []
   nextTriggerId:
   - 40012101
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
-  utahaSpawn: {fileID: 6463705222775148553}
-  Door: {fileID: 6463705222528535041}
 --- !u!1 &6463705222528535051
 GameObject:
   m_ObjectHideFlags: 0
@@ -24106,6 +24057,7 @@ GameObject:
   - component: {fileID: 6463705222528535055}
   - component: {fileID: 6463705222528535052}
   - component: {fileID: 6463705222528535041}
+  - component: {fileID: 397803514056391137}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -24265,6 +24217,19 @@ MonoBehaviour:
   connectRoomId: 10012200
   connectDoorId: 10012210
   isActivate: 0
+--- !u!114 &397803514056391137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463705222528535051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec889b8c7ff00fb439ededf883dfc9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: Door
 --- !u!1 &6463705222775148566
 GameObject:
   m_ObjectHideFlags: 0
@@ -24290,11 +24255,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6463705222775148566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.47, y: -2.67, z: 0}
+  m_LocalPosition: {x: -4.9688234, y: -1.8140597, z: -11.885818}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6463705222489011737}
+  m_Father: {fileID: 1025150293748628932}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4391288656149787004
@@ -24343,6 +24308,7 @@ Transform:
   - {fileID: 6463705222940333787}
   - {fileID: 6463705221427923196}
   - {fileID: 6535555858304567446}
+  - {fileID: 1025150293748628932}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

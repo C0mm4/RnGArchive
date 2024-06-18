@@ -11,7 +11,6 @@ public class SubTrig40012202 : SubTrigger
         Debug.Log("40012202 is Activate");
         Door door = originTrig.GetComponent<Trig40012102>().Door;
         var pos = door.transform.position;
-        pos.x += door.InDir.x * 1.5f * door.transform.localScale.x;
 
         GameObject go = await GameManager.MobSpawner.BossSpawn("SweaperBoss", pos);
 

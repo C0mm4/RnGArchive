@@ -284,6 +284,9 @@ public static class Func
                     door = actions[++i];
                     GameManager.Stage.DoorDeActivate(door);
                     break;
+                case "StartAfterOpening":
+                    await GameManager.Scene.StartGameAfterOpening();
+                    break;
             }
         }
     }

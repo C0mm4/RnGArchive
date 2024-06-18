@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Map : Obj
@@ -29,5 +30,15 @@ public class Map : Obj
                 }
             }
         }
+    }
+
+    public SpawnP FindSpawnP(string id)
+    {
+        SpawnP ret;
+        List<SpawnP> list = GetComponentsInChildren<SpawnP>().ToList();
+        ret = list.Find(item => item.id == id);
+        
+        return ret;
+
     }
 }

@@ -10,11 +10,6 @@ public abstract class SubTrigger
 
     public abstract Task Action();
     
-    public void FindOriginTrig()
-    {
-        
-    }
-
     public void SetOriginSpawnObjs(GameObject[] objs)
     {
         foreach(GameObject obj in objs)

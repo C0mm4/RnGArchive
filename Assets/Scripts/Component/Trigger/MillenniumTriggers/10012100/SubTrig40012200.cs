@@ -8,7 +8,8 @@ public class SubTrig40012200 : SubTrigger
 {
     public async override Task Action()
     {
-        Door door = originTrig.GetComponent<Trig40012100>().Door;
+        SpawnP door = GameManager.Stage.currentMap.FindSpawnP("Door");
+        Debug.Log(door);
         GameManager.CameraManager.CameraMove(door.transform);
         var pos = door.transform.position;
 
@@ -19,9 +20,7 @@ public class SubTrig40012200 : SubTrigger
         {
             await Task.Delay(TimeSpan.FromSeconds(1f));
             go = GameManager.MobSpawner.MobSpawn("Sweaper", pos, true);
-            Vector3 movePos = door.transform.position;
-            movePos.x += -door.InDir.x * ((door.InDir.x * 1.25f) + (i * 0.9f));
-            go.GetComponent<Mob>().SetTargetPosition(movePos);
+            go.GetComponent<Mob>().SetTargetPosition(door.transform.position + new Vector3(-0.7f, 0) * i);
             go.GetComponent<Mob>().isForceMoving = true;
             gos[i] = go;
             originTrig.nextTrigger[0].conditionObjs.Add(go);
