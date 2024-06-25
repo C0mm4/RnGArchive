@@ -243,6 +243,7 @@ public abstract class Trigger : Obj
 
         int state = 0;
 
+        currentChara.velocity = new Vector2(0, currentChara.velocity.y);
 
         if(currentChara.charactor.charaData.id != 10001001)
         {
@@ -320,6 +321,8 @@ public abstract class Trigger : Obj
             string npcId = trigText.scripts[i].npcId;
             if (npcId.Equals("90000000"))
             {
+                GameManager.CameraManager.player = GameManager.player.transform;
+                await Task.Delay(TimeSpan.FromSeconds(1));
                 List<Script> selections = new List<Script>();
                 selections.Add(trigText.scripts[i]);
                 if (i != trigText.scripts.Count - 1)
@@ -345,6 +348,7 @@ public abstract class Trigger : Obj
             else
             {
                 NPC targetNPC = FindNPC(npcId);
+                GameManager.CameraManager.player = targetNPC.transform;
                 if (trigText.scripts[i].isAwait)
                 {
                     #pragma warning disable CS4014 
@@ -385,7 +389,9 @@ public abstract class Trigger : Obj
                 playerDummys[index].Destroy();
             });
         }
-//        playerDummys.Clear();
+        //        playerDummys.Clear();
+
+        GameManager.CameraManager.player = GameManager.player.transform;
     }
 
     public void ActiveSpawnObjs()

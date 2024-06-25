@@ -30,6 +30,8 @@ public class NPC : InteractionTrigger
 
     public GameObject triggerEffect;
 
+    public int sayN = 0;
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -100,6 +102,8 @@ public class NPC : InteractionTrigger
     public async Task Say()
     {
 
+        int currentSayN = ++sayN;
+
         if (letterBox != null)
         {
             GameManager.Destroy(letterBox);
@@ -123,6 +127,10 @@ public class NPC : InteractionTrigger
             {
                 await Task.Yield();
                 continue;
+            }
+            if(currentSayN != sayN)
+            {
+                return;
             }
             sayT += Time.deltaTime;
             sayStartT += Time.deltaTime;
@@ -173,7 +181,8 @@ public class NPC : InteractionTrigger
 
     public async Task Say(string script)
     {
-        
+        int currentSayN = ++sayN;
+
         if (letterBox != null)
         {
             GameManager.Destroy(letterBox);
@@ -197,6 +206,10 @@ public class NPC : InteractionTrigger
             {
                 await Task.Yield();
                 continue;
+            }
+            if(currentSayN != sayN)
+            {
+                return;
             }
             sayT += Time.deltaTime;
             sayStartT += Time.deltaTime;

@@ -30,15 +30,15 @@ public class LetterBox : Obj
         else
         {
             SetPosition();
-            MiddleLetterBox.GetComponent<RectTransform>().sizeDelta = new Vector2(MiddleLetterBox.GetComponent<RectTransform>().sizeDelta.x, txt.preferredHeight);
-            TopLetterBox.GetComponent<RectTransform>().localPosition = new Vector2(TopLetterBox.GetComponent<RectTransform>().localPosition.x, MiddleLetterBox.GetComponent<RectTransform>().sizeDelta.y + 100f);
+            
         }
     }
 
     public override void AfterStep()
     {
         base.AfterStep();
-        
+        MiddleLetterBox.GetComponent<RectTransform>().sizeDelta = new Vector2(MiddleLetterBox.GetComponent<RectTransform>().sizeDelta.x, txt.preferredHeight);
+        TopLetterBox.GetComponent<RectTransform>().localPosition = new Vector2(TopLetterBox.GetComponent<RectTransform>().localPosition.x, MiddleLetterBox.GetComponent<RectTransform>().sizeDelta.y + 100f);
     }
 
     public void SetPosition()

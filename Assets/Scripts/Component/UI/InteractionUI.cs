@@ -42,6 +42,11 @@ public class InteractionUI : Obj
                 Destroy();
             }
         }
+
+        if(GameManager.GetUIState() != UIState.InPlay)
+        {
+            Destroy();
+        }
         
 
         if(player == null)
