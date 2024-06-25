@@ -57,7 +57,6 @@ public class StageController
         {
             if (!trig.data.id.Equals("Spawnger"))
             {
-                Debug.Log(trig.data.id);
                 TrigText trigText = currentMapTrigTexts.trigTexts.Find(item => item.trigId.Equals(trig.data.id));
                 trig.SetTriggerTextData(trigText);
                 if (!trigText.scripts[0].startNPCId.Equals(""))

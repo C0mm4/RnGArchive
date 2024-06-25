@@ -20,8 +20,9 @@ public class SubTrig40012201 : SubTrigger
         {
             await Task.Delay(TimeSpan.FromSeconds(1f));
             go = GameManager.MobSpawner.MobSpawn("FlyingDrone", pos);
-            go.GetComponent<Mob>().SetTargetPosition(door.transform.position + new Vector3(-0.7f, 0) * k);
-            go.GetComponent<Mob>().isForceMoving = true;
+            go.GetComponent<Mob>().ForceMove(door.transform.position + new Vector3(-0.7f, 0) * k, false);
+            
+            
             gos[k] = go;
             originTrig.nextTrigger[0].conditionObjs.Add(go);
         }

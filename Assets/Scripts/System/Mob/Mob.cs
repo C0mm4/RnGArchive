@@ -84,12 +84,6 @@ public class Mob : PlayerTest
     {
         if (isForceMoving)
         {
-            if(Mathf.Abs(targetMovePos.x - transform.position.x) <= 0.5f)
-            {
-                canMove = false;
-                isForceMoving = false;
-            }
-            else
             {
                 var dir = targetMovePos - transform.position;
                 if (!isLanding)

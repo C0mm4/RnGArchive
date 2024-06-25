@@ -20,8 +20,7 @@ public class SubTrig40012200 : SubTrigger
         {
             await Task.Delay(TimeSpan.FromSeconds(1f));
             go = GameManager.MobSpawner.MobSpawn("Sweaper", pos, true);
-            go.GetComponent<Mob>().SetTargetPosition(door.transform.position + new Vector3(-0.7f, 0) * i);
-            go.GetComponent<Mob>().isForceMoving = true;
+            go.GetComponent<Mob>().ForceMove(door.transform.position + new Vector3(-0.7f, 0) * i);
             gos[i] = go;
             originTrig.nextTrigger[0].conditionObjs.Add(go);
         }

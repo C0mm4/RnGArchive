@@ -48,6 +48,7 @@ public class SceneController
         GameManager.CharactorSpawnInLoadGame();
 
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
+        Debug.Log(GameManager.Progress.activeTrigs.Count);
         if(GameManager.Progress.activeTrigs.Count != 1)
         {
             await FadeIn();

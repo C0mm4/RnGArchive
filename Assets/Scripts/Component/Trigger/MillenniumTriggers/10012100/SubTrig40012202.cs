@@ -9,7 +9,7 @@ public class SubTrig40012202 : SubTrigger
     public override async Task Action()
     {
         Debug.Log("40012202 is Activate");
-        Door door = originTrig.GetComponent<Trig40012102>().Door;
+        SpawnP door = GameManager.Stage.currentMap.FindSpawnP("Door");
         var pos = door.transform.position;
 
         GameObject go = await GameManager.MobSpawner.BossSpawn("SweaperBoss", pos);

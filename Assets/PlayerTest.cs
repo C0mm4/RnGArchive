@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerTest : Obj
@@ -182,4 +183,41 @@ public class PlayerTest : Obj
 
     }
 
+    public async Task ForceMove(Vector3 position, bool isReturn = true)
+    {
+        isForceMoving = true;
+        targetMovePos = position;
+        Vector2 prevSawDir = targetMovePos - transform.position;
+        sawDir = prevSawDir;
+
+        while (Mathf.Abs(position.x - transform.position.x) > 0.05f)
+        {
+            await Task.Yield();
+        }
+        isForceMoving = false;
+        if (isReturn)
+        {
+            if (prevSawDir.x > 0)
+            {
+                sawDir = Vector2.left;
+            }
+            else
+            {
+                sawDir = Vector2.right;
+            }
+        }
+        else
+        {
+            if (prevSawDir.x > 0)
+            {
+                sawDir = Vector2.right;
+            }
+            else
+            {
+                sawDir = Vector2.left;
+            }
+        }
+        velocity = Vector2.zero;
+        canMove = false;
+    }
 }

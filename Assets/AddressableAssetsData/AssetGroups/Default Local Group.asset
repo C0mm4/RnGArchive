@@ -187,10 +187,6 @@ MonoBehaviour:
     m_Address: Sweaper 0
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 12a9dd29b18fad84c8c0eaecd1fe8383
-    m_Address: SweaperBoss 0
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 16a68796f59f54b469dfd659d0ad6236
     m_Address: 20001001
     m_ReadOnly: 0
@@ -333,6 +329,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: bc127b18a42036e4db8b1d2aaec5ad4c
     m_Address: AliceBaseWeapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3d441090d3a2f5144a8525e572f71ddb
+    m_Address: SweaperBoss 0
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -18885,6 +18885,9 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  condi:
+    condition: 1
+    HPRatio: 0
 --- !u!1 &4164020000148661081
 GameObject:
   m_ObjectHideFlags: 0
@@ -20016,6 +20019,9 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  condi:
+    condition: 1
+    HPRatio: 0
 --- !u!1 &5029700706758426379
 GameObject:
   m_ObjectHideFlags: 0
@@ -20160,6 +20166,9 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  condi:
+    condition: 1
+    HPRatio: 0
 --- !u!1 &6202325324858637068
 GameObject:
   m_ObjectHideFlags: 0
@@ -20305,6 +20314,9 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  condi:
+    condition: 2
+    HPRatio: 0.8
 --- !u!1 &6325884557005164446
 GameObject:
   m_ObjectHideFlags: 0
@@ -24045,6 +24057,9 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  condi:
+    condition: 0
+    HPRatio: 0
 --- !u!1 &6463705222528535051
 GameObject:
   m_ObjectHideFlags: 0

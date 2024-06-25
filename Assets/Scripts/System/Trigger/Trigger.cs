@@ -26,6 +26,51 @@ public abstract class Trigger : Obj
     public List<GameObject> conditionObjs;
     public List<GameObject> spawnObjs;
 
+    [Serializable]
+
+    class AdditionalCondi
+    {
+        [SerializeField]
+        enum condiType 
+        {
+            None, CheckMobAlive, CheckMobHP, 
+        };
+
+        [SerializeField]
+        condiType condition;
+
+        [SerializeField]
+        float HPRatio;
+
+        public Trigger originTrigger;
+
+        public bool CheckCondi()
+        {
+            switch (condition)
+            {
+                case condiType.None: return true;
+                case condiType.CheckMobAlive:
+                    foreach (var item in originTrigger.conditionObjs)
+                    {
+                        if (item != null)
+                            return false;
+                    }
+                    return true;
+                case condiType.CheckMobHP:
+                    var mob = originTrigger.conditionObjs[0].GetComponent<Mob>();
+                    if(mob.status.currentHP < mob.status.maxHP * HPRatio)
+                    {
+                        return true;
+                    }
+                    return false;
+                default: return true;
+            }
+        }
+
+    }
+    [SerializeField]
+    AdditionalCondi condi;
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -45,6 +90,7 @@ public abstract class Trigger : Obj
         string id = GetType().Name;
         id = id.Replace("Trig", "");
         data.id = id;*/
+        condi.originTrigger = this;
     }
 
     public async virtual void OnTriggerStay2D(Collider2D collision)
@@ -59,7 +105,7 @@ public abstract class Trigger : Obj
                     {
                         if (nodeIds.Count == 0)
                         {
-                            if (AdditionalCondition())
+                            if (condi.CheckCondi())
                             {
                                 await TriggerActive();
                             }
@@ -81,11 +127,13 @@ public abstract class Trigger : Obj
 
     public virtual async Task TriggerActive()
     {
-        StartCutScene(); 
+        await StartCutScene();
+        
         await Task.Run(() =>
         {
             GameManager.Trigger.ActiveTrigger(data);
         });
+//        GameManager.Trigger.ActiveTrigger(data);
     }
 
     public bool CheckNodesActive()
@@ -97,7 +145,7 @@ public abstract class Trigger : Obj
                 return false;
             }
         }
-        return AdditionalCondition();
+        return condi.CheckCondi();
 
     }
 
@@ -144,7 +192,7 @@ public abstract class Trigger : Obj
         await targetNPC.Say(applyScript);
     }
 
-    public async void StartCutScene()
+    public async Task StartCutScene()
     {
         PlayerController player = GameManager.player.GetComponent<PlayerController>();
         GameManager.ChangeUIState(UIState.CutScene);
@@ -154,6 +202,7 @@ public abstract class Trigger : Obj
 
         GameManager.ChangeUIState(UIState.InPlay);
         player.canMove = true;
+
     }
 
     public abstract Task Action();
@@ -194,7 +243,6 @@ public abstract class Trigger : Obj
 
         int state = 0;
 
-        Debug.Log(currentChara.charactor.charaData.id);
 
         if(currentChara.charactor.charaData.id != 10001001)
         {

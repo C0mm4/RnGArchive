@@ -16,5 +16,7 @@ public class TriggerManager
         GameManager.Progress.activeTrigs[trig.id] = trig;
 
         trig.isActivate = true;
+
+        Debug.Log(GameManager.Progress.activeTrigs.Count);
     }
 }
