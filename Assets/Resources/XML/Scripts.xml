@@ -86,6 +86,7 @@
 			<script>
 				<NPCID>90000000</NPCID>
 				<kr>눈을 뜬다</kr>
+				<eng>Wake up</eng>
 				<jp>目を開ける</jp>
 				<subTrig>4001220</subTrig>
 			</script>
@@ -96,7 +97,6 @@
 			<script>
 				<NPCID>99000000</NPCID>
 				<kr>#Spawn.20001001.utahaSpawn.Delay.1000</kr>
-				<jp>目を開ける</jp>
 			</script>
 		</trigID>
 	</mapID>
@@ -134,8 +134,7 @@
 			<script>
 				<NPCID>20001001</NPCID>
 				<junctionID>40012100_1</junctionID>
-				<kr>....?</kr>
-				<jp>システム起動、準備完了</jp>
+				<kr>….?</kr>
 			</script>
 		</trigID>
 	</mapID>
@@ -432,8 +431,8 @@
 			<script>
 				<NPCID>20001002</NPCID>
 				<isAwait>x</isAwait>
-				<delayT>2</delayT>
-				<kr>아리스! 성능 테스트는 어떠셨나요? 대충 잡다한 TMI…</kr>
+				<delayT>1000</delayT>
+				<kr>아리스! 성능 테스트는 어떠셨나요? 참고로 이번 테스트는 스트레스 테스트를 겸하고는 싶었지만 아무래도 우리의 장비를 모두 사용하는것은 손해가 막심할 수 있기에 약식으로 진행하게 되었습니다만, </kr>
 			</script>
 		</trigID>
 	</mapID>
@@ -458,8 +457,8 @@
 			<script>
 				<NPCID>20001002</NPCID>
 				<isAwait>x</isAwait>
-				<delayT>3</delayT>
-				<kr>대충 설명….</kr>
+				<delayT>2000</delayT>
+				<kr>그럼 아리스의 테스트 결과에 대해 설명해드리도록 하죠. 우선 외부에 드러난 상처라던가 문제점은 발견되지 않았으며 갑작스러운 전투상황을 상정한 테스트에도 침착하게 전투 능력을 발휘한 것으로 보아 인지능력도 문제는 없는 것으로 보이며 빛의 검을 다루는 모습을 보아서는 신체적인 문제 또한 발견되지 않은 것으로 보아 현재 아리스의 상태는 평소와 다를게 없다! 라고도 말할 수 있겠습니다만, 현재 일어나고 있는 문제에 관해서는 저희도 인식하지 못하고 있는 문제이기에 이러한 관점에서 보게 된다면 어딘가 문제가 있을 수도?! 와 같은 상태라고 설명할 수 있겠네요!</kr>
 			</script>
 		</trigID>
 	</mapID>
@@ -506,10 +505,8 @@
 	<mapID name="10012200">
 		<trigID name="40012200">
 			<script>
-				<NPCID>20001002</NPCID>
-				<isAwait>x</isAwait>
-				<delayT>3</delayT>
-				<kr>꿈이라면…. 대충 TMI…</kr>
+				<NPCID>20001001</NPCID>
+				<kr>꿈인가…</kr>
 			</script>
 		</trigID>
 	</mapID>
@@ -598,6 +595,14 @@
 			<script>
 				<NPCID>20001003</NPCID>
 				<kr>조심해서 가자 아리스쨩</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012300">
+		<trigID name="40012301">
+			<script>
+				<NPCID>99000000</NPCID>
+				<kr>#Camera.20009002.AinSpawnP.Animation.20009002.AinSpawnP.Search.Delay.3000</kr>
 			</script>
 		</trigID>
 	</mapID>

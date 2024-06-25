@@ -119,6 +119,11 @@ public class NPC : InteractionTrigger
 
         while (sayingIndex <= scripts[scriptIndex].Length - 1)
         {
+            if (GameManager.isPaused)
+            {
+                await Task.Yield();
+                continue;
+            }
             sayT += Time.deltaTime;
             sayStartT += Time.deltaTime;
             if(sayT >= sayingDelay)
@@ -188,6 +193,11 @@ public class NPC : InteractionTrigger
 
         while (sayingIndex <= script.Length - 1)
         {
+            if (GameManager.isPaused)
+            {
+                await Task.Yield();
+                continue;
+            }
             sayT += Time.deltaTime;
             sayStartT += Time.deltaTime;
             if (sayT >= sayingDelay)

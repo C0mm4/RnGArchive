@@ -350,9 +350,12 @@ public abstract class Trigger : Obj
                     #pragma warning disable CS4014 
                     NPCSay(trigText.scripts[i], targetNPC);
                     #pragma warning restore CS4014 
-                    await Task.Delay(TimeSpan.FromSeconds(trigText.scripts[i].delayT));
+                    await Task.Delay(TimeSpan.FromMilliseconds(trigText.scripts[i].delayT));
                 }
-                await NPCSay(trigText.scripts[i], targetNPC);
+                else
+                {
+                    await NPCSay(trigText.scripts[i], targetNPC);
+                }
             }
             if (!trigText.scripts[i].subTriggerId.Equals(""))
             {
