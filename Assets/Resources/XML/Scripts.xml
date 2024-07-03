@@ -132,9 +132,9 @@
 	<mapID name="10012100">
 		<trigID name="40012100">
 			<script>
-				<NPCID>20001001</NPCID>
+				<NPCID>99000000</NPCID>
 				<junctionID>40012100_1</junctionID>
-				<kr>….?</kr>
+				<kr>#Emoji.20001001.Wet</kr>
 			</script>
 		</trigID>
 	</mapID>

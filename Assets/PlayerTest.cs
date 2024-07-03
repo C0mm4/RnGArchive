@@ -220,4 +220,10 @@ public class PlayerTest : Obj
         velocity = Vector2.zero;
         canMove = false;
     }
+
+    public async Task EmojiPlay(string emojiName)
+    {
+        var go = GameManager.InstantiateAsync("Emoji", transform.position, transform.rotation);
+        await go.GetComponentInChildren<Emoji>().CreateHandler(emojiName);
+    }
 }

@@ -287,11 +287,24 @@ public static class Func
                 case "StartAfterOpening":
                     await GameManager.Scene.StartGameAfterOpening();
                     break;
+                case "Emoji":
+                    targetNPCID = actions[++i];
+                    Debug.Log(targetNPCID);
+                    if (targetNPCID.Equals("Player"))
+                    {
+                        await GameManager.player.GetComponent<PlayerController>().EmojiPlay(actions[++i]);
+                    }
+                    else
+                    {
+                        NPC npc = FindNPC(targetNPCID);
+                        await npc.EmojiPlay(actions[++i]);
+                    }
+                    break;
             }
         }
     }
 
-    public static NPC FindNPC(string id, string spawnP)
+    public static NPC FindNPC(string id, string spawnP = null)
     {
         List<NPC> npcs = GameManager.Instance.currentMapObj.GetComponentsInChildren<NPC>().ToList();
         NPC ret = npcs.Find(item => item.npcId.Equals(id));

@@ -37,7 +37,7 @@
 			</name>
 			<maxSpeed>3</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
-			<jumpForce>5</jumpForce>
+			<jumpForce>7</jumpForce>
 			<baseHP>3</baseHP>
 			<maxCost>10</maxCost>
 			<costRecovery>0.5</costRecovery>
@@ -71,7 +71,7 @@
 			</name>
 			<maxSpeed>4</maxSpeed>
 			<AttackSpeed>0.2</AttackSpeed>
-			<jumpForce>4</jumpForce>
+			<jumpForce>6</jumpForce>
 			<baseHP>3</baseHP>
 			<maxCost>10</maxCost>
 			<costRecovery>0.5</costRecovery>

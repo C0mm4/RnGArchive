@@ -335,6 +335,22 @@ MonoBehaviour:
     m_Address: SweaperBoss 0
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6463d458f7831004d8e282c83581ada3
+    m_Address: Effect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0134049efe4274645b98d0e559a4635a
+    m_Address: Wet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c94b9e7fe3a8f946afe3a1cfa0a0f99
+    m_Address: Wrath
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 785a82bd67b30a94f843b7c96648d796
+    m_Address: Emoji
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

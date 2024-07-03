@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject currentMapObj;
 
-    public UIState asdf;
     public UIManager uimanager;
 
 
@@ -158,15 +157,6 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (UnityEngine.Input.GetKeyDown(KeyCode.F))
-        {
-            Debug.Log(gameData.masterVolume);
-        }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.G))
-        {
-            Setting.SettingChange("masterVolume", 1f);
-        }
-
         FindPlayer();
         ManagerUpdate();
         if (CameraManager == null)
@@ -175,16 +165,6 @@ public class GameManager : MonoBehaviour
             CameraManager = cm;
         }
 
-        if (UnityEngine.Input.GetKeyDown(KeyCode.Z))
-        {
-            CharactorSpawn(test, 10001001);
-        }
-
-        if (UnityEngine.Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log(testDoor.transform.position);
-        }
-        asdf = GetUIState();
         uimanager = UIManager;
     }
 
