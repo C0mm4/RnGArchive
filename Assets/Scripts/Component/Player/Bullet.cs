@@ -23,6 +23,7 @@ public class Bullet : Attack
         contactFilter.useLayerMask = true;
 
         body = GetComponent<Rigidbody2D>();
+        
         body.isKinematic = true;
     }
 

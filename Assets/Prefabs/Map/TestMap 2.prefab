@@ -10414,7 +10414,7 @@ GameObject:
   - component: {fileID: 6463705222932089686}
   - component: {fileID: 3412350544625039212}
   m_Layer: 0
-  m_Name: TestMap
+  m_Name: TestMap 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

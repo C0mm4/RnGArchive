@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6278104925074694715}
   m_Layer: 10
   m_Name: Attack
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,6 +170,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   body: {fileID: 0}
   spd: 1
+  animator: {fileID: 0}
   attackedMobs: []
 --- !u!96 &6278104925074694715
 TrailRenderer:

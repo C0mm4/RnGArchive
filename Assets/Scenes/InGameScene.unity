@@ -271,7 +271,7 @@ Camera:
   far clip plane: 30
   field of view: 29
   orthographic: 1
-  orthographic size: 1.5
+  orthographic size: 1.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -325,7 +325,7 @@ MonoBehaviour:
   background: {fileID: 0}
   sideWall1: {fileID: 1302935467}
   sideWall2: {fileID: 1807048721}
-  wallBios: 2.3
+  wallBios: 2.5
 --- !u!1 &1302935467
 GameObject:
   m_ObjectHideFlags: 0

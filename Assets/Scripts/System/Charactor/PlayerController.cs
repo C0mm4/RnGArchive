@@ -374,6 +374,7 @@ public class PlayerController : PlayerTest
     public void GetDmg(GameObject obj)
     {
         HPDecrease(1);
+        Debug.Log(obj.name);
         AddForce((new Vector2((-obj.transform.position.x + transform.position.x) * 4, Vector2.up.y * 4)));
         isImmune = true;
         isHitState = true;

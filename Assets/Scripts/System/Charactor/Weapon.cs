@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static UnityEditor.LightingExplorerTableColumn;
 
 public class Weapon : Obj
 {
