@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CustomButton : Obj, IPointerClickHandler
+public class CustomButton : Obj, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
     public Button button;
@@ -30,8 +30,18 @@ public class CustomButton : Obj, IPointerClickHandler
 //        GameManager.LoadGame();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
         OnClick();
+    }
+
+    public virtual void OnPointerEnter(PointerEventData eventData)
+    {
+
+    }
+
+    public virtual void OnPointerExit(PointerEventData eventData)
+    {
+
     }
 }

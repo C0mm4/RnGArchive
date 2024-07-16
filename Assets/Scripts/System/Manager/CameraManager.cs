@@ -18,7 +18,7 @@ public class CameraManager : Obj
 
     public GameObject sideWall1, sideWall2;
 
-    public float wallBios = 2.5;
+    public float wallBios = 2.5f;
 
     public override void OnCreate()
     {

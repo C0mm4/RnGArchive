@@ -14,22 +14,31 @@ public class SelectUI : Menu
     List<SelectButton> buttons;
 
     int listSize;
-    int currentIndex;
     public int selectIndex;
+
+    public int hoveringIndex = -1;
+    public bool isHoveringAnimation = false;
+
+    public GameObject HoveringUI;
+
+    public bool isClick = false;
 
     public override void OnCreate()
     {
         base.OnCreate();
         transform.SetParent(GameManager.UIManager.canvas.transform, false);
         selectIndex = -1;
+        hoveringIndex = -1;
     }
 
-    public void CreateHandler(int size, List<string> txts)
+    public async void CreateHandler(int size, List<string> txts)
     {
         listSize = size;
-        currentIndex = 0;
         buttons = new List<SelectButton>();
-        for(int i = 0; i < size; i++)
+        HoveringUI = GameManager.InstantiateAsync("SelectHovering");
+        HoveringUI.transform.SetParent(transform, false);
+        HoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+        for (int i = 0; i < size; i++)
         {
             GameObject go = GameManager.InstantiateAsync("SelectButton");
             SelectButton sb = go.GetComponent<SelectButton>();
@@ -39,6 +48,10 @@ public class SelectUI : Menu
             go.transform.localPosition = new Vector3(0, ((size - 1 - i) * 150), 0);
             buttons.Add(sb);
         }
+
+        await Task.Delay(TimeSpan.FromMilliseconds(300));
+        hoveringIndex = 0;
+        OnMouseEnterHandler();
     }
 
     public async Task<int> Select()
@@ -55,27 +68,99 @@ public class SelectUI : Menu
     public override void KeyInput()
     {
         base.KeyInput();
+/*        Debug.Log("KeyInput Enable");
         if(Input.GetKeyDown(GameManager.Input._keySettings.upKey))
         {
-            currentIndex--;
-            currentIndex %= listSize;
+            hoveringIndex--;
+            hoveringIndex %= listSize;
+            OnMouseEnterHandler();
         }
         if (Input.GetKeyDown(GameManager.Input._keySettings.downKey))
         {
-            currentIndex++;
-            currentIndex %= listSize;
+            hoveringIndex++;
+            hoveringIndex %= listSize;
+            OnMouseEnterHandler();
         }
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        ExecuteEvents.Execute(buttons[currentIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
+        ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
 
         if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
         {
             ConfirmAction();
+        }*/
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if (!isClick)
+        {
+            if (listSize > 1)
+            {
+                if (Input.GetKeyDown(GameManager.Input._keySettings.upKey))
+                {
+                    hoveringIndex--;
+                    hoveringIndex %= listSize;
+                    OnMouseEnterHandler();
+                    PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+                    if (hoveringIndex != -1)
+                        ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
+
+                }
+                if (Input.GetKeyDown(GameManager.Input._keySettings.downKey))
+                {
+                    hoveringIndex++;
+                    hoveringIndex %= listSize;
+                    OnMouseEnterHandler();
+                    PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+                    if (hoveringIndex != -1)
+                        ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
+
+                }
+            }
+
+            if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
+            {
+                ConfirmAction();
+            }
         }
     }
 
     public override void ConfirmAction()
     {
-        ExecuteEvents.Execute(buttons[currentIndex].button.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+        ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
     }
+
+    public async void OnMouseEnterHandler()
+    {
+        isHoveringAnimation = true;
+        HoveringUI.GetComponent<RectTransform>().localPosition = buttons[hoveringIndex].GetComponent<RectTransform>().localPosition;
+        HoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+        var currentHovering = hoveringIndex;
+
+        float t = 0f;
+        while(t <= 0.1)
+        {
+            t += Time.deltaTime;
+            HoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
+            await Task.Yield();
+        }
+        HoveringUI.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        isHoveringAnimation = false;
+    }
+
+    public void OnMouseExitHandler()
+    {
+        
+    }
+
+    public void OnMouseClickHandler()
+    {
+        isClick = true;
+        GameManager.Destroy(HoveringUI);
+        hoveringIndex = -1;
+
+    }
+
+    
 }

@@ -27,6 +27,8 @@ public class CharaSlotUI : Obj
     public List<Image> fillInCostBar;
     private bool isCostSet = false;
 
+    public GameObject ChangeUI;
+
     // 1 = enableAnimation, 2 = enable, 3 = disableAnimation, 0 = disable, 4 = hitAnimation
     public int state;
 
@@ -34,6 +36,7 @@ public class CharaSlotUI : Obj
     {
         base.OnCreate();
         rect = GetComponent<RectTransform>();
+        DisableChangeSlot();
     }
 
     public override void BeforeStep()
@@ -159,6 +162,7 @@ public class CharaSlotUI : Obj
         gameObject.SetActive(false);
     }
 
+    [System.Obsolete]
     public async void HitAnimation()
     {
         state = 4;
@@ -180,6 +184,16 @@ public class CharaSlotUI : Obj
             rect.localPosition = originPos;
         }
         
+    }
+
+    public void EnableChangeSlot()
+    {
+        ChangeUI.SetActive(true);
+    }
+
+    public void DisableChangeSlot() 
+    {
+        ChangeUI.SetActive(false);
     }
 
 }

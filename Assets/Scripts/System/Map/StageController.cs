@@ -19,16 +19,31 @@ public class StageController
 
     public List<NPC> currentNPCs;
 
+    public bool isTapInput = false;
+    public int changeSlot = 0;
+    public float changeInputT;
+
     // Update is called once per frame
     public void Update()
     {   
         if(Input.GetKeyDown(KeyCode.Tab))
         {
+
             if (GameManager.Progress.currentParty.Count > 1)
             {
-                if(!GameManager.Player.GetComponent<PlayerController>().isHitState)
+
+
+                if (!GameManager.Player.GetComponent<PlayerController>().isHitState)
                 {
-                    GameManager.CharactorChange();
+                    changeInputT = Time.time;
+                    isTapInput = true;
+
+
+                    GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().DisableChangeSlot();
+                    changeSlot++;
+                    changeSlot %= GameManager.Progress.currentParty.Count;
+
+                    GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().EnableChangeSlot();
                 }
             }
         }
@@ -36,6 +51,21 @@ public class StageController
         if (Input.GetKeyDown(KeyCode.M))
         {
             GameManager.UIManager.MapToggle();
+        }
+
+        if (isTapInput)
+        {
+            if(Time.time - changeInputT >= 1f)
+            {
+                GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().DisableChangeSlot();
+                if (changeSlot != 0)
+                {
+                    GameManager.CharactorChange(changeSlot);
+                    changeSlot = 0;
+                }
+
+                isTapInput = false;
+            }
         }
     }
 

@@ -56,11 +56,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Halo
-    uniqueID: 368192261
-    locked: 0
   - name: PlayerBack
     uniqueID: 1562918333
+    locked: 0
+  - name: Halo
+    uniqueID: 368192261
     locked: 0
   - name: PlayerLeg
     uniqueID: 527595085

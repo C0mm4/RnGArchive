@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 
     public UIManager uimanager;
 
-
+    public bool pause;
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
         }
 
         uimanager = UIManager;
+        pause = isPaused;
     }
 
     private void FindPlayer()
@@ -228,12 +229,12 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 
-    public static void CharactorChange()
+    public static void CharactorChange(int index)
     {
         player.GetComponent<PlayerController>().controlEnabled = false;
-        CharactorSpawn(player.transform, Progress.currentParty[1].charaData.id);
+        CharactorSpawn(player.transform, Progress.currentParty[index].charaData.id);
         player.GetComponent<PlayerController>().canMove = true;
-        UIManager.inGameUI.CharactorChange(0, 1);
+        UIManager.inGameUI.CharactorChange(0, index);
     }
 
     public void ManagerUpdate()

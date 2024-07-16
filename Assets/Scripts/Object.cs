@@ -41,7 +41,7 @@ public abstract class Obj : MonoBehaviour
 
     // Update is called once per frame
     // Objects inheriting from the Object class do not declare the Update method.
-    void Update()
+    public virtual void Update()
     {
         if (!GameManager.isPaused)
         {

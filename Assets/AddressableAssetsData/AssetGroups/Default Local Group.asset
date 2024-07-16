@@ -351,6 +351,10 @@ MonoBehaviour:
     m_Address: Emoji
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6173f4142a0da384f80e1501dfbfe83d
+    m_Address: SelectHovering
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 368192261
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,7 +213,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   groundNormal: {x: 0, y: 0}
   sawDir: {x: 0, y: 0}
-  canMove: 1
+  _canMove: 0
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
@@ -299,8 +299,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1562918333
-  m_SortingLayer: 2
+  m_SortingLayerID: -180114217
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 380764296, guid: 4e87dd256bb359548ab4b3e4acb3c7a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -180114217
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -162,7 +162,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   groundNormal: {x: 0, y: 0}
   sawDir: {x: 0, y: 0}
-  canMove: 0
+  _canMove: 0
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
@@ -176,12 +176,14 @@ MonoBehaviour:
   nextSayDelay: 1
   letterBox: {fileID: 0}
   animator: {fileID: 5662721222491012449}
+  glasses: {fileID: 0}
   npcId: 20009001
   scripts: []
   scriptIndex: 0
   SaveScripts: []
   sayTrigger: {fileID: 0}
   triggerEffect: {fileID: 0}
+  sayN: 0
 --- !u!61 &7422470879913157792
 BoxCollider2D:
   m_ObjectHideFlags: 0
