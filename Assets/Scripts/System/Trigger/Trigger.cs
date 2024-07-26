@@ -25,6 +25,7 @@ public abstract class Trigger : Obj
     public List<GameObject> conditionObjs;
     public List<GameObject> spawnObjs;
 
+
     [Serializable]
 
     class AdditionalCondi
@@ -167,6 +168,29 @@ public abstract class Trigger : Obj
     public void SetTriggerTextData(TrigText txts)
     {
         trigText = txts;
+
+        if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+        {
+            data.isActivate = true;
+        }
+        else
+        {
+            data.isActivate = false;
+        }
+
+        // is this trigger is activate already
+        if (data.isActivate)
+        {
+            // Add NPC Spawn Despawn Data for Map Load
+            foreach (Script script in trigText.scripts)
+            {
+                if (script.npcId.Equals("99000000"))
+                {
+                    Func.Action(script.script);
+                }
+            }
+
+        }
     }
 
     public async Task<int> GenSelectionUI(List<Script> scripts)
@@ -350,9 +374,9 @@ public abstract class Trigger : Obj
                 GameManager.CameraManager.player = targetNPC.transform;
                 if (trigText.scripts[i].isAwait)
                 {
-                    #pragma warning disable CS4014 
+#pragma warning disable CS4014
                     NPCSay(trigText.scripts[i], targetNPC);
-                    #pragma warning restore CS4014 
+#pragma warning restore CS4014
                     await Task.Delay(TimeSpan.FromMilliseconds(trigText.scripts[i].delayT));
                 }
                 else

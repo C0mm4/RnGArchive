@@ -39,7 +39,30 @@ public class NPC : InteractionTrigger
         scriptIndex = 0;
         isSaying = false;
         text = "대화한다";
+    }
 
+    public override void BeforeStep()
+    {
+        if (isForceMoving)
+        {
+            {
+                var dir = targetMovePos - transform.position;
+                if (!isLanding)
+                {
+                    if (dir.x < 0)
+                    {
+                        velocity = new Vector2(-1, velocity.y);
+                        isMove = true;
+                    }
+                    else
+                    {
+                        velocity = new Vector2(1, velocity.y);
+                        isMove = true;
+                    }
+                }
+            }
+        }
+        base.BeforeStep();
     }
 
     public override void Step()

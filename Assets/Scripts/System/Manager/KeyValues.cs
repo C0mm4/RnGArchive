@@ -201,7 +201,7 @@ public static class Func
     }
 
 
-    public static async Task Action(string action)
+    public static async Task Action(string action, bool isScene = true)
     {
         action = action.TrimStart('#');
         action = action.Trim(' ');
@@ -214,20 +214,26 @@ public static class Func
             switch (actions[i])
             {
                 case "Delay":
-                    float delayT = float.Parse(actions[++i]);
-                    Debug.Log(delayT);
-                    await Task.Delay(TimeSpan.FromMilliseconds(delayT));
+                    if (isScene)
+                    {
+                        float delayT = float.Parse(actions[++i]);
+                        Debug.Log(delayT);
+                        await Task.Delay(TimeSpan.FromMilliseconds(delayT));
+                    }
                     break;
                 case "Camera":
-                    targetNPCID = actions[++i];
-                    if (targetNPCID.Equals("Player"))
+                    if (isScene)
                     {
-                        GameManager.CameraManager.player = GameManager.Player.transform;
-                    }
-                    else
-                    {
-                        NPC npc = FindNPC(targetNPCID, actions[++i]);
-                        GameManager.CameraManager.player = npc.transform;
+                        targetNPCID = actions[++i];
+                        if (targetNPCID.Equals("Player"))
+                        {
+                            GameManager.CameraManager.player = GameManager.Player.transform;
+                        }
+                        else
+                        {
+                            NPC npc = FindNPC(targetNPCID, actions[++i]);
+                            GameManager.CameraManager.player = npc.transform;
+                        }
                     }
                     break;
                 case "Spawn":
@@ -236,68 +242,135 @@ public static class Func
                     {
                         FindNPC(targetNPCID, actions[++i]);
                     }
-                    if (targetNPCID.Equals("Boss"))
+                    if (isScene)
                     {
-                        await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                        if (targetNPCID.Equals("Boss"))
+                        {
+                            await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                        }
+                        else if (targetNPCID.Equals("Mob"))
+                        {
+                            GameManager.MobSpawner.MobSpawn(actions[++i], actions[++i]);
+                        }
                     }
-                    else if (targetNPCID.Equals("Mob"))
+                    break;
+                case "Despawn":
+                    targetNPCID = actions[++i];
+                    if (targetNPCID[0].Equals('2'))
                     {
-                        GameManager.MobSpawner.MobSpawn(actions[++i], actions[++i]);
+                        NPC target = FindNPC(targetNPCID);
+                        target.Destroy();
+                    }
+                    if (isScene)
+                    {
+                        if (targetNPCID.Equals("Boss"))
+                        {
+                            await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                        }
+                        else if (targetNPCID.Equals("Mob"))
+                        {
+                            GameManager.MobSpawner.MobSpawn(actions[++i], actions[++i]);
+                        }
                     }
                     break;
                 case "Animation":
-                    targetNPCID = actions[++i];
-                    if (targetNPCID.Equals("Player"))
+                    if(isScene)
                     {
-                        GameManager.player.GetComponent<PlayerController>().AnimationPlayBody(actions[++i]);
-                    }
-                    else
-                    {
-                        NPC npc = FindNPC(targetNPCID, actions[++i]);
-                        npc.AnimationPlay(npc.animator, actions[++i]);
+                        targetNPCID = actions[++i];
+                        if (targetNPCID.Equals("Player"))
+                        {
+                            GameManager.player.GetComponent<PlayerController>().AnimationPlayBody(actions[++i]);
+                        }
+                        else
+                        {
+                            NPC npc = FindNPC(targetNPCID, actions[++i]);
+                            npc.AnimationPlay(npc.animator, actions[++i]);
+                        }
                     }
                     break;
                 case "Party":
-                    string afterAction = actions[++i];
-                    if (afterAction.Equals("Insert"))
+                    if (isScene)
                     {
-                        GameManager.Progress.AddNewCharas(int.Parse(actions[++i]));
-                    }
-                    else if (afterAction.Equals("Delete"))
-                    {
-                        GameManager.Progress.DeleteCharaInParty(int.Parse(actions[++i]));
-                    }
-                    else if (afterAction.Equals("Disable"))
-                    {
-                        GameManager.Progress.DisableChara(int.Parse(actions[++i]));
-                    }
-                    else if (afterAction.Equals("Able"))
-                    {
-                        GameManager.Progress.AbleChara(int.Parse(actions[++i]));
+                        string afterAction = actions[++i];
+                        if (afterAction.Equals("Insert"))
+                        {
+                            GameManager.Progress.AddNewCharas(int.Parse(actions[++i]));
+                        }
+                        else if (afterAction.Equals("Delete"))
+                        {
+                            GameManager.Progress.DeleteCharaInParty(int.Parse(actions[++i]));
+                        }
+                        else if (afterAction.Equals("Disable"))
+                        {
+                            GameManager.Progress.DisableChara(int.Parse(actions[++i]));
+                        }
+                        else if (afterAction.Equals("Able"))
+                        {
+                            GameManager.Progress.AbleChara(int.Parse(actions[++i]));
+                        }
                     }
                     break;
                 case "DoorActive":
-                    string door = actions[++i];
-                    GameManager.Stage.DoorActivate(door);
+                    if (isScene)
+                    {
+                        string door = actions[++i];
+                        GameManager.Stage.DoorActivate(door);
+                    }
                     break;
                 case "DoorClose":
-                    door = actions[++i];
-                    GameManager.Stage.DoorDeActivate(door);
-                    break;
-                case "StartAfterOpening":
-                    await GameManager.Scene.StartGameAfterOpening();
+                    if(isScene)
+                    {
+                        string door = actions[++i];
+                        GameManager.Stage.DoorDeActivate(door);
+                    }
                     break;
                 case "Emoji":
-                    targetNPCID = actions[++i];
-                    Debug.Log(targetNPCID);
-                    if (targetNPCID.Equals("Player"))
+                    if (isScene)
                     {
-                        await GameManager.player.GetComponent<PlayerController>().EmojiPlay(actions[++i]);
+                        targetNPCID = actions[++i];
+                        Debug.Log(targetNPCID);
+                        if (targetNPCID.Equals("Player"))
+                        {
+                            await GameManager.player.GetComponent<PlayerController>().EmojiPlay(actions[++i]);
+                        }
+                        else
+                        {
+                            NPC npc = FindNPC(targetNPCID);
+                            await npc.EmojiPlay(actions[++i]);
+                        }
                     }
-                    else
+                    break;
+                case "NPCMove":
+                    if (isScene)
                     {
-                        NPC npc = FindNPC(targetNPCID);
-                        await npc.EmojiPlay(actions[++i]);
+                        targetNPCID = actions[++i];
+                        NPC targetNPC = FindNPC(targetNPCID);
+                        if (targetNPC != null)
+                        {
+                            Vector3 targetPos = FindSpawnP(actions[++i]).position;
+                            await targetNPC.GetComponent<NPC>().ForceMove(targetPos);
+                        }
+                        else
+                        {
+                            Debug.Log("NPC Not Find");
+                        }
+                    }
+                    break;
+
+                case "NPCMoveBack":
+                    if (isScene)
+                    {
+                        targetNPCID = actions[++i];
+                        NPC targetNPC = FindNPC(targetNPCID);
+                        if (targetNPC != null)
+                        {
+                            Vector3 targetPos = FindSpawnP(actions[++i]).position;
+                            await targetNPC.GetComponent<NPC>().ForceMoveBack(targetPos);
+                        }
+                        else
+                        {
+                            Debug.Log("NPC Not Find");
+                        }
                     }
                     break;
             }

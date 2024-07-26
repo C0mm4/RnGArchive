@@ -85,7 +85,7 @@ public class StageController
         currentMapTrigger = new();
         foreach (Trigger trig in triggers)
         {
-            if (!trig.data.id.Equals("Spawnger"))
+            if (!trig.data.id.Equals("SpawnTrigger"))
             {
                 TrigText trigText = currentMapTrigTexts.trigTexts.Find(item => item.trigId.Equals(trig.data.id));
                 trig.SetTriggerTextData(trigText);
@@ -96,6 +96,7 @@ public class StageController
             }
             currentMapTrigger.Add(trig);
         }
+
 
         // Set Map NPC Text Datas (add later)
         currentMapNPCTexts = GameManager.Script.getMapScriptsData(mapId);

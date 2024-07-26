@@ -51,6 +51,8 @@ public class PlayerTest : Obj
 
     public override void BeforeStep()
     {
+
+
         if(body != null)
         {
 
@@ -217,6 +219,22 @@ public class PlayerTest : Obj
                 sawDir = Vector2.left;
             }
         }
+        velocity = Vector2.zero;
+        canMove = false;
+    }
+
+
+    public async Task ForceMoveBack(Vector3 position, bool isReturn = false)
+    {
+        isForceMoving = true;
+        targetMovePos = position;
+        Debug.Log("Backword");
+        Debug.Log(sawDir);
+        while (Mathf.Abs(position.x - transform.position.x) > 0.05f)
+        {
+            await Task.Yield();
+        }
+        isForceMoving = false;
         velocity = Vector2.zero;
         canMove = false;
     }
