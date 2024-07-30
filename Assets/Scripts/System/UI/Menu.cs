@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -31,8 +33,10 @@ public abstract class Menu : Obj
     }
 
     // when Menu Exit, Input Deset, GameObject Destroy
-    public virtual void exit()
+    public virtual async void exit()
     {
+        AnimationPlay(GetComponent<Animator>(), "Close");
+        await Task.Delay(TimeSpan.FromMilliseconds(100));
         hide();
         GameManager.Input.MenuCloseT = Time.time;
         GameManager.ResumeGame();

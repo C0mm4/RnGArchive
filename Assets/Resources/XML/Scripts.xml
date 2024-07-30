@@ -13,16 +13,6 @@
 	<mapID name="10011000">
 		<trigID name="40011000">
 			<script>
-				<NPCID>99000000</NPCID>
-				<kr>#NPCMoveBack.20009001.test</kr>
-				<eng>Ah, It's you</eng>
-				<jp>あ、あなたですか</jp>
-			</script>
-		</trigID>
-	</mapID>
-	<mapID name="10011000">
-		<trigID name="40011000">
-			<script>
 				<NPCID>20009001</NPCID>
 				<kr>…..?</kr>
 				<eng>…..?</eng>

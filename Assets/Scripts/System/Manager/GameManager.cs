@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
+using UnityEngine.Windows;
 
 public class GameManager : MonoBehaviour
 {
@@ -167,6 +169,11 @@ public class GameManager : MonoBehaviour
 
         uimanager = UIManager;
         pause = isPaused;
+
+        if (UnityEngine.Input.GetKeyDown(KeyCode.K))
+        {
+            InstantiateAsync("PartyControlUI");
+        }
     }
 
     private void FindPlayer()
