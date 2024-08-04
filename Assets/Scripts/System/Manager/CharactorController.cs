@@ -86,9 +86,15 @@ public class CharactorController
 
             newChara.SetType(node["AtkType"].InnerText, node["DefType"].InnerText);
 
+            charaData.ProfileImg = node.SelectSingleNode("ProfileImg").InnerText;
+            Debug.Log(node.SelectSingleNode("ProfileImg").InnerText);
+            
+
             newChara.charaData = charaData;
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
+
+            Debug.Log(newChara.charaData.ProfileImg);
         }
 
         

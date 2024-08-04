@@ -29,4 +29,6 @@ public struct CharactorData
 
     public List<string> haloSkins;
     public int currentHalo;
+
+    public string ProfileImg;
 }

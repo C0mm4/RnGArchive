@@ -581,6 +581,7 @@ public class PlayerController : PlayerTest
         }
     }
 
+    [Obsolete]
     public void HPDecrease(int value)
     {
         GameManager.Progress.charaDatas[charactor.charaData.id].charactor.charaData.currentHP -= value;

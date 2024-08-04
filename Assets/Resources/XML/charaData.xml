@@ -26,6 +26,7 @@
 			</Halos>
 			<Skills>
 			</Skills>
+			<ProfileImg></ProfileImg>
 		</Charactor>
 		<Charactor>
 			<id>10001001</id>
@@ -60,6 +61,7 @@
 					<cost>6</cost>
 				</Skill>
 			</Skills>
+			<ProfileImg>AliceBaseSpr[AliceBase_0]</ProfileImg>
 		</Charactor>
 		<Charactor>
 			<id>10001002</id>
@@ -94,6 +96,7 @@
 					<cost>10</cost>
 				</Skill>
 			</Skills>
+			<ProfileImg>MidoriBaseSpr[Midori_0]</ProfileImg>
 		</Charactor>
 	</text>
 </Root>

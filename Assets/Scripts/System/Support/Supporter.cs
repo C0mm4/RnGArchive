@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public  class Supporter
+public  class Supporter : Contents
 {
     public SupporterData data;
     public bool isCool = false;

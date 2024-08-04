@@ -114,7 +114,7 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   index: 1
-  charaIcon: {fileID: 2530075448932601777}
+  charaIcon: {fileID: 2511656569082926444}
   HPBar: {fileID: 8094964406834160585}
   currentCharaId: 0
   target:
@@ -141,6 +141,7 @@ MonoBehaviour:
       _currentSkin: 0
       haloSkins: []
       currentHalo: 0
+      ProfileImg: 
     playerController: {fileID: 0}
     weaponPref: 
     atkType: 0
@@ -1674,7 +1675,7 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   index: 2
-  charaIcon: {fileID: 7178502662796281835}
+  charaIcon: {fileID: 7806599616827690623}
   HPBar: {fileID: 9149357464448750135}
   currentCharaId: 0
   target:
@@ -1701,6 +1702,7 @@ MonoBehaviour:
       _currentSkin: 0
       haloSkins: []
       currentHalo: 0
+      ProfileImg: 
     playerController: {fileID: 0}
     weaponPref: 
     atkType: 0
@@ -3738,7 +3740,7 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   index: 0
-  charaIcon: {fileID: 5286787504067706134}
+  charaIcon: {fileID: 7199763256756308721}
   HPBar: {fileID: 4318540245732530502}
   currentCharaId: 0
   target:
@@ -3765,6 +3767,7 @@ MonoBehaviour:
       _currentSkin: 0
       haloSkins: []
       currentHalo: 0
+      ProfileImg: 
     playerController: {fileID: 0}
     weaponPref: 
     atkType: 0

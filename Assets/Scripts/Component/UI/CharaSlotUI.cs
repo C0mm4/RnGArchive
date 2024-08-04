@@ -111,6 +111,7 @@ public class CharaSlotUI : Obj
         isCostSet = false;
         target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
         currentCharaId = target.charaData.id;
+        charaIcon.sprite = GameManager.Resource.LoadSprite(target.charaData.ProfileImg);
         movingT = t;
         while (movingT < time)
         {
@@ -126,6 +127,7 @@ public class CharaSlotUI : Obj
 
         rect.localPosition = new Vector3(enableXePos - Screen.width / 2, rect.localPosition.y);
         movingT = 0f;
+
         state = 2;
     }
 

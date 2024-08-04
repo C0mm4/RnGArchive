@@ -104,7 +104,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: eb1348abe9cd86e49b72388e850dcaba
-    m_Address: AliceBase
+    m_Address: AliceBaseSpr
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: cd586cff403064545a2bf8520db58659
@@ -335,18 +335,6 @@ MonoBehaviour:
     m_Address: SweaperBoss 0
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 6463d458f7831004d8e282c83581ada3
-    m_Address: Effect
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 0134049efe4274645b98d0e559a4635a
-    m_Address: Wet
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3c94b9e7fe3a8f946afe3a1cfa0a0f99
-    m_Address: Wrath
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 785a82bd67b30a94f843b7c96648d796
     m_Address: Emoji
     m_ReadOnly: 0
@@ -357,6 +345,14 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 456370693064d1348a70d91a8c9f9aff
     m_Address: PartyControlUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4984529bd393fe340b1eb44fb5de76e4
+    m_Address: PartySlotStr
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4e87dd256bb359548ab4b3e4acb3c7a5
+    m_Address: MidoriBaseSpr
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

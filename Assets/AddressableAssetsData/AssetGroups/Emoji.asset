@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Emoji
+  m_EditorClassIdentifier: 
+  m_GroupName: Emoji
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 47eceabc47d3fb94d845be24a6308685
+  m_SerializeEntries:
+  - m_GUID: 3c94b9e7fe3a8f946afe3a1cfa0a0f99
+    m_Address: Wrath
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0134049efe4274645b98d0e559a4635a
+    m_Address: Wet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6463d458f7831004d8e282c83581ada3
+    m_Address: Effect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c1c951dbadb65a849bd290ad6b3eb73e, type: 2}
+    - {fileID: 11400000, guid: f8f6f9455cf43c7409858a0c3e0aee16, type: 2}

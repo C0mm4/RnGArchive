@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 [Serializable]
-public class Charactor
+public class Charactor : Contents
 {
     public Dictionary<List<KeyValues>, Skill> commands;
     [SerializeField]
