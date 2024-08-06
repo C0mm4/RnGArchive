@@ -355,6 +355,14 @@ MonoBehaviour:
     m_Address: MidoriBaseSpr
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 37ebf8819cb61b7428eeba41d6609020
+    m_Address: Assets/Sprites/NPC/Utaha/Utaha.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 234fd64b724795d4c95d28a262340fbe
+    m_Address: PartySlotSpe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

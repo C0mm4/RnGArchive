@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -93,6 +94,10 @@ public class GameManager : MonoBehaviour
     public UIManager uimanager;
 
     public bool pause;
+
+    public UIState gamestate;
+    public List<UIState> uiStates;
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -159,6 +164,8 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        gamestate = uiState;
+        uiStates = UIManager.uistack.ToList();
         FindPlayer();
         ManagerUpdate();
         if (CameraManager == null)

@@ -11,6 +11,8 @@ public class SubTrig40011200 : SubTrigger
         GameManager.Progress.InsertCharaInParty(10001001);
         GameManager.Progress.InsertCharaInParty(10001002);
 
+        GameManager.Progress.SetNewSpecial("10002001");
+
         await GameManager.Scene.StartGameAfterOpening();
     }
 }

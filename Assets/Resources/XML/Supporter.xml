@@ -9,7 +9,7 @@
 			<coolTime>10</coolTime>
 			<objName>Utaha</objName>
 			<cost>3</cost>
-			
+			<ProfileImg>Assets/Sprites/NPC/Utaha/Utaha.png[Utaha_0]</ProfileImg>
 		</Charactor>
 	</text>
 </Root>

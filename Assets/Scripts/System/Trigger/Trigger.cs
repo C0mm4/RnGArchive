@@ -261,6 +261,7 @@ public abstract class Trigger : Obj
 
     public async Task ScriptPlay()
     {
+        GameManager.ChangeUIState(UIState.CutScene);
         PlayerController currentChara = GameManager.player.GetComponent<PlayerController>();
 
         List<PlayerController> playerDummys = new();

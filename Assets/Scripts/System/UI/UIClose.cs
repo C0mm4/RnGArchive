@@ -7,6 +7,6 @@ public class UIClose : CustomButton
     public Menu menu;
     public override void OnClick()
     {
-        menu.exit();
+        GameManager.UIManager.endMenu();
     }
 }

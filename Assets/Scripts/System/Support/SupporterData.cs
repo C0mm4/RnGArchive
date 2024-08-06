@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class SupporterData
 {
     public string id;
@@ -13,4 +15,5 @@ public class SupporterData
     public float coolTime;
     public float leftCoolTime;
     public int cost;
+    public string ProfileImg;
 }

@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 
 public class PartyControlUI : Menu
 {
-    public List<Charactor> openCharas;
-    public List<GameObject> openCharaSlots;
+    public List<Charactor> openCharas = new();
+    public List<Supporter> openSupporter = new();
 
     public List<RectTransform> viewPort;
     public List<RectTransform> contents;
@@ -17,11 +17,21 @@ public class PartyControlUI : Menu
 
     public ListContents strikerSlot;
 
+    public ListContents specialSlot;
+
     public List<Charactor> selectParty;
+
+    public Supporter selectSuport = new();
 
     public List<PartyControlSlotStriker> strikerSlots;
 
     public List<PartyControlPreviewSlot> selectedStriker;
+
+    public List<PartyControlSlotSpecial> specialSlots;
+
+    public PartyControlPreviewSlotSpe selectedSpecial;
+
+    public int viewIndex;
 
     public override void OnCreate()
     {
@@ -38,24 +48,63 @@ public class PartyControlUI : Menu
 
             }
         }
-        strikerSlots = GetComponentsInChildren<PartyControlSlotStriker>().ToList();
-        foreach(var obj in strikerSlots)
+        strikerSlots = GetComponentsInChildren<PartyControlSlotStriker>(true).ToList();
+        foreach (var obj in strikerSlots)
         {
             obj.originUI = this;
         }
 
+        var openSpecial = GameManager.Progress.openSupporeters.ToList();
+
+        foreach(var special in openSpecial)
+        {
+            Debug.Log(special.data.id);
+            openSupporter.Add(special);
+            specialSlot.AddContents(special);
+        }
+
+        specialSlots = GetComponentsInChildren<PartyControlSlotSpecial>(true).ToList();
+        Debug.Log(specialSlots.Count);  
+        foreach (var obj in specialSlots)
+        {
+            obj.originUI = this;
+        }
+
+        // Set Selected Party Data
+
         selectParty = GameManager.Progress.currentParty.ToList();
+        Debug.Log(GameManager.Progress.currentSupporterId);
+        selectSuport = GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId];
+        Debug.Log(selectSuport.data.id);
         ViewStriker();
         SetPreview();
     }
 
     public override void ConfirmAction()
     {
+        if(selectParty.Count >= 1)
+        {
+            if(selectSuport != null)
+            {
+                GameManager.Progress.currentParty = selectParty;
+                GameManager.Progress.currentSupporterId = int.Parse(selectSuport.data.id);
 
+                GameManager.UIManager.endMenu();
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+
+        }
     }
 
     public void ViewStriker()
     {
+        viewIndex = 0;
         scrollView.viewport = viewPort[0];
         scrollView.content = contents[0];
 
@@ -67,9 +116,11 @@ public class PartyControlUI : Menu
 
     public void ViewSpecial()
     {
+        viewIndex = 1;
         scrollView.viewport = viewPort[1];
         scrollView.content = contents[1];
 
+        specialSlot.FreshUI();
 
         viewPort[0].gameObject.SetActive(false);
         viewPort[1].gameObject.SetActive(true);
@@ -94,6 +145,14 @@ public class PartyControlUI : Menu
             selectedStriker[i].SetContent(null);
             selectedStriker[i].OnFresh();
         }
+
+        foreach(var obj in specialSlots)
+        {
+            obj.OnFresh();
+
+        }
+        selectedSpecial.SetContent(selectSuport);
+        selectedSpecial.OnFresh();
 
     }
 }

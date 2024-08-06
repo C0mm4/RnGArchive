@@ -4,11 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyControlSlotStriker : ContentsSlot
+public class PartyControlSlotSpecial : ContentsSlot
 {
 
     [SerializeField]
-    Charactor charactor;
+    Supporter charactor;
 
     public Image image;
 
@@ -23,7 +23,7 @@ public class PartyControlSlotStriker : ContentsSlot
     public override void SetContent(Contents content)
     {
         base.SetContent(content);
-        charactor = content as Charactor;
+        charactor = content as Supporter;
     }
 
     public override void OnFresh()
@@ -33,17 +33,26 @@ public class PartyControlSlotStriker : ContentsSlot
         if(charactor != null)
         {
             image.color = new Color(1, 1, 1, 1);
-            if (originUI.selectParty.Exists(item => item.charaData.id == charactor.charaData.id))
+            if(originUI.selectSuport != null)
             {
-                isSelected = true;
+                if (originUI.selectSuport.data.id.Equals(charactor.data.id))
+                {
+
+                    isSelected = true;
+                }
+                else
+                {
+                    isSelected = false;
+                }
+
             }
             else
             {
                 isSelected = false;
             }
 
-            image.sprite = GameManager.Resource.LoadSprite(charactor.charaData.ProfileImg);
-            text.text = charactor.charaData.Name;
+            image.sprite = GameManager.Resource.LoadSprite(charactor.data.ProfileImg);
+            text.text = charactor.data.name;
 
             if (isSelected)
             {
@@ -64,24 +73,17 @@ public class PartyControlSlotStriker : ContentsSlot
 
     public override void OnClick()
     {
-        if(originUI.viewIndex == 1)
+        if(originUI.viewIndex == 0)
         {
-            originUI.ViewStriker();
+            originUI.ViewSpecial();
         }
         if (isSelected)
         {
-            if (GameManager.Progress.currentParty[0].charaData.id == charactor.charaData.id)
-            {
-
-            }
-            else
-            {
-                originUI.selectParty.Remove(charactor);
-            }
+            originUI.selectSuport = null;
         }
         else
         {
-            originUI.selectParty.Add(charactor);
+            originUI.selectSuport = charactor;
         }
         isSelected = !isSelected;
         OnFresh();

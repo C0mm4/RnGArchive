@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
+[Serializable]
 public abstract class Menu : Obj
 {
     [SerializeField]

@@ -5,10 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyControlPreviewSlot : ContentsSlot
+public class PartyControlPreviewSlotSpe : ContentsSlot
 {
     [SerializeField]
-    Charactor charactor;
+    Supporter charactor;
 
     public Image image;
     public TMP_Text text;
@@ -17,7 +17,7 @@ public class PartyControlPreviewSlot : ContentsSlot
     public override void SetContent(Contents content)
     {
         base.SetContent(content);
-        charactor = content as Charactor;
+        charactor = content as Supporter;
     }
 
     public override void OnFresh()
@@ -28,8 +28,8 @@ public class PartyControlPreviewSlot : ContentsSlot
         {
             image.color = new Color(1, 1, 1, 1);
 
-            image.sprite = GameManager.Resource.LoadSprite(charactor.charaData.ProfileImg);
-            text.text = charactor.charaData.Name;
+            image.sprite = GameManager.Resource.LoadSprite(charactor.data.ProfileImg);
+            text.text = charactor.data.name;
 
         }
         else
@@ -45,18 +45,11 @@ public class PartyControlPreviewSlot : ContentsSlot
 
         if (charactor != null)
         {
-            if (originUI.viewIndex == 1)
+            if (originUI.viewIndex == 0)
             {
-                originUI.ViewStriker();
+                originUI.ViewSpecial();
             }
-            if (GameManager.Progress.currentParty[0].charaData.id == charactor.charaData.id)
-            {
-
-            }
-            else
-            {
-                originUI.selectParty.Remove(charactor);
-            }
+            originUI.selectSuport = null;
         }
 
         OnFresh();

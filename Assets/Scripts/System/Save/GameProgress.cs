@@ -96,4 +96,21 @@ public class GameProgress
             charaDatas[id] = progress;
         }
     }
+
+    public void SetNewSpecial(string specialId)
+    {
+        if (!openSupporeters.Exists(item => item.data.id.Equals(specialId)))
+        {
+            openSupporeters.Add(GameManager.CharaCon.supporters[int.Parse(specialId)]);
+            currentSupporterId = int.Parse(specialId);
+        }
+    }
+
+    public void AddNewSpecial(string specialId)
+    {
+        if (!openSupporeters.Exists(item => item.data.id.Equals(specialId)))
+        {
+            openSupporeters.Add(GameManager.CharaCon.supporters[int.Parse(specialId)]);
+        }
+    }
 }

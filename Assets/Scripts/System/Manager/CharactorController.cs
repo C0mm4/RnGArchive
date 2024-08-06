@@ -113,6 +113,7 @@ public class CharactorController
             data.objName = node["objName"].InnerText;
             data.coolTime = float.Parse(node["coolTime"].InnerText);
             data.cost = int.Parse(node["cost"].InnerText);
+            data.ProfileImg = node["ProfileImg"].InnerText;
             supporter.data = data;
 
             supporters[int.Parse(data.id)] = supporter;

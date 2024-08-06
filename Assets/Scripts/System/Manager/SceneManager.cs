@@ -36,7 +36,7 @@ public class SceneController
         GameManager.Save.SaveGameprogress(GameManager.Player.transform);
         await Task.Delay(TimeSpan.FromSeconds(.5f));
 
-
+        GameManager.ChangeUIState(UIState.InPlay);
     }
 
     public async Task LoadGame()

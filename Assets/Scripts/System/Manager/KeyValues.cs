@@ -310,6 +310,20 @@ public static class Func
                         }
                     }
                     break;
+                case "Special":
+                    if (isScene)
+                    {
+                        string afterAction = actions[++i];
+                        if (afterAction.Equals("Insert"))
+                        {
+                            GameManager.Progress.SetNewSpecial(afterAction);
+                        }
+                        else if(afterAction.Equals("Able"))
+                        {
+                            GameManager.Progress.AddNewSpecial(afterAction);
+                        }
+                    }
+                    break;
                 case "DoorActive":
                     if (isScene)
                     {

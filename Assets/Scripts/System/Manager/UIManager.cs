@@ -13,10 +13,9 @@ public class UIManager
 
     public Menu currentMenu = null;
     public Stack<Menu> menuStack = new Stack<Menu>();
-    
 
-    Stack<UIState> uistack = new Stack<UIState>();
-    private UIState uiState;
+    [SerializeField]
+    public Stack<UIState> uistack = new Stack<UIState>();
 
     private bool isMapToggle = false;
     private bool isMapToggleActivate = false;
@@ -28,7 +27,6 @@ public class UIManager
 
     public InteractionUI interactionUI;
 
-    public static UIState UI { get { return ui_instance.uiState; } }
 
 
     public void initialize()
@@ -72,7 +70,7 @@ public class UIManager
     // Change Ui State on Stack (Used Menus)
     public void ChangeStateOnStack(UIState state)
     {
-        uistack.Push(uiState);
+        uistack.Push(GameManager.uiState);
         GameManager.ChangeUIState(state);
     }
 
@@ -82,11 +80,6 @@ public class UIManager
         GameManager.ChangeUIState(uistack.Pop());
     }
 
-
-    public UIState GetUIState()
-    {
-        return uiState;
-    }
 
 
     public void MapToggle()
