@@ -18,4 +18,6 @@ public class KeySetting : ScriptableObject
     public KeyCode Skill1;
     public KeyCode Skill2;
     public KeyCode Skill3;
+
+    public KeyCode Reload;
 }

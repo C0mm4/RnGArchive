@@ -139,6 +139,8 @@ MonoBehaviour:
   attackPref: MidoriBaseAttackPref
   fireEffectPref: MidoriBaseFire
   fireEffect: {fileID: 0}
+  MaxAmmo: 15
+  currentAmmo: 0
 --- !u!95 &6432899406747940701
 Animator:
   serializedVersion: 5

@@ -35,6 +35,7 @@ public class StageController
 
                 if (!GameManager.Player.GetComponent<PlayerController>().isHitState)
                 {
+
                     changeInputT = Time.time;
                     isTapInput = true;
 
@@ -57,14 +58,17 @@ public class StageController
         {
             if(Time.time - changeInputT >= 1f)
             {
-                GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().DisableChangeSlot();
-                if (changeSlot != 0)
+                if (!GameManager.Player.GetComponent<PlayerController>().weapon.isReload)
                 {
-                    GameManager.CharactorChange(changeSlot);
-                    changeSlot = 0;
-                }
+                    GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().DisableChangeSlot();
+                    if (changeSlot != 0)
+                    {
+                        GameManager.CharactorChange(changeSlot);
+                        changeSlot = 0;
+                    }
 
-                isTapInput = false;
+                    isTapInput = false;
+                }
             }
         }
     }

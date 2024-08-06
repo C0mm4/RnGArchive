@@ -35,7 +35,6 @@ public class PlayerController : PlayerTest
 
     public bool isSetAnimator;
 
-    public Skill workingSkill;
 
 
     public string currentState;
@@ -96,48 +95,17 @@ public class PlayerController : PlayerTest
 
             if (GameManager.GetUIState() == UIState.InPlay)
             {
-                if(GameManager.Progress != null)
-                {
-                    // ActiveSkills, And Supporter Action
-                    if (GameManager.Progress.isActiveSkill)
-                    {
-                        if (workingSkill != null)
-                        {
-                            workingSkill.Step();
-                        }
-
-                        if (charactor.passiveSkill.Count > 0)
-                        {
-                            foreach (Skill skill in charactor.passiveSkill)
-                            {
-                                skill.PassiveStep();
-                            }
-                        }
-                    }
-                }
                 // Calculate Skill CoolTime
-                foreach (Skill skill in charactor.skills)
+
+                if (charactor.skill.isCool)
                 {
-                    if (skill.isCool)
+                    charactor.skill.leftCoolTime -= Time.deltaTime;
+                    if (charactor.skill.leftCoolTime < 0)
                     {
-                        skill.leftCoolTime -= Time.deltaTime;
-                        if (skill.leftCoolTime < 0)
-                        {
-                            skill.isCool = false;
-                        }
+                        charactor.skill.isCool = false;
                     }
                 }
 
-                // Cost Recovery
-                if(charactor.charaData.currentCost < charactor.charaData.maxCost)
-                {
-                    float recoveryCost = charactor.charaData.costRecovery * Time.deltaTime;
-                    charactor.charaData.currentCost += recoveryCost;
-                    if (charactor.charaData.currentCost >= charactor.charaData.maxCost)
-                    {
-                        charactor.charaData.currentCost = charactor.charaData.maxCost;
-                    }
-                }
 
 
                 // Interaction UI Generate
@@ -316,7 +284,10 @@ public class PlayerController : PlayerTest
         if (Input.GetKeyDown(GameManager.Input._keySettings.Shot) && !isAttack && isWeaponEquip)
         {
             charactor.Attack();
-            SetAlarm(4, charactor.charaData.attackSpeed);
+        }
+        if(Input.GetKeyDown(GameManager.Input._keySettings.Reload) && !isAttack && isWeaponEquip)
+        {
+            weapon.Reload();
         }
         if(GameManager.Progress != null)
         {
@@ -324,53 +295,55 @@ public class PlayerController : PlayerTest
             {
                 if (Input.GetKeyDown(GameManager.Input._keySettings.Skill1))
                 {
-                    if (!charactor.skills[0].isCool)
-                        charactor.skills[0].Execute(sawDir);
+                    if (!charactor.skill.isCool)
+                        charactor.skill.Execute(sawDir);
                 }
 
-                if (Input.GetKeyDown(GameManager.Input._keySettings.Skill2))
-                {
-                    if (!charactor.skills[1].isCool)
-                        charactor.skills[1].Execute(sawDir);
-                }
-
-                if (Input.GetKeyDown(GameManager.Input._keySettings.Skill3))
-                {
-                    if (!charactor.skills[0].isCool)
-                        charactor.skills[0].Execute(sawDir);
-                }
             }
-        }
-    }
-/*
-    public override void FlipX()
-    {
-        if(sawDir.x > 0f)
-        {
-            transform.localRotation = new Quaternion(0, 0, 0, 0);
 
-        }
-        else
-        {
-            transform.localRotation = new Quaternion(0, 180, 0, 0);
-        }
-        
-    }
-
-*/
-/*
-    public override void CheckCollision(Collision2D obj)
-    {
-        base.CheckCollision(obj);
-        if (obj.gameObject.tag == "Enemy")
-        {
-            if (!isImmune)
+            if(GameManager.Progress.isActiveSupport)
             {
-                GetDmg(obj.gameObject);
+                if (Input.GetKeyDown(GameManager.Input._keySettings.Call))
+                {
+                    if (!GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId].isCool)
+                    {
+                        GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId].Action();
+                    }
+                }
             }
         }
+
     }
-*/
+
+    /*
+        public override void FlipX()
+        {
+            if(sawDir.x > 0f)
+            {
+                transform.localRotation = new Quaternion(0, 0, 0, 0);
+
+            }
+            else
+            {
+                transform.localRotation = new Quaternion(0, 180, 0, 0);
+            }
+
+        }
+
+    */
+    /*
+        public override void CheckCollision(Collision2D obj)
+        {
+            base.CheckCollision(obj);
+            if (obj.gameObject.tag == "Enemy")
+            {
+                if (!isImmune)
+                {
+                    GetDmg(obj.gameObject);
+                }
+            }
+        }
+    */
     public void GetDmg(GameObject obj)
     {
         HPDecrease(1);

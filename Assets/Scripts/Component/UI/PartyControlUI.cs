@@ -93,12 +93,12 @@ public class PartyControlUI : Menu
             }
             else
             {
-
+                GameManager.UIManager.SetText("Special을 선택해야 합니다.");
             }
         }
         else
         {
-
+            GameManager.UIManager.SetText("파티는 1명 이상의 스트라이커와 스페셜을 요구합니다");
         }
     }
 

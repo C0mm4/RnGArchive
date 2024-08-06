@@ -9,9 +9,8 @@ public class Charactor : Contents
 {
     public Dictionary<List<KeyValues>, Skill> commands;
     [SerializeField]
-    public List<Skill> passiveSkill;
 
-    public List<Skill> skills;
+    public Skill skill;
 
 
     public StateMachine stateMachine;
@@ -95,12 +94,15 @@ public class Charactor : Contents
 
     public virtual void Attack()
     {
-        playerController.isAttack = true;
+        if(charaData.currentAmmo > 0 && !playerController.weapon.isReload)
+        {
 
-        playerController.weapon.Fire();
-/*        var awaitGo = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
-        GameObject go = awaitGo;
-        go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);*/
+            playerController.weapon.Fire();
+            charaData.currentAmmo--;
+        }
+        /*        var awaitGo = GameManager.InstantiateAsync(attackPref, playerController.transform.position);
+                GameObject go = awaitGo;
+                go.GetComponent<Attack>().CreateHandler(2, playerController.sawDir, atkType);*/
 
     }
 

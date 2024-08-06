@@ -23,9 +23,13 @@ public class CharaSlotUI : Obj
 
     RectTransform rect;
 
-    public List<Image> emptyCostBar;
-    public List<Image> fillInCostBar;
-    private bool isCostSet = false;
+    public Image AmmoBar;
+    public Image AmmoBarMask;
+
+    public float MaskStartP;
+    public float MaskEndP;
+
+    public Image skillCooltimeBar;
 
     public GameObject ChangeUI;
 
@@ -50,45 +54,27 @@ public class CharaSlotUI : Obj
             {
                 gameObject.SetActive(true);
                 HPBar.fillAmount = (float)targetCharactor.charaData.currentHP / (float)targetCharactor.charaData.maxHP;
-                
 
-                if (!isCostSet && target != null)
+                AmmoBar.fillAmount = (float)targetCharactor.charaData.currentAmmo / (float)targetCharactor.charaData.maxAmmo;
+                if (targetCharactor.playerController.weapon.isReload)
                 {
-                    int maxCost = ((int)target.charaData.maxCost);
-                    int i;
-                    for(i = 0; i < maxCost; i++) 
-                    {
-                        emptyCostBar[i].color = Color.white;
-                    }
-                    for(; i < 10; i++)
-                    {
-                        emptyCostBar[i].color = new Color(1, 1, 1, 0);
-                    }
-                    isCostSet = true;
+                    AmmoBar.color = Color.gray;
+                }
+                else
+                {
+                    AmmoBar.color = Color.white;
                 }
 
-                float targetCost = target.charaData.currentCost;
-                int manaIndex = 0;
-                while(targetCost > 0)
+                if (targetCharactor.skill.isCool)
                 {
-                    if(targetCost >= 1f)
-                    {
-                        fillInCostBar[manaIndex].fillAmount = 1f;
-                        manaIndex++;
-                        targetCost -= 1f;
-                    }
-                    else
-                    {
-                        fillInCostBar[manaIndex].fillAmount = targetCost;
-                        targetCost = 0f;
-                        manaIndex++;
-                    }
+                    skillCooltimeBar.fillAmount = 1 - (float)targetCharactor.skill.leftCoolTime / (float)targetCharactor.skill.coolTime;
+                    skillCooltimeBar.color = Color.gray;
                 }
-                for(; manaIndex < 10; manaIndex++)
+                else
                 {
-                    fillInCostBar[manaIndex ].fillAmount = 0f;
+                    skillCooltimeBar.fillAmount = 1f;
+                    skillCooltimeBar.color = Color.white;
                 }
-
             }
             else
             {
@@ -108,7 +94,6 @@ public class CharaSlotUI : Obj
     {
         state = 1;
         gameObject.SetActive(true);
-        isCostSet = false;
         target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
         currentCharaId = target.charaData.id;
         charaIcon.sprite = GameManager.Resource.LoadSprite(target.charaData.ProfileImg);

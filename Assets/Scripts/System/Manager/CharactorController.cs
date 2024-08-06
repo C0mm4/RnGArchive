@@ -40,9 +40,11 @@ public class CharactorController
             charaData.maxHP = int.Parse(node["baseHP"].InnerText);
             charaData.currentHP = charaData.maxHP;
 
-            charaData.maxCost = float.Parse(node["maxCost"].InnerText);
-            charaData.currentCost = charaData.maxCost;
-            charaData.costRecovery = float.Parse(node["costRecovery"].InnerText);
+
+            charaData.maxAmmo = int.Parse(node["MaxAmmo"].InnerText);
+            charaData.currentAmmo = charaData.maxAmmo;
+
+            charaData.reloadT = float.Parse(node["reloadT"].InnerText);
 
             charaData.prefabPath = node["path"].InnerText;
 
@@ -68,8 +70,6 @@ public class CharactorController
             }
 
             newChara.commands = new();
-            newChara.passiveSkill = new();
-            newChara.skills = new();
 
             XmlNode Skills = node.SelectSingleNode("Skills");
             foreach(XmlNode skill in Skills.SelectNodes("Skill"))
@@ -78,9 +78,9 @@ public class CharactorController
                 Skill target = Activator.CreateInstance(skl) as Skill;
                 target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
 
-                target.cost = int.Parse(skill["cost"].InnerText);
+                target.coolTime = float.Parse(skill["CoolTime"].InnerText);
 
-                newChara.skills.Add(target);
+                newChara.skill = target;
 
             }
 

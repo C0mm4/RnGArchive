@@ -11,6 +11,8 @@
 			</name>
 			<maxSpeed>0</maxSpeed>
 			<AttackSpeed>0</AttackSpeed>
+			<MaxAmmo>0</MaxAmmo>
+			<reloadT>0</reloadT>
 			<jumpForce>0</jumpForce>
 			<baseHP>100</baseHP>
 			<maxCost>10</maxCost>
@@ -38,6 +40,8 @@
 			</name>
 			<maxSpeed>3</maxSpeed>
 			<AttackSpeed>1.2</AttackSpeed>
+			<MaxAmmo>2</MaxAmmo>
+			<reloadT>0.75</reloadT>
 			<jumpForce>7</jumpForce>
 			<baseHP>3</baseHP>
 			<maxCost>10</maxCost>
@@ -58,7 +62,7 @@
 					<Eng>Aris, Clean Up!</Eng>
 					<Jp>アリス、お掃除します！</Jp>
 					<baseAmmo>3</baseAmmo>
-					<cost>6</cost>
+					<CoolTime>10</CoolTime>
 				</Skill>
 			</Skills>
 			<ProfileImg>AliceBaseSpr[AliceBase_0]</ProfileImg>
@@ -73,6 +77,8 @@
 			</name>
 			<maxSpeed>4</maxSpeed>
 			<AttackSpeed>0.2</AttackSpeed>
+			<MaxAmmo>15</MaxAmmo>
+			<reloadT>0.13</reloadT>
 			<jumpForce>6</jumpForce>
 			<baseHP>3</baseHP>
 			<maxCost>10</maxCost>
@@ -93,7 +99,7 @@
 					<Eng>Artistic Polish</Eng>
 					<Jp>磨き上げるセンス</Jp>
 					<baseAmmo>2</baseAmmo>
-					<cost>10</cost>
+					<CoolTime>15</CoolTime>
 				</Skill>
 			</Skills>
 			<ProfileImg>MidoriBaseSpr[Midori_0]</ProfileImg>

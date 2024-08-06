@@ -73,17 +73,22 @@ public class PartyControlSlotStriker : ContentsSlot
             if (GameManager.Progress.currentParty[0].charaData.id == charactor.charaData.id)
             {
 
+                GameManager.UIManager.SetText("해당 캐릭터를 변경할 수 없습니다.");
             }
             else
             {
                 originUI.selectParty.Remove(charactor);
+                isSelected = !isSelected;
             }
         }
         else
         {
-            originUI.selectParty.Add(charactor);
+            if(originUI.selectParty.Count < 3)
+            {
+                originUI.selectParty.Add(charactor);
+                isSelected = !isSelected;
+            }
         }
-        isSelected = !isSelected;
         OnFresh();
 
         originUI.SetPreview();

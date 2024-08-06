@@ -52,6 +52,7 @@ public class PartyControlPreviewSlot : ContentsSlot
             if (GameManager.Progress.currentParty[0].charaData.id == charactor.charaData.id)
             {
 
+                GameManager.UIManager.SetText("해당 캐릭터를 변경할 수 없습니다.");
             }
             else
             {

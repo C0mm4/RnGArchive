@@ -19,9 +19,9 @@ public struct CharactorData
     public int maxHP;
     public int currentHP;
 
-    public float maxCost;
-    public float currentCost;
-    public float costRecovery;
+    public int maxAmmo;
+    public int currentAmmo;
+    public float reloadT;
 
     public List<string> skins;
     public int _currentSkin;

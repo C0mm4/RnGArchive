@@ -34,7 +34,6 @@ public class ArisCleanUp : Skill
             player.charactor.EndState();
             player.canMove = true;
             player.isAction = false;
-            player.workingSkill = null;
             isRunning = false;
         }
 

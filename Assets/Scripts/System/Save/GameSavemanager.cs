@@ -57,13 +57,7 @@ public class GameSavemanager
                 Charactor targetChara = progress.charaDatas[chara].charactor;
                 // Write Charactor Id
                 writer.Write(targetChara.charaData.id);
-                writer.Write(targetChara.skills.Count);
-                // Save Charactors Skill Ammos
-                foreach(Skill skill in targetChara.skills)
-                {
-                    // Write Skill data
-                    writer.Write(skill.name);
-                }
+
                 // Save Charactor Status
                 writer.Write(targetChara.charaData.maxHP);
                 writer.Write(targetChara.charaData.currentHP);
@@ -132,13 +126,6 @@ public class GameSavemanager
                     int targetCharaId = reader.ReadInt32();
                     Charactor targetChara = GameManager.CharaCon.charactors[targetCharaId];
                     
-                    int skillCnt = reader.ReadInt32();
-                    for (int j = 0; j < skillCnt; j++)
-                    {
-                        string name = reader.ReadString();
-                        int skill = targetChara.skills.FindIndex(item => item.name == name);
-
-                    }
 
                     targetChara.charaData.maxHP = reader.ReadInt32();
                     targetChara.charaData.currentHP = reader.ReadInt32();

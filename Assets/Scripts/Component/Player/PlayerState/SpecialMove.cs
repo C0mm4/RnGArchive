@@ -35,7 +35,6 @@ public class SpecialMove : PlayerState
         else
         {
             base.UpdateState();
-            player.workingSkill.Step();
         }
     }
 }

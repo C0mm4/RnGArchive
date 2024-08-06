@@ -80,12 +80,16 @@ public class PartyControlSlotSpecial : ContentsSlot
         if (isSelected)
         {
             originUI.selectSuport = null;
+            isSelected = !isSelected;
         }
         else
         {
-            originUI.selectSuport = charactor;
+            if (originUI.selectSuport == null) 
+            { 
+                originUI.selectSuport = charactor;
+                isSelected = !isSelected;
+            }
         }
-        isSelected = !isSelected;
         OnFresh();
 
         originUI.SetPreview();

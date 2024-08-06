@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5373829167110650904}
   - component: {fileID: 3698493741856586083}
   - component: {fileID: 6432899406747940701}
+  - component: {fileID: 6444754875387730982}
   m_Layer: 7
   m_Name: Fire
   m_TagString: Player
@@ -106,3 +107,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6444754875387730982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6684749954007529477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1578412fc0bb2ec45bd1188097cc6049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  dir: {x: 0, y: 0, z: 0}

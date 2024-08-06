@@ -131,10 +131,6 @@ MonoBehaviour:
     m_Address: Assets/Sprites/Alice/Base/AliceCleanUp.png
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 01987e78f459d8b40b02517ddb547c79
-    m_Address: SkillSlotUI
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: d656b5f2d6d1d834ab4cb0a58987dd82
     m_Address: Assets/Sprites/UI/LetterBox.png
     m_ReadOnly: 0
@@ -361,6 +357,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 234fd64b724795d4c95d28a262340fbe
     m_Address: PartySlotSpe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8cb89bbd180d8c147a43ef04da7da898
+    m_Address: TextUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

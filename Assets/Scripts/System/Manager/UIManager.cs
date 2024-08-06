@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
@@ -27,7 +28,10 @@ public class UIManager
 
     public InteractionUI interactionUI;
 
+    public Stack<string> TextUIStack = new();
+    public float LastTextUIGenT = 0;
 
+    public List<string> textStack;
 
     public void initialize()
     {
@@ -112,6 +116,7 @@ public class UIManager
 
     public void Update()
     {
+        textStack = TextUIStack.ToList();
         if(canvas == null)
         {
             GameObject go = GameObject.Find("Canvas");
@@ -134,6 +139,14 @@ public class UIManager
             else if(GameManager.GetUIState() == UIState.Menu)
             {
                 endMenu();
+            }
+        }
+
+        if(TextUIStack.Count > 0)
+        {
+            if(Time.time - LastTextUIGenT >= 3f)
+            {
+                TextUIGen(TextUIStack.Pop());
             }
         }
     }
@@ -162,5 +175,28 @@ public class UIManager
     {
         GameObject go = GameManager.InstantiateAsync("InGameUI");
         inGameUI = go.GetComponent<InGameUI>();
+    }
+
+    public void SetText(string text)
+    {
+        string peek;
+        if (TextUIStack.TryPeek(out peek))
+        {
+            if (!peek.Equals(text))
+            {
+                TextUIStack.Push(text);
+            }
+        }
+        else
+        {
+            TextUIStack.Push(text);
+        }
+    }
+
+    private void TextUIGen(string text)
+    {
+        var go = GameManager.InstantiateAsync("TextUI");
+        go.GetComponent<TextUI>().SetText(text);
+        Func.SetRectTransform(go);
     }
 }

@@ -9,7 +9,6 @@ public abstract class Skill
     public PlayerController player;
     public string name;
 
-    public int cost;
 
     public float coolTime = 5;
     public bool isCool = false;
@@ -25,20 +24,20 @@ public abstract class Skill
         if (!isCool)
         {
             player = GameManager.player.GetComponent<PlayerController>();
-            if (player.charactor.charaData.currentCost >= cost && ExecuteCondition())
+            if (ExecuteCondition())
             {
-                player.workingSkill = this;
                 isCool = true;
                 leftCoolTime = coolTime;
                 Debug.Log(GetType().Name);
-                player.charactor.charaData.currentCost -= cost;
 
                 Action();
             }
         }
     }
 
-    public abstract void Step();
+    public virtual void Step()
+    {
+    }
 
     public virtual void End()
     {

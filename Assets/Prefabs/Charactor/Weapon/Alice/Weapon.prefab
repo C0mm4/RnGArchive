@@ -104,9 +104,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 527595085
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: -180114217
+  m_SortingLayer: 4
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1231501528, guid: 496449583f4e2054e84eafd0fdceb3da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -139,6 +139,8 @@ MonoBehaviour:
   attackPref: AliceBaseAttackPref
   fireEffectPref: AliceBaseFire
   fireEffect: {fileID: 0}
+  isReload: 0
+  isCharge: 1
 --- !u!95 &6432899406747940701
 Animator:
   serializedVersion: 5
