@@ -371,10 +371,11 @@ public class GameManager : MonoBehaviour
         await SceneControlLoad("InGameScene");
     }
 
-    public static void ParticleGen(string target, Vector3 startPos, Vector3 endPos, float time = 1f)
+    public static GameObject ParticleGen(string target, Vector3 startPos, Vector3 endPos, float time = 1f)
     {
         GameObject particle = InstantiateAsync(target, startPos);
         particle.GetComponent<Particle>().CreateHandler(startPos, endPos, time);
+        return particle;
     }
 
     public static async void PlayerDie()

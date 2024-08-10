@@ -33,6 +33,7 @@ public class Mob : PlayerTest
     public bool isAttack;
     public bool isSet = false;
 
+    public bool isDead = false;
 
     public override void OnCreate()
     {
@@ -82,81 +83,96 @@ public class Mob : PlayerTest
 
     public override void BeforeStep()
     {
-        if (isForceMoving)
+        if (isDead)
         {
-            {
-                var dir = targetMovePos - transform.position;
-                if (!isLanding)
-                {
-                    if (dir.x < 0)
-                    {
-                        sawDir = new Vector2(-1, 0);
-                        velocity = new Vector2(-data.maxSpeed, velocity.y);
-                        isMove = true;
-                    }
-                    else
-                    {
-                        sawDir = new Vector2(1, 0);
-                        velocity = new Vector2(data.maxSpeed, velocity.y);
-                        isMove = true;
-                    }
-                }
-            }
-        }
-        else if (canMove)
-        {
-            if(GameManager.GetUIState() == UIState.InPlay)
-            {
-                var dir = targetMovePos - transform.position;
-                if (!isLanding)
-                {
-                    if (dir.x < 0)
-                    {
-                        sawDir = new Vector2(-1, 0);
-                        velocity = new Vector2(-data.maxSpeed, velocity.y);
-                        isMove = true;
-                    }
-                    else
-                    {
-                        sawDir = new Vector2(1, 0);
-                        velocity = new Vector2(data.maxSpeed, velocity.y);
-                        isMove = true;
-                    }
-                }
-            }
+            Dead();
         }
         else
         {
-            velocity = new Vector2(0, velocity.y);
-            isMove = false;
+            if (isForceMoving)
+            {
+                {
+                    var dir = targetMovePos - transform.position;
+                    if (!isLanding)
+                    {
+                        if (dir.x < 0)
+                        {
+                            sawDir = new Vector2(-1, 0);
+                            velocity = new Vector2(-data.maxSpeed, velocity.y);
+                            isMove = true;
+                        }
+                        else
+                        {
+                            sawDir = new Vector2(1, 0);
+                            velocity = new Vector2(data.maxSpeed, velocity.y);
+                            isMove = true;
+                        }
+                    }
+                }
+            }
+            else if (canMove)
+            {
+                if (GameManager.GetUIState() == UIState.InPlay)
+                {
+                    var dir = targetMovePos - transform.position;
+                    if (!isLanding)
+                    {
+                        if (dir.x < 0)
+                        {
+                            sawDir = new Vector2(-1, 0);
+                            velocity = new Vector2(-data.maxSpeed, velocity.y);
+                            isMove = true;
+                        }
+                        else
+                        {
+                            sawDir = new Vector2(1, 0);
+                            velocity = new Vector2(data.maxSpeed, velocity.y);
+                            isMove = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                velocity = new Vector2(0, velocity.y);
+                isMove = false;
+            }
+
+            base.BeforeStep();
+
+            currentState = stateMachine.getStateStr();
         }
-
-        base.BeforeStep();
-
-        currentState = stateMachine.getStateStr();
     }
 
     public override void Step()
     {
         base.Step();
-        if (AI != null)
+
+        if (!isDead)
         {
-            AI.player = GameManager.player.GetComponent<PlayerController>();
-            if(AI.player != null) 
+            if (AI != null)
             {
-                AI.Step();
-            }
-            else
-            {
-                if (isGrounded && !isMove && !isLanding)
+                AI.player = GameManager.player.GetComponent<PlayerController>();
+                if (AI.player != null)
                 {
-                    SetIdle();
+                    AI.Step();
+                }
+                else
+                {
+                    if (isGrounded && !isMove && !isLanding)
+                    {
+                        SetIdle();
+                    }
                 }
             }
+            stateMachine.updateState();
         }
-        stateMachine.updateState();
     }
 
+    public virtual void Dead()
+    {
+        AnimationPlay("Explosive");
+    }
 
 
     public void ChangeState(State newState)
@@ -193,7 +209,7 @@ public class Mob : PlayerTest
         }
         if (status.currentHP <= 0)
         {
-            Destroy();
+            isDead = true;
         }
     }
 

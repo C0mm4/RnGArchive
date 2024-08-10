@@ -287,7 +287,10 @@ public class PlayerController : PlayerTest
         }
         if(Input.GetKeyDown(GameManager.Input._keySettings.Reload) && !isAttack && isWeaponEquip)
         {
-            weapon.Reload();
+            if(charactor.charaData.currentAmmo != charactor.charaData.maxAmmo)
+            {
+                weapon.Reload();
+            }
         }
         if(GameManager.Progress != null)
         {

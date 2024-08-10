@@ -11,7 +11,9 @@ public class GameProgress
     public int currentCharactorId;
     public int currentSupporterId;
     public bool isActiveSkill;
-    public bool isActiveSupport;
+
+    public bool _isActiveSupport;
+    public bool isActiveSupport { get { return isActiveSkill; } set { _isActiveSupport = value; } }
     public List<int> openCharactors = new();
     public Dictionary<int, CharactorProgress> charaDatas = new();
     public List<Supporter> openSupporeters = new();

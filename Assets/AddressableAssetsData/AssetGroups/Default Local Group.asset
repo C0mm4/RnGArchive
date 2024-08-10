@@ -363,6 +363,18 @@ MonoBehaviour:
     m_Address: TextUI
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 76f126d32042ad943a12f4f75f6ba39c
+    m_Address: HoveringUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8df80787234ee6c40a596d071ff5577b
+    m_Address: Assets/Sprites/Player/Skills.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fcc6542dc1bb51048ba1554398f7e01e
+    m_Address: InfoUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

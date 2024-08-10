@@ -49,7 +49,7 @@ public class SelectButton : CustomButton
     {
         if (!currentUI.isClick)
         {
-            if (currentUI.hoveringIndex != -1)
+            if (currentUI.cursorIndex != -1)
             {
                 currentUI.OnMouseClickHandler();
                 img.color = Color.gray;
@@ -68,11 +68,11 @@ public class SelectButton : CustomButton
     {
         if (!currentUI.isClick)
         {
-            if (currentUI.hoveringIndex != index)
+            if (currentUI.cursorIndex != index)
             {
-                if (currentUI.hoveringIndex != -1)
+                if (currentUI.cursorIndex != -1)
                 {
-                    currentUI.hoveringIndex = index;
+                    currentUI.cursorIndex = index;
                     currentUI.OnMouseEnterHandler();
                 }
             }

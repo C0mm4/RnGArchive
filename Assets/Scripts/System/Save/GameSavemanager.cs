@@ -21,7 +21,7 @@ public class GameSavemanager
         GameManager.Progress = new GameProgress();
         GameManager.Progress.activeTrigs = new Dictionary<string, TriggerData>();
         GameManager.Progress.isActiveSkill = true;
-        GameManager.Progress.isActiveSupport = false;
+        GameManager.Progress.isActiveSupport = true;
         GameManager.Progress.openCharactors = new();
         GameManager.Progress.currentParty = new();
 //        GameManager.Stage.SetInitializeParty();

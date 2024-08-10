@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PartyControlPreviewSlot : ContentsSlot
 {
     [SerializeField]
-    Charactor charactor;
+    public Charactor charactor;
 
     public Image image;
     public TMP_Text text;
@@ -48,6 +49,7 @@ public class PartyControlPreviewSlot : ContentsSlot
             if (originUI.viewIndex == 1)
             {
                 originUI.ViewStriker();
+
             }
             if (GameManager.Progress.currentParty[0].charaData.id == charactor.charaData.id)
             {
@@ -62,5 +64,11 @@ public class PartyControlPreviewSlot : ContentsSlot
 
         OnFresh();
         originUI.SetPreview();
+    }
+
+    public override void CreateInfoUI()
+    {
+        base.CreateInfoUI();
+        InfoUI.GetComponent<InfoUI>().SetData(charactor);
     }
 }

@@ -5,13 +5,12 @@ using UnityEngine;
 public class Utaha : SupportObj
 {
     float detectDistance = 5f;
+    public GameObject head;
     GameObject target;
-    float spawnT;
 
     public override void OnCreate()
     {
         base.OnCreate();
-        spawnT = 0f;
     }
 
     public override void Step()

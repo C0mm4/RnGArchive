@@ -11,6 +11,11 @@ public abstract class Menu : Obj
     [SerializeField]
     protected bool isGetInput;
 
+    [SerializeField]
+    protected UIClose closeButton;
+
+    public int cursorIndex;
+
     // Start is called before the first frame update
     public override void OnCreate()
     {
@@ -25,12 +30,13 @@ public abstract class Menu : Obj
         gameObject.SetActive(false);
     }
     // when Menu show, input Set, gameObject Active true
-    public virtual void show()
+    public async virtual void show()
     {
         gameObject.SetActive(true);
         GameManager.PauseGame();
-        SetAlarm(0, 0.5f);
-
+        
+        await Task.Delay(TimeSpan.FromSeconds(0.5));
+        isGetInput = true;
     }
 
     // when Menu Exit, Input Deset, GameObject Destroy
@@ -60,8 +66,14 @@ public abstract class Menu : Obj
         }
     }
 
-    public override void Alarm0()
+
+    public override void KeyInputAlways()
     {
-        isGetInput = true;
+
+    }
+
+    public virtual void OnMouseEnterHandler()
+    {
+
     }
 }

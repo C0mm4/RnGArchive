@@ -94,5 +94,9 @@ public class PartyControlSlotSpecial : ContentsSlot
 
         originUI.SetPreview();
     }
-
+    public override void CreateInfoUI()
+    {
+        base.CreateInfoUI();
+        InfoUI.GetComponent<InfoUI>().SetData(charactor);
+    }
 }

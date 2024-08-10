@@ -7,7 +7,11 @@ using UnityEngine;
 public abstract class Skill
 {
     public PlayerController player;
+
+    public string imgPath;
     public string name;
+    public string type;
+    public string info;
 
 
     public float coolTime = 5;

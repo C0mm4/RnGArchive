@@ -31,4 +31,16 @@ public struct CharactorData
     public int currentHalo;
 
     public string ProfileImg;
+
+    public string PassiveName;
+    public string PassiveImg;
+    public string PassiveTooltip;
+    public string AtkType;
+
+    public string EXName;
+    public string EXImg;
+    public string EXTooltip;
+    public string SkillType;
+
+    
 }

@@ -314,6 +314,17 @@ Transform:
   m_Father: {fileID: 1882316030}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &993822212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6542274421448471643, guid: 6c36d2e5af16e9d43a236e8badd3964d, type: 3}
+  m_PrefabInstance: {fileID: 1380343875}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a867222a5e8984789e91da2f60f39c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1171100943
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,7 +660,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1508588785}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 993822212}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1508588788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,6 +689,11 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   button: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  localPosition: {x: 0, y: 0}
+  anchoredPos: {x: 0, y: 0}
+  FuncPosition: {x: 0, y: 0}
 --- !u!1 &1634066896
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,6 @@ public  class Supporter : Contents
             isCool = true;
             data.leftCoolTime = data.coolTime;
         }
-        Debug.Log(data.leftCoolTime);
     }
 
 }

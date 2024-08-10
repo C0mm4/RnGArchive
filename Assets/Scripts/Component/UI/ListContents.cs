@@ -8,12 +8,13 @@ public class ListContents : MonoBehaviour
 
     public string UIName;
 
-    
+    int index = 0;
 
     public void AddContents<T>(T contentsObj) where T : Contents    
     {
         GameObject obj = GameManager.InstantiateAsync(UIName);
         obj.GetComponent<ContentsSlot>().SetContent(contentsObj);
+        obj.GetComponent<ContentsSlot>().index = index++;
         slots.Add(obj.GetComponent<ContentsSlot>());
 
         obj.transform.SetParent(gameObject.transform, false);

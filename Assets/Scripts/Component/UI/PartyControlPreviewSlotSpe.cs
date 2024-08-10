@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PartyControlPreviewSlotSpe : ContentsSlot
 {
     [SerializeField]
-    Supporter charactor;
+    public Supporter charactor;
 
     public Image image;
     public TMP_Text text;
@@ -54,5 +54,11 @@ public class PartyControlPreviewSlotSpe : ContentsSlot
 
         OnFresh();
         originUI.SetPreview();
+    }
+
+    public override void CreateInfoUI()
+    {
+        base.CreateInfoUI();
+        InfoUI.GetComponent<InfoUI>().SetData(charactor);
     }
 }

@@ -4,24 +4,29 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ContentsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ContentsSlot : ButtonInUI, IPointerEnterHandler, IPointerExitHandler
 {
     public Image charaImg;
     public Contents contents;
 
     public GameObject InfoUI;
 
-    public void Start()
+    public int index;
+
+    public override void OnCreate()
     {
-        
+        base.OnCreate();
+    }
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        if (menu.cursorIndex != index)
+        {
+            menu.cursorIndex = index;
+            menu.OnMouseEnterHandler();
+        }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        CreateInfoUI();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
+    public override void OnPointerExit(PointerEventData eventData)
     {
         DestroyInfoUI();
     }
@@ -31,28 +36,27 @@ public class ContentsSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         contents = content;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        OnClick();
-    }
 
     public virtual void OnFresh()
     {
 
     }
 
-    public virtual void OnClick()
-    {
-
-    }
 
     public virtual void CreateInfoUI()
     {
-
+        InfoUI = GameManager.InstantiateAsync("InfoUI");
+        Func.SetRectTransform(InfoUI);
     }
 
     public virtual void DestroyInfoUI() 
     {
-        GameManager.Destroy(InfoUI);
+        if(InfoUI != null) 
+        {
+            GameManager.Destroy(InfoUI);
+        }
+        
     }
+
+
 }

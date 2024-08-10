@@ -16,4 +16,13 @@ public class SupporterData
     public float leftCoolTime;
     public int cost;
     public string ProfileImg;
+
+    public string SkillName;
+    public string SkillImg;
+    public string type;
+    public string info;
+
+    public float durateT;
+    public string atkType;
+    public string defType;
 }

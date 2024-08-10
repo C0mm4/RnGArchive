@@ -26,9 +26,21 @@
 			<Halos>
 				<Halo>DummyHalo</Halo>
 			</Halos>
+			<PassiveImg></PassiveImg>
+			<PassiveName>
+				<Kr></Kr>
+				<Eng></Eng>
+				<Jp></Jp>
+			</PassiveName>
+			<PassiveTooltip>
+				<Kr></Kr>
+				<Eng></Eng>
+				<Jp></Jp>
+			</PassiveTooltip>
 			<Skills>
 			</Skills>
 			<ProfileImg></ProfileImg>
+			
 		</Charactor>
 		<Charactor>
 			<id>10001001</id>
@@ -55,6 +67,17 @@
 			<Halos>
 				<Halo>AliceHalo</Halo>
 			</Halos>
+			<PassiveName>
+				<Kr>직업 특성 : 용사</Kr>
+				<Eng></Eng>
+				<Jr></Jr>
+			</PassiveName>
+			<PassiveImg>Assets/Sprites/Player/Skills.png[Skills_1]</PassiveImg>
+			<PassiveTooltip>
+				<Kr>기본 공격이 적을 관통합니다.</Kr>
+				<Eng>A basic attack penetrates the enemy.</Eng>
+				<Jp>基本攻撃が敵を貫通します。</Jp>
+			</PassiveTooltip>
 			<Skills>
 				<Skill>
 					<class>ArisCleanUp</class>
@@ -63,6 +86,13 @@
 					<Jp>アリス、お掃除します！</Jp>
 					<baseAmmo>3</baseAmmo>
 					<CoolTime>10</CoolTime>
+					<Type>Piercing</Type>
+					<SkillImg>Assets/Sprites/Player/Skills.png[Skills_0]</SkillImg>
+					<SkillTooltip>
+						<Kr>차지 후 10의 관통 피해를 입히는 투사체를 발사합니다.</Kr>
+						<Eng>Fire a projectile that causes 10 penetration damage after charging.</Eng>
+						<Jp>チャージ後10の貫通ダメージを与える投射体を発射します。</Jp>
+					</SkillTooltip>
 				</Skill>
 			</Skills>
 			<ProfileImg>AliceBaseSpr[AliceBase_0]</ProfileImg>
@@ -92,6 +122,17 @@
 			<Halos>
 				<Halo>MidoriHalo</Halo>
 			</Halos>
+			<PassiveName>
+				<Kr>개발자의 분노</Kr>
+				<Eng></Eng>
+				<Jp></Jp>
+			</PassiveName>
+			<PassiveImg>Assets/Sprites/Player/Skills.png[Skills_4]</PassiveImg>
+			<PassiveTooltip>
+				<Kr>잃은 체력에 비례해 이동속도가 증가합니다.</Kr>
+				<Eng>The movement speed increases in proportion to the health lost.</Eng>
+				<Jp>失った体力に比例して移動速度が増加します。</Jp>
+			</PassiveTooltip>
 			<Skills>
 				<Skill>
 					<class>ArtPolicing</class>
@@ -99,7 +140,14 @@
 					<Eng>Artistic Polish</Eng>
 					<Jp>磨き上げるセンス</Jp>
 					<baseAmmo>2</baseAmmo>
-					<CoolTime>15</CoolTime>
+					<CoolTime>25</CoolTime>
+					<Type>Piercing</Type>
+					<SkillImg>Assets/Sprites/Player/Skills.png[Skills_2]</SkillImg>
+					<SkillTooltip>
+						<Kr>체력을 1 회복합니다.</Kr>
+						<Eng>Recovery 1 health point.</Eng>
+						<Jp>体力を1回復します。</Jp>
+					</SkillTooltip>
 				</Skill>
 			</Skills>
 			<ProfileImg>MidoriBaseSpr[Midori_0]</ProfileImg>

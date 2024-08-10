@@ -116,7 +116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8775293572155412534
 CanvasRenderer:
@@ -138,6 +138,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec9578bf8fcffa41a3b3f1d9498a9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  button: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  localPosition: {x: 0, y: 0}
+  anchoredPos: {x: 0, y: 0}
+  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
   charactor:
@@ -157,9 +168,9 @@ MonoBehaviour:
       prefabPath: 
       maxHP: 0
       currentHP: 0
-      maxCost: 0
-      currentCost: 0
-      costRecovery: 0
+      maxAmmo: 0
+      currentAmmo: 0
+      reloadT: 0
       skins: []
       _currentSkin: 0
       haloSkins: []

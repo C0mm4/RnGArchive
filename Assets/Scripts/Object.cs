@@ -48,6 +48,8 @@ public abstract class Obj : MonoBehaviour
             KeyInput();
             Step();
         }
+        KeyInputAlways();
+        StepAlways();
     }
 
     private void LateUpdate()
@@ -97,6 +99,16 @@ public abstract class Obj : MonoBehaviour
     public virtual void KeyInput()
     {
         // Describe the behavior of keyboard input here
+    }
+
+    public virtual void KeyInputAlways()
+    {
+
+    }
+
+    public virtual void StepAlways()
+    {
+
     }
 
     // Execute the alarm at index 'index' after the specified 'time'.

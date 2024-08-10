@@ -45,6 +45,53 @@
 		<trigID name="40012100">
 			<script>
 				<NPCID>20001001</NPCID>
+				<kr>정신이 들어 아리스?</kr>
+				<eng>Hey you, finally awake up</eng>
+				<jp>気が覚めたか、アリス？</jp>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>90000000</NPCID>
+				<kr>여기는…?</kr>
+				<jp>ここは。。。？</jp>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>90000001</NPCID>
+				<kr>시스템 가동 준비완료</kr>
+				<jp>システム起動、準備完了</jp>
+				<junction>40012100_1</junction>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>99000000</NPCID>
+				<junctionID>40012100_1</junctionID>
+				<kr>#Emoji.20001001.Wet</kr>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
+				<kr>정신을 차렸나 보네</kr>
+				<jp>気を覚めたようだね</jp>
+			</script>
+		</trigID>
+	</mapID>
+	<mapID name="10012100">
+		<trigID name="40012100">
+			<script>
+				<NPCID>20001001</NPCID>
 				<kr>일어나자마자 미안하지만 아리스, 테스트를 위해 전투용 드론을 보냈어</kr>
 				<jp>早速で悪いけどテストのためにドローンを送った。</jp>
 				<subTrig>40012200</subTrig>

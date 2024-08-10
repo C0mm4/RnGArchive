@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PartyControlSlotStriker : ContentsSlot
@@ -19,6 +21,7 @@ public class PartyControlSlotStriker : ContentsSlot
     public TMP_Text text;
 
     public PartyControlUI originUI;
+
 
     public override void SetContent(Contents content)
     {
@@ -64,6 +67,7 @@ public class PartyControlSlotStriker : ContentsSlot
 
     public override void OnClick()
     {
+        Debug.Log("Click");
         if(originUI.viewIndex == 1)
         {
             originUI.ViewStriker();
@@ -88,10 +92,21 @@ public class PartyControlSlotStriker : ContentsSlot
                 originUI.selectParty.Add(charactor);
                 isSelected = !isSelected;
             }
+            else
+            {
+
+                GameManager.UIManager.SetText("선택 가능한 파티를 모두 선택했습니다.");
+            }
         }
         OnFresh();
 
         originUI.SetPreview();
     }
 
+
+    public override void CreateInfoUI()
+    {
+        base.CreateInfoUI();
+        InfoUI.GetComponent<InfoUI>().SetData(charactor);
+    }
 }

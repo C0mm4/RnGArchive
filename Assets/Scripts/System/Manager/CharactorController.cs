@@ -69,7 +69,11 @@ public class CharactorController
 
             }
 
-            newChara.commands = new();
+            charaData.AtkType = node["AtkType"].InnerText;
+            charaData.PassiveName = node["PassiveName"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
+            charaData.PassiveImg = node["PassiveImg"].InnerText;
+            charaData.PassiveTooltip = node["PassiveTooltip"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
+
 
             XmlNode Skills = node.SelectSingleNode("Skills");
             foreach(XmlNode skill in Skills.SelectNodes("Skill"))
@@ -77,7 +81,9 @@ public class CharactorController
                 Type skl = Type.GetType(skill["class"].InnerText);
                 Skill target = Activator.CreateInstance(skl) as Skill;
                 target.name = skill[GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
-
+                target.type = skill["Type"].InnerText;
+                target.info = skill["SkillTooltip"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
+                target.imgPath = skill["SkillImg"].InnerText;
                 target.coolTime = float.Parse(skill["CoolTime"].InnerText);
 
                 newChara.skill = target;
@@ -94,7 +100,6 @@ public class CharactorController
 
             charactors[int.Parse(node["id"].InnerText)] = newChara;
 
-            Debug.Log(newChara.charaData.ProfileImg);
         }
 
         
@@ -106,7 +111,7 @@ public class CharactorController
             Supporter supporter = new Supporter();
             SupporterData data = new SupporterData();
             data.id = node["id"].InnerText;
-            data.name = node["name"].InnerText;
+            data.name = node["name"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
             data.maxAmmo = int.Parse(node["maxAmmo"].InnerText);
             data.currentAmmo = data.maxAmmo;
             data.maxHP = int.Parse(node["maxHP"].InnerText);
@@ -114,6 +119,10 @@ public class CharactorController
             data.coolTime = float.Parse(node["coolTime"].InnerText);
             data.cost = int.Parse(node["cost"].InnerText);
             data.ProfileImg = node["ProfileImg"].InnerText;
+            data.SkillName = node["SkillName"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
+            data.type = node["Type"].InnerText;
+            data.SkillImg = node["SkillImg"].InnerText;
+            data.info = node["SkillTooltip"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
             supporter.data = data;
 
             supporters[int.Parse(data.id)] = supporter;
@@ -135,7 +144,6 @@ public class CharactorController
                     if (supporter.data.leftCoolTime < 0)
                     {
                         supporter.isCool = false;
-                        Debug.Log("Cool is Done");
                     }
                 }
 

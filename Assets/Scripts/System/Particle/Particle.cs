@@ -40,5 +40,27 @@ public class Particle : Obj
         }
     }
 
+    public void AnimationPlay(string clip, float spd = 1f)
+    {
+        if (animator != null)
+        {
+            if (!clip.Equals(currentAnimation))
+            {
+                if (System.Array.Exists(animator.runtimeAnimatorController.animationClips.ToArray(), findClip => findClip.name.Equals(clip)))
+                {
+                    currentAnimation = clip;
+                    animator.speed = spd;
+                    animator.Play(clip);
+                }
+                else
+                {
+                    Debug.Log($"Can't Find Clip : {clip}");
+                }
+            }
+
+
+        }
+    }
+
 
 }
