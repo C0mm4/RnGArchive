@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2212251181186088611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1189418540628928390}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1189418540628928390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212251181186088611}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.48, y: 0.01, z: -0.0017805675}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244720839489893595}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3527674762853575800
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4244720839489893595}
   - component: {fileID: 2742854404718045082}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,14 +55,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3527674762853575800}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.20791169, w: 0.9781476}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1189418540628928390}
   m_Father: {fileID: 5650963635287573951}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 24}
 --- !u!212 &2742854404718045082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70,9 +102,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1562918333
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 873239651, guid: 52c366ef530d4314987b7b1ffd269701, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,7 +130,7 @@ GameObject:
   - component: {fileID: 3768451625629197786}
   - component: {fileID: 6931212919242346828}
   - component: {fileID: 4212887407593960602}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Utaha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 5067731821727002716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4244720839489893595}
@@ -185,9 +217,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1562918333
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: -471843500, guid: 52c366ef530d4314987b7b1ffd269701, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -251,6 +283,9 @@ MonoBehaviour:
   defType: 0
   spawnT: 0
   head: {fileID: 3527674762853575800}
+  Muzzle: {fileID: 2212251181186088611}
+  headDigrees: 0
+  targetDigrees: 0
 --- !u!50 &4212887407593960602
 Rigidbody2D:
   serializedVersion: 4

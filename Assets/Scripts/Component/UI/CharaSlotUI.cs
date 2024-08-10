@@ -149,7 +149,6 @@ public class CharaSlotUI : Obj
         gameObject.SetActive(false);
     }
 
-    [System.Obsolete]
     public async void HitAnimation()
     {
         state = 4;

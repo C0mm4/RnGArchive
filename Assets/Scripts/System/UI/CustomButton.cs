@@ -36,7 +36,6 @@ public class CustomButton : Obj, IPointerEnterHandler, IPointerExitHandler
 
 
         position = GetComponent<RectTransform>().position;
-        Debug.Log(position);
         size = GetComponent<RectTransform>().rect.size * 1.1f;
     }
 

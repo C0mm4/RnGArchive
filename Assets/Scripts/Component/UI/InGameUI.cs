@@ -8,7 +8,7 @@ using UnityEngine;
 public class InGameUI : Obj
 {
     public List<GameObject> charas;
-    public List<GameObject> skillSlots;
+    public GameObject specialUI;
 
     public bool isShow;
 
@@ -44,7 +44,17 @@ public class InGameUI : Obj
             {
                 charas[i].gameObject.SetActive(false);
             }
+            if (GameManager.Progress.isActiveSupport)
+            {
+                specialUI.GetComponent<SpecialUI>().Enable();
+
+            }
+            else
+            {
+                specialUI.SetActive(false);
+            }
         }
+
     }
 
     public void DisableCharaSlots()
@@ -57,6 +67,10 @@ public class InGameUI : Obj
                 charas[i].GetComponent<CharaSlotUI>().Disable();
             }
 
+            if(GameManager.Progress.isActiveSupport) 
+            {
+                specialUI.GetComponent<SpecialUI>().Disable();
+            }
         }
     }
 

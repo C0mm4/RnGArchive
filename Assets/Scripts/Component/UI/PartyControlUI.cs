@@ -411,7 +411,7 @@ public class PartyControlUI : Menu
                 }
                 else if(currentIndex == 999)
                 {
-                    confirmButton.GetComponent<CustomButton>().OnClick();
+                    confirmButton.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
                 }
                 else
                 {

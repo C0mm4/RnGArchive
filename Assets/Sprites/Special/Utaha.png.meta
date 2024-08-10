@@ -112,8 +112,8 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,7 +134,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,6 +142,90 @@ TextureImporter:
       bones: []
       spriteID: a71f2189cc7c75846ab0a3ed41545b13
       internalID: -471843500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Utaha_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9de1035a572758f499b4a93f6e382e1c
+      internalID: 1887022835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Utaha_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0f837ef6ca1c584e9d630ec7bcc82e0
+      internalID: 69259310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Utaha_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc1f6ad569844be4ea580ae5ae8fdbda
+      internalID: 1907497413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Utaha_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c676b858b52ad14297866af9ad5ba39
+      internalID: -231295954
       vertices: []
       indices: 
       edges: []
@@ -159,6 +243,10 @@ TextureImporter:
     nameFileIdTable:
       Utaha_0: 873239651
       Utaha_1: -471843500
+      Utaha_2: 1887022835
+      Utaha_3: 69259310
+      Utaha_4: 1907497413
+      Utaha_5: -231295954
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
