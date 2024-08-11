@@ -17,7 +17,7 @@ public class FlyingDrone : AIModel
             if(currentState == "MobIdle" || currentState == "MobMove" || currentState == "MobJumpFinish" || currentState == "MobFalling")
             {
                 target.SetTargetPosition(player.transform.position);
-                if (target.GetPlayerDistance() <= 2f)
+                if (target.GetPlayerDistance(player) <= 2f)
                 {
                     target.canMove = false;
 //                    if (!target.data.attackCooltime[0])

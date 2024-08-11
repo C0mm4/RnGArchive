@@ -78,7 +78,7 @@ public class Mob : PlayerTest
         Type T = Type.GetType(data.AIModel);
         AI = Activator.CreateInstance(T) as AIModel;
         AI.target = this;
-        AI.player = GameManager.player.GetComponent<PlayerController>();
+        AI.player = GameManager.player;
     }
 
     public override void BeforeStep()
@@ -152,10 +152,25 @@ public class Mob : PlayerTest
         {
             if (AI != null)
             {
-                AI.player = GameManager.player.GetComponent<PlayerController>();
-                if (AI.player != null)
+                if(GameManager.player != null)
                 {
-                    AI.Step();
+                    AI.player = GameManager.player;
+                    float distance = GetPlayerDistance(AI.player);
+                    GameObject []objs = GameObject.FindGameObjectsWithTag("Special");
+
+                    foreach(var obj in objs)
+                    {
+                        if(distance > GetPlayerDistance(obj))
+                        {
+                            AI.player = obj;
+                        }
+                    }
+
+                    if (AI.player != null)
+                    {
+                        AI.Step();
+                    }
+
                 }
                 else
                 {
@@ -227,10 +242,10 @@ public class Mob : PlayerTest
         targetMovePos = pos;
     }
 
-    public float GetPlayerDistance()
+    public float GetPlayerDistance(GameObject target)
     {
         float ret;
-        ret = Math.Abs(GameManager.player.transform.position.x - transform.position.x);
+        ret = Math.Abs(target.transform.position.x - transform.position.x);
         ret -= GetComponent<Collider2D>().bounds.extents.x;
         return ret;
     }

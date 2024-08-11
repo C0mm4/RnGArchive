@@ -9,6 +9,7 @@ public class SupporterData
     public string id;
     public string name;
     public int maxHP;
+    public int currentHP;
     public string objName;
     public int maxAmmo;
     public int currentAmmo;
@@ -19,7 +20,6 @@ public class SupporterData
 
     public string SkillName;
     public string SkillImg;
-    public string type;
     public string info;
 
     public float durateT;

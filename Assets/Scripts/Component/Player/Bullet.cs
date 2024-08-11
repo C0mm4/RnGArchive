@@ -18,6 +18,14 @@ public class Bullet : Attack
     {
         base.CreateHandler(dmg, dir, t);
         movPos = dir;
+
+        Vector2 referenceVector = Vector2.right;
+        float angle = Vector2.Angle(referenceVector, movPos);
+        float sign = Mathf.Sign(Vector3.Cross(referenceVector, movPos).z);
+        float signedAngle = angle * sign;
+
+        transform.rotation = Quaternion.Euler(0, 0, signedAngle);
+
         contactFilter.useTriggers = true;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         contactFilter.useLayerMask = true;

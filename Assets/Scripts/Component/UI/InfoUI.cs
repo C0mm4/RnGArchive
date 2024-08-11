@@ -46,7 +46,7 @@ public class InfoUI : MonoBehaviour
         EXSkillInfoObj.GetComponent<RectTransform>().localPosition = Vector3.zero;
         EXSkill.image.sprite = GameManager.Resource.LoadSprite(charactor.data.SkillImg);
         EXSkill.name.text = charactor.data.SkillName;
-        EXSkill.type.text = charactor.data.type;
+        EXSkill.type.text = charactor.data.atkType;
         EXSkill.info.text = charactor.data.info;
 
 

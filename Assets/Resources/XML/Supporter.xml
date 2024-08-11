@@ -20,12 +20,14 @@
 				<Jp></Jp>
 			</SkillName>
 			<SkillImg>Assets/Sprites/Player/Skills.png[Skills_7]</SkillImg>
-			<Type>Piercing</Type>
+			<AtkType>Piercing</AtkType>
+			<DefType>Heavy</DefType>
 			<SkillTooltip>
 				<Kr>1의 피해를 입히는 천둥이를 소환합니다. (10초)</Kr>
 				<Eng></Eng>
 				<Jp></Jp>
 			</SkillTooltip>
+			<durateT>5</durateT>
 		</Charactor>
 	</text>
 </Root>

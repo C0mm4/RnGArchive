@@ -52,21 +52,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
-  gravityModifier: 1
-  body: {fileID: 0}
+  currentAnimation: 
+  gravityModifier: 0
   isGrounded: 0
+  body: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  groundNormal: {x: 0, y: 0}
   sawDir: {x: 0, y: 0}
-  canMove: 1
+  _canMove: 0
   isMove: 0
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
+  isLanding: 0
   attackPrefab: []
   isHitbox: 
   lastAttackT: []
   data: {fileID: 11400000, guid: 1fff64d2c78488c469ad0a8629d03176, type: 2}
   status:
-    maxHP: 0
-    currentHP: 0
+    maxHP: 2147483647
+    currentHP: 2147483647
   stateMachine:
     currentState:
       charactor: {fileID: 0}
@@ -76,9 +80,9 @@ MonoBehaviour:
   currentState: 
   attackObj: {fileID: 0}
   animator: {fileID: 0}
-  currentAnimation: 
   isAttack: 0
   isSet: 0
+  isDead: 0
 --- !u!50 &3760179625236663660
 Rigidbody2D:
   serializedVersion: 4

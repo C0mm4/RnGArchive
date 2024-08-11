@@ -21,6 +21,8 @@ public class CharactorController
 
     XmlDocument text;
 
+    public List<Supporter> supporterss;
+
     public void initialize()
     {
         text = GameManager.Resource.LoadXML(charactorDataXML);
@@ -122,8 +124,10 @@ public class CharactorController
             data.cost = int.Parse(node["cost"].InnerText);
             data.ProfileImg = node["ProfileImg"].InnerText;
             data.SkillName = node["SkillName"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
-            data.type = node["Type"].InnerText;
+            data.atkType = node["AtkType"].InnerText;
+            data.defType = node["DefType"].InnerText;
             data.SkillImg = node["SkillImg"].InnerText;
+            data.durateT = float.Parse(node["durateT"].InnerText);
             data.info = node["SkillTooltip"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
             supporter.data = data;
 
@@ -131,6 +135,8 @@ public class CharactorController
         }
 
         charas = charactors.Values.ToList();
+
+        supporterss = supporters.Values.ToList();
     }
 
 

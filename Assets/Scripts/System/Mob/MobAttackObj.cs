@@ -39,11 +39,18 @@ public class MobAttackObj : Obj
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             if (!other.GetComponent<PlayerController>().isImmune)
             {
                 other.GetComponent<PlayerController>().GetDmg(gameObject);
+            }
+        }
+        if (other.tag == "Special")
+        {
+            if (!other.GetComponent<SupportObj>().isImumune)
+            {
+                other.GetComponent<SupportObj>().GetDMG();
             }
         }
     }

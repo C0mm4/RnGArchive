@@ -16,7 +16,7 @@ public class Sweaper : AIModel
             {
                 target.SetTargetPosition(player.transform.position);
             }
-            if (target.GetPlayerDistance() <= 0.8f)
+            if (target.GetPlayerDistance(player) <= 0.8f)
             {
                 // Attack Code Add
 //                if (!target.data.attackCooltime[0])

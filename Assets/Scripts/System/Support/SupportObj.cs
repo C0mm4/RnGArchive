@@ -7,12 +7,14 @@ public class SupportObj : PlayerTest
     protected bool isAttack = false;
 
     public int HP;
-    public AtkType atkType;
-    public DefType defType;
+    public AtkType atkType = new();
+    public DefType defType = new();
 
     public float spawnT;
 
-    SupporterData data;
+    public SupporterData Data;
+
+    public bool isImumune;
 
     public override void OnCreate()
     {
@@ -22,9 +24,12 @@ public class SupportObj : PlayerTest
 
     public void CreateHandler(SupporterData data)
     {
-        this.data = data;
-        SetType(data.atkType, data.defType);
-        SetAlarm(1, data.durateT);
+        Data = data;
+        HP = Data.maxHP;
+        isImumune = false;
+        Debug.Log(Data.atkType);
+        SetType(Data.atkType, Data.defType);
+        SetAlarm(1, Data.durateT);
     }
 
     public virtual void Attack()
@@ -41,7 +46,7 @@ public class SupportObj : PlayerTest
     public override void Alarm1()
     {
         base.Alarm1();
-        Destroy();
+//        Destroy();
     }
 
 
@@ -85,5 +90,21 @@ public class SupportObj : PlayerTest
                 defType = DefType.Elastic;
                 break;
         }
+    }
+
+    public void GetDMG()
+    {
+        isImumune = true;
+        HP--;
+        if(HP <= 0 )
+        {
+            Destroy();
+        }
+        SetAlarm(2, 1f);
+    }
+
+    public override void Alarm2()
+    {
+        isImumune = true;
     }
 }
