@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml;
 using UnityEngine;
 
-
+[Serializable]
 public class CharactorController
 {
     public Dictionary<int, Charactor> _charactors;
@@ -13,6 +13,8 @@ public class CharactorController
 
     public Dictionary<int, Supporter> _supporters;
     public Dictionary<int, Supporter> supporters { get { return _supporters; } }
+
+    public List<Charactor> charas;
 
     public string charactorDataXML = "charaData";
     public string supportDataXML = "Supporter";
@@ -127,6 +129,8 @@ public class CharactorController
 
             supporters[int.Parse(data.id)] = supporter;
         }
+
+        charas = charactors.Values.ToList();
     }
 
 

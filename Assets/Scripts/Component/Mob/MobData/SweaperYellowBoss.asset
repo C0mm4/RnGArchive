@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4b0ac86cb9a69743ab46d4ef7d559b1, type: 3}
-  m_Name: TestSweaper
+  m_Name: SweaperYellowBoss
   m_EditorClassIdentifier: 
   maxHP: 40
-  maxSpeed: 3
+  maxSpeed: 2
   speedAccel: 3
   attackDelay:
   - 0.1
@@ -22,5 +22,5 @@ MonoBehaviour:
   atkType: 0
   defType: 2
   atkPref:
-  - {fileID: 0}
+  - {fileID: 9143606469643959943, guid: 3d441090d3a2f5144a8525e572f71ddb, type: 3}
   AIModel: Sweaper

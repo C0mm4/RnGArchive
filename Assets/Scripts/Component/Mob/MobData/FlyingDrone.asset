@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlyingDrone
   m_EditorClassIdentifier: 
   maxHP: 6
-  maxSpeed: 3
+  maxSpeed: 1.5
   speedAccel: 3
   attackDelay:
   - 1.5

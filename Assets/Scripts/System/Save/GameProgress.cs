@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]   
@@ -23,6 +25,7 @@ public class GameProgress
 
     public Dictionary<string, TriggerData> activeTrigs;
 
+    [Serializable]
     public struct CharactorProgress
     {
         public Charactor charactor;
@@ -44,11 +47,13 @@ public class GameProgress
         {
             charaDatas[charactorId] = charaPros;
         }
+
     }
 
     public void AbleChara(int charactorId)
     {
-        CharactorProgress charaPros = charaDatas[charactorId];
+        CharactorProgress charaPros = new CharactorProgress();
+        charaPros.charactor = GameManager.CharaCon.charactors[charactorId];
         charaPros.isOpen = true;
         charaDatas[charactorId] = charaPros;
     }

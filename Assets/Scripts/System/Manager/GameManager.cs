@@ -98,6 +98,8 @@ public class GameManager : MonoBehaviour
     public UIState gamestate;
     public List<UIState> uiStates;
 
+    public CharactorController characon;
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -136,6 +138,8 @@ public class GameManager : MonoBehaviour
         DataInit();
         isPaused = false;
         FindPlayer();
+
+        characon = CharaCon;
     }
 
 
