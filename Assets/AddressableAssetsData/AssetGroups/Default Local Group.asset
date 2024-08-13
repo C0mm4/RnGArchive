@@ -107,14 +107,6 @@ MonoBehaviour:
     m_Address: AliceBaseSpr
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: cd586cff403064545a2bf8520db58659
-    m_Address: KotoriAnimator
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a787f8eb0b04132489f2bf57bea6c667
-    m_Address: Assets/Sprites/NPC/Kotori/Idle.anim
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: d58be587bc7d75f4590b179fc6a2aa5c
     m_Address: 10012200
     m_ReadOnly: 0
@@ -151,14 +143,6 @@ MonoBehaviour:
     m_Address: MidoriAnimator
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c0cf886de1c63ac499a289a8ed169087
-    m_Address: MilleniumMob1Animator
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: f1f430ae8ff5bab48b5a9c5eb6825c0e
-    m_Address: MilleniumMob2Animator
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 0a0bb8a3892c5874ca4c2a3d498fa03e
     m_Address: DMGUI
     m_ReadOnly: 0
@@ -193,14 +177,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 249b199f2c7d2924e884ca362cc6e193
     m_Address: 20001003
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 732e42b578554d54a862f70281275534
-    m_Address: 20001004
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: fb8bb9ab5b06ee54c9f6cb22cba7fff6
-    m_Address: 20001005
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 1bafdbf4df062d94cae11e5324e60272
@@ -349,10 +325,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 4e87dd256bb359548ab4b3e4acb3c7a5
     m_Address: MidoriBaseSpr
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 37ebf8819cb61b7428eeba41d6609020
-    m_Address: Assets/Sprites/NPC/Utaha/Utaha.png
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 234fd64b724795d4c95d28a262340fbe

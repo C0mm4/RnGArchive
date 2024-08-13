@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -100,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     public CharactorController characon;
 
+    string screenshotFolder = "Screenshots";
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -184,6 +187,11 @@ public class GameManager : MonoBehaviour
         if (UnityEngine.Input.GetKeyDown(KeyCode.K))
         {
             InstantiateAsync("PartyControlUI");
+        }
+
+        if (UnityEngine.Input.GetKeyDown(KeyCode.F12))
+        {
+            ScreenshotCapture();
         }
     }
 
@@ -392,5 +400,20 @@ public class GameManager : MonoBehaviour
         Destroy(Player);
         await Task.Delay(TimeSpan.FromSeconds(3f));
         LoadGame();
+    }
+
+    public void ScreenshotCapture()
+    {
+        string folderPath = Path.Combine(Application.dataPath, screenshotFolder);
+
+        if(!System.IO.Directory.Exists(folderPath))
+        {
+            System.IO.Directory.CreateDirectory(folderPath);
+        }
+
+        string screenshotName = "Screenshot_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+
+        string filepath = Path.Combine(folderPath, screenshotName);
+        ScreenCapture.CaptureScreenshot(filepath);
     }
 }
