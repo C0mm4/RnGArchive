@@ -16,9 +16,6 @@ public class SelectUI : Menu
     int listSize;
     public int selectIndex;
 
-    public bool isHoveringAnimation = false;
-
-    public GameObject HoveringUI;
 
     public bool isClick = false;
 
@@ -34,9 +31,9 @@ public class SelectUI : Menu
     {
         listSize = size;
         buttons = new List<SelectButton>();
-        HoveringUI = GameManager.InstantiateAsync("HoveringUI");
-        HoveringUI.transform.SetParent(transform, false);
-        HoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+        hoveringUI = GameManager.InstantiateAsync("HoveringUI");
+        hoveringUI.transform.SetParent(transform, false);
+        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
         for (int i = 0; i < size; i++)
         {
             GameObject go = GameManager.InstantiateAsync("SelectButton");
@@ -107,40 +104,6 @@ public class SelectUI : Menu
     public override void Update()
     {
         base.Update();
-/*        if (isGetInput)
-        {
-            if (!isClick)
-            {
-                if (listSize > 1)
-                {
-                    if (Input.GetKeyDown(GameManager.Input._keySettings.upKey))
-                    {
-                        hoveringIndex--;
-                        hoveringIndex %= listSize;
-                        OnMouseEnterHandler();
-                        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-                        if (hoveringIndex != -1)
-                            ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
-
-                    }
-                    if (Input.GetKeyDown(GameManager.Input._keySettings.downKey))
-                    {
-                        hoveringIndex++;
-                        hoveringIndex %= listSize;
-                        OnMouseEnterHandler();
-                        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-                        if (hoveringIndex != -1)
-                            ExecuteEvents.Execute(buttons[hoveringIndex].button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
-
-                    }
-                }
-
-                if (Input.GetKeyDown(GameManager.Input._keySettings.Interaction))
-                {
-                    ConfirmAction();
-                }
-            }
-        }*/
     }
 
     public override void ConfirmAction()
@@ -151,17 +114,17 @@ public class SelectUI : Menu
     public async override void OnMouseEnterHandler()
     {
         isHoveringAnimation = true;
-        HoveringUI.GetComponent<HoveringUI>().SetData(buttons[cursorIndex].GetComponent<RectTransform>().position, new Vector2(1650, 150));
-        HoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+        hoveringUI.GetComponent<HoveringUI>().SetData(buttons[cursorIndex].GetComponent<RectTransform>().position, new Vector2(1650, 150));
+        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
 
         float t = 0f;
         while(t <= 0.1f)
         {
             t += Time.deltaTime;
-            HoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
+            hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
             await Task.Yield();
         }
-        HoveringUI.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         isHoveringAnimation = false;
     }
 
@@ -173,10 +136,13 @@ public class SelectUI : Menu
     public void OnMouseClickHandler()
     {
         isClick = true;
-        GameManager.Destroy(HoveringUI);
+        GameManager.Destroy(hoveringUI);
         cursorIndex = -1;
 
     }
 
-    
+    public override HoveringRectTransform FindIndexButton(int index)
+    {
+        return buttons[index];
+    }
 }

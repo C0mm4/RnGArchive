@@ -13,7 +13,6 @@ public class PartyControlUI : Menu
 {
     public GameObject strikerButton;
     public GameObject specialButton;
-    public GameObject confirmButton;
 
     public List<Charactor> openCharas = new();
     public List<Supporter> openSupporter = new();
@@ -41,9 +40,6 @@ public class PartyControlUI : Menu
 
     public int viewIndex;
 
-    // Hovering Set
-    public GameObject hoveringUI;
-    public bool isHoveringAnimation = false;
 
     public async override void OnCreate()
     {
@@ -93,9 +89,6 @@ public class PartyControlUI : Menu
         ViewStriker();
         SetPreview();
 
-        hoveringUI = GameManager.InstantiateAsync("HoveringUI");
-        hoveringUI.transform.SetParent(transform, false);
-        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
 
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
 
@@ -356,7 +349,7 @@ public class PartyControlUI : Menu
             {
 
                 PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-                ExecuteEvents.Execute(lastButton.button.gameObject, pointerEventData, ExecuteEvents.pointerExitHandler);
+                lastButton.pointerExitEvent(pointerEventData);
                 OnMouseEnterHandler();
             }
 
@@ -427,36 +420,9 @@ public class PartyControlUI : Menu
             }
         }
 
-
-
     }
 
-    public async override void OnMouseEnterHandler()
-    {
-        isHoveringAnimation = true;
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        CustomButton targetButton;
-        targetButton = FindIndexButton(cursorIndex);
-
-        ExecuteEvents.Execute(targetButton.button.gameObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
-        hoveringUI.GetComponent<HoveringUI>().SetData(targetButton.position, targetButton.size);
-
-        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
-
-        float t = 0f;
-        while(t <= 0.1f)
-        {
-            t += Time.deltaTime;
-            hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
-            await Task.Yield();
-        }
-
-        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.one;
-
-        isHoveringAnimation = false;
-    }
-
-    public CustomButton FindIndexButton(int index)
+    public override HoveringRectTransform FindIndexButton(int index)
     {
         CustomButton targetButton;
         if (cursorIndex == -1)

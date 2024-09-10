@@ -19,6 +19,7 @@ public class ContentsSlot : ButtonInUI, IPointerEnterHandler, IPointerExitHandle
     }
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        base.OnPointerEnter(eventData);
         if (menu.cursorIndex != index)
         {
             menu.cursorIndex = index;

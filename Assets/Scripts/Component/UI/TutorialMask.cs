@@ -92,4 +92,9 @@ public class TutorialMask : Menu
 
         GameManager.UIManager.endMenu();
     }
+
+    public override HoveringRectTransform FindIndexButton(int index)
+    {
+        throw new System.NotImplementedException();
+    }
 }

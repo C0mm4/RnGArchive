@@ -17,6 +17,8 @@ public abstract class Obj : MonoBehaviour
     [SerializeField]
     public string currentAnimation;
 
+    private bool isSet = false;
+
     // Start is called before the first frame update
     public void Awake()
     {
@@ -27,7 +29,11 @@ public abstract class Obj : MonoBehaviour
 
         isAlarmRun = new bool[alarms.Length];
         alarmTime = new float[alarms.Length];
-        OnCreate();
+        if (!isSet)
+        {
+            isSet = true;
+            OnCreate();
+        }
     }
 
     void FixedUpdate()

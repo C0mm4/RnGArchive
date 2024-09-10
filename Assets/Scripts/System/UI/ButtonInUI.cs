@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ButtonInUI : CustomButton
 {
-    public Menu menu;
-    public int targetIndex;
 
     public override void OnClick()
     {

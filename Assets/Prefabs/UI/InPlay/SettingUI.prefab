@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 109635819}
   - component: {fileID: 109635818}
   - component: {fileID: 109635817}
+  - component: {fileID: 1748848905195594685}
   m_Layer: 5
   m_Name: Master Volume Bar
   m_TagString: Untagged
@@ -216,6 +217,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1748848905195594685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109635815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6effe53632cb87449d59ffbec3ee6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  rect: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  menu: {fileID: 1310642763}
+  targetIndex: 1
+  scrollbar: {fileID: 0}
 --- !u!1 &179086533
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,6 +589,7 @@ GameObject:
   - component: {fileID: 280575605}
   - component: {fileID: 280575604}
   - component: {fileID: 280575603}
+  - component: {fileID: 4465241584079258369}
   m_Layer: 5
   m_Name: Language Selection
   m_TagString: Untagged
@@ -695,6 +718,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &4465241584079258369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280575601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cb07eddecf1d14db1c37dbd5d0d7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  rect: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  menu: {fileID: 1310642763}
+  targetIndex: 4
+  dropdown: {fileID: 0}
 --- !u!1 &462356860
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,6 +3320,7 @@ GameObject:
   - component: {fileID: 1670930665}
   - component: {fileID: 1670930664}
   - component: {fileID: 1670930663}
+  - component: {fileID: 9136325372123519464}
   m_Layer: 5
   m_Name: Resolution Selection
   m_TagString: Untagged
@@ -3410,6 +3455,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &9136325372123519464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670930661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cb07eddecf1d14db1c37dbd5d0d7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  rect: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  menu: {fileID: 1310642763}
+  targetIndex: 0
+  dropdown: {fileID: 0}
 --- !u!1 &1675878804
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3488,7 @@ GameObject:
   - component: {fileID: 1675878808}
   - component: {fileID: 1675878807}
   - component: {fileID: 1675878806}
+  - component: {fileID: 698464440934431417}
   m_Layer: 5
   m_Name: Effect Volume Bar
   m_TagString: Untagged
@@ -3550,6 +3617,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &698464440934431417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675878804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6effe53632cb87449d59ffbec3ee6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  rect: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  menu: {fileID: 1310642763}
+  targetIndex: 3
+  scrollbar: {fileID: 0}
 --- !u!1 &1750168226
 GameObject:
   m_ObjectHideFlags: 0
@@ -3920,6 +4008,7 @@ GameObject:
   - component: {fileID: 1850656182}
   - component: {fileID: 1850656181}
   - component: {fileID: 1850656180}
+  - component: {fileID: 6278779813467481467}
   m_Layer: 5
   m_Name: Music Volume Bar
   m_TagString: Untagged
@@ -4048,6 +4137,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6278779813467481467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850656178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6effe53632cb87449d59ffbec3ee6e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlarmRun: 
+  alarmTime: []
+  currentAnimation: 
+  rect: {fileID: 0}
+  position: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  menu: {fileID: 1310642763}
+  targetIndex: 2
+  scrollbar: {fileID: 0}
 --- !u!1 &2074349204
 GameObject:
   m_ObjectHideFlags: 0
@@ -4618,14 +4728,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 8764280655746965530}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 1310642763}
   targetIndex: 999
+  button: {fileID: 8764280655746965530}
 --- !u!1 &7689524460726318493
 GameObject:
   m_ObjectHideFlags: 0
@@ -4763,14 +4871,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 7689524460726318496}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
-  menu: {fileID: 0}
+  menu: {fileID: 1310642763}
   targetIndex: -1
+  button: {fileID: 7689524460726318496}
 --- !u!1 &7689524461467960664
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,12 +4991,17 @@ MonoBehaviour:
   isGetInput: 0
   closeButton: {fileID: 7689524460726318495}
   cursorIndex: 0
-  masterVolume: {fileID: 109635817}
+  hoveringUI: {fileID: 0}
+  confirmButton: {fileID: 4162543611366197440}
+  resolutions: {fileID: 9136325372123519464}
+  masterVolume: {fileID: 1748848905195594685}
   masterVolumeTxt: {fileID: 480239230}
-  musicVolume: {fileID: 1850656180}
+  musicVolume: {fileID: 6278779813467481467}
   musicVolumeTxt: {fileID: 1667999308}
-  effectVolume: {fileID: 1675878806}
+  effectVolume: {fileID: 698464440934431417}
   effectVolumeTxt: {fileID: 1268617885}
+  languages: {fileID: 4465241584079258369}
+  isDataSet: 0
 --- !u!1 &7689524462418725955
 GameObject:
   m_ObjectHideFlags: 0

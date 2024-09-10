@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 
 [Serializable]
 public abstract class Menu : Obj
@@ -16,12 +17,29 @@ public abstract class Menu : Obj
 
     public int cursorIndex;
 
+    [SerializeField]
+    protected GameObject hoveringUI;
+    protected bool isHoveringAnimation = false;
+
+    [SerializeField]
+    protected GameObject confirmButton;
+
     // Start is called before the first frame update
     public override void OnCreate()
     {
         GameManager.UIManager.addMenu(this);
         transform.SetParent(GameManager.UIManager.canvas.transform, false);
         isGetInput = false;
+
+        hoveringUI = GameManager.InstantiateAsync("HoveringUI");
+        hoveringUI.transform.SetParent(transform, false);
+        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+
+        var hoverableUIs = GetComponentsInChildren<HoveringRectTransform>(true);
+        foreach(var obj in hoverableUIs)
+        {
+            obj.OnCreate();
+        }
     }
 
     // when Menu hide, input deset, gameObject SetActive false
@@ -72,8 +90,30 @@ public abstract class Menu : Obj
 
     }
 
-    public virtual void OnMouseEnterHandler()
+    public async virtual void OnMouseEnterHandler()
     {
+        isHoveringAnimation = true;
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        HoveringRectTransform targetButton;
+        targetButton = FindIndexButton(cursorIndex);
 
+        targetButton.pointerEnterEvent(pointerEventData);
+        hoveringUI.GetComponent<HoveringUI>().SetData(targetButton.position, targetButton.size);
+
+        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+
+        float t = 0f;
+        while (t <= 0.1f)
+        {
+            t += Time.deltaTime;
+            hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
+            await Task.Yield();
+        }
+
+        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.one;
+
+        isHoveringAnimation = false;
     }
+
+    public abstract HoveringRectTransform FindIndexButton(int index);
 }

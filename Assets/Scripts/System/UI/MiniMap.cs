@@ -53,4 +53,9 @@ public class MiniMap : Menu
             mosPos = Input.mousePosition;
         }
     }
+
+    public override HoveringRectTransform FindIndexButton(int index)
+    {
+        throw new System.NotImplementedException();
+    }
 }
