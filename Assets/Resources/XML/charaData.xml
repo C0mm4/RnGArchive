@@ -15,8 +15,6 @@
 			<reloadT>0</reloadT>
 			<jumpForce>0</jumpForce>
 			<baseHP>100</baseHP>
-			<maxCost>10</maxCost>
-			<costRecovery>0.5</costRecovery>
 			<path>Dummy</path>
 			<AtkType>Mystic</AtkType>
 			<DefType>Special</DefType>
@@ -56,8 +54,6 @@
 			<reloadT>0.75</reloadT>
 			<jumpForce>7</jumpForce>
 			<baseHP>3</baseHP>
-			<maxCost>10</maxCost>
-			<costRecovery>0.5</costRecovery>
 			<path>Alice</path>
 			<AtkType>Mystic</AtkType>
 			<DefType>Special</DefType>
@@ -84,7 +80,6 @@
 					<Kr>아리스, 청소합니다!</Kr>
 					<Eng>Aris, Clean Up!</Eng>
 					<Jp>アリス、お掃除します！</Jp>
-					<baseAmmo>3</baseAmmo>
 					<CoolTime>10</CoolTime>
 					<Type>Piercing</Type>
 					<SkillImg>Assets/Sprites/Player/Skills.png[Skills_0]</SkillImg>
@@ -111,8 +106,6 @@
 			<reloadT>0.13</reloadT>
 			<jumpForce>6</jumpForce>
 			<baseHP>3</baseHP>
-			<maxCost>10</maxCost>
-			<costRecovery>0.5</costRecovery>
 			<path>Midori</path>
 			<AtkType>Piercing</AtkType>
 			<DefType>Light</DefType>
@@ -139,7 +132,6 @@
 					<Kr>아트 폴리싱!</Kr>
 					<Eng>Artistic Polish</Eng>
 					<Jp>磨き上げるセンス</Jp>
-					<baseAmmo>2</baseAmmo>
 					<CoolTime>25</CoolTime>
 					<Type>Piercing</Type>
 					<SkillImg>Assets/Sprites/Player/Skills.png[Skills_2]</SkillImg>

@@ -11,9 +11,9 @@
 			<maxAmmo>3</maxAmmo>
 			<maxHP>3</maxHP>
 			<coolTime>20</coolTime>
-			<objName>Utaha</objName>
+			<objPath>Utaha</objPath>
 			<cost>3</cost>
-			<ProfileImg>Assets/Sprites/NPC/Utaha/Utaha.png[Utaha_0]</ProfileImg>
+			<ProfileImg>Assets/Sprites/NPC/Npcs.png[Npcs_0]</ProfileImg>
 			<SkillName>
 				<Kr>천둥이 소환</Kr>
 				<Eng></Eng>

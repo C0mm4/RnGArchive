@@ -1,15 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[Serializable]
 public class StageController
 {
-
-    public Charactor currentCharactor;
-    public int currentIndex;
-
     public Map currentMap;
 
     public MapTrigText currentMapTrigTexts;
@@ -78,6 +76,7 @@ public class StageController
 
         GameObject go = GameManager.InstantiateAsync(mapId);
         currentMap = go.GetComponent<Map>();
+        currentMap.CreateHandler();
         GameManager.Progress.saveMapId = mapId;
         GameManager.CameraManager.background = go.GetComponent<Map>().bound;
         
@@ -104,10 +103,12 @@ public class StageController
 
         // Set Map NPC Text Datas (add later)
         currentMapNPCTexts = GameManager.Script.getMapScriptsData(mapId);
-        if(currentMapNPCTexts != null)
+        currentNPCs = new();
+        currentNPCs = currentMap.NPCs;
+
+        if (currentMapNPCTexts != null)
         {
             var scripts = currentMapNPCTexts.scripts;
-            currentNPCs = go.GetComponentsInChildren<NPC>().ToList();
             foreach (TrigScript script in scripts)
             {
                 foreach (NPC npc in currentNPCs)
@@ -119,12 +120,7 @@ public class StageController
         }
 
         // SetNPC Text in Load
-        if(currentNPCs != null)
-            foreach(NPC npc in currentNPCs)
-            {
-                npc.SetScripts();
-            }
-
+        RefreshNPCScript();
 
         // Set Doors Activate Datas
         var doors = currentMap.GetComponentsInChildren<Door>().ToList();
@@ -145,6 +141,16 @@ public class StageController
             {
                 npc.AddScripts(script);
             }
+
+            npc.SetScripts();
+        }
+    }
+
+    public void RefreshNPCScript()
+    {
+        foreach(var npc in currentMap.NPCs)
+        {
+            npc.SetScripts();
         }
     }
 

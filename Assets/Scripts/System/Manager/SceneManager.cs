@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -182,4 +183,28 @@ public class SceneController
         GameManager.Destroy(fadeOutImg.gameObject);
     }
 
+    public async Task FadeOut()
+    {
+
+        float t = 0;
+        if (fadeOutImg != null)
+        {
+            fadeOutImg = GameObject.Find("fadeOut 1(Clone)").GetComponent<Image>();
+        }
+
+        if (fadeOutImg == null)
+        {
+            CreateFadeOutObj();
+        }
+        Color color = fadeOutImg.color;
+        while (t < fadeOutTime)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, t / fadeOutTime);
+            color.a = alpha;
+            fadeOutImg.color = color;
+
+            await Task.Yield();
+        }
+    }
 }

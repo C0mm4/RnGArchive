@@ -45,7 +45,7 @@ public class PartyControlSlotStriker : ContentsSlot
                 isSelected = false;
             }
 
-            image.sprite = GameManager.Resource.LoadSprite(charactor.charaData.ProfileImg);
+            image.sprite = GameManager.LoadSprite(charactor.charaData.ProfileImg);
             text.text = charactor.charaData.Name;
 
             if (isSelected)

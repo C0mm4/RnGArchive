@@ -27,12 +27,12 @@ public class InfoUI : MonoBehaviour
     public void SetData(Charactor charactor)
     {
         
-        Passive.image.sprite = GameManager.Resource.LoadSprite(charactor.charaData.PassiveImg);
+        Passive.image.sprite = GameManager.LoadSprite(charactor.charaData.PassiveImg);
         Passive.name.text = charactor.charaData.PassiveName;
         Passive.type.text = charactor.charaData.AtkType;
         Passive.info.text = charactor.charaData.PassiveTooltip;
 
-        EXSkill.image.sprite = GameManager.Resource.LoadSprite(charactor.skill.imgPath);
+        EXSkill.image.sprite = GameManager.LoadSprite(charactor.skill.imgPath);
         EXSkill.name.text = charactor.skill.name;
         EXSkill.type.text = charactor.skill.type;
         EXSkill.info.text = charactor.skill.info;
@@ -44,7 +44,7 @@ public class InfoUI : MonoBehaviour
 
         rt.sizeDelta += new Vector2(0, -350);
         EXSkillInfoObj.GetComponent<RectTransform>().localPosition = Vector3.zero;
-        EXSkill.image.sprite = GameManager.Resource.LoadSprite(charactor.data.SkillImg);
+        EXSkill.image.sprite = GameManager.LoadSprite(charactor.data.SkillImg);
         EXSkill.name.text = charactor.data.SkillName;
         EXSkill.type.text = charactor.data.atkType;
         EXSkill.info.text = charactor.data.info;

@@ -22,7 +22,6 @@ public class PlayerController : PlayerTest
     public bool isAttackInput = false;
 
     public Charactor charactor;
-    public Supporter supporter;
 
     public Weapon weapon;
     public bool isWeaponEquip;

@@ -100,8 +100,11 @@ public class GameManager : MonoBehaviour
     public List<UIState> uiStates;
 
     public CharactorController characon;
+    public StageController stage;
 
     string screenshotFolder = "Screenshots";
+
+    public SettingManager.SerializeGameData setting;
 
     private void Awake()
     {
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("FirstRun"))
         {
             _settingManager.LoadSettingData();
-
+            Debug.Log("SecondRun Seting");
         }
         // If First Run
         else
@@ -133,7 +136,7 @@ public class GameManager : MonoBehaviour
             _settingManager.SetFirstSetting();
             _settingManager.SaveSettingData();
             _settingManager.LoadSettingData();
-
+            Debug.Log("FirstFun Setting");
         }
 
         _settingManager.SetResolution();
@@ -143,6 +146,8 @@ public class GameManager : MonoBehaviour
         FindPlayer();
 
         characon = CharaCon;
+        stage= Stage;
+        setting = gameData;
     }
 
 
@@ -183,6 +188,7 @@ public class GameManager : MonoBehaviour
 
         uimanager = UIManager;
         pause = isPaused;
+        setting = gameData;
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.K))
         {
@@ -304,7 +310,6 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().charactor = gameProgress.charaDatas[id].charactor;
         player.GetComponent<PlayerController>().CreateHandler();
 
-        Stage.currentCharactor = Progress.charaDatas[id].charactor;
 
         if(Progress != null)
             Progress.currentCharactorId = id;
@@ -344,6 +349,11 @@ public class GameManager : MonoBehaviour
         Resource.Destroy(gos);
     }
 
+    public static Sprite LoadSprite(string path)
+    {
+        return Resource.LoadSprite(path);
+    }
+
     public static void Destroy(GameObject go)
     {
         Resource.Destroy(go);
@@ -381,6 +391,21 @@ public class GameManager : MonoBehaviour
     {
         Save.LoadProgress();
         await SceneControlLoad("InGameScene");
+    }
+
+    public static async void GameEnd()
+    {
+        await Scene.FadeOut();
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
+    public static void SettingButton()
+    {
+        InstantiateAsync("SettingUI");
     }
 
     public static GameObject ParticleGen(string target, Vector3 startPos, Vector3 endPos, float time = 1f)

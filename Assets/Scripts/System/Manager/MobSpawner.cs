@@ -72,6 +72,7 @@ public class MobSpawner
         ret.GetComponent<NPC>().npcId = id;
         ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
         GameManager.Stage.NPCScriptSet(ret.GetComponent<NPC>());
+        GameManager.Stage.currentNPCs.Add(ret.GetComponent<NPC>());
         return ret.GetComponent<NPC>();
     }
 }

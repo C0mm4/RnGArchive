@@ -10,12 +10,9 @@ public class SupporterData
     public string name;
     public int maxHP;
     public int currentHP;
-    public string objName;
-    public int maxAmmo;
-    public int currentAmmo;
     public float coolTime;
     public float leftCoolTime;
-    public int cost;
+    public string objPath;
     public string ProfileImg;
 
     public string SkillName;

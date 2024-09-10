@@ -10,7 +10,7 @@ public class MobData : ScriptableObject
     public float maxSpeed;
     public float speedAccel;
     public float[] attackDelay;
-    public bool[] attackCooltime;
+    public bool[] attackIsCool;
     public float detectDistance;
 
     public AtkType atkType;

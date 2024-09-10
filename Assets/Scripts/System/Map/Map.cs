@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,11 +6,17 @@ using UnityEngine;
 public class Map : Obj
 {
     public SpriteRenderer bound;
+    public List<NPC> NPCs;
 
     public override void OnCreate()
     {
         base.OnCreate();
         SetTriggerDatas();
+    }
+
+    public void CreateHandler()
+    {
+        NPCs = GetComponentsInChildren<NPC>(true).ToList();
     }
 
     public void SetTriggerDatas()

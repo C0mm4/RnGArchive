@@ -60,11 +60,11 @@ public class Mob : PlayerTest
         animator = GetComponentInChildren<Animator>();
         
 
-        data.attackCooltime = new bool[data.attackDelay.Count()];
+        data.attackIsCool = new bool[data.attackDelay.Count()];
 
         for(int i = 0; i < data.attackDelay.Count(); i++)
         {
-            data.attackCooltime[i] = false;
+            data.attackIsCool[i] = false;
         }
 
         SetTargetPosition(pos);
@@ -304,31 +304,31 @@ public class Mob : PlayerTest
     public override void Alarm0()
     {
         base.Alarm0();
-        data.attackCooltime[0] = false;
+        data.attackIsCool[0] = false;
 
     }
     public override void Alarm1()
     {
         base.Alarm0();
-        data.attackCooltime[1] = false;
+        data.attackIsCool[1] = false;
 
     }
     public override void Alarm2()
     {
         base.Alarm0();
-        data.attackCooltime[2] = false;
+        data.attackIsCool[2] = false;
 
     }
     public override void Alarm3()
     {
         base.Alarm0();
-        data.attackCooltime[3] = false;
+        data.attackIsCool[3] = false;
 
     }
     public override void Alarm4()
     {
         base.Alarm0();
-        data.attackCooltime[4] = false;
+        data.attackIsCool[4] = false;
 
     }
 }

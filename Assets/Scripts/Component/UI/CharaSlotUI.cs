@@ -96,7 +96,7 @@ public class CharaSlotUI : Obj
         gameObject.SetActive(true);
         target = GameManager.Progress.charaDatas[GameManager.Progress.currentParty[index].charaData.id].charactor;
         currentCharaId = target.charaData.id;
-        charaIcon.sprite = GameManager.Resource.LoadSprite(target.charaData.ProfileImg);
+        charaIcon.sprite = GameManager.LoadSprite(target.charaData.ProfileImg);
         movingT = t;
         while (movingT < time)
         {

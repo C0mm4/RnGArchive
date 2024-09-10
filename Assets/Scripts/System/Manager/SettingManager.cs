@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.Playables;
 
 public class SettingManager
 {
-
+    [Serializable]
     public struct SerializeGameData
     {
         // Resoluition Lists
@@ -29,6 +30,19 @@ public class SettingManager
         public int LanguageIndex;
     }
 
+    public void SettingCopy(SerializeGameData target, SerializeGameData originData)
+    {
+        target.resolutionLists = originData.resolutionLists;
+        target.resolution = originData.resolution; 
+        target.resolutionIndex = originData.resolutionIndex;
+        target.isFullScreen = originData.isFullScreen;
+        target.masterVolume = originData.masterVolume;
+        target.effectVolume = originData.effectVolume;
+        target.charactorVolume = originData.charactorVolume;
+        target.FrameRate = originData.FrameRate;
+        target.Language = originData.Language;
+        target.LanguageIndex = originData.LanguageIndex;
+    }
 
     public void SetResolution()
     {

@@ -203,7 +203,6 @@ public class Script
     public string script;
     public bool isAwait;
     public float delayT;
-    public string nextTextTrig;
     public string subTriggerId;
 }
 

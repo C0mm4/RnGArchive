@@ -116,12 +116,10 @@ public class CharactorController
             SupporterData data = new SupporterData();
             data.id = node["id"].InnerText;
             data.name = node["name"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
-            data.maxAmmo = int.Parse(node["maxAmmo"].InnerText);
-            data.currentAmmo = data.maxAmmo;
+
             data.maxHP = int.Parse(node["maxHP"].InnerText);
-            data.objName = node["objName"].InnerText;
             data.coolTime = float.Parse(node["coolTime"].InnerText);
-            data.cost = int.Parse(node["cost"].InnerText);
+            data.objPath = node["objPath"].InnerText;
             data.ProfileImg = node["ProfileImg"].InnerText;
             data.SkillName = node["SkillName"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
             data.atkType = node["AtkType"].InnerText;

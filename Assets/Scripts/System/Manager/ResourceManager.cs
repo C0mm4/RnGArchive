@@ -12,7 +12,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 // 리소스의 Load, Instantiate, Destroy 를 관리하는 리소스 매니저. 
 public class ResourceManager
 {
-    public Dictionary<string, AsyncOperationHandle> LoadResources = new();
+    private Dictionary<string, AsyncOperationHandle> LoadResources = new();
 
     // path에 있느 파일을 로드하는 함수, 로드되는 조건은 Object 일 때
     public T Load<T>(string path) where T : UnityEngine.Object
@@ -123,7 +123,7 @@ public class ResourceManager
     }
 
 
-public Sprite LoadSprite(string path)
+    public Sprite LoadSprite(string path)
     {
         if (LoadResources.ContainsKey(path))
         {

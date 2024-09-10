@@ -29,7 +29,7 @@ public class PartyControlPreviewSlot : ContentsSlot
         {
             image.color = new Color(1, 1, 1, 1);
 
-            image.sprite = GameManager.Resource.LoadSprite(charactor.charaData.ProfileImg);
+            image.sprite = GameManager.LoadSprite(charactor.charaData.ProfileImg);
             text.text = charactor.charaData.Name;
 
         }

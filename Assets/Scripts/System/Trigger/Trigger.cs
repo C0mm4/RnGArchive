@@ -133,7 +133,9 @@ public abstract class Trigger : Obj
         {
             GameManager.Trigger.ActiveTrigger(data);
         });
-//        GameManager.Trigger.ActiveTrigger(data);
+        //        GameManager.Trigger.ActiveTrigger(data);
+
+        GameManager.Stage.RefreshNPCScript();
     }
 
     public bool CheckNodesActive()

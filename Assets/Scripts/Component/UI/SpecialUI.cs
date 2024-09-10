@@ -60,7 +60,7 @@ public class SpecialUI : Obj
         Debug.Log(targetY);
         gameObject.SetActive(true);
         special = GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId];
-        specialImg.sprite = GameManager.Resource.LoadSprite(special.data.SkillImg);
+        specialImg.sprite = GameManager.LoadSprite(special.data.SkillImg);
         movingT = t;
         while (movingT < time)
         {

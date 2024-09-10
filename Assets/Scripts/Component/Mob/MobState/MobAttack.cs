@@ -24,7 +24,7 @@ public class MobAttack : State
 
         charactor.canMove = false;
 
-        charactor.data.attackCooltime[attackIndex] = true;
+        charactor.data.attackIsCool[attackIndex] = true;
         t = 0;
     }
 

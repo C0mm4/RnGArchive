@@ -51,7 +51,7 @@ public class PartyControlSlotSpecial : ContentsSlot
                 isSelected = false;
             }
 
-            image.sprite = GameManager.Resource.LoadSprite(charactor.data.ProfileImg);
+            image.sprite = GameManager.LoadSprite(charactor.data.ProfileImg);
             text.text = charactor.data.name;
 
             if (isSelected)
