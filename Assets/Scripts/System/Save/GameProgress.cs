@@ -10,14 +10,14 @@ public class GameProgress
 {
     public string saveMapId;
     public Vector3 saveP;
-    public int currentCharactorId;
-    public int currentSupporterId;
+    public string currentCharactorId;
+    public string currentSupporterId;
     public bool isActiveSkill;
 
     public bool _isActiveSupport;
     public bool isActiveSupport { get { return isActiveSkill; } set { _isActiveSupport = value; } }
-    public List<int> openCharactors = new();
-    public Dictionary<int, CharactorProgress> charaDatas = new();
+    public List<string> openCharactors = new();
+    public Dictionary<string, CharactorProgress> charaDatas = new();
     public List<Supporter> openSupporeters = new();
     public List<Charactor> currentParty = new();
     public List<string> openDoors = new();
@@ -33,7 +33,7 @@ public class GameProgress
 
     }
 
-    public void AddNewCharas(int charactorId)
+    public void AddNewCharas(string charactorId)
     {
         CharactorProgress charaPros = new CharactorProgress();
         charaPros.charactor = GameManager.CharaCon.charactors[charactorId];
@@ -50,7 +50,7 @@ public class GameProgress
 
     }
 
-    public void AbleChara(int charactorId)
+    public void AbleChara(string charactorId)
     {
         CharactorProgress charaPros = new CharactorProgress();
         charaPros.charactor = GameManager.CharaCon.charactors[charactorId];
@@ -58,14 +58,14 @@ public class GameProgress
         charaDatas[charactorId] = charaPros;
     }
 
-    public void DisableChara(int charactorId)
+    public void DisableChara(string charactorId)
     {
         CharactorProgress charaPros = charaDatas[charactorId];
         charaPros.isOpen = false;
         charaDatas[charactorId] = charaPros;
     }
 
-    public void InsertCharaInParty(int charactorId)
+    public void InsertCharaInParty(string charactorId)
     {
         if (!openCharactors.Contains(charactorId))
         {
@@ -78,7 +78,7 @@ public class GameProgress
         currentParty.Add(GameManager.Progress.charaDatas[charactorId].charactor);
     }
 
-    public void DeleteCharaInParty(int charactorId)
+    public void DeleteCharaInParty(string charactorId)
     {
         if (currentParty.Contains(GameManager.Progress.charaDatas[charactorId].charactor))
         {
@@ -93,7 +93,7 @@ public class GameProgress
 
     public void AddNewCharas(CharactorProgress progress)
     {
-        int id = progress.charactor.charaData.id;
+        string id = progress.charactor.charaData.id;
         if(!openCharactors.Contains(id))
         {
             openCharactors.Add(id);
@@ -108,8 +108,8 @@ public class GameProgress
     {
         if (!openSupporeters.Exists(item => item.data.id.Equals(specialId)))
         {
-            openSupporeters.Add(GameManager.CharaCon.supporters[int.Parse(specialId)]);
-            currentSupporterId = int.Parse(specialId);
+            openSupporeters.Add(GameManager.CharaCon.supporters[specialId]);
+            currentSupporterId = specialId;
         }
     }
 
@@ -117,7 +117,7 @@ public class GameProgress
     {
         if (!openSupporeters.Exists(item => item.data.id.Equals(specialId)))
         {
-            openSupporeters.Add(GameManager.CharaCon.supporters[int.Parse(specialId)]);
+            openSupporeters.Add(GameManager.CharaCon.supporters[specialId]);
         }
     }
 }

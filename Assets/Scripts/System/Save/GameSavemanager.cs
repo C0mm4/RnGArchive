@@ -25,11 +25,11 @@ public class GameSavemanager
         GameManager.Progress.openCharactors = new();
         GameManager.Progress.currentParty = new();
 //        GameManager.Stage.SetInitializeParty();
-        GameManager.Progress.currentSupporterId = 10002001;
-        GameManager.Progress.currentCharactorId = 10001000;
+        GameManager.Progress.currentSupporterId = "10002001";
+        GameManager.Progress.currentCharactorId = "10001000";
 
 //        GameManager.Progress.AddNewCharas(10001000);
-        GameManager.Progress.InsertCharaInParty(10001000);
+        GameManager.Progress.InsertCharaInParty("10001000");
     }
 
     public void SaveGameprogress(Transform savePoint)
@@ -52,7 +52,7 @@ public class GameSavemanager
             // Save Open Charactor Counts
             writer.Write(progress.openCharactors.Count);
             // Save Charactors Data
-            foreach(int chara in progress.openCharactors)
+            foreach(string chara in progress.openCharactors)
             {
                 Charactor targetChara = progress.charaDatas[chara].charactor;
                 // Write Charactor Id
@@ -115,9 +115,9 @@ public class GameSavemanager
                 x = reader.ReadSingle(); y = reader.ReadSingle();
                 saveProgress.saveP = new Vector3(x, y);
 
-                var currentCharaId = reader.ReadInt32();
+                var currentCharaId = reader.ReadString();
                 saveProgress.currentCharactorId = currentCharaId;
-                var currentSupporterId = reader.ReadInt32();
+                var currentSupporterId = reader.ReadString();
                 saveProgress.currentSupporterId = currentSupporterId;
                 var skill = reader.ReadBoolean();
                 saveProgress.isActiveSkill = skill == true;
@@ -127,7 +127,7 @@ public class GameSavemanager
                 int charaCnt = reader.ReadInt32();
                 for (int i = 0; i < charaCnt; i++)
                 {
-                    int targetCharaId = reader.ReadInt32();
+                    var targetCharaId = reader.ReadString();
                     Charactor targetChara = GameManager.CharaCon.charactors[targetCharaId];
                     
 
@@ -157,7 +157,7 @@ public class GameSavemanager
                 int partySize = reader.ReadInt32();
                 for (int i = 0; i <  partySize; i++)
                 {
-                    int partyId = reader.ReadInt32();
+                    var partyId = reader.ReadString();
                     saveProgress.currentParty.Add(GameManager.CharaCon.charactors[partyId]);
                 }
 

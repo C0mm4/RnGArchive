@@ -48,7 +48,7 @@ public class PartyControlUI : Menu
         var openList = GameManager.Progress.charaDatas.Values.ToList();
         foreach(var charactor in openList)
         {
-            if(charactor.charactor.charaData.id != 10001000)
+            if(!charactor.charactor.charaData.id.Equals("10001000"))
             {
                 openCharas.Add(charactor.charactor);
                 strikerSlot.AddContents(charactor.charactor);
@@ -97,7 +97,7 @@ public class PartyControlUI : Menu
             if(selectSuport != null)
             {
                 GameManager.Progress.currentParty = selectParty;
-                GameManager.Progress.currentSupporterId = int.Parse(selectSuport.data.id);
+                GameManager.Progress.currentSupporterId = selectSuport.data.id;
 
                 GameManager.UIManager.endMenu();
             }

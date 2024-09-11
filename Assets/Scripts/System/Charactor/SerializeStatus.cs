@@ -7,7 +7,7 @@ using UnityEngine;
 public struct CharactorData 
 {
     public string Name;
-    public int id;
+    public string id;
     public float maxSpeed;
     public float activeMaxSpeed;
     public float jumpForce;

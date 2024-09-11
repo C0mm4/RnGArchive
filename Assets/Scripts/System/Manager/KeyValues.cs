@@ -293,19 +293,19 @@ public static class Func
                         string afterAction = actions[++i];
                         if (afterAction.Equals("Insert"))
                         {
-                            GameManager.Progress.AddNewCharas(int.Parse(actions[++i]));
+                            GameManager.Progress.AddNewCharas(actions[++i]);
                         }
                         else if (afterAction.Equals("Delete"))
                         {
-                            GameManager.Progress.DeleteCharaInParty(int.Parse(actions[++i]));
+                            GameManager.Progress.DeleteCharaInParty(actions[++i]);
                         }
                         else if (afterAction.Equals("Disable"))
                         {
-                            GameManager.Progress.DisableChara(int.Parse(actions[++i]));
+                            GameManager.Progress.DisableChara(actions[++i]);
                         }
                         else if (afterAction.Equals("Able"))
                         {
-                            GameManager.Progress.AbleChara(int.Parse(actions[++i]));
+                            GameManager.Progress.AbleChara(actions[++i]);
                         }
                     }
                     break;

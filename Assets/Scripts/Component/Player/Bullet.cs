@@ -14,6 +14,9 @@ public class Bullet : Attack
     public float spd;
 
     public Animator animator;
+
+    private bool isHit = false;
+
     public override void CreateHandler(int dmg, Vector2 dir, AtkType t)
     {
         base.CreateHandler(dmg, dir, t);
@@ -48,12 +51,17 @@ public class Bullet : Attack
             {
                 if (hits[i].collider.CompareTag("Wall"))
                 {
+                    isHit = true;
                     Destroy();
                     return;
                 }
                 if (hits[i].collider.CompareTag("Enemy"))
                 {
-                    EnterEnemy(hits[i].collider.GetComponent<Mob>());
+                    if (!isHit)
+                    {
+                        EnterEnemy(hits[i].collider.GetComponent<Mob>());
+                        isHit = false;
+                    }
                     Destroy();
                     return;
                 }

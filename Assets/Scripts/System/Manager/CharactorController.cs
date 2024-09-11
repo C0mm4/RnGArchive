@@ -8,11 +8,11 @@ using UnityEngine;
 [Serializable]
 public class CharactorController
 {
-    public Dictionary<int, Charactor> _charactors;
-    public Dictionary<int, Charactor> charactors { get { return _charactors; } }
+    public Dictionary<string, Charactor> _charactors;
+    public Dictionary<string, Charactor> charactors { get { return _charactors; } }
 
-    public Dictionary<int, Supporter> _supporters;
-    public Dictionary<int, Supporter> supporters { get { return _supporters; } }
+    public Dictionary<string, Supporter> _supporters;
+    public Dictionary<string, Supporter> supporters { get { return _supporters; } }
 
     public List<Charactor> charas;
 
@@ -34,7 +34,7 @@ public class CharactorController
             Charactor newChara = Activator.CreateInstance(T) as Charactor;
             CharactorData charaData = new();
 
-            charaData.id = int.Parse(node["id"].InnerText);
+            charaData.id = node["id"].InnerText;
 
             charaData.attackSpeed = float.Parse(node["AttackSpeed"].InnerText);
 
@@ -102,7 +102,7 @@ public class CharactorController
 
             newChara.charaData = charaData;
 
-            charactors[int.Parse(node["id"].InnerText)] = newChara;
+            charactors[node["id"].InnerText] = newChara;
 
         }
 
@@ -129,7 +129,7 @@ public class CharactorController
             data.info = node["SkillTooltip"][GameManager.gameData.Language[GameManager.gameData.LanguageIndex]].InnerText;
             supporter.data = data;
 
-            supporters[int.Parse(data.id)] = supporter;
+            supporters[data.id] = supporter;
         }
 
         charas = charactors.Values.ToList();

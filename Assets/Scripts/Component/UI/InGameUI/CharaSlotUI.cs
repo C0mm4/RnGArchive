@@ -13,7 +13,7 @@ public class CharaSlotUI : Obj
     public Image charaIcon;
     public Image HPBar;
 
-    public int currentCharaId;
+    public string currentCharaId;
     [SerializeField]
     Charactor target;
 

@@ -273,11 +273,13 @@ public abstract class Trigger : Obj
 
         currentChara.velocity = new Vector2(0, currentChara.velocity.y);
 
-        if(currentChara.charactor.charaData.id != 10001001)
+        // Add NPC Spawn in Script Play
+
+/*        if(!currentChara.charactor.charaData.id.Equals("10001001"))
         {
-            if(GameManager.Progress.openCharactors.FindIndex(item => item == 10001001) != -1)
+            if(GameManager.Progress.openCharactors.FindIndex(item => item.Equals("10001001")) != -1)
             {
-                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, 10001001);
+                PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, "10001001");
                 playerDummys.Add(dummy);
 
                 state = 1;
@@ -287,9 +289,9 @@ public abstract class Trigger : Obj
         foreach(Charactor chara in GameManager.Progress.currentParty)
         {
             // is Not Alice
-            if(chara.charaData.id != currentChara.charactor.charaData.id && chara.charaData.id != 10001001)
+            if(chara.charaData.id != currentChara.charactor.charaData.id && !chara.charaData.id.Equals("10001001"))
             {
-                if (GameManager.Progress.charaDatas[10001001].isOpen) 
+                if (GameManager.Progress.charaDatas["10001001"].isOpen) 
                 {
                     PlayerController dummy = GameManager.CutSceneCharactorSpawn(currentChara.transform, chara.charaData.id);
                     playerDummys.Add(dummy);
@@ -333,7 +335,7 @@ public abstract class Trigger : Obj
                     playerDummys[index].gameObject.SetActive(false);
                 }
             });
-        }
+        }*/
 
 
         List<string> junctions = new List<string>();
@@ -398,7 +400,7 @@ public abstract class Trigger : Obj
                 await subTrigger.Action();
             }
         }
-
+/*
         for(int i = 0; i < spawnNPCs.Count; i++)
         {
             spawnNPCs[i].Destroy();
@@ -415,7 +417,7 @@ public abstract class Trigger : Obj
 
                 playerDummys[index].Destroy();
             });
-        }
+        }*/
         //        playerDummys.Clear();
 
         GameManager.CameraManager.player = GameManager.player.transform;

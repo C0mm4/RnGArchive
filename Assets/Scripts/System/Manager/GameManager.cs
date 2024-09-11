@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().canMove = true;
     }
 
-    public static void CharactorSpawn(Transform transform, int id)
+    public static void CharactorSpawn(Transform transform, string id)
     {
         Vector3 tmp = transform.position;
 
@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour
         CameraManager.player = player.transform;
     }
 
-    public static PlayerController CutSceneCharactorSpawn(Transform trans, int id)
+    public static PlayerController CutSceneCharactorSpawn(Transform trans, string id)
     {
         GameObject go;
         go = InstantiateAsync("Player", trans.position, trans.rotation);
