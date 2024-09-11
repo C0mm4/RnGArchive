@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class CustomDropDown : HoveringRectTransform
 {
@@ -29,13 +30,14 @@ public class CustomDropDown : HoveringRectTransform
 
     }
 
-    public override void pointerEnterEvent(PointerEventData eventData)
+    public override void pointerEnterEventOnCode(PointerEventData eventData)
     {
-        menu.OnMouseEnterHandler();
+        ExecuteEvents.Execute(dropdown.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
     }
 
-    public override void pointerExitEvent(PointerEventData eventData)
+    public override void pointerExitEventOnCode(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+
+        ExecuteEvents.Execute(dropdown.gameObject, eventData, ExecuteEvents.pointerExitHandler);
     }
 }

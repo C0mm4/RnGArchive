@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ContentsSlot : ButtonInUI, IPointerEnterHandler, IPointerExitHandler
+public class ContentsSlot : CustomButton
 {
     public Image charaImg;
     public Contents contents;
@@ -16,15 +16,6 @@ public class ContentsSlot : ButtonInUI, IPointerEnterHandler, IPointerExitHandle
     public override void OnCreate()
     {
         base.OnCreate();
-    }
-    public override void OnPointerEnter(PointerEventData eventData)
-    {
-        base.OnPointerEnter(eventData);
-        if (menu.cursorIndex != index)
-        {
-            menu.cursorIndex = index;
-            menu.OnMouseEnterHandler();
-        }
     }
 
     public override void OnPointerExit(PointerEventData eventData)

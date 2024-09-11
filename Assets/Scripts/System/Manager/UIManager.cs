@@ -61,6 +61,7 @@ public class UIManager
     // Menu object closed, reset before menu
     public void endMenu()
     {
+        Debug.Log(currentMenu.gameObject);
         currentMenu.exit();
         currentMenu = null;
         if (menuStack.Count > 0)

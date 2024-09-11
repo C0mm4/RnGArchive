@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIClose : ButtonInUI
+public class UIClose : CustomButton
 {
     public override void OnCreate()
     {
@@ -11,6 +11,9 @@ public class UIClose : ButtonInUI
     }
     public override void OnClick()
     {
-        GameManager.UIManager.endMenu();
+        if(GameManager.UIManager.currentMenu == menu)
+        {
+            GameManager.UIManager.endMenu();
+        }
     }
 }

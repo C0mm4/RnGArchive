@@ -110,7 +110,7 @@ public class SelectUI : Menu
     {
         ExecuteEvents.Execute(buttons[cursorIndex].button.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
     }
-
+/*
     public async override void OnMouseEnterHandler()
     {
         isHoveringAnimation = true;
@@ -126,7 +126,7 @@ public class SelectUI : Menu
         }
         hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         isHoveringAnimation = false;
-    }
+    }*/
 
     public void OnMouseExitHandler()
     {

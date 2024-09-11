@@ -36,12 +36,12 @@ public class CustomButton : HoveringRectTransform
 
     }
 
-    public override void pointerEnterEvent(PointerEventData eventData)
+    public override void pointerEnterEventOnCode(PointerEventData eventData)
     {
         ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
     }
 
-    public override void pointerExitEvent(PointerEventData eventData)
+    public override void pointerExitEventOnCode(PointerEventData eventData)
     {
         ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerExitHandler);
     }

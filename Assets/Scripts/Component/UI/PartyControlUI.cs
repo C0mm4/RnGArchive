@@ -349,7 +349,7 @@ public class PartyControlUI : Menu
             {
 
                 PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-                lastButton.pointerExitEvent(pointerEventData);
+                lastButton.pointerExitEventOnCode(pointerEventData);
                 OnMouseEnterHandler();
             }
 

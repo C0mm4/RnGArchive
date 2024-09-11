@@ -24,6 +24,17 @@ public abstract class HoveringRectTransform : Obj, IPointerEnterHandler, IPointe
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
+        if (menu != null)
+        {
+            if (menu.cursorIndex != targetIndex)
+            {
+                if (menu.cursorIndex != -99)
+                {
+                    menu.cursorIndex = targetIndex;
+                    menu.OnMouseEnterHandler();
+                }
+            }
+        }
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
@@ -40,6 +51,6 @@ public abstract class HoveringRectTransform : Obj, IPointerEnterHandler, IPointe
         size = rect.rect.size * 1.1f;
     }
 
-    public abstract void pointerEnterEvent(PointerEventData eventData);
-    public abstract void pointerExitEvent(PointerEventData eventData);
+    public abstract void pointerEnterEventOnCode(PointerEventData eventData);
+    public abstract void pointerExitEventOnCode(PointerEventData eventData);
 }

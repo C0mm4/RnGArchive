@@ -861,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00000083662337, y: 0.000015200818}
+  m_AnchoredPosition: {x: 0.00000083662337, y: 0.000118276934}
   m_SizeDelta: {x: -183, y: 180}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &581777760524012573
@@ -1039,14 +1039,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 4871268752457980165}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: -1
+  button: {fileID: 4871268752457980165}
 --- !u!1 &4871268753829090998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,9 +1148,10 @@ MonoBehaviour:
   isGetInput: 0
   closeButton: {fileID: 4871268752457980160}
   cursorIndex: 0
+  hoveringUI: {fileID: 0}
+  confirmButton: {fileID: 7038191200876647883}
   strikerButton: {fileID: 6057586403239264394}
   specialButton: {fileID: 6174159594926446693}
-  confirmButton: {fileID: 7038191200876647883}
   openCharas: []
   openSupporter: []
   viewPort:
@@ -1191,8 +1190,6 @@ MonoBehaviour:
   - {fileID: 0}
   selectedSpecial: {fileID: 7462108969834522582}
   viewIndex: 0
-  hoveringUI: {fileID: 0}
-  isHoveringAnimation: 0
 --- !u!95 &4871268753829090995
 Animator:
   serializedVersion: 5
@@ -1374,7 +1371,7 @@ GameObject:
   - component: {fileID: 6227481573470071656}
   - component: {fileID: 1118372374668179182}
   - component: {fileID: 7189617244873696241}
-  - component: {fileID: 7762932195875146611}
+  - component: {fileID: 1665074683557355565}
   m_Layer: 5
   m_Name: StrikerButton
   m_TagString: Untagged
@@ -1497,7 +1494,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7762932195875146611
+--- !u!114 &1665074683557355565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1506,20 +1503,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6057586403239264394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0283d7a5131606c4fad2b4ded9730fb0, type: 3}
+  m_Script: {fileID: 11500000, guid: adbab926ee3ad5e40b42a8f99975f150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 7189617244873696241}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: -2
+  button: {fileID: 7189617244873696241}
 --- !u!1 &6174159594926446693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1527,7 @@ GameObject:
   - component: {fileID: 1213484794876785074}
   - component: {fileID: 7479164610130795615}
   - component: {fileID: 195202981839932310}
-  - component: {fileID: 643184065604353030}
+  - component: {fileID: 5420294483768550898}
   m_Layer: 5
   m_Name: SpecialButton
   m_TagString: Untagged
@@ -1655,7 +1650,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &643184065604353030
+--- !u!114 &5420294483768550898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1664,20 +1659,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6174159594926446693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0283d7a5131606c4fad2b4ded9730fb0, type: 3}
+  m_Script: {fileID: 11500000, guid: adbab926ee3ad5e40b42a8f99975f150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 195202981839932310}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: -3
+  button: {fileID: 195202981839932310}
 --- !u!1 &6555020120594531637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,7 +1909,7 @@ GameObject:
   - component: {fileID: 8478807762501628879}
   - component: {fileID: 6301624894852748528}
   - component: {fileID: 8523176390259955529}
-  - component: {fileID: 7765211966925695955}
+  - component: {fileID: 8951420509461886970}
   m_Layer: 5
   m_Name: ConfirmButton
   m_TagString: Untagged
@@ -2039,7 +2032,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7765211966925695955
+--- !u!114 &8951420509461886970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2048,20 +2041,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7038191200876647883}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0283d7a5131606c4fad2b4ded9730fb0, type: 3}
+  m_Script: {fileID: 11500000, guid: adbab926ee3ad5e40b42a8f99975f150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 8523176390259955529}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: 999
+  button: {fileID: 8523176390259955529}
 --- !u!1 &7131588695457501977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,14 +2476,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 6710764404886708759}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: 0
+  button: {fileID: 6710764404886708759}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
   index: 90
@@ -2789,14 +2778,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 3232376930744601914}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: 0
+  button: {fileID: 3232376930744601914}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
   index: 92
@@ -3190,14 +3177,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 2323719074123356756}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: 0
+  button: {fileID: 2323719074123356756}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
   index: 91
@@ -3406,14 +3391,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 8534483795865142392}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
   targetIndex: 0
+  button: {fileID: 8534483795865142392}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
   index: 100

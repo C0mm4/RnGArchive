@@ -22,6 +22,9 @@ public abstract class Menu : Obj
     protected bool isHoveringAnimation = false;
 
     [SerializeField]
+    private HoveringRectTransform hoveringTarget;
+
+    [SerializeField]
     protected GameObject confirmButton;
 
     // Start is called before the first frame update
@@ -94,11 +97,10 @@ public abstract class Menu : Obj
     {
         isHoveringAnimation = true;
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        HoveringRectTransform targetButton;
-        targetButton = FindIndexButton(cursorIndex);
+        hoveringTarget = FindIndexButton(cursorIndex);
 
-        targetButton.pointerEnterEvent(pointerEventData);
-        hoveringUI.GetComponent<HoveringUI>().SetData(targetButton.position, targetButton.size);
+        hoveringTarget.pointerEnterEventOnCode(pointerEventData);
+        hoveringUI.GetComponent<HoveringUI>().SetData(hoveringTarget.position, hoveringTarget.size);
 
         hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
 
@@ -113,6 +115,15 @@ public abstract class Menu : Obj
         hoveringUI.GetComponent<RectTransform>().localScale = Vector3.one;
 
         isHoveringAnimation = false;
+    }
+
+    public override void StepAlways()
+    {
+        base.StepAlways();
+        if(hoveringTarget != null && hoveringUI != null)
+        {
+            hoveringUI.GetComponent<HoveringUI>().SetData(hoveringTarget.position, hoveringTarget.size);
+        }
     }
 
     public abstract HoveringRectTransform FindIndexButton(int index);

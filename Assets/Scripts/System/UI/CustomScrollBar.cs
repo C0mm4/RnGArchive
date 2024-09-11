@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class CustomScrollBar : HoveringRectTransform
 {
@@ -20,13 +21,15 @@ public class CustomScrollBar : HoveringRectTransform
         
     }
 
-    public override void pointerEnterEvent(PointerEventData eventData)
+    public override void pointerEnterEventOnCode(PointerEventData eventData)
     {
-        menu.OnMouseEnterHandler();
+
+        ExecuteEvents.Execute(scrollbar.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
     }
 
-    public override void pointerExitEvent(PointerEventData eventData)
+    public override void pointerExitEventOnCode(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+
+        ExecuteEvents.Execute(scrollbar.gameObject, eventData, ExecuteEvents.pointerExitHandler);
     }
 }
