@@ -391,7 +391,6 @@ public abstract class Trigger : Obj
             }
             if (!trigText.scripts[i].subTriggerId.Equals(""))
             {
-                Debug.Log(trigText.scripts[i].subTriggerId);
                 Type t = Type.GetType("SubTrig" + trigText.scripts[i].subTriggerId);
                 SubTrigger subTrigger;
                 subTrigger = Activator.CreateInstance(t) as SubTrigger;

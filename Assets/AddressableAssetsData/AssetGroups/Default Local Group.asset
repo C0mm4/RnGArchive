@@ -311,10 +311,6 @@ MonoBehaviour:
     m_Address: Emoji
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 6173f4142a0da384f80e1501dfbfe83d
-    m_Address: SelectHovering
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 456370693064d1348a70d91a8c9f9aff
     m_Address: PartyControlUI
     m_ReadOnly: 0
@@ -357,6 +353,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 9e60da703bbe0aa4bb88894437d6c9e9
     m_Address: SettingUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fb3fdbcb565be3445b8f550cb94b66f0
+    m_Address: PauseUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

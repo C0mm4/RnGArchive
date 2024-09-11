@@ -33,6 +33,8 @@ public class UIManager
 
     public List<string> textStack;
 
+    public List<Menu> menuList = new();
+
     public void initialize()
     {
         ui_instance = this;
@@ -61,13 +63,18 @@ public class UIManager
     // Menu object closed, reset before menu
     public void endMenu()
     {
-        Debug.Log(currentMenu.gameObject);
         currentMenu.exit();
         currentMenu = null;
         if (menuStack.Count > 0)
         {
             currentMenu = menuStack.Pop();
             currentMenu.show();
+        }
+
+
+        if(currentMenu == null)
+        {
+            GameManager.ResumeGame();
         }
         PopStateStack();
     }
@@ -118,6 +125,7 @@ public class UIManager
     public void Update()
     {
         textStack = TextUIStack.ToList();
+        menuList = menuStack.ToList();
         if(canvas == null)
         {
             GameObject go = GameObject.Find("Canvas");

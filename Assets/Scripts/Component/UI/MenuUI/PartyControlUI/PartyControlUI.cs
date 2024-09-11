@@ -51,7 +51,6 @@ public class PartyControlUI : Menu
             if(charactor.charactor.charaData.id != 10001000)
             {
                 openCharas.Add(charactor.charactor);
-                Debug.Log(charactor.charactor);
                 strikerSlot.AddContents(charactor.charactor);
 
             }
@@ -67,13 +66,11 @@ public class PartyControlUI : Menu
 
         foreach(var special in openSpecial)
         {
-            Debug.Log(special.data.id);
             openSupporter.Add(special);
             specialSlot.AddContents(special);
         }
 
         specialSlots = GetComponentsInChildren<PartyControlSlotSpecial>(true).ToList();
-        Debug.Log(specialSlots.Count);  
         foreach (var obj in specialSlots)
         {
             obj.originUI = this;
@@ -83,9 +80,7 @@ public class PartyControlUI : Menu
         // Set Selected Party Data
 
         selectParty = GameManager.Progress.currentParty.ToList();
-        Debug.Log(GameManager.Progress.currentSupporterId);
         selectSuport = GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId];
-        Debug.Log(selectSuport.data.id);
         ViewStriker();
         SetPreview();
 
@@ -128,7 +123,6 @@ public class PartyControlUI : Menu
         viewPort[1].gameObject.SetActive(false);
         viewPort[0].gameObject.SetActive(true);
 
-        cursorIndex = 0;
     }
 
     public void ViewSpecial()
@@ -142,7 +136,6 @@ public class PartyControlUI : Menu
         viewPort[0].gameObject.SetActive(false);
         viewPort[1].gameObject.SetActive(true);
 
-        cursorIndex = 0;
     }
 
     public void SetPreview()

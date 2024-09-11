@@ -26,17 +26,13 @@ public class StageController
     {   
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-
             if (GameManager.Progress.currentParty.Count > 1)
             {
-
-
                 if (!GameManager.Player.GetComponent<PlayerController>().isHitState)
                 {
 
                     changeInputT = Time.time;
                     isTapInput = true;
-
 
                     GameManager.UIManager.inGameUI.charas[changeSlot].GetComponent<CharaSlotUI>().DisableChangeSlot();
                     changeSlot++;

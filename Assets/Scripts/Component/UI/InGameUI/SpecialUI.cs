@@ -57,7 +57,6 @@ public class SpecialUI : Obj
     {
         state = 1;
         float targetY = -250 - ((GameManager.Progress.currentParty.Count - 1) * 110);
-        Debug.Log(targetY);
         gameObject.SetActive(true);
         special = GameManager.CharaCon.supporters[GameManager.Progress.currentSupporterId];
         specialImg.sprite = GameManager.LoadSprite(special.data.SkillImg);

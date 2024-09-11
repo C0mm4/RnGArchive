@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 666069176}
   - component: {fileID: 666069180}
   m_Layer: 5
-  m_Name: w (3)
+  m_Name: Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,12 +369,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 0}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
+  button: {fileID: 0}
 --- !u!114 &666069177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 899760519}
   - component: {fileID: 899760518}
   m_Layer: 5
-  m_Name: w (4)
+  m_Name: Credit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -554,12 +554,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 0}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
+  button: {fileID: 0}
 --- !u!114 &899760520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6542274421448471643, guid: 6c36d2e5af16e9d43a236e8badd3964d, type: 3}
   m_PrefabInstance: {fileID: 1380343875}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1387018361}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74a867222a5e8984789e91da2f60f39c, type: 3}
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 1222188022}
   - component: {fileID: 1222188021}
   m_Layer: 5
-  m_Name: w (1)
+  m_Name: LoadGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -836,12 +836,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 0}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
+  button: {fileID: 0}
 --- !u!114 &1222188022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 1258131036}
   - component: {fileID: 1258131035}
   m_Layer: 5
-  m_Name: w (2)
+  m_Name: ExitGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1050,12 +1050,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 0}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
+  button: {fileID: 0}
 --- !u!114 &1258131036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1270,6 +1270,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c36d2e5af16e9d43a236e8badd3964d, type: 3}
+--- !u!1 &1387018361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6542274421448471642, guid: 6c36d2e5af16e9d43a236e8badd3964d, type: 3}
+  m_PrefabInstance: {fileID: 1380343875}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1387018362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387018361}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381232f68762b0349a22b1e171a6d5e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1508588783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1301,7 @@ GameObject:
   - component: {fileID: 1508588787}
   - component: {fileID: 1508588788}
   m_Layer: 5
-  m_Name: w
+  m_Name: NewGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1478,12 +1495,12 @@ MonoBehaviour:
   isAlarmRun: 
   alarmTime: []
   currentAnimation: 
-  button: {fileID: 0}
+  rect: {fileID: 0}
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  localPosition: {x: 0, y: 0}
-  anchoredPos: {x: 0, y: 0}
-  FuncPosition: {x: 0, y: 0}
+  menu: {fileID: 0}
+  targetIndex: 0
+  button: {fileID: 0}
 --- !u!1 &1634066896
 GameObject:
   m_ObjectHideFlags: 0

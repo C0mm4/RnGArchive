@@ -56,6 +56,13 @@ public class SceneController
         }
     }
 
+    public async void GotoTitle()
+    {
+        CreateFadeOutObj();
+        await FadeOut("TitleScene");
+        GameManager.ChangeUIState(UIState.Title);
+    }
+
     public async Task MoveMap(string mapId, string doorId)
     {
         GameManager.ChangeUIState(UIState.Loading);

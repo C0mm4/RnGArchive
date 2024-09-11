@@ -16,7 +16,6 @@ public class CustomDropDown : HoveringRectTransform
         base.OnCreate();
         try
         {
-            Debug.Log("dropdownSet");
             dropdown = GetComponent<TMP_Dropdown>();
 
         }

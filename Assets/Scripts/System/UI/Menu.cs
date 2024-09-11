@@ -67,7 +67,6 @@ public abstract class Menu : Obj
         await Task.Delay(TimeSpan.FromMilliseconds(100));
         hide();
         GameManager.Input.MenuCloseT = Time.time;
-        GameManager.ResumeGame();
         Destroy();
     }
 
@@ -100,19 +99,23 @@ public abstract class Menu : Obj
         hoveringTarget = FindIndexButton(cursorIndex);
 
         hoveringTarget.pointerEnterEventOnCode(pointerEventData);
-        hoveringUI.GetComponent<HoveringUI>().SetData(hoveringTarget.position, hoveringTarget.size);
 
-        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
-
-        float t = 0f;
-        while (t <= 0.1f)
+        if(hoveringUI != null)
         {
-            t += Time.deltaTime;
-            hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
-            await Task.Yield();
-        }
+            hoveringUI.GetComponent<HoveringUI>().SetData(hoveringTarget.position, hoveringTarget.size);
 
-        hoveringUI.GetComponent<RectTransform>().localScale = Vector3.one;
+            hoveringUI.GetComponent<RectTransform>().localScale = Vector3.zero;
+
+            float t = 0f;
+            while (t <= 0.1f)
+            {
+                t += Time.deltaTime;
+                hoveringUI.GetComponent<RectTransform>().localScale = new Vector3(t * 10, t * 10, 1);
+                await Task.Yield();
+            }
+
+            hoveringUI.GetComponent<RectTransform>().localScale = Vector3.one;
+        }
 
         isHoveringAnimation = false;
     }

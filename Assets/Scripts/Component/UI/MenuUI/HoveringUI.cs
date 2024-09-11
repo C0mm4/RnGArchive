@@ -19,6 +19,5 @@ public class HoveringUI : MonoBehaviour
         Position = pos; Size = size;
         rt.position = pos;
         rt.sizeDelta = size;
-        Debug.Log(pos);
     }
 }

@@ -262,8 +262,6 @@ public class Mob : PlayerTest
 
     public void EndAttackState()
     {
-        Debug.Log(currentState);
-        Debug.Log(attackObj);
         if (attackObj != null)
         {
             attackObj.GetComponent<MobAttackObj>().EndAttackState();

@@ -861,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00000083662337, y: 0.000118276934}
+  m_AnchoredPosition: {x: 0.00000083662337, y: 0.00041806742}
   m_SizeDelta: {x: -183, y: 180}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &581777760524012573
@@ -1149,6 +1149,7 @@ MonoBehaviour:
   closeButton: {fileID: 4871268752457980160}
   cursorIndex: 0
   hoveringUI: {fileID: 0}
+  hoveringTarget: {fileID: 0}
   confirmButton: {fileID: 7038191200876647883}
   strikerButton: {fileID: 6057586403239264394}
   specialButton: {fileID: 6174159594926446693}
@@ -2480,11 +2481,10 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
-  targetIndex: 0
+  targetIndex: 90
   button: {fileID: 6710764404886708759}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
-  index: 90
   charactor:
     stateMachine:
       currentState:
@@ -2782,11 +2782,10 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
-  targetIndex: 0
+  targetIndex: 92
   button: {fileID: 3232376930744601914}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
-  index: 92
   charactor:
     stateMachine:
       currentState:
@@ -3181,11 +3180,10 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
-  targetIndex: 0
+  targetIndex: 91
   button: {fileID: 2323719074123356756}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
-  index: 91
   charactor:
     stateMachine:
       currentState:
@@ -3395,11 +3393,10 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   size: {x: 0, y: 0}
   menu: {fileID: 4871268753829090994}
-  targetIndex: 0
+  targetIndex: 100
   button: {fileID: 8534483795865142392}
   charaImg: {fileID: 0}
   InfoUI: {fileID: 0}
-  index: 100
   charactor:
     data:
       id: 

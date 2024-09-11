@@ -217,7 +217,6 @@ public static class Func
                     if (isScene)
                     {
                         float delayT = float.Parse(actions[++i]);
-                        Debug.Log(delayT);
                         await Task.Delay(TimeSpan.FromMilliseconds(delayT));
                     }
                     break;

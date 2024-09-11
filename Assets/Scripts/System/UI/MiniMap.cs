@@ -22,7 +22,7 @@ public class MiniMap : Menu
 
     public override void ConfirmAction()
     {
-        exit();
+        GameManager.UIManager.endMenu();
     }
 
     public override void KeyInput()

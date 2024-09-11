@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
 
     public static Vector2 tileOffset = new Vector2(0.32f, 0.32f);
 
-    public static bool isPaused;
+    public static bool _isPaused;
+    public static bool isPaused { get { return  _isPaused; } set { _isPaused = value; } }
 
     public static GameObject player;
     public static GameObject Player { get { return player; } }
@@ -243,11 +244,11 @@ public class GameManager : MonoBehaviour
     {
         if (isPaused)
         {
-            ResumeGame();
+//            ResumeGame();
         }
         else
         {
-            PauseGame();
+            InstantiateAsync("PauseUI");
         }
     }
 

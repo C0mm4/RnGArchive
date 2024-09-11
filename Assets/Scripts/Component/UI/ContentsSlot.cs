@@ -11,7 +11,6 @@ public class ContentsSlot : CustomButton
 
     public GameObject InfoUI;
 
-    public int index;
 
     public override void OnCreate()
     {

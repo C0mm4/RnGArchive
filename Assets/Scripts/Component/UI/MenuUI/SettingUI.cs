@@ -31,7 +31,6 @@ public class SettingUI : Menu
 
     public void FirstFreshValue()
     {
-        Debug.Log("FirstFresh");
         resolutions.dropdown.value = GameManager.gameData.resolutionIndex;
         masterVolume.scrollbar.value = GameManager.gameData.masterVolume;
         effectVolume.scrollbar.value = GameManager.gameData.effectVolume;
