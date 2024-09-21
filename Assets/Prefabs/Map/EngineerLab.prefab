@@ -5072,6 +5072,8 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   bound: {fileID: 409411373968826590}
+  NPCs: []
+  mapTile: {fileID: 8333530620468312002}
 --- !u!1 &6463705222940333784
 GameObject:
   m_ObjectHideFlags: 0

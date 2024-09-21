@@ -619,7 +619,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 368192261
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}
@@ -1408,7 +1408,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1562918333
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}
@@ -10453,6 +10453,8 @@ MonoBehaviour:
   alarmTime: []
   currentAnimation: 
   bound: {fileID: 7990852130175907373}
+  NPCs: []
+  mapTile: {fileID: 6463705221392211383}
 --- !u!1 &6463705222949832468
 GameObject:
   m_ObjectHideFlags: 0
