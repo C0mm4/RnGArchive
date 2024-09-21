@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -122,6 +123,8 @@ public class Map : Obj
         public int[,] grid; // 0: 이동 가능, 1: 이동 불가
         public int jumpForce; // 점프의 최대 높이
         private int xMin, yMin;
+        private Dictionary<int, List<Vector2Int>> pathcache = new();
+        private bool isUsed = false;
 
         public AStarPathfinding(int[,] grid, int xMin, int yMin, int jumpForce = 1)
         {
@@ -131,12 +134,19 @@ public class Map : Obj
             this.yMin = yMin;
         }
 
-        public List<Vector2Int> FindPathInField(Vector2Int start, Vector2Int target, int jumpForce = 1)
+        public async Task<List<Vector2Int>> FindPathInField(Vector2Int start, Vector2Int target, int jumpForce = 1)
         {
+            while (isUsed)
+            {
+                await Task.Yield();
+            }
+            isUsed = true;
             start -= new Vector2Int(xMin, yMin);
             target -= new Vector2Int(xMin, yMin);
             this.jumpForce = jumpForce;
 
+
+            isUsed = false;
             return FindPath(start, target);
         }
 

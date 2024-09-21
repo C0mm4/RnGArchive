@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -32,19 +33,26 @@ public class Test : MonoBehaviour
             {
                 if (!findPath)
                 {
-                    var path = currentMap.aStar.FindPathInField(tileMapPos, targetObject.tileMapPos, jumpF);
-                    if (path != null)
+                    UnityEngine.Debug.Log("Start Searching");
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    var astarSearch = currentMap.aStar.FindPathInField(tileMapPos, targetObject.tileMapPos, jumpF);
+                    var path = astarSearch.Result;
+                    stopwatch.Stop();
+                    if (path.Count > 0)
                     {
                         foreach (Vector2Int step in path)
                         {
-                            Debug.Log("경로: " + step);
+                            UnityEngine.Debug.Log("경로: " + step);
                             tilemap.SetTile(new Vector3Int(step.x + tilemap.cellBounds.xMin, step.y + tilemap.cellBounds.yMin, 0), pathTile);
                         }
+                        UnityEngine.Debug.Log("End Searching");
                     }
                     else
                     {
-                        Debug.Log("경로를 찾지 못했습니다.");
+                        UnityEngine.Debug.Log("경로를 찾지 못했습니다.");
                     }
+                    UnityEngine.Debug.Log($"Pathfinding execute time : {stopwatch.ElapsedMilliseconds} ms");
                     findPath = true;
                 }
             }

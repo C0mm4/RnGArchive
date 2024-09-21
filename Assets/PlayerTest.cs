@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerTest : Obj
 {
@@ -34,6 +35,8 @@ public class PlayerTest : Obj
     public Vector3 targetMovePos;
 
     public bool isLanding;
+
+    public Vector2Int onTilePos;
 
     protected virtual void OnEnable()
     {
@@ -96,6 +99,8 @@ public class PlayerTest : Obj
             DecayAdditionalVelocity();
 
             FlipX();
+
+            IsObjectOnMapTilemap();
         }
     }
 
@@ -244,4 +249,29 @@ public class PlayerTest : Obj
         var go = GameManager.InstantiateAsync("Emoji", transform.position, transform.rotation);
         await go.GetComponentInChildren<Emoji>().CreateHandler(emojiName);
     }
+
+    protected bool IsObjectOnMapTilemap()
+    {
+        Tilemap currentMapTile = GameManager.Stage.currentMap.mapTile;
+        if(currentMapTile != null)
+        {
+            Vector3Int cellPosition = currentMapTile.WorldToCell(transform.position);
+            
+            BoundsInt bounds = currentMapTile.cellBounds;
+
+            if(!bounds.Contains(cellPosition))
+            {
+                return false;
+            }
+            onTilePos = new Vector2Int(cellPosition.x, cellPosition.y);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    
 }

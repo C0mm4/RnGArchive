@@ -115,7 +115,11 @@ public class Mob : PlayerTest
                 if (GameManager.GetUIState() == UIState.InPlay)
                 {
                     var dir = targetMovePos - transform.position;
-                    if (!isLanding)
+                    if(Mathf.Abs(dir.x) < 0.05)
+                    {
+                        isMove = false;
+                    }
+                    else if (!isLanding)
                     {
                         if (dir.x < 0)
                         {
