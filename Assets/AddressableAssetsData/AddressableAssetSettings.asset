@@ -92,6 +92,10 @@ MonoBehaviour:
     - Player
     - UI
     - Sprite
+    - Tile
+    - Tile_MilleniumLab
+    - Tildmap
+    - TileMap
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: b3d3965c4f1bc124a8b2c60ade9b308a, type: 2}

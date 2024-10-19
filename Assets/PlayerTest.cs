@@ -54,11 +54,8 @@ public class PlayerTest : Obj
 
     public override void BeforeStep()
     {
-
-
         if(body != null)
         {
-
             if (gravityModifier > 0f)
             {
                 if (velocity.y < 0)

@@ -35,6 +35,7 @@ public class ResourceManager
         }
     }
 
+
     public GameObject Instantiate(GameObject gameObject, Vector3 pos, Quaternion rotation)
     {
         GameObject prefab = UnityEngine.Object.Instantiate(gameObject, pos, rotation);
@@ -109,15 +110,10 @@ public class ResourceManager
     }
 
 
-    public List<AsyncOperationHandle> LoadAssetAsyncWithTag<T>(string label) where T : UnityEngine.Object
+    public List<T> LoadAssetAsyncWithTag<T>(string label) where T : UnityEngine.Object
     {
-        var ops = Addressables.LoadResourceLocationsAsync(label);
-        List<AsyncOperationHandle> ret = new();
-        foreach(var location in ops.Result)
-        {
-            AsyncOperationHandle op = LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey);
-            ret.Add(op);
-        }
+        List<T> ret = new();
+        var ops = Addressables.LoadAssetsAsync<T>(label, prefab => ret.Add(prefab));
 
         return ret;
     }

@@ -12,9 +12,10 @@ public class CameraManager : Obj
     public Camera maincamera;
     public Camera minimapCam;
 
-    private float cameraWidth, cameraHeight;
+    public float cameraWidth, cameraHeight;
 
     public SpriteRenderer background;
+    public Bounds backgroundBounds;
 
     public GameObject sideWall1, sideWall2;
 
@@ -49,6 +50,7 @@ public class CameraManager : Obj
     {
         if(player != null && background != null)
         {
+            backgroundBounds = background.bounds;
             // If Game State is not InPlay, side wall collision disabled
             if(GameManager.GetUIState() != UIState.InPlay)
             {
@@ -67,10 +69,10 @@ public class CameraManager : Obj
             float height = distance * Mathf.Tan(maincamera.fieldOfView * Mathf.Deg2Rad / 2);
             float width = (cameraWidth / cameraHeight) * height;
 
-            float minX = background.bounds.min.x + width;
-            float minY = background.bounds.min.y + height;
-            float maxX = background.bounds.max.x - width;
-            float maxY = background.bounds.max.y - height;
+            float minX = backgroundBounds.min.x + width;
+            float minY = backgroundBounds.min.y + height;
+            float maxX = backgroundBounds.max.x - width;
+            float maxY = backgroundBounds.max.y - height;
             //Limit camera movement range
 
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);

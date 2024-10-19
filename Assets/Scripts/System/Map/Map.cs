@@ -8,7 +8,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Map : Obj
 {
@@ -22,8 +21,10 @@ public class Map : Obj
     [SerializeField]
     public List<int> grid;
 
-    public Tile testTile;
-    public Tile aTile;
+    public GameObject NPCParent;
+    public GameObject TriggerParent;
+    public GameObject DoorParents;
+    public GameObject SpawnPointParents;
 
     public override void OnCreate()
     {

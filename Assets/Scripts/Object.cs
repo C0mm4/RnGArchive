@@ -64,6 +64,7 @@ public abstract class Obj : MonoBehaviour
         {
             AfterStep();
         }
+        AfterStepAlways();
     }
 
     public virtual void OnCreate()
@@ -113,6 +114,11 @@ public abstract class Obj : MonoBehaviour
     }
 
     public virtual void StepAlways()
+    {
+
+    }
+
+    public virtual void AfterStepAlways()
     {
 
     }

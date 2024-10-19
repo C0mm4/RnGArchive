@@ -359,6 +359,24 @@ MonoBehaviour:
     m_Address: PauseUI
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 30699ae4e40df244f8d6c322f7b52f69
+    m_Address: MapTemplate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 962f37b33ac442947b4ca49664282006
+    m_Address: Tile_MilleniumLab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - TileMap
+  - m_GUID: 1f7d4791c00223b41847c70e2b432440
+    m_Address: TileButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b52a5d9c572d01343958e553d612f895
+    m_Address: Tile_TestMap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - TileMap
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

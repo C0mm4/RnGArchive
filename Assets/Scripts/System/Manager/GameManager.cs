@@ -149,6 +149,12 @@ public class GameManager : MonoBehaviour
         characon = CharaCon;
         stage= Stage;
         setting = gameData;
+
+        if (CameraManager == null)
+        {
+            CameraManager cm = GameObject.Find("Main Camera").GetComponent<CameraManager>();
+            CameraManager = cm;
+        }
     }
 
 

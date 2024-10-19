@@ -9,38 +9,37 @@ using UnityEngine;
 
 public abstract class Trigger : Obj
 {
-    public List<string> nodeIds;
+    public List<string> nodeIds = new();
 
     protected Collider2D triggerBox;
 
-    public TriggerData data;
-
-    public int SelectIndex;
+    public TriggerData data = new("00000000", false);
 
     public TrigText trigText;
 
-    public List<string> nextTriggerId;
+    public List<string> nextTriggerId = new();
     public List<Trigger> nextTrigger;
 
     public List<GameObject> conditionObjs;
     public List<GameObject> spawnObjs;
 
+    public bool isInitialize = false;
 
     [Serializable]
 
-    class AdditionalCondi
+    public class AdditionalCondi
     {
         [SerializeField]
-        enum condiType 
+        public enum condiType 
         {
             None, CheckMobAlive, CheckMobHP, 
         };
 
         [SerializeField]
-        condiType condition;
+        public condiType condition;
 
         [SerializeField]
-        float HPRatio;
+        public float HPRatio;
 
         public Trigger originTrigger;
 
@@ -69,28 +68,47 @@ public abstract class Trigger : Obj
 
     }
     [SerializeField]
-    AdditionalCondi condi;
+    public AdditionalCondi condi = new();
+
+    public enum TriggerType
+    {
+        CutScene, Spawn,
+    }
+
+    public TriggerType type = TriggerType.CutScene;
 
     public override void OnCreate()
     {
+        if (!GameManager.isPaused)
+        {
+            Initialize();
+        }
+    }
+
+    public void Initialize()
+    {
         base.OnCreate();
         triggerBox = GetComponent<Collider2D>();
-        triggerBox.isTrigger = true;
+        if (triggerBox != null)
+        {
+            triggerBox.isTrigger = true;
+        }
         data.isActivate = false;
         conditionObjs = new();
         spawnObjs = new();
-        if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+        if (GameManager.Progress != null)
         {
-            data.isActivate = true;
+            if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+            {
+                data.isActivate = true;
+            }
+            else
+            {
+                data.isActivate = false;
+            }
         }
-        else
-        {
-            data.isActivate = false;
-        }/*
-        string id = GetType().Name;
-        id = id.Replace("Trig", "");
-        data.id = id;*/
         condi.originTrigger = this;
+        isInitialize = true;
     }
 
     public async virtual void OnTriggerStay2D(Collider2D collision)
@@ -157,13 +175,23 @@ public abstract class Trigger : Obj
     public override void BeforeStep()
     {
         base.BeforeStep();
-        if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+        if (isInitialize)
         {
-            data.isActivate = true;
+            if (GameManager.Progress.activeTrigs.ContainsKey(data.id))
+            {
+                data.isActivate = true;
+            }
+            else
+            {
+                data.isActivate = false;
+            }
         }
         else
         {
-            data.isActivate = false;
+            if (!GameManager.isPaused)
+            {
+                Initialize();
+            }
         }
     }
 
@@ -432,4 +460,32 @@ public abstract class Trigger : Obj
         }
     }
 
+    public void drawLine(Color color)
+    {
+        LineRenderer line = GetComponent<LineRenderer>();
+        if(line == null)
+            line = gameObject.AddComponent<LineRenderer>();
+
+        line.loop = true;
+        Vector3[] positions = new Vector3[5];
+
+        positions[0] = transform.position + new Vector3(-GetComponent<BoxCollider2D>().size.x / 2, GetComponent<BoxCollider2D>().size.y / 2);
+        positions[1] = transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2, GetComponent<BoxCollider2D>().size.y / 2);
+        positions[2] = transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2, -GetComponent<BoxCollider2D>().size.y / 2);
+        positions[3] = transform.position + new Vector3(-GetComponent<BoxCollider2D>().size.x / 2, -GetComponent<BoxCollider2D>().size.y / 2);
+        positions[4] = positions[0];
+
+        line.startColor = color;
+        line.endColor = color;
+
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+
+        line.positionCount = 5; 
+
+        line.useWorldSpace = true;
+
+        line.SetPositions(positions);
+        
+    }
 }
