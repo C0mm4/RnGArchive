@@ -31,6 +31,7 @@ public class NPC : InteractionTrigger
     public GameObject triggerEffect;
 
     public int sayN = 0;
+    
 
     public override void OnCreate()
     {
@@ -118,6 +119,8 @@ public class NPC : InteractionTrigger
                 triggerEffect = null;
             }
         }
+
+
     }
 
 
@@ -408,5 +411,13 @@ public class NPC : InteractionTrigger
         }
 
         return null;
+    }
+
+    public void TextureYPosChange()
+    {
+        if(GetComponent<NPCHologramShaderController>() != null)
+        {
+            GetComponent<NPCHologramShaderController>().SetUVCoordinate();
+        }
     }
 }

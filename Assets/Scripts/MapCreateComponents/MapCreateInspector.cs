@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MapCreateInspector : MonoBehaviour
@@ -9,7 +10,6 @@ public class MapCreateInspector : MonoBehaviour
     public List<InspectorArea> components;
 
     public GameObject contents;
-
 
     public void SetComponentsRect()
     {
@@ -33,5 +33,8 @@ public class MapCreateInspector : MonoBehaviour
             components.Add(rt.GetComponent<InspectorArea>());
         }
         SetComponentsRect();
+
     }
+
+
 }

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 368192261
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2044869928, guid: 70f3be9dc74ad7b4a98100aa05bf9352, type: 3}
+  m_Sprite: {fileID: -809380160, guid: 70f3be9dc74ad7b4a98100aa05bf9352, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: -180114217
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1140693174, guid: 5ea0f989d5036004091ca102fc6c3436, type: 3}
+  m_Sprite: {fileID: -592879696, guid: 70f3be9dc74ad7b4a98100aa05bf9352, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -286,12 +286,12 @@ SpriteRenderer:
   m_SortingLayerID: -180114217
   m_SortingLayer: 4
   m_SortingOrder: 2
-  m_Sprite: {fileID: -775505979, guid: 5ea0f989d5036004091ca102fc6c3436, type: 3}
+  m_Sprite: {fileID: -1412625128, guid: 70f3be9dc74ad7b4a98100aa05bf9352, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -381,6 +381,7 @@ MonoBehaviour:
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
   isLanding: 0
+  onTilePos: {x: 0, y: 0}
   player: {fileID: 0}
   detectDistance: 0
   text: 
@@ -398,6 +399,7 @@ MonoBehaviour:
   sayTrigger: {fileID: 0}
   triggerEffect: {fileID: 0}
   sayN: 0
+  isHolo: 0
 --- !u!61 &3343830729914614469
 BoxCollider2D:
   m_ObjectHideFlags: 0

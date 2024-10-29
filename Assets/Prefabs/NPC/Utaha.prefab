@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 368192261
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -899412482, guid: 70f3be9dc74ad7b4a98100aa05bf9352, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2539230161560934091
@@ -274,6 +274,7 @@ MonoBehaviour:
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
   isLanding: 0
+  onTilePos: {x: 0, y: 0}
   player: {fileID: 0}
   detectDistance: 0
   text: 
@@ -291,6 +292,7 @@ MonoBehaviour:
   sayTrigger: {fileID: 0}
   triggerEffect: {fileID: 0}
   sayN: 0
+  isHolo: 0
 --- !u!50 &91740689258290755
 Rigidbody2D:
   serializedVersion: 4

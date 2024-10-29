@@ -84,12 +84,14 @@ public class ResourceManager
     {
         if (LoadResources.ContainsKey(path))
         {
+            Debug.Log($"Already Loaded Resource : {path}");
             return LoadResources[path];
         }
         else
         {
             try
             {
+                Debug.Log($"Load Resource : {path}");
                 var op = Addressables.LoadAssetAsync<T>(path);
                 op.WaitForCompletion();
                 LoadResources[path] = op;
@@ -97,6 +99,7 @@ public class ResourceManager
             }
             catch
             {
+                Debug.LogError($"Failed to load Resource : {path}");
                 return default;
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -68,11 +69,20 @@ public class MobSpawner
 
     public NPC NPCSpawn(string id, Vector3 pos)
     {
-        GameObject ret = GameManager.InstantiateAsync(id, pos);
-        ret.GetComponent<NPC>().npcId = id;
+        var ids = id.Split('_');
+
+        GameObject ret = GameManager.InstantiateAsync(ids[0], pos);
+        ret.GetComponent<NPC>().npcId = ids[0];
         ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
         GameManager.Stage.NPCScriptSet(ret.GetComponent<NPC>());
         GameManager.Stage.currentNPCs.Add(ret.GetComponent<NPC>());
+
+        if (ids.Length == 2)
+        {
+            ret.AddComponent<NPCHologramShaderController>();
+        }
+
+
         return ret.GetComponent<NPC>();
     }
 }

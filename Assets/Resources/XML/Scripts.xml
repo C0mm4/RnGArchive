@@ -37,7 +37,7 @@
 		<trigID name="40012100">
 			<script>
 				<NPCID>99000000</NPCID>
-				<kr>#Spawn.20001001.utahaSpawn.Delay.1000</kr>
+				<kr>#Spawn.20001001_H.utahaSpawn.Delay.1000</kr>
 			</script>
 		</trigID>
 	</mapID>

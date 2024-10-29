@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MapCreateController : MonoBehaviour
 {
     public Map currentMap;
     public GameObject mapCenterObj;
@@ -48,8 +48,11 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
     public GameObject spawntriggerInspectorPrefab;
     public GameObject spawnPointInspectorPrefab;
     public GameObject doorInspectorPrefab;
+    public GameObject mapInspectorPrefab;
 
     public GameObject invisableObjectsParent;
+
+    public CursorUI cursorUI;
     
 
     // Start is called before the first frame update
@@ -60,13 +63,14 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
         SetCameraOrigin();
         animator = GetComponent<Animator>();
 
-        GameManager.PauseGame();
+        GameManager.isPaused = true;
 
         mapSelect.value = 0;
         tileSelect.value = 0;
         selectLayer.value = 0;
 
         CreateNewMap();
+        cursorUI.SetButton(0);
     }
 
     // Update is called once per frame
@@ -74,37 +78,74 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if(inputMode == InputMode.selectObj)
+            if (inputMode == InputMode.selectObj)
             {
                 inputMode = InputMode.selectTrigger;
+
+                cursorUI.SetButton(3);
             }
-            else inputMode = InputMode.selectObj;
+            else
+            {
+                inputMode = InputMode.selectObj;
+
+                cursorUI.SetButton(2);
+            }
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             inputMode = InputMode.draw;
+
+            cursorUI.SetButton(0);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             inputMode = InputMode.erase;
+
+            cursorUI.SetButton(1);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if(inputMode == InputMode.drawCutSceneTrigger)
+            if (inputMode == InputMode.drawCutSceneTrigger)
             {
                 inputMode = InputMode.drawSpawnTrigger;
+
+                cursorUI.SetButton(5);
             }
-            else inputMode = InputMode.drawCutSceneTrigger;
+            else
+            {
+                inputMode = InputMode.drawCutSceneTrigger;
+
+                cursorUI.SetButton(4);
+            }
         }
 
-        if(mapSelect.IsExpanded || selectLayer.IsExpanded || tileSelect.IsExpanded)
+        if (isMouseInInspector())
+        {
+            if (!isShow && !isAnimationPlay)
+            {
+                isAnimationPlay = true;
+                animator.Play("Show");
+                isShow = true;
+            }
+        }
+        else
+        {
+            if (isShow && !isAnimationPlay)
+            {
+                isAnimationPlay = true;
+                animator.Play("Hide");
+                isShow = false;
+            }
+        }
+/*
+        if(mapSelect.IsExpanded || selectLayer.IsExpanded || tileSelect.IsExpanded || (inspector != null && inspector.isDropDownExpend()))
         {
             isDropDownOpen = true;
         }
         else
         {
             isDropDownOpen = false;
-        }
+        }*/
     }
 
     public void CreateNewMap()
@@ -130,6 +171,7 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
 
         mapSelect.ClearOptions();
         mapSelect.AddOptions(maps);
+
 //        mapSelect.value = index;
     }
 
@@ -155,7 +197,11 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
         if (currentMap != null)
             currentMap.Destroy();
         var prefab = Resources.Load<GameObject>($"Maps/{name}");
-        if (prefab == null) return false;
+        if (prefab == null)
+        {
+            Debug.Log("ASDF");
+            return false;
+        }
         var obj = Instantiate(prefab);
         if(obj != null)
         {
@@ -168,6 +214,9 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
             SetObjectLines();
 
             OnLayerDropDownChnage();
+
+
+            SetInspector(null);
             return true;
         }
         else
@@ -273,7 +322,6 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
         }
 
         List<Object> data = customTilemap.GetAllTiles();
-        Debug.Log(data.Count);
 
         foreach (var obj in data)
         {
@@ -283,7 +331,6 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
                 var tileButton = Instantiate(tileButtonPrefab, tileView.transform);
                 if (tileButton != null)
                 {
-                    Debug.Log("TileButton instantiated successfully.");
                     tileButton.GetComponent<TileButton>().controller = this;
                     tileButton.GetComponent<TileButton>().img.sprite = tile.sprite;
                     tileButton.GetComponent<TileButton>().tile = tile;
@@ -341,7 +388,7 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
     {
         LoadTileFile(tileSelect.options[tileSelect.value].text);
     }
-
+/*
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!isDropDownOpen && !isAnimationPlay)
@@ -360,7 +407,7 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
             animator.Play("Hide");
             isShow = false;
         }
-    }
+    }*/
     public void AnimationEnd()
     {
         isAnimationPlay = false;
@@ -368,61 +415,74 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void SetInspector(GameObject go)
     {
-        DataShowObj = go;
-        if(inspector != null)
+        if (inspector != null)
         {
             DeleteInspector();
         }
-        var trig = go.GetComponent<Trigger>();
-        if (trig != null)
+        if (go == null)
         {
-            if(trig.type == Trigger.TriggerType.CutScene)
-            {
+            inspector = Instantiate(mapInspectorPrefab).GetComponent<MapInspector>();
+            inspector.controller = this;
+            inspector.gameObject.transform.SetParent(transform);
 
-                inspector = Instantiate(triggerInspectorPrefab).GetComponent<MapCreateInspector>();
-                inspector.controller = this;
-                inspector.gameObject.transform.SetParent(transform);
+            inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
 
-                inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
-
-                inspector.SetData(go);
-            }
-            else
-            {
-                inspector = Instantiate(spawntriggerInspectorPrefab).GetComponent<MapCreateInspector>();
-                inspector.controller = this;
-                inspector.gameObject.transform.SetParent(transform);
-
-                inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
-
-                inspector.SetData(go);
-            }
+            inspector.SetData(go);
         }
         else
         {
-            var spawnP = go.GetComponent<SpawnP>();
-            if(spawnP != null)
+            DataShowObj = go;
+            var trig = go.GetComponent<Trigger>();
+            if (trig != null)
             {
-                inspector = Instantiate(spawnPointInspectorPrefab).GetComponent<SpawnPointInspector>();
-                inspector.controller = this;
-                inspector.gameObject.transform.SetParent(transform);
-
-                inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
-
-                inspector.SetData(go);
-            }
-            else
-            {
-                var door = go.GetComponent<Door>();
-                if(door != null)
+                if (trig.type == Trigger.TriggerType.CutScene)
                 {
-                    inspector = Instantiate(doorInspectorPrefab).GetComponent<DoorInspector>();
+
+                    inspector = Instantiate(triggerInspectorPrefab).GetComponent<MapCreateInspector>();
                     inspector.controller = this;
                     inspector.gameObject.transform.SetParent(transform);
 
                     inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
 
                     inspector.SetData(go);
+                }
+                else
+                {
+                    inspector = Instantiate(spawntriggerInspectorPrefab).GetComponent<MapCreateInspector>();
+                    inspector.controller = this;
+                    inspector.gameObject.transform.SetParent(transform);
+
+                    inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
+
+                    inspector.SetData(go);
+                }
+            }
+            else
+            {
+                var spawnP = go.GetComponent<SpawnP>();
+                if (spawnP != null)
+                {
+                    inspector = Instantiate(spawnPointInspectorPrefab).GetComponent<SpawnPointInspector>();
+                    inspector.controller = this;
+                    inspector.gameObject.transform.SetParent(transform);
+
+                    inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
+
+                    inspector.SetData(go);
+                }
+                else
+                {
+                    var door = go.GetComponent<Door>();
+                    if (door != null)
+                    {
+                        inspector = Instantiate(doorInspectorPrefab).GetComponent<DoorInspector>();
+                        inspector.controller = this;
+                        inspector.gameObject.transform.SetParent(transform);
+
+                        inspector.GetComponent<RectTransform>().localPosition = new Vector3(0, -260, 0);
+
+                        inspector.SetData(go);
+                    }
                 }
             }
         }
@@ -438,7 +498,101 @@ public class MapCreateController : MonoBehaviour, IPointerEnterHandler, IPointer
         foreach(Transform trig in currentMap.TriggerParent.transform)
         {
             GameObject go = trig.gameObject;
-            go.GetComponent<Trigger>().drawLine(Color.red);
+//            go.GetComponent<Trigger>().drawLine(Color.red);
+            DrawTriggerLine(Color.red, go.GetComponent<Trigger>());
+            if(go.GetComponent<Trigger>().type == Trigger.TriggerType.Spawn)
+            {
+                foreach(Transform spawnP in trig.transform)
+                {
+                    DrawSpawnPoint(Color.cyan, spawnP);
+                }
+            }
         }
+        foreach(Transform spawnP in currentMap.SpawnPointParents.transform)
+        {
+            DrawSpawnPoint(Color.green, spawnP);
+        }
+    }
+
+
+    public void DrawTriggerLine(Color color, Trigger trig)
+    {
+        LineRenderer line = trig.GetComponent<LineRenderer>();
+        if (line == null)
+            line = trig.AddComponent<LineRenderer>();
+
+        line.loop = true;
+        Vector3[] positions = new Vector3[5];
+
+        positions[0] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2);
+        positions[1] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2);
+        positions[2] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2);
+        positions[3] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2);
+        positions[4] = positions[0];
+
+        line.startColor = color;
+        line.endColor = color;
+
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+
+        line.positionCount = 5;
+
+        line.useWorldSpace = true;
+
+        line.SetPositions(positions);
+
+    }
+
+    public void DrawSpawnPoint(Color color, Transform trans)
+    {
+        LineRenderer line = trans.GetComponent<LineRenderer>();
+        if (line == null)
+            line = trans.AddComponent<LineRenderer>();
+
+        line.loop = true;
+        Vector3[] positions = new Vector3[5];
+
+        positions[0] = trans.transform.position + new Vector3(-0.16f, 0.16f);
+        positions[1] = trans.transform.position + new Vector3(0.16f, 0.16f);
+        positions[2] = trans.transform.position + new Vector3(0.16f, -0.16f);
+        positions[3] = trans.transform.position + new Vector3(-0.16f, -0.16f);
+        positions[4] = positions[0];
+
+        line.startColor = color;
+        line.endColor = color;
+
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+
+        line.positionCount = 5;
+
+        line.useWorldSpace = true;
+
+        line.SetPositions(positions);
+
+    }
+
+    public bool isMouseInInspector()
+    {
+        float xMin, xMax;
+        Vector3 mousePos = Input.mousePosition;
+
+        if (isShow)
+        {
+            xMin = GameManager.CameraManager.maincamera.pixelWidth - 500;
+        }
+        else
+        {
+            xMin = GameManager.CameraManager.maincamera.pixelWidth - 50;
+        }
+        xMax = GameManager.CameraManager.maincamera.pixelWidth;
+
+
+        if (mousePos.x >= xMin && mousePos.x <= xMax)
+        {
+            return true;
+        }
+        else return false;
     }
 }

@@ -103,6 +103,10 @@ public class Cursor : MonoBehaviour
                                     controller.SetInspector(clickObject);
                                     
                                 }
+                                else
+                                {
+                                    controller.SetInspector(null);
+                                }
                             }
                         }
                         else
@@ -130,13 +134,16 @@ public class Cursor : MonoBehaviour
                             foreach (var trig in trigs)
                             {
                                 var size = trig.GetComponent<BoxCollider2D>().size;
-                                float minX = trig.gameObject.transform.position.x - size.x;
-                                float maxX = trig.gameObject.transform.position.x + size.x;
-                                float minY = trig.gameObject.transform.position.y - size.y;
-                                float maxY = trig.gameObject.transform.position.y + size.y;
-                                if (mousePos.x >= minX && mousePos.x <= maxY && mousePos.y >= minX && mousePos.y <= maxY)
+                                float minX = trig.gameObject.transform.position.x - size.x/2;
+                                float maxX = trig.gameObject.transform.position.x + size.x/2;
+                                float minY = trig.gameObject.transform.position.y - size.y/2;
+                                float maxY = trig.gameObject.transform.position.y + size.y/2;
+                                if(mousePos.x >= minX && mousePos.x <= maxX)
                                 {
-                                    tmpTrigger = trig;
+                                    if(mousePos.y >= minY && mousePos.y <= maxY)
+                                    {
+                                        tmpTrigger = trig;
+                                    }
                                 }
 
                                 if (Input.GetKeyDown(KeyCode.Mouse0) && !controller.isShow)
@@ -146,6 +153,10 @@ public class Cursor : MonoBehaviour
                                         clickObject = tmpTrigger as GameObject;
                                         controller.SetInspector(clickObject);
                                         
+                                    }
+                                    else
+                                    {
+                                        controller.SetInspector(null);
                                     }
                                 }
 
@@ -158,6 +169,7 @@ public class Cursor : MonoBehaviour
                                 var startP = pastPos;
                                 var tmpPos = Pos - startP;
                                 clickObject.transform.position += new Vector3(0.32f * tmpPos.x, 0.32f * tmpPos.y, 0);
+                                controller.DrawTriggerLine(Color.red, clickObject.GetComponent<Trigger>());
                             }
                             else
                             {
@@ -319,17 +331,21 @@ public class Cursor : MonoBehaviour
     private void AddTrigger(Vector3Int Pos, string type)
     {
         GameObject go = new GameObject();
-        if(type.Equals("CutScene"))
-            go.AddComponent<CutSceneTrigger>();
-        else if(type.Equals("Spawn"))
-            go.AddComponent<SpawnTrigger>();
+        if (type.Equals("CutScene"))
+        {
+            go.AddComponent<CutSceneTrigger>().type = Trigger.TriggerType.CutScene;
+        }
+        else if (type.Equals("Spawn"))
+        {
+            go.AddComponent<SpawnTrigger>().type = Trigger.TriggerType.Spawn;
+
+        }
         go.GetComponent<Trigger>().type = Trigger.TriggerType.CutScene;
         go.AddComponent<BoxCollider2D>();
         go.transform.SetParent(controller.currentMap.TriggerParent.transform);
         go.transform.position = controller.currentLayer.CellToWorld(Pos) + new Vector3(0.16f, 0.16f, 0);
         go.GetComponent<BoxCollider2D>().size = new Vector2(0.32f, 0.32f);
         go.GetComponent<BoxCollider2D>().isTrigger = true;
-        go.GetComponent<Trigger>().drawLine(Color.red);
         clickObject = go;
         controller.SetInspector(clickObject);
     }
@@ -339,6 +355,9 @@ public class Cursor : MonoBehaviour
         var startPos = clickedPos[0];
         var endPos = Pos;
         var size = endPos - startPos;
+
+
+        Debug.Log($"StartYPos {startPos.y} endYPos {endPos.y} size {size.y}");
         if (size.x < 0)
         {
             var tmp = startPos.x;
@@ -355,11 +374,14 @@ public class Cursor : MonoBehaviour
 
             size.y = -size.y;
         }
-        clickObject.transform.position =
-            (controller.currentLayer.CellToWorld(startPos) + controller.currentLayer.CellToWorld(Pos)) / 2
-            + new Vector3(0.16f, 0.16f, 0);
+
+
+        Debug.Log($"change StartYPos {startPos.y} endYPos {endPos.y} size {size.y}");
+
+        clickObject.transform.position = (controller.currentLayer.CellToWorld(startPos) + controller.currentLayer.CellToWorld(endPos)) / 2 + new Vector3(0.16f, 0.16f, 0);
+
         clickObject.GetComponent<BoxCollider2D>().size = new Vector2(0.32f * (size.x + 1), 0.32f * (size.y + 1));
 
-        clickObject.GetComponent<Trigger>().drawLine(Color.red);
+        controller.DrawTriggerLine(Color.red, clickObject.GetComponent<Trigger>());
     }
 }

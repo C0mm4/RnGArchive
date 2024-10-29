@@ -75,7 +75,7 @@ public abstract class Trigger : Obj
         CutScene, Spawn,
     }
 
-    public TriggerType type = TriggerType.CutScene;
+    public TriggerType type;
 
     public override void OnCreate()
     {
@@ -485,6 +485,7 @@ public abstract class Trigger : Obj
 
         line.useWorldSpace = true;
 
+        line.sortingLayerName = "OnViewer";
         line.SetPositions(positions);
         
     }
