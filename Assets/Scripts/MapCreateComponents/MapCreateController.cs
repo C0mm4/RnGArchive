@@ -35,6 +35,8 @@ public class MapCreateController : MonoBehaviour
 
     public GameObject DataShowObj;
 
+    public string currentMapName;
+
     public enum InputMode
     {
         draw, erase, selectObj, selectTrigger, drawCutSceneTrigger,  drawSpawnTrigger
@@ -53,7 +55,9 @@ public class MapCreateController : MonoBehaviour
     public GameObject invisableObjectsParent;
 
     public CursorUI cursorUI;
-    
+
+    public bool isRename;
+    public string newName;
 
     // Start is called before the first frame update
     void Start()
@@ -76,50 +80,107 @@ public class MapCreateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (inputMode == InputMode.selectObj)
-            {
-                inputMode = InputMode.selectTrigger;
 
-                cursorUI.SetButton(3);
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (!isRename)
+            {
+                isRename = true;
+                newName = "";
             }
             else
             {
-                inputMode = InputMode.selectObj;
-
-                cursorUI.SetButton(2);
+                mapSelect.captionText.text = currentMapName;
+                isRename = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            inputMode = InputMode.draw;
 
-            cursorUI.SetButton(0);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
+        if(isRename)
         {
-            inputMode = InputMode.erase;
-
-            cursorUI.SetButton(1);
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (inputMode == InputMode.drawCutSceneTrigger)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                inputMode = InputMode.drawSpawnTrigger;
-
-                cursorUI.SetButton(5);
+                newName = "";
+                mapSelect.captionText.text = currentMapName;
+                isRename = false;
             }
-            else
-            {
-                inputMode = InputMode.drawCutSceneTrigger;
 
-                cursorUI.SetButton(4);
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+
+                currentMap.name = newName;
+                mapSelect.captionText.text = newName;
+                newName = "";
+                isRename = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                if(newName.Length > 0)
+                {
+                    newName = newName.Substring(0, newName.Length - 1);
+                    mapSelect.captionText.text = newName;
+                }
+            }
+
+            foreach (char c in Input.inputString)
+            {
+                // 입력된 키가 특수 키가 아닌 경우에만 추가
+                if (!char.IsControl(c))
+                {
+                    newName += c;
+
+                    mapSelect.captionText.text = newName;
+                }
+            }
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                if (inputMode == InputMode.selectObj)
+                {
+                    inputMode = InputMode.selectTrigger;
+
+                    cursorUI.SetButton(3);
+                }
+                else
+                {
+                    inputMode = InputMode.selectObj;
+
+                    cursorUI.SetButton(2);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                inputMode = InputMode.draw;
+
+                cursorUI.SetButton(0);
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                inputMode = InputMode.erase;
+
+                cursorUI.SetButton(1);
+            }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (inputMode == InputMode.drawCutSceneTrigger)
+                {
+                    inputMode = InputMode.drawSpawnTrigger;
+
+                    cursorUI.SetButton(5);
+                }
+                else
+                {
+                    inputMode = InputMode.drawCutSceneTrigger;
+
+                    cursorUI.SetButton(4);
+                }
             }
         }
 
-        if (isMouseInInspector())
+        if (isMouseInInspector() || isRename)
         {
             if (!isShow && !isAnimationPlay)
             {
@@ -137,15 +198,7 @@ public class MapCreateController : MonoBehaviour
                 isShow = false;
             }
         }
-/*
-        if(mapSelect.IsExpanded || selectLayer.IsExpanded || tileSelect.IsExpanded || (inspector != null && inspector.isDropDownExpend()))
-        {
-            isDropDownOpen = true;
-        }
-        else
-        {
-            isDropDownOpen = false;
-        }*/
+
     }
 
     public void CreateNewMap()
@@ -208,6 +261,7 @@ public class MapCreateController : MonoBehaviour
             currentMap = obj.GetComponent<Map>();
             obj.name = mapSelect.options[mapSelect.value].text;
             GameManager.CameraManager.background = currentMap.bound;
+            currentMapName = name;
             SetCameraOrigin();
             SetLayerData();
 
@@ -244,6 +298,22 @@ public class MapCreateController : MonoBehaviour
             if (PrefabUtility.SaveAsPrefabAsset(obj, $"Assets/Resources/Maps/{obj.name}.prefab") != null)
             {
                 GameManager.UIManager.SetText($"{obj.name} map save successfully");
+                GameObject savedPrefab = Resources.Load<GameObject>($"Maps/{obj.name}");
+                if (savedPrefab != null)
+                {
+                    // 자식 오브젝트의 모든 Line Renderer 삭제
+                    RemoveAllLineRenderers(savedPrefab.transform);
+                }
+                if (!currentMapName.Equals(obj.name) && !currentMapName.Equals("MapTemplate"))
+                {
+                    if (AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Resources/Maps/{currentMapName}.prefab"))
+                    {
+                        AssetDatabase.DeleteAsset($"Assets/Resources/Maps/{currentMapName}.prefab");
+                    }
+                }
+                mapSelect.options[mapSelect.value].text = obj.name;
+                mapSelect.captionText.text = obj.name;
+                currentMapName = obj.name;
                 return;
             }
             else
@@ -256,6 +326,23 @@ public class MapCreateController : MonoBehaviour
 
         GameManager.UIManager.SetText($"current Map is null");
         return;
+    }
+
+
+    private void RemoveAllLineRenderers(Transform parent)
+    {
+        // 현재 오브젝트의 Line Renderer 삭제
+        LineRenderer lineRenderer = parent.GetComponent<LineRenderer>();
+        if (lineRenderer != null)
+        {
+            DestroyImmediate(lineRenderer, true);  // Prefab의 컴포넌트 삭제
+        }
+
+        // 모든 자식 오브젝트를 재귀적으로 탐색하여 Line Renderer 삭제
+        foreach (Transform child in parent)
+        {
+            RemoveAllLineRenderers(child);
+        }
     }
 
     private void LoadTileDropdown()

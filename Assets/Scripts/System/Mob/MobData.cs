@@ -12,6 +12,7 @@ public class MobData : ScriptableObject
     public float[] attackDelay;
     public bool[] attackIsCool;
     public float detectDistance;
+    public int jumpForce;
 
     public AtkType atkType;
     public DefType defType;

@@ -124,7 +124,7 @@ public class Map : Obj
         public int[,] grid; // 0: 이동 가능, 1: 이동 불가
         public int jumpForce; // 점프의 최대 높이
         private int xMin, yMin;
-        private Dictionary<int, List<Vector2Int>> pathcache = new();
+        private Dictionary<(int x, int y, int jumpF), List<Vector2Int>> pathcache = new();
         private bool isUsed = false;
 
         public AStarPathfinding(int[,] grid, int xMin, int yMin, int jumpForce = 1)
@@ -147,8 +147,10 @@ public class Map : Obj
             this.jumpForce = jumpForce;
 
 
+            var path = FindPath(start, target);
+
             isUsed = false;
-            return FindPath(start, target);
+            return path;
         }
 
         public Vector2Int ApplyGravity(Vector2Int start)
@@ -194,6 +196,14 @@ public class Map : Obj
                     }
                 }
 
+                for (int i = 1; i <= jumpForce; i++)
+                {
+                    if (pathcache.ContainsKey((currentNode.position.x, currentNode.position.y, i)))
+                    {
+                        return pathcache[(currentNode.position.x, currentNode.position.y, i)];
+                    }
+                }
+
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
                
@@ -221,7 +231,7 @@ public class Map : Obj
                 {
                     if (grid[newPos.x, newPos.y] == 0)
                     {
-                        AddNeighbor(currentNode, newPos, target, openSet, closedSet);
+                        AddNeighbor(currentNode, newPos, target, openSet, closedSet, 0);
                     }
                     // When X Axis searching reach wall, Start Y Axis Search (Stairs)
                     else
@@ -231,7 +241,7 @@ public class Map : Obj
                             Vector2Int upStairPos = new Vector2Int(currentNode.position.x, currentNode.position.y + jumpHeight) + direction;
                             if(IsWithinBounds(upStairPos) && grid[upStairPos.x, upStairPos.y] == 0)
                             {
-                                AddNeighbor(currentNode, upStairPos, target, openSet, closedSet);
+                                AddNeighbor(currentNode, upStairPos, target, openSet, closedSet, jumpHeight);
                                 break;
                             }
                         }
@@ -241,7 +251,7 @@ public class Map : Obj
             }
         }
 
-        private void AddNeighbor(Node currentNode, Vector2Int newPos, Vector2Int target, List<Node> openSet, HashSet<Node> closedSet)
+        private void AddNeighbor(Node currentNode, Vector2Int newPos, Vector2Int target, List<Node> openSet, HashSet<Node> closedSet, int jumpCnt)
         {
             int newCostToNeighbor = currentNode.gCost + 1; // 기본 이동 비용
            
@@ -251,6 +261,7 @@ public class Map : Obj
                 neighbor.gCost = newCostToNeighbor;
                 neighbor.hCost = Heuristic(neighbor.position, target);
                 neighbor.parent = currentNode;
+                neighbor.jumpCnt = jumpCnt;
 
                 if (!openSet.Contains(neighbor))
                 {
@@ -262,29 +273,6 @@ public class Map : Obj
             }
         }
 
-
-        private List<Node> GetNeighbors(Node node)
-        {
-            List<Node> neighbors = new List<Node>();
-
-            Vector2Int[] directions = {
-                new Vector2Int(0, 1),  // 상
-                new Vector2Int(1, 0),  // 우
-                new Vector2Int(0, -1), // 하
-                new Vector2Int(-1, 0)  // 좌
-            };
-
-            foreach (var direction in directions)
-            {
-                Vector2Int newPos = node.position + direction;
-                if (IsWithinBounds(newPos))
-                {
-                    neighbors.Add(new Node(newPos));
-                }
-            }
-
-            return neighbors;
-        }
 
         private bool IsWithinBounds(Vector2Int pos)
         {
@@ -300,10 +288,19 @@ public class Map : Obj
         {
             List<Vector2Int> path = new List<Vector2Int>();
             Node currentNode = endNode;
+
+            int maxJumpForce = 0;
            
             while (currentNode != startNode)
             {
+                if(currentNode.jumpCnt > maxJumpForce)
+                {
+                    maxJumpForce = currentNode.jumpCnt;
+                }
                 path.Add(currentNode.position);
+
+                pathcache[(currentNode.position.x, currentNode.position.y, maxJumpForce)] = path;
+
                 currentNode = currentNode.parent;
             }
             path.Add(startNode.position);
@@ -317,6 +314,7 @@ public class Map : Obj
             public int gCost; // 시작 노드에서의 비용
             public int hCost; // 목표 노드까지의 비용
             public Node parent;
+            public int jumpCnt;
 
             public Node(Vector2Int position, int gCost = int.MaxValue, int hCost = int.MaxValue)
             {

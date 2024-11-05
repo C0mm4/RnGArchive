@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
+[Serializable]
 public class Sweaper : AIModel
 {
     public override void Step()
@@ -10,6 +12,32 @@ public class Sweaper : AIModel
         currentState = target.currentState;
         StateControl();
 
+        if (!target.isForceMoving)
+        {
+            if (canAccessPlayer)
+            {
+                Vector3 pos = default(Vector3);
+                if(path.Count > 1)
+                {
+                    pos = GameManager.Stage.currentMap.mapTile.CellToWorld(new Vector3Int(path[1].x, path[1].y, 0));
+                }
+                else 
+                {
+                    pos = target.transform.position;
+                }
+                
+                target.SetTargetPosition(pos);
+            }
+            if (currentState == "MobIdle" || currentState == "MobMove")
+            {
+                if (target.GetPlayerDistance(target.player) <= 0.3f * target.transform.localScale.x)
+                {
+                    if (!target.data.attackIsCool[0])
+                        target.ChangeState(new MobPrepareAttack(0));
+                }
+            }
+        }
+/*
         if (!target.isForceMoving)
         {
             if(currentState == "MobIdle" || currentState == "MobMove")
@@ -24,7 +52,7 @@ public class Sweaper : AIModel
                     target.ChangeState(new MobPrepareAttack(0));
                 }
             }
-        }
+        }*/
     }
 
     public override void StateControl()

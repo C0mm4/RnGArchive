@@ -262,18 +262,6 @@ public abstract class Trigger : Obj
 
     public abstract Task Action();
 
-    public NPC FindNPC(string id, Transform trans)
-    {
-        /*NPC ret = npcList.Find(item => item.npcId.Equals(id));*/
-        List<NPC> npcs = GameManager.Instance.currentMapObj.GetComponentsInChildren<NPC>().ToList();
-        NPC ret = npcs.Find(item => item.npcId.Equals(id));
-        if(ret == null)
-        {
-            ret = NPCSpawn(id, trans);
-        }
-        return ret;
-
-    }
 
     public NPC FindNPC(string id)
     {
@@ -283,11 +271,6 @@ public abstract class Trigger : Obj
         return ret;
     }
     
-    public NPC NPCSpawn(string id, Transform trans)
-    {
-        NPC ret = GameManager.MobSpawner.NPCSpawn(id, trans.position).GetComponent<NPC>();
-        return ret;
-    }
 
     public async Task ScriptPlay()
     {

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using static UnityEngine.AudioSettings;
 
 public class Mob : PlayerTest
 {
@@ -15,7 +14,7 @@ public class Mob : PlayerTest
     public List<float> lastAttackT = new List<float>();
     public MobData data;
 
-
+    [SerializeField]
     public AIModel AI;
 
     [SerializeField]
@@ -35,12 +34,15 @@ public class Mob : PlayerTest
 
     public bool isDead = false;
 
+    public GameObject player;
+
     public override void OnCreate()
     {
         base.OnCreate();
         animator = GetComponentInChildren<Animator>();
         transform.tag = "Enemy";
         stateMachine = new StateMachine(this);
+        data = Instantiate(data);
         int layer = LayerMask.NameToLayer("Enemy");
         gameObject.layer = layer;
     }
@@ -62,10 +64,7 @@ public class Mob : PlayerTest
 
         data.attackIsCool = new bool[data.attackDelay.Count()];
 
-        for(int i = 0; i < data.attackDelay.Count(); i++)
-        {
-            data.attackIsCool[i] = false;
-        }
+        Array.Fill(data.attackIsCool, false);
 
         SetTargetPosition(pos);
         CreateHPBar();
@@ -78,7 +77,7 @@ public class Mob : PlayerTest
         Type T = Type.GetType(data.AIModel);
         AI = Activator.CreateInstance(T) as AIModel;
         AI.target = this;
-        AI.player = GameManager.player;
+        player = GameManager.player;
     }
 
     public override void BeforeStep()
@@ -117,6 +116,7 @@ public class Mob : PlayerTest
                     var dir = targetMovePos - transform.position;
                     if(Mathf.Abs(dir.x) < 0.05)
                     {
+                        velocity = new Vector2(0, velocity.y);
                         isMove = false;
                     }
                     else if (!isLanding)
@@ -142,13 +142,14 @@ public class Mob : PlayerTest
                 isMove = false;
             }
 
+
             base.BeforeStep();
 
             currentState = stateMachine.getStateStr();
         }
     }
 
-    public override void Step()
+    public async override void Step()
     {
         base.Step();
 
@@ -158,19 +159,31 @@ public class Mob : PlayerTest
             {
                 if(GameManager.player != null)
                 {
-                    AI.player = GameManager.player;
-                    float distance = GetPlayerDistance(AI.player);
+                    player = GameManager.player;
+                    float distance = GetPlayerDistance(player);
                     GameObject []objs = GameObject.FindGameObjectsWithTag("Special");
+
 
                     foreach(var obj in objs)
                     {
                         if(distance > GetPlayerDistance(obj))
                         {
-                            AI.player = obj;
+                            player = obj;
                         }
                     }
 
-                    if (AI.player != null)
+                    var path = await GameManager.Stage.currentMap.aStar.FindPathInField(onTilePos, player.GetComponent<PlayerController>().onTilePos, data.jumpForce);
+                    if(path.Count > 0)
+                    {
+                        AI.canAccessPlayer = true;
+                        AI.path = path;
+                    }
+                    else
+                    {
+                        AI.canAccessPlayer = false;
+                    }
+
+                    if (player != null)
                     {
                         AI.Step();
                     }
@@ -178,6 +191,7 @@ public class Mob : PlayerTest
                 }
                 else
                 {
+                    player = null;
                     if (isGrounded && !isMove && !isLanding)
                     {
                         SetIdle();
@@ -191,6 +205,7 @@ public class Mob : PlayerTest
     public virtual void Dead()
     {
         AnimationPlay("Explosive");
+        DeleteAttackObj();
     }
 
 

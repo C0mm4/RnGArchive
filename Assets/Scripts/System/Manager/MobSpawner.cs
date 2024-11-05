@@ -71,7 +71,7 @@ public class MobSpawner
     {
         var ids = id.Split('_');
 
-        GameObject ret = GameManager.InstantiateAsync(ids[0], pos);
+        GameObject ret = GameManager.InstantiateAsync(id, pos);
         ret.GetComponent<NPC>().npcId = ids[0];
         ret.transform.SetParent(GameManager.Instance.currentMapObj.transform);
         GameManager.Stage.NPCScriptSet(ret.GetComponent<NPC>());
@@ -79,7 +79,7 @@ public class MobSpawner
 
         if (ids.Length == 2)
         {
-            ret.AddComponent<NPCHologramShaderController>();
+            ret.GetComponent<PlayerTest>().gravityModifier = 0;
         }
 
 

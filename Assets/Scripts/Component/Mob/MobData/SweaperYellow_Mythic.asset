@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SweaperYellow_Mythic
   m_EditorClassIdentifier: 
   maxHP: 10
-  maxSpeed: 1.5
+  maxSpeed: 0.75
   speedAccel: 3
   attackDelay:
-  - 0.1
-  attackCooltime: 00
+  - 0.5
+  attackIsCool: 
   detectDistance: 0
+  jumpForce: 0
   atkType: 0
   defType: 3
   atkPref:

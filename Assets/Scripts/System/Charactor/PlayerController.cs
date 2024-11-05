@@ -128,6 +128,7 @@ public class PlayerController : PlayerTest
             {
                 charactor.Step();
             }
+
         }
     }
 

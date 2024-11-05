@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -10,14 +11,17 @@ public class NPCHologramShaderController : Obj
     public Material material;
     public string address = "Assets/Materials/NPCHolo.mat";
 
-
-    public override void OnCreate()
+    public async override void OnCreate()
     {
+        base.OnCreate();
+
         spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+        
+//        LoadMeterial();
 
-        LoadMeterial();
-
+        await Appear();
     }
+
 
     public override void BeforeStep()
     {
@@ -47,7 +51,6 @@ public class NPCHologramShaderController : Obj
 
             renderer.material.SetVector("_UVRange", uvRange);
 
-            Debug.Log(uvRange);
         }
     }
 
@@ -63,6 +66,56 @@ public class NPCHologramShaderController : Obj
         };
     }
 
+    public async Task Appear()
+    {
+        float t = 0;
+        while(t < 1)
+        {
+            t += Time.deltaTime;
+
+            foreach (var renderer in spriteRenderer)
+            {
+
+                renderer.material.SetFloat("_DisplayPercentage", t);
+
+            }
+
+            await Task.Yield();
+        }
 
 
+        foreach (var renderer in spriteRenderer)
+        {
+            renderer.material.SetFloat("_DisplayPercentage", 1);
+
+        }
+
+    }
+
+    public async Task Disappear()
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+
+            foreach (var renderer in spriteRenderer)
+            {
+
+                renderer.material.SetFloat("_DisplayPercentage", 1 - t);
+
+            }
+
+            await Task.Yield();
+        }
+
+
+        foreach (var renderer in spriteRenderer)
+        {
+            renderer.material.SetFloat("_DisplayPercentage", 0);
+
+        }
+
+        Destroy();
+    }
 }

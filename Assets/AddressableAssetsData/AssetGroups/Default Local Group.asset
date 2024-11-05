@@ -381,6 +381,10 @@ MonoBehaviour:
     m_Address: Assets/Materials/NPCHolo.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bbe61af2fe221464db72296539c17590
+    m_Address: 20001001_H
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0614a15202da0c043a256cbdf14f7e64, type: 2}
   m_SchemaSet:

@@ -2933,7 +2933,6 @@ MonoBehaviour:
     id: 40012101
     isActivate: 0
     startNPCId: 
-  SelectIndex: 0
   trigText:
     trigId: 
     scripts: []
@@ -2942,10 +2941,12 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  isInitialize: 0
   condi:
     condition: 1
     HPRatio: 0
     originTrigger: {fileID: 0}
+  type: 0
 --- !u!1 &4446308674495104884
 GameObject:
   m_ObjectHideFlags: 0
@@ -3082,7 +3083,6 @@ MonoBehaviour:
     id: 40012102
     isActivate: 0
     startNPCId: 
-  SelectIndex: 0
   trigText:
     trigId: 
     scripts: []
@@ -3092,10 +3092,12 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  isInitialize: 0
   condi:
     condition: 1
     HPRatio: 0
     originTrigger: {fileID: 0}
+  type: 0
 --- !u!1 &4705185866794583570
 GameObject:
   m_ObjectHideFlags: 0
@@ -3441,6 +3443,116 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 14, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 22
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 15, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 16, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 17, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 18, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 19, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 20, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 20
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 14, y: 6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 14, y: 7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 14, y: 8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
+  - first: {x: 14, y: 9, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 23
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 25
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 0
@@ -3475,8 +3587,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 11
+    m_Data: {fileID: 11400000, guid: 1ca1069f884f07848bdf9be07c1d9b37, type: 2}
   - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: 09e8545aea1d0374f946e40191922162, type: 2}
   - m_RefCount: 23
@@ -3522,20 +3634,20 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1563155838, guid: 877ce70011e5c384ca2b010ff762ce83, type: 3}
+  - m_RefCount: 8
+    m_Data: {fileID: -879948699, guid: 877ce70011e5c384ca2b010ff762ce83, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 1284172812, guid: 877ce70011e5c384ca2b010ff762ce83, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 836874220, guid: 877ce70011e5c384ca2b010ff762ce83, type: 3}
   - m_RefCount: 7
     m_Data: {fileID: -684345849, guid: 253fedf620b140c4fa5354431f9bb6f5, type: 3}
   - m_RefCount: 23
     m_Data: {fileID: 1918949700, guid: 253fedf620b140c4fa5354431f9bb6f5, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 30
+  - m_RefCount: 41
     m_Data:
       e00: 1
       e01: 0
@@ -3604,7 +3716,7 @@ Tilemap:
     m_Data: {r: 7.4745e-41, g: 7.4745e-41, b: 7.4745e-41, a: 7.4745e-41}
   - m_RefCount: 0
     m_Data: {r: 7.4745e-41, g: 7.4745e-41, b: 7.4745e-41, a: 7.4745e-41}
-  - m_RefCount: 30
+  - m_RefCount: 41
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -3736,6 +3848,46 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 8901165230641612424}
     m_ColliderPaths:
+    - - X: 47999996
+        Y: 32000000
+      - X: 44800000
+        Y: 32000000
+      - X: 44800000
+        Y: 19200000
+      - X: 47999996
+        Y: 19200000
+    - - X: 54399996
+        Y: 19199998
+      - X: 51200000
+        Y: 19199998
+      - X: 51200000
+        Y: 15999999
+      - X: 54399996
+        Y: 15999999
+    - - X: 60799996
+        Y: 19199998
+      - X: 54400000
+        Y: 19199998
+      - X: 54400000
+        Y: 15999999
+      - X: 60799996
+        Y: 15999999
+    - - X: 67199992
+        Y: 19199998
+      - X: 60800000
+        Y: 19199998
+      - X: 60800000
+        Y: 15999999
+      - X: 67199992
+        Y: 15999999
+    - - X: 51199996
+        Y: 19199998
+      - X: 44800000
+        Y: 19199998
+      - X: 44800000
+        Y: 15999999
+      - X: 51199996
+        Y: 15999999
     - - X: 9599999
         Y: 0
       - X: -9599999
@@ -3826,6 +3978,12 @@ CompositeCollider2D:
         Y: -3200000
   m_CompositePaths:
     m_Paths:
+    - - {x: 6.7199697, y: 1.5999999}
+      - {x: 6.7199697, y: 1.9199998}
+      - {x: 4.7999997, y: 1.9200292}
+      - {x: 4.7999706, y: 3.2}
+      - {x: 4.48, y: 3.1999707}
+      - {x: 4.480029, y: 1.5999999}
     - - {x: 8.63997, y: -0.32}
       - {x: 8.63997, y: 0}
       - {x: -0.9599999, y: -0.000029300001}
@@ -3968,7 +4126,6 @@ MonoBehaviour:
     id: 40012104
     isActivate: 0
     startNPCId: 
-  SelectIndex: 0
   trigText:
     trigId: 
     scripts: []
@@ -3976,10 +4133,12 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  isInitialize: 0
   condi:
     condition: 1
     HPRatio: 0
     originTrigger: {fileID: 0}
+  type: 0
 --- !u!1 &5757429212468909123
 GameObject:
   m_ObjectHideFlags: 0
@@ -4411,7 +4570,6 @@ MonoBehaviour:
     id: 40012103
     isActivate: 0
     startNPCId: 
-  SelectIndex: 0
   trigText:
     trigId: 
     scripts: []
@@ -4420,10 +4578,12 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  isInitialize: 0
   condi:
     condition: 2
     HPRatio: 0.8
     originTrigger: {fileID: 0}
+  type: 0
 --- !u!1 &6238070358375490848
 GameObject:
   m_ObjectHideFlags: 0
@@ -4775,7 +4935,6 @@ MonoBehaviour:
     id: 40012100
     isActivate: 0
     startNPCId: 
-  SelectIndex: 0
   trigText:
     trigId: 
     scripts: []
@@ -4784,10 +4943,12 @@ MonoBehaviour:
   nextTrigger: []
   conditionObjs: []
   spawnObjs: []
+  isInitialize: 0
   condi:
     condition: 0
     HPRatio: 0
     originTrigger: {fileID: 0}
+  type: 0
 --- !u!1 &6463705222528535051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4816,7 +4977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6463705222528535051}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.983, y: 0.645, z: 0}
+  m_LocalPosition: {x: 5.615, y: 2.536, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4952,6 +5113,7 @@ MonoBehaviour:
   isForceMoving: 0
   targetMovePos: {x: 0, y: 0, z: 0}
   isLanding: 0
+  onTilePos: {x: 0, y: 0}
   player: {fileID: 0}
   detectDistance: 2
   text: 
@@ -5074,6 +5236,11 @@ MonoBehaviour:
   bound: {fileID: 409411373968826590}
   NPCs: []
   mapTile: {fileID: 8333530620468312002}
+  grid: 
+  NPCParent: {fileID: 0}
+  TriggerParent: {fileID: 0}
+  DoorParents: {fileID: 0}
+  SpawnPointParents: {fileID: 0}
 --- !u!1 &6463705222940333784
 GameObject:
   m_ObjectHideFlags: 0

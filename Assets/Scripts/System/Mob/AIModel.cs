@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public abstract class AIModel
 {
     public Mob target;
-    public GameObject player;
+
+    public bool canAccessPlayer;
+
+    public List<Vector2Int> path = new();
 
     protected string currentState;
     public abstract void Step();

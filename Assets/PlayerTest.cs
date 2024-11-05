@@ -269,6 +269,4 @@ public class PlayerTest : Obj
             return false;
         }
     }
-
-    
 }

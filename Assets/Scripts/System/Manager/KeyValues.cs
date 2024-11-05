@@ -245,7 +245,7 @@ public static class Func
                     {
                         if (targetNPCID.Equals("Boss"))
                         {
-                            await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                            GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
                         }
                         else if (targetNPCID.Equals("Mob"))
                         {
@@ -264,7 +264,7 @@ public static class Func
                     {
                         if (targetNPCID.Equals("Boss"))
                         {
-                            await GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
+                            GameManager.MobSpawner.BossSpawn(actions[++i], actions[++i]);
                         }
                         else if (targetNPCID.Equals("Mob"))
                         {
@@ -397,7 +397,6 @@ public static class Func
 
         if(ret == null)
         {
-            
             Transform trans = FindSpawnP(spawnP);
             ret = GameManager.MobSpawner.NPCSpawn(id, trans.position);
         }
