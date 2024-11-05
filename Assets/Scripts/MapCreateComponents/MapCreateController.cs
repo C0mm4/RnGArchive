@@ -428,7 +428,22 @@ public class MapCreateController : MonoBehaviour
                     Debug.LogError("Failed to instantiate TileButton prefab.");
                 }
             }
-
+            if(obj is RuleTile ruletile)
+            {
+                Debug.Log(ruletile.name);
+                var tileButton = Instantiate(tileButtonPrefab, tileView.transform);
+                if (tileButton != null)
+                {
+                    tileButton.GetComponent<TileButton>().controller = this;
+                    tileButton.GetComponent<TileButton>().img.sprite = ruletile.m_DefaultSprite;
+                    tileButton.GetComponent<TileButton>().tile = ruletile;
+                    // tileButton에 타일 정보를 설정하는 코드 추가
+                }
+                else
+                {
+                    Debug.LogError("Failed to instantiate TileButton prefab.");
+                }
+            }
             if (obj is GameObject go)
             {
                 var tileButton = Instantiate(tileButtonPrefab, tileView.transform);

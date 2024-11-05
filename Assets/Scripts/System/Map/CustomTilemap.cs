@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public class CustomTilemap : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class CustomTilemap : MonoBehaviour
     {
         tilemap = GetComponent<Tilemap>();
 
-
+        
         prefabs = new();
 
         foreach(Transform child in transform)
@@ -23,6 +24,33 @@ public class CustomTilemap : MonoBehaviour
 
     public Object GetObjectAtCell(Vector3Int cellPos)
     {
+        TileBase tile = tilemap.GetTile(cellPos);
+        if (tile != null)
+        {
+            return tile;
+        }
+
+        // RuleTile이 있는 경우를 확인하기 위해
+        
+        TileBase[] tiles = tilemap.GetTilesBlock(new BoundsInt(cellPos, Vector3Int.one));
+        foreach (TileBase t in tiles)
+        {
+
+            if (t is RuleTile)
+            {
+                Debug.Log("RuleTile");
+                return t;
+            }
+        }
+        foreach (GameObject obj in prefabs)
+        {
+            if (tilemap.WorldToCell(obj.transform.position) == cellPos)
+            {
+                return obj;
+            }
+        }
+        return null;
+/*
         TileBase tile = tilemap.GetTile(cellPos);
         if(tile != null)
         {
@@ -38,7 +66,7 @@ public class CustomTilemap : MonoBehaviour
                 }
             }
         }
-        return null;
+        return null;*/
     }
 
     public List<Object> GetAllTiles()
@@ -46,6 +74,14 @@ public class CustomTilemap : MonoBehaviour
         List<Object> ret = new();
 
         BoundsInt bounds = tilemap.cellBounds;
+        
+        var tiles = tilemap.GetTilesBlock(bounds);
+
+        foreach (Object t in tiles)
+        {
+            ret.Add(t);
+        }
+        /*
         for(int x = bounds.xMin; x < bounds.xMax; x++)
         {
             for(int y = bounds.yMin; y < bounds.yMax; y++)
@@ -57,7 +93,7 @@ public class CustomTilemap : MonoBehaviour
                     ret.Add(obj);
                 }
             }
-        }
+        }*/
 
         ret.AddRange(prefabs);
 

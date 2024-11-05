@@ -57,6 +57,14 @@ public class Cursor : MonoBehaviour
                                 controller.currentLayer.SetTile(Pos, tile);
                             }
                         }
+                        else if(controller.selectedTile is RuleTile ruleTile)
+                        {
+                            controller.currentLayer.SetEditorPreviewTile(Pos, ruleTile);
+                            if (Input.GetKey(KeyCode.Mouse0) && !controller.isShow && !clickedPos.Exists(item => item.x == Pos.x && item.y == Pos.y))
+                            {
+                                controller.currentLayer.SetTile(Pos, ruleTile);
+                            }
+                        }
                         else if (controller.selectedTile is GameObject go)
                         {
                             tmpObj = Instantiate(go);
