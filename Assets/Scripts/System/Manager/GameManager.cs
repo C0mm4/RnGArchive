@@ -107,6 +107,11 @@ public class GameManager : MonoBehaviour
 
     public SettingManager.SerializeGameData setting;
 
+    public static float GameTime = 1220;
+    static float realTime;
+
+    public float inGameT;
+
     private void Awake()
     {
         // Set Dont Destroy Object
@@ -206,6 +211,22 @@ public class GameManager : MonoBehaviour
         {
             ScreenshotCapture();
         }
+
+        if (isPaused)
+        {
+            realTime += Time.deltaTime;
+            if(realTime >= 0.1f)
+            {
+                realTime -= 0.1f;
+                GameTime++;
+            }
+            if(GameTime > 1440)
+            {
+                GameTime = 0;
+            }
+        }
+
+        inGameT = GameTime;
     }
 
     private void FindPlayer()
@@ -391,6 +412,7 @@ public class GameManager : MonoBehaviour
     public static async void GameStart()
     {
         Save.NewGame();
+        GameTime = 720;
         await SceneControlStart("InGameScene");
     }
 

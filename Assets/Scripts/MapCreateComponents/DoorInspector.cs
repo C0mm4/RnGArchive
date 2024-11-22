@@ -40,6 +40,10 @@ public class DoorInspector : MapCreateInspector
     public void onChangeIDValues(string value)
     {
         controller.DataShowObj.GetComponent<Door>().id = value;
+        if (controller.DataShowObj.GetComponent<SpawnP>() != null)
+        {
+            controller.DataShowObj.GetComponent<SpawnP>().id = "Door_" + value;
+        }
     }
 
     public void onChangeConnectRoomId(string value)
@@ -68,5 +72,20 @@ public class DoorInspector : MapCreateInspector
         connectDoorId.text = go.GetComponent<Door>().connectDoorId;
 
         startActivated.isOn = go.GetComponent<Door>().isActivate;
+    }
+
+    public override void ReSetData(string dataType, string value)
+    {
+        base.ReSetData(dataType, value);
+        switch(dataType)
+        {
+            case "X":
+                x.text = value;
+                break;
+            case "Y":
+                y.text = value;
+                break;
+
+        }
     }
 }

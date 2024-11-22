@@ -35,7 +35,7 @@ public class MapCreateSceneCamera : CameraManager
 
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
             targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
-            maincamera.transform.position = Vector3.Lerp(maincamera.transform.position, targetPos, Time.deltaTime * 5f);
+            maincamera.transform.position = Vector3.Lerp(maincamera.transform.position, targetPos, 0.1f);
             // Relatively smooth tracking of playr positions
         }
     }

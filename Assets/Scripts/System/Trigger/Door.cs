@@ -6,6 +6,11 @@ public class Door : InteractionTrigger
 {
     public Vector2 InDir;
 
+    public Sprite openSpr;
+    public Sprite closeSpr;
+
+    SpriteRenderer renderer;
+
     public string id;
     public string connectRoomId;
     public string connectDoorId;
@@ -20,6 +25,8 @@ public class Door : InteractionTrigger
         {
             detectDistance = 1f;
         }
+
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     public override void Step()
@@ -43,4 +50,16 @@ public class Door : InteractionTrigger
             await GameManager.Scene.MoveMap(connectRoomId, connectDoorId);
         }
     }
+
+    public void DoorActivate()
+    {
+        isActivate = true;
+        renderer.sprite = openSpr;
+    }
+
+    public void DoorDeActivate()
+    {
+        renderer.sprite = closeSpr;
+    }
+
 }

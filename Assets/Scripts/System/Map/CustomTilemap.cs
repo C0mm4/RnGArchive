@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class CustomTilemap : MonoBehaviour
 {
-    public static Tilemap tilemap;
-    public static List<GameObject> prefabs;
+    public Tilemap tilemap;
+    public List<GameObject> prefabs;
 
     void Awake()
     {

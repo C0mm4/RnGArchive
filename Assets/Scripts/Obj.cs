@@ -38,6 +38,7 @@ public abstract class Obj : MonoBehaviour
             BeforeStep();
 
         }
+        BeforeStepAlways();
     }
 
     // Update is called once per frame
@@ -73,6 +74,11 @@ public abstract class Obj : MonoBehaviour
     public virtual void BeforeStep()
     {
         // Add your code for Before Step here
+    }
+
+    public virtual void BeforeStepAlways()
+    {
+
     }
 
     public virtual void Step()

@@ -124,7 +124,11 @@ public class StageController
         {
             if (GameManager.Progress.openDoors.Contains(door.id))
             {
-                door.isActivate = true;
+                door.DoorActivate();
+            }
+            else
+            {
+                door.DoorDeActivate();
             }
         }
     }
@@ -157,7 +161,7 @@ public class StageController
         Door targetDoor = doors.Find(item => item.id == id);
         if(targetDoor != null)
         {
-            targetDoor.isActivate = true;
+            targetDoor.DoorActivate();
         }
     }
 
@@ -172,7 +176,7 @@ public class StageController
         Door targetDoor = doors.Find(item => item.id == id);
         if (targetDoor != null)
         {
-            targetDoor.isActivate = false;
+            targetDoor.DoorDeActivate();
         }
     }
 }

@@ -122,6 +122,12 @@ public class Cursor : MonoBehaviour
                             if (Input.GetKey(KeyCode.Mouse0) && !controller.isShow && clickObject != null)
                             {
                                 clickObject.transform.position = controller.currentLayer.CellToWorld(Pos) + new Vector3(0.16f, 0.16f, 0);
+                                controller.inspector.ReSetData("X", clickObject.transform.position.x.ToString());
+                                controller.inspector.ReSetData("Y", clickObject.transform.position.y.ToString());
+                                if (clickObject.GetComponent<SpawnP>() != null)
+                                {
+                                    controller.DrawSpawnPoint(Color.green, clickObject.transform);
+                                }
                             }
                             else
                             {
@@ -267,6 +273,15 @@ public class Cursor : MonoBehaviour
                         }
 
                         break;
+                    case MapCreateController.InputMode.drawSpawnPoint:
+                        if (!isClicked)
+                        {
+                            if (Input.GetKeyDown(KeyCode.Mouse0) && !controller.isShow)
+                            {
+                                AddSpawnPoint(Pos);
+                            }
+                        }
+                        break;
                 }
             }
             else
@@ -317,7 +332,7 @@ public class Cursor : MonoBehaviour
             if (controller.DataShowObj != null)
             {
                 GameManager.Destroy(controller.DataShowObj);
-                controller.DeleteInspector();
+                controller.SetInspector(null);
             }
         }
         pastPos = Pos;
@@ -355,6 +370,17 @@ public class Cursor : MonoBehaviour
         go.GetComponent<BoxCollider2D>().size = new Vector2(0.32f, 0.32f);
         go.GetComponent<BoxCollider2D>().isTrigger = true;
         clickObject = go;
+        controller.SetInspector(clickObject);
+    }
+
+    private void AddSpawnPoint(Vector3Int Pos)
+    {
+        GameObject go = new GameObject();
+        go.AddComponent<SpawnP>();
+        go.transform.SetParent(controller.currentMap.SpawnPointParents.transform);
+        go.transform.position = controller.currentLayer.CellToWorld(Pos) + new Vector3(0.16f, 0.16f, 0);
+        clickObject = go;
+        controller.DrawSpawnPoint(Color.green, go.transform);
         controller.SetInspector(clickObject);
     }
 

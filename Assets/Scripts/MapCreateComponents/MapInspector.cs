@@ -12,6 +12,8 @@ public class MapInspector : MapCreateInspector
     public TMP_InputField yInput;
     public Button submitButton;
 
+    public TMP_Dropdown skySelect;
+
     public override void SetData(GameObject go)
     {
         base.SetData(go);
@@ -19,13 +21,11 @@ public class MapInspector : MapCreateInspector
         xInput.text = controller.currentLayer.size.x.ToString();
         yInput.text = controller.currentLayer.size.y.ToString();
 
-
-
-
-
         xInput.onSubmit.AddListener((value) => xValueChange(value));
         yInput.onSubmit.AddListener((value) => yValueChange(value));
         submitButton.onClick.AddListener(() => SubmitButton());
+
+        skySelect.onValueChanged.AddListener((value) => ChangeSky(value));
 
         if (int.Parse(xInput.text) < 20)
         {
@@ -64,6 +64,11 @@ public class MapInspector : MapCreateInspector
         yInput.onSubmit.Invoke(yInput.text);
     }
 
+    public void ChangeSky(int sky)
+    {
+
+    }
+
     public void ChangeAllTilmepSize()
     {
         Debug.Log("onChangeSize");
@@ -76,6 +81,7 @@ public class MapInspector : MapCreateInspector
         {
             tilemap.CompressBounds();
             tilemap.size = inputBounds;
+            tilemap.origin = Vector3Int.zero;
         }
 
         var bound = controller.currentMap.bound;

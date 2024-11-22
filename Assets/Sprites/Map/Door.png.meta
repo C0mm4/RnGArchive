@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c35b8029356b35345bc45f32b8b0a81d
+guid: b0fa2d0430261ff4aa4bbace690abc1b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,148 +105,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CursorMode_0
+      name: Door_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f07ce9061bbc8643902d5905d3ba252
-      internalID: 270340445
+      spriteID: bddd07cda6666ee4d9e5f16cd4011f44
+      internalID: 938401329
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CursorMode_1
+      name: Door_1
       rect:
         serializedVersion: 2
-        x: 45
+        x: 32
         y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6bf498ec9414c547b10490e03e04fad
-      internalID: 1881706628
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CursorMode_2
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3d0640589f4c2c94ab2596a91738e48f
-      internalID: 84853549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CursorMode_3
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 446652139e1e5864e9edf973ae5d7a71
-      internalID: 1592761553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CursorMode_4
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6458af2e67f92e84cbb2368106a73a8f
-      internalID: 1341529780
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CursorMode_5
-      rect:
-        serializedVersion: 2
-        x: 225
-        y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9534d2a233c4944198e63eb627f8619
-      internalID: 105074078
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CursorMode_6
-      rect:
-        serializedVersion: 2
-        x: 270
-        y: 0
-        width: 45
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8b5a3758bb190d940986f0d74b42b756
-      internalID: -818709089
+      spriteID: ec3c75b6924525c4fa82395bd1eb29e4
+      internalID: -1794389551
       vertices: []
       indices: 
       edges: []
@@ -254,7 +149,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: bd1bdf6030d6b80419980ebc89075403
+    spriteID: 6a30a695f936b4343b7680df0dac1f1a
     internalID: 0
     vertices: []
     indices: 
@@ -262,13 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CursorMode_0: 270340445
-      CursorMode_1: 1881706628
-      CursorMode_2: 84853549
-      CursorMode_3: 1592761553
-      CursorMode_4: 1341529780
-      CursorMode_5: 105074078
-      CursorMode_6: -818709089
+      Door_0: 938401329
+      Door_1: -1794389551
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

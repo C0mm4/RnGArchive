@@ -36,5 +36,8 @@ public class MapCreateInspector : MonoBehaviour
 
     }
 
+    public virtual void ReSetData(string dataType, string value)
+    {
 
+    }
 }

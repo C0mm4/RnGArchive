@@ -42,4 +42,19 @@ public class SpawnPointInspector : MapCreateInspector
         y.text = go.transform.position.y.ToString();
         spawnPId.text = go.GetComponent<SpawnP>().id;
     }
+
+    public override void ReSetData(string dataType, string value)
+    {
+        base.ReSetData(dataType, value);
+        switch (dataType)
+        {
+            case "X":
+                x.text = value;
+                break;
+            case "Y":
+                y.text = value;
+                break;
+
+        }
+    }
 }

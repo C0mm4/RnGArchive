@@ -19,6 +19,8 @@ public class CursorUI : MonoBehaviour
             button.onClick.AddListener(() => OnButtonClick(button));
             button.onClick.AddListener(() => SetCursorMode(buttons.IndexOf(button)));
         }
+
+        buttons[0].onClick.Invoke();
     }
 
     private void OnButtonClick(Button button)
@@ -65,7 +67,9 @@ public class CursorUI : MonoBehaviour
             case 5:
                 controller.inputMode = MapCreateController.InputMode.drawSpawnTrigger;
                 break;
-
+            case 6:
+                controller.inputMode = MapCreateController.InputMode.drawSpawnPoint;
+                break;
         }
     }
 }

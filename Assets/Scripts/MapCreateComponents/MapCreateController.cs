@@ -39,12 +39,12 @@ public class MapCreateController : MonoBehaviour
 
     public enum InputMode
     {
-        draw, erase, selectObj, selectTrigger, drawCutSceneTrigger,  drawSpawnTrigger
+        draw, erase, selectObj, selectTrigger, drawCutSceneTrigger,  drawSpawnTrigger, drawSpawnPoint,
     }
     [SerializeField]
     public InputMode inputMode = InputMode.draw;
 
-    MapCreateInspector inspector;
+    public MapCreateInspector inspector;
 
     public GameObject triggerInspectorPrefab;
     public GameObject spawntriggerInspectorPrefab;
@@ -58,6 +58,8 @@ public class MapCreateController : MonoBehaviour
 
     public bool isRename;
     public string newName;
+
+    public Material LineMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -490,26 +492,7 @@ public class MapCreateController : MonoBehaviour
     {
         LoadTileFile(tileSelect.options[tileSelect.value].text);
     }
-/*
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!isDropDownOpen && !isAnimationPlay)
-        {
-            isAnimationPlay = true;
-            animator.Play("Show");
-            isShow = true;
-        }
-    }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (!isDropDownOpen && !isAnimationPlay) 
-        {
-            isAnimationPlay = true;
-            animator.Play("Hide");
-            isShow = false;
-        }
-    }*/
     public void AnimationEnd()
     {
         isAnimationPlay = false;
@@ -523,6 +506,7 @@ public class MapCreateController : MonoBehaviour
         }
         if (go == null)
         {
+            // click object is null, set map inspector
             inspector = Instantiate(mapInspectorPrefab).GetComponent<MapInspector>();
             inspector.controller = this;
             inspector.gameObject.transform.SetParent(transform);
@@ -534,9 +518,11 @@ public class MapCreateController : MonoBehaviour
         else
         {
             DataShowObj = go;
+            // if Object is Trigger
             var trig = go.GetComponent<Trigger>();
             if (trig != null)
             {
+                // if Object is Cut Scene Trigger, set cut scene trigger inspector
                 if (trig.type == Trigger.TriggerType.CutScene)
                 {
 
@@ -548,6 +534,7 @@ public class MapCreateController : MonoBehaviour
 
                     inspector.SetData(go);
                 }
+                // if object is spawn trigger inspector, set spawn trigger inspector
                 else
                 {
                     inspector = Instantiate(spawntriggerInspectorPrefab).GetComponent<MapCreateInspector>();
@@ -561,10 +548,11 @@ public class MapCreateController : MonoBehaviour
             }
             else
             {
-                var spawnP = go.GetComponent<SpawnP>();
-                if (spawnP != null)
+                // if object is door, set door inspector
+                var door = go.GetComponent<Door>();
+                if (door != null)
                 {
-                    inspector = Instantiate(spawnPointInspectorPrefab).GetComponent<SpawnPointInspector>();
+                    inspector = Instantiate(doorInspectorPrefab).GetComponent<DoorInspector>();
                     inspector.controller = this;
                     inspector.gameObject.transform.SetParent(transform);
 
@@ -572,12 +560,13 @@ public class MapCreateController : MonoBehaviour
 
                     inspector.SetData(go);
                 }
+                // if object is spawn Point, set spawn point inspector
                 else
-                {
-                    var door = go.GetComponent<Door>();
-                    if (door != null)
+                {                
+                    var spawnP = go.GetComponent<SpawnP>();
+                    if (spawnP != null)
                     {
-                        inspector = Instantiate(doorInspectorPrefab).GetComponent<DoorInspector>();
+                        inspector = Instantiate(spawnPointInspectorPrefab).GetComponent<SpawnPointInspector>();
                         inspector.controller = this;
                         inspector.gameObject.transform.SetParent(transform);
 
@@ -586,6 +575,7 @@ public class MapCreateController : MonoBehaviour
                         inspector.SetData(go);
                     }
                 }
+
             }
         }
     }
@@ -622,14 +612,15 @@ public class MapCreateController : MonoBehaviour
         LineRenderer line = trig.GetComponent<LineRenderer>();
         if (line == null)
             line = trig.AddComponent<LineRenderer>();
+        line.material = LineMaterial;
 
         line.loop = true;
         Vector3[] positions = new Vector3[5];
 
-        positions[0] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2);
-        positions[1] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2);
-        positions[2] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2);
-        positions[3] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2);
+        positions[0] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2, -1);
+        positions[1] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, trig.GetComponent<BoxCollider2D>().size.y / 2, -1);
+        positions[2] = trig.transform.position + new Vector3(trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2, -1);
+        positions[3] = trig.transform.position + new Vector3(-trig.GetComponent<BoxCollider2D>().size.x / 2, -trig.GetComponent<BoxCollider2D>().size.y / 2, -1);
         positions[4] = positions[0];
 
         line.startColor = color;
@@ -651,6 +642,7 @@ public class MapCreateController : MonoBehaviour
         LineRenderer line = trans.GetComponent<LineRenderer>();
         if (line == null)
             line = trans.AddComponent<LineRenderer>();
+        line.material = LineMaterial;
 
         line.loop = true;
         Vector3[] positions = new Vector3[5];
