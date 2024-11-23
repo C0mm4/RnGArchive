@@ -46,26 +46,38 @@ Shader "Custom/TimeBasedSky"
             {
                 float timeOfDay = _CustomTime;
 
-                float morningEnd = 0.2;
-                float noonEnd = 0.75;    
-                float eveningEnd = 0.85;
+                float Sunrise = 0.23;
+                float SunMid = 0.25;
+                float SunSet = 0.77;
+                float SunFall = 0.79;
+                float FallDown = 0.81;
 
-                fixed4 skyColor = lerp(_SkyColorNight, _SkyColorMorning, saturate(timeOfDay / morningEnd));
-                
-                if (timeOfDay > morningEnd)
-                {
-                    skyColor = lerp(_SkyColorMorning, _SkyColorNoon, saturate((timeOfDay - morningEnd) / (noonEnd - morningEnd)));
-                }
-                
-                if (timeOfDay > noonEnd)
-                {
-                    skyColor = lerp(_SkyColorNoon, _SkyColorEvening, saturate((timeOfDay - noonEnd) / (eveningEnd - noonEnd)));
+                float4 skyColor;
+
+                if(timeOfDay <= Sunrise || timeOfDay >= FallDown){
+                    skyColor.rgb = _SkyColorNight;
                 }
 
-                if (timeOfDay > eveningEnd)
-                {
-                    skyColor = lerp(_SkyColorEvening, _SkyColorNight, saturate((timeOfDay - eveningEnd) / (1.0 - eveningEnd)));
-                }
+                else if(timeOfDay >= Sunrise && timeOfDay <= SunMid){
+                    
+                    skyColor.rgb = lerp(_SkyColorMorning, _SkyColorNoon, saturate((timeOfDay - Sunrise) / (SunMid - Sunrise)));
+                    }
+
+                else if(timeOfDay >= SunMid && timeOfDay <= SunSet){
+                    
+                    skyColor.rgb = _SkyColorNoon;
+                    }
+
+                else if(timeOfDay >= SunSet && timeOfDay <= SunFall){
+                    skyColor.rgb = lerp(_SkyColorNoon, _SkyColorEvening, saturate((timeOfDay - SunSet) / (SunFall - SunSet)));
+                    
+                    }
+
+                else {
+                    skyColor.rgb = lerp(_SkyColorEvening, _SkyColorNight, saturate((timeOfDay - SunFall) / (FallDown - SunFall)));
+                    
+                    }
+
 
                 return skyColor;
             }

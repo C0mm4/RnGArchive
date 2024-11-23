@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     public SettingManager.SerializeGameData setting;
 
-    public static float GameTime = 1220;
+    public static float GameTime = 720;
     static float realTime;
 
     public float inGameT;

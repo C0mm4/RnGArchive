@@ -55,30 +55,42 @@ Shader "Custom/TimeBasedCloue"
                 float timeOfDay = _CustomTime;
                 float4 texColor = tex2D(_MainTex, i.uv);
 
+                float Sunrise = 0.23;
+                float SunMid = 0.25;
+                float SunSet = 0.77;
+                float SunFall = 0.79;
+                float FallDown = 0.81;
 
-                float morningEnd = 0.2;
-                float noonEnd = 0.75;    
-                float eveningEnd = 0.85;
-                
-                fixed4 skyColor = lerp(_SkyColorNight, _SkyColorMorning, saturate(timeOfDay / morningEnd));
-                
-                if (timeOfDay > morningEnd)
-                {
-                    skyColor = lerp(_SkyColorMorning, _SkyColorNoon, saturate((timeOfDay - morningEnd) / (noonEnd - morningEnd)));
-                }
-                
-                if (timeOfDay > noonEnd)
-                {
-                    skyColor = lerp(_SkyColorNoon, _SkyColorEvening, saturate((timeOfDay - noonEnd) / (eveningEnd - noonEnd)));
+                float4 skyColor = texColor;
+
+                if(timeOfDay <= Sunrise || timeOfDay >= FallDown){
+                    texColor.rgb = lerp(texColor, _SkyColorNight * texColor, _SkyColorNight.a);
                 }
 
-                if (timeOfDay > eveningEnd)
-                {
-                    skyColor = lerp(_SkyColorEvening, _SkyColorNight, saturate((timeOfDay - eveningEnd) / (1.0 - eveningEnd)));
-                }
+                else if(timeOfDay >= Sunrise && timeOfDay <= SunMid){
+                    
+                    texColor.rgb = lerp(_SkyColorMorning, _SkyColorNoon, saturate((timeOfDay - Sunrise) / (SunMid - Sunrise)));
+                    }
 
-                if(texColor.a > 0.1){
-                    texColor.rgb = lerp(texColor.rgb, skyColor * texColor.rgb, skyColor.a);
+                else if(timeOfDay >= SunMid && timeOfDay <= SunSet){
+                    
+                    texColor.rgb = lerp(texColor, _SkyColorNoon * texColor, _SkyColorNoon.a);
+                    }
+
+                else if(timeOfDay >= SunSet && timeOfDay <= SunFall){
+                    texColor.rgb = lerp(_SkyColorNoon, _SkyColorEvening, saturate((timeOfDay - SunSet) / (SunFall - SunSet)));
+                    
+                    }
+
+                else {
+                    texColor.rgb = lerp(_SkyColorEvening, _SkyColorNight, saturate((timeOfDay - SunFall) / (FallDown - SunFall)));
+                    
+                    }
+
+
+
+                if(skyColor.a > 0.1){
+                    texColor.rgba = lerp(texColor.rgba, skyColor * texColor.rgba, skyColor.a);
 
                     }
                 else{
