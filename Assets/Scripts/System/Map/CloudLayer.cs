@@ -23,7 +23,8 @@ public class CloudLayer : TilemapParallax
     public override void OnCreate()
     {
         base.OnCreate();
-        tilemapRightMax = 20 * 0.32f + Mathf.Max(GetComponent<Tilemap>().cellBounds.size.x - 20, 0) * (1 - parallaxEffectX) * 0.32f;
+
+        tilemapRightMax = transform.position.x + 22 * 0.32f; 
         maxY = GetComponent<Tilemap>().cellBounds.size.y * 0.32f;
         minY = maxY / 2;
         nextT = 0;
@@ -33,8 +34,8 @@ public class CloudLayer : TilemapParallax
     public override void StepAlways()
     {
         base.StepAlways();
-        tilemapRightMax = 20 * 0.32f + Mathf.Max(GetComponent<Tilemap>().cellBounds.size.x - 20, 0) * (1 - parallaxEffectX) * 0.32f;
 
+        tilemapRightMax = transform.position.x + 22 * 0.32f;
         moveClouds();
 
         lastCloudT += Time.deltaTime;
@@ -55,41 +56,96 @@ public class CloudLayer : TilemapParallax
     {
         foreach (var cloud in clouds)
         {
-            cloud.transform.position -= new Vector3(cloudSpd, 0, 0) * Time.deltaTime;
+            cloud.transform.position -= new Vector3(cloudSpd, 0, 0) * Time.deltaTime * Random.Range(0.7f, 1.25f);
         }
     }
-
     public void CloudInitialize()
     {
         float xMin, xMax;
         xMin = 0;
         xMax = tilemapRightMax + 0.64f;
 
-        for(int i = 0; i < GetComponent<Tilemap>().size.x; i += 2)
+        for (int i = 0; i < GetComponent<Tilemap>().size.x; i += 2)
         {
-            float randomX = Random.Range(xMin, xMax);
-            float randomY = Random.Range(minY, maxY);
+            int attempt = 0;
+            bool isPositionValid;
 
-            int randomIndex = Random.Range(0, 21);
+            int randomIndex = UnityEngine.Random.Range(0, 21);
+            isPositionValid = true;
+
+            float randomX, randomY;
+            Vector3 pos;
+
+            do
+            {
+                randomX = UnityEngine.Random.Range(xMin, xMax);
+                randomY = UnityEngine.Random.Range(minY, maxY);
 
 
-            GameObject go = Instantiate(cloudPrefab, new Vector3(randomX, randomY, 9), Quaternion.identity, transform);
-            go.GetComponent<SpriteRenderer>().sprite = cloudSprites[randomIndex];
-            clouds.Add(go);
+                pos = new Vector3(randomX, randomY, 9);
+
+                // if clouds so close, refind new position
+                foreach (var cloud in clouds)
+                {
+                    if (Vector2.Distance(cloud.transform.position, pos) <= 0.48f)
+                    {
+                        isPositionValid = false;
+                        break;
+                    }
+                }
+                attempt++;
+
+            } while (!isPositionValid && attempt < 10);
+
+            // if find valid new position, create new cloud
+            if (isPositionValid)
+            {
+                GameObject go = Instantiate(cloudPrefab, pos, Quaternion.identity, transform);
+                go.GetComponent<SpriteRenderer>().sprite = cloudSprites[randomIndex];
+                clouds.Add(go);
+            }
         }
 
     }
 
+
     public void CreateCloud()
     {
         float newCloudX = tilemapRightMax + 0.64f;
-        float randomY = Random.Range(minY, maxY);
 
         int randomIndex = Random.Range(0, 21);
 
-        GameObject go = Instantiate(cloudPrefab, new Vector3(newCloudX, randomY, 9), Quaternion.identity, transform);
-        go.GetComponent<SpriteRenderer>().sprite = cloudSprites[randomIndex];
-        clouds.Add(go);
+        bool isPositionValid;
+        int attempt = 0;
+
+        float randomY;
+        Vector3 pos;
+
+        do
+        {
+            randomY = Random.Range(minY, maxY);
+            pos = new Vector3(newCloudX, randomY, 9);
+
+            isPositionValid = true;
+            foreach (var cloud in clouds)
+            {
+                if (Vector2.Distance(cloud.transform.position, pos) <= 0.48f)
+                {
+                    isPositionValid = false;
+                    break;
+                }
+            }
+            attempt++;
+
+        } while (attempt < 10 && isPositionValid);
+
+        if (isPositionValid)
+        {
+
+            GameObject go = Instantiate(cloudPrefab, pos, Quaternion.identity, transform);
+            go.GetComponent<SpriteRenderer>().sprite = cloudSprites[randomIndex];
+            clouds.Add(go);
+        }
     }
 
     public void DeleteCloud()
