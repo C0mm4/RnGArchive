@@ -64,34 +64,33 @@ Shader "Custom/TimeBasedCloue"
                 float4 skyColor = texColor;
 
                 if(timeOfDay <= Sunrise || timeOfDay >= FallDown){
-                    texColor.rgb = lerp(texColor, _SkyColorNight * texColor, _SkyColorNight.a);
+                    texColor.rgb = lerp(texColor, _SkyColorNight * texColor, 1);
                 }
 
                 else if(timeOfDay >= Sunrise && timeOfDay <= SunMid){
                     
-                    texColor.rgb = lerp(_SkyColorMorning, _SkyColorNoon, saturate((timeOfDay - Sunrise) / (SunMid - Sunrise)));
+                    texColor.rgb = lerp(_SkyColorMorning * texColor, _SkyColorNoon * texColor, saturate((timeOfDay - Sunrise) / (SunMid - Sunrise)));
                     }
 
                 else if(timeOfDay >= SunMid && timeOfDay <= SunSet){
                     
-                    texColor.rgb = lerp(texColor, _SkyColorNoon * texColor, _SkyColorNoon.a);
+                    texColor.rgb = lerp(texColor, _SkyColorNoon * texColor, 1);
                     }
 
                 else if(timeOfDay >= SunSet && timeOfDay <= SunFall){
-                    texColor.rgb = lerp(_SkyColorNoon, _SkyColorEvening, saturate((timeOfDay - SunSet) / (SunFall - SunSet)));
+                    texColor.rgb = lerp(_SkyColorNoon * texColor, _SkyColorEvening * texColor, saturate((timeOfDay - SunSet) / (SunFall - SunSet)));
                     
                     }
 
                 else {
-                    texColor.rgb = lerp(_SkyColorEvening, _SkyColorNight, saturate((timeOfDay - SunFall) / (FallDown - SunFall)));
+                    texColor.rgb = lerp(_SkyColorEvening * texColor, _SkyColorNight * texColor, saturate((timeOfDay - SunFall) / (FallDown - SunFall)));
                     
                     }
 
 
 
                 if(skyColor.a > 0.1){
-                    texColor.rgba = lerp(texColor.rgba, skyColor * texColor.rgba, skyColor.a);
-
+                    texColor.a = texColor.a * skyColor.a;
                     }
                 else{
                     discard;
