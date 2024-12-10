@@ -58,11 +58,12 @@ public class MapCreateController : MonoBehaviour
 
     public bool isRename;
     public string newName;
+    public bool forceShow;
 
     public Material LineMaterial;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         LoadMapPrefab();
         LoadTileDropdown();
@@ -80,7 +81,7 @@ public class MapCreateController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.F2))
@@ -95,6 +96,11 @@ public class MapCreateController : MonoBehaviour
                 mapSelect.captionText.text = currentMapName;
                 isRename = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            forceShow = !forceShow;
         }
 
         if(isRename)
@@ -182,7 +188,7 @@ public class MapCreateController : MonoBehaviour
             }
         }
 
-        if (isMouseInInspector() || isRename)
+        if (isMouseInInspector() || isRename || forceShow)
         {
             if (!isShow && !isAnimationPlay)
             {
@@ -297,15 +303,11 @@ public class MapCreateController : MonoBehaviour
         var obj = currentMap.gameObject;
         if(obj != null)
         {
+            currentMap.SaveBeforeStep($"Assets/Resources/Maps/{obj.name}.prefab");
             if (PrefabUtility.SaveAsPrefabAsset(obj, $"Assets/Resources/Maps/{obj.name}.prefab") != null)
             {
                 GameManager.UIManager.SetText($"{obj.name} map save successfully");
                 GameObject savedPrefab = Resources.Load<GameObject>($"Maps/{obj.name}");
-                if (savedPrefab != null)
-                {
-                    // 자식 오브젝트의 모든 Line Renderer 삭제
-                    RemoveAllLineRenderers(savedPrefab.transform);
-                }
                 if (!currentMapName.Equals(obj.name) && !currentMapName.Equals("MapTemplate"))
                 {
                     if (AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Resources/Maps/{currentMapName}.prefab"))
@@ -316,6 +318,7 @@ public class MapCreateController : MonoBehaviour
                 mapSelect.options[mapSelect.value].text = obj.name;
                 mapSelect.captionText.text = obj.name;
                 currentMapName = obj.name;
+
                 return;
             }
             else
@@ -331,21 +334,6 @@ public class MapCreateController : MonoBehaviour
     }
 
 
-    private void RemoveAllLineRenderers(Transform parent)
-    {
-        // 현재 오브젝트의 Line Renderer 삭제
-        LineRenderer lineRenderer = parent.GetComponent<LineRenderer>();
-        if (lineRenderer != null)
-        {
-            DestroyImmediate(lineRenderer, true);  // Prefab의 컴포넌트 삭제
-        }
-
-        // 모든 자식 오브젝트를 재귀적으로 탐색하여 Line Renderer 삭제
-        foreach (Transform child in parent)
-        {
-            RemoveAllLineRenderers(child);
-        }
-    }
 
     private void LoadTileDropdown()
     {

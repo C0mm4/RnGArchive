@@ -79,7 +79,7 @@ public class MapInspector : MapCreateInspector
 
         foreach (Tilemap tilemap in tilemaps)
         {
-            tilemap.CompressBounds();
+//            tilemap.CompressBounds();
             tilemap.size = inputBounds;
             tilemap.origin = Vector3Int.zero;
         }

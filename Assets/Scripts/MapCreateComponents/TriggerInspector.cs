@@ -97,6 +97,7 @@ public class TriggerInspector : MapCreateInspector
         components[1].RemoveSize(30);
         SetComponentsRect();
     }
+
     public void RemoveInputFieldNext(int index)
     {
         // 리스트와 UI에서 해당 인덱스 삭제
@@ -138,6 +139,11 @@ public class TriggerInspector : MapCreateInspector
             AddNextInputFieldOnLoad();
             nextInputFields[i].GetComponent<TMP_InputField>().text = trigger.nextTriggerId[i];
         }
+
+        triggerId.onValueChanged.AddListener((value) => TriggerIDOnChange(value));
+
+        condition.onValueChanged.AddListener((value) => ConditionChange(value));
+        HPRatio.onValueChanged.AddListener((value) => HPRatioChange(value));
 
         AddNodeIds.onClick.AddListener(() => AddInputFieldNodeList());
         AddNextIds.onClick.AddListener(() => AddInputFieldNextList());
@@ -185,4 +191,29 @@ public class TriggerInspector : MapCreateInspector
         SetComponentsRect();
     }
 
+
+    public void TriggerIDOnChange(string id)
+    {
+        controller.DataShowObj.GetComponent<Trigger>().data.id = id;
+    }
+
+    public void TriggerNodeListChange(string id, int index)
+    {
+        controller.DataShowObj.GetComponent<Trigger>().nodeIds[index] = id;
+    }
+
+    public void TriggerNextListChnage(string id, int index)
+    {
+        controller.DataShowObj.GetComponent<Trigger>().nextTriggerId[index] = id;
+    }
+
+    public void ConditionChange(int type)
+    {
+        controller.DataShowObj.GetComponent<Trigger>().condi.condition = (Trigger.AdditionalCondi.condiType)type;
+    }
+
+    public void HPRatioChange(float ratio)
+    {
+        controller.DataShowObj.GetComponent<Trigger>().condi.HPRatio = ratio;
+    }
 }

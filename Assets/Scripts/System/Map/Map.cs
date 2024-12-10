@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -21,6 +22,7 @@ public class Map : Obj
     [SerializeField]
     public List<int> grid;
 
+    public GameObject LayerParent;
     public GameObject NPCParent;
     public GameObject TriggerParent;
     public GameObject DoorParents;
@@ -36,6 +38,27 @@ public class Map : Obj
 
         aStar = new(mapGridData, mapTile.cellBounds.xMin, mapTile.cellBounds.yMin);
         grid = ConvertToList(mapGridData);
+
+        if(GameManager.uiState != UIState.Title)
+        {
+            RemoveAllLineRenderers(transform);
+        }
+    }
+
+    private void RemoveAllLineRenderers(Transform parent)
+    {
+        // 현재 오브젝트의 Line Renderer 삭제
+        LineRenderer lineRenderer = parent.GetComponent<LineRenderer>();
+        if (lineRenderer != null)
+        {
+            Destroy(lineRenderer);  // Prefab의 컴포넌트 삭제
+        }
+
+        // 모든 자식 오브젝트를 재귀적으로 탐색하여 Line Renderer 삭제
+        foreach (Transform child in parent)
+        {
+            RemoveAllLineRenderers(child);
+        }
     }
 
     public List<int> ConvertToList(int[,] array)
@@ -118,6 +141,19 @@ public class Map : Obj
         }
 
     }
+    public TileBase tmpTile;
+    public void SaveBeforeStep(string path)
+    {
+        foreach(Transform layer in LayerParent.transform)
+        {
+            Tilemap tilemap = layer.GetComponent<Tilemap>();
+            TileBase tile = tilemap.GetTile(new Vector3Int(0, 10, 0));
+            tilemap.SetTile(new Vector3Int(0, 10, 0), tmpTile);
+            PrefabUtility.SaveAsPrefabAsset(gameObject, path);
+            tilemap.SetTile(new Vector3Int(0, 10, 0), tile);
+        }
+    }
+
 
     public class AStarPathfinding
     {
@@ -342,5 +378,7 @@ public class Map : Obj
             }
         }
     }
+
+
 
 }

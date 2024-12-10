@@ -19,6 +19,7 @@ public class CloudLayer : TilemapParallax
     float nextT;
 
     public List<Sprite> cloudSprites;
+    public List<Sprite> specialClouds;
 
     public override void OnCreate()
     {
@@ -28,12 +29,15 @@ public class CloudLayer : TilemapParallax
         maxY = GetComponent<Tilemap>().cellBounds.size.y * 0.32f;
         minY = maxY / 2;
         nextT = 0;
-        CloudInitialize();
+        if (!GameManager.isPaused)
+        {
+            CloudInitialize();
+        }
     }
 
-    public override void StepAlways()
+    public override void Step()
     {
-        base.StepAlways();
+        base.Step();
 
         tilemapRightMax = transform.position.x + 22 * 0.32f;
         moveClouds();
@@ -70,7 +74,16 @@ public class CloudLayer : TilemapParallax
             int attempt = 0;
             bool isPositionValid;
 
-            int randomIndex = UnityEngine.Random.Range(0, 21);
+            int randomIndex = UnityEngine.Random.Range(0, 10);
+            if(randomIndex >= 9)
+            {
+                randomIndex = UnityEngine.Random.Range(0, specialClouds.Count);
+            }
+            else
+            {
+                randomIndex = UnityEngine.Random.Range(0, cloudSprites.Count);
+            }
+
             isPositionValid = true;
 
             float randomX, randomY;
@@ -112,9 +125,15 @@ public class CloudLayer : TilemapParallax
     public void CreateCloud()
     {
         float newCloudX = tilemapRightMax + 0.64f;
-
-        int randomIndex = Random.Range(0, 21);
-
+        int randomIndex = UnityEngine.Random.Range(0, 10);
+        if (randomIndex >= 9)
+        {
+            randomIndex = UnityEngine.Random.Range(0, specialClouds.Count);
+        }
+        else
+        {
+            randomIndex = UnityEngine.Random.Range(0, cloudSprites.Count);
+        }
         bool isPositionValid;
         int attempt = 0;
 

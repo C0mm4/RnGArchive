@@ -37,7 +37,6 @@ Shader "Custom/Lazer"
                 float4 _MainTex_ST;
                 float4 _TintColor;
                 float _FadeSpeed;
-                float _Time;
 
                 struct Input {
                     float2 uv_MainTex;
